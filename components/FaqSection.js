@@ -60,7 +60,7 @@ const FaqSection = () => (
           height="444px"
           width="317px"
           src="/dl_card-9.png"
-          alt="Data Science Trivia Card Machine Learning"
+          alt="Data Science Trivia Card Deep Learning"
         />
       </Flex>
     </Flex>
@@ -78,7 +78,7 @@ const FaqSection = () => (
           height="444px"
           width="317px"
           src="/history_card-6.png"
-          alt="Data Science Trivia Card Statistics"
+          alt="Data Science Trivia Card History"
         />
       </Flex>
       <Flex direction="column" width={{ base: "100%", lg: "60%" }}>
