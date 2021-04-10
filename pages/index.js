@@ -16,7 +16,7 @@ const App = () => {
       borderRightColor="#EFAAAD"
       borderBottomColor="#BB92D4"
       width="100%"
-      pb="2"
+      pb="4"
     >
       <Section></Section>
       <PeopleSection></PeopleSection>
