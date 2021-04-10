@@ -16,7 +16,7 @@ const People = ({ name, bio, photoUrl, twitterUrl }) => (
     width={{ base: "100%", lg: "400px" }}
   >
     <Box>
-      <Avatar width="82px" height="82px" src={photoUrl} />
+      <Avatar width="82px" height="82px" src={photoUrl} alt="avatar photo" />
     </Box>
     <Flex
       flexDirection="column"
