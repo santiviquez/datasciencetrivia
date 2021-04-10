@@ -35,7 +35,7 @@ class MyDocument extends Document {
           />
           <meta
             property="og:image"
-            content="./data_science_trivia_open_graph.jpg"
+            content="https://ds-trivia-site.vercel.app/data_science_trivia_open_graph.jpg"
           />
 
           {/* Twitter Meta Tags */}
@@ -56,7 +56,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="/data_science_trivia_open_graph.jpg"
+            content="https://ds-trivia-site.vercel.app/data_science_trivia_open_graph.jpg"
           />
 
           <title>Data Science Trivia - Learn Data Science The Fun Way</title>
