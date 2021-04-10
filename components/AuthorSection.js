@@ -71,13 +71,15 @@ const AuthorSection = () => (
         <Text mt={1} lineHeight="5">
           I’m Santiago Víquez, a physicist turned data scientist. Creator of
           Data Science Trivia a Q&A card game to learn key data science concepts
-          by playing.
+          by playing. Over the last 4 years I've been working as a data
+          scientist at startups and 500 fortune companies. And a lot of what
+          I've learned is on those cards.
         </Text>
         <Text mt={4} lineHeight="5">
-          I built data science trivia because I always wanted to create a card
-          game and a way for me to learn and remember complex data science
-          concepts. If you have any questions about the game just contact me on
-          twitter.
+          I built data science trivia with two intentions in mind. Create a fun
+          trivia game and practice complex data science concepts while doing it.
+          I hope you enjoy playing the game as much I enjoyed creating it. If
+          you have any questions about the game please contact me on twitter.
         </Text>
       </Flex>
     </Flex>
