@@ -41,6 +41,7 @@ class MyDocument extends Document {
           {/* Twitter Meta Tags */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta property="twitter:domain" content="ds-trivia-site.vercel.app" />
+          <meta name="twitter:creator" content="santiviquez" />
           <meta
             property="twitter:url"
             content="https://ds-trivia-site.vercel.app/"
@@ -55,7 +56,7 @@ class MyDocument extends Document {
           />
           <meta
             name="twitter:image"
-            content="./data_science_trivia_open_graph.jpg"
+            content="/data_science_trivia_open_graph.jpg"
           />
 
           <title>Data Science Trivia - Learn Data Science The Fun Way</title>
