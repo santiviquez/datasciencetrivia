@@ -1,0 +1,87 @@
+import React from "react";
+import {
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Button,
+  Avatar,
+  Icon,
+} from "@chakra-ui/react";
+import PeopleWall from "../components/PeopleWall";
+import People from "./People";
+import { FaTwitter } from "react-icons/fa";
+
+const AuthorSection = () => (
+  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
+    <Flex
+      display={{ lg: "flex" }}
+      width="100%"
+      direction={{ base: "column", lg: "row" }}
+      justifyContent={{ base: "center", lg: "space-between" }}
+      alignItems={{ base: "center", lg: "strech" }}
+    >
+      <Box width="auto" maxW="1000px">
+        <Box>
+          <Heading mt={{ md: 4 }} size="2xl">
+            About The Author
+          </Heading>
+          <Box
+            width={{ base: "80%", lg: "65%" }}
+            mt={-4}
+            height="6"
+            backgroundColor="#BB92D4"
+          ></Box>
+        </Box>
+      </Box>
+    </Flex>
+
+    <Flex
+      mt={10}
+      direction={{ base: "column", lg: "row" }}
+      justifyContent="flex-start"
+      alignItems={{ base: "center" }}
+    >
+      <Avatar
+        height="246px"
+        width="246px"
+        src="/santiago_viquez.jpg"
+        alt="Santiago Viquez"
+      />
+
+      <Flex
+        flexDirection="column"
+        alignItems="flex-start"
+        justifyContent="center"
+        ml={{ base: 2, lg: 10 }}
+        mt={{ base: 10, lg: 0 }}
+      >
+        <Flex alignItems="flex-start">
+          <Text fontSize="lg" fontWeight="bold">
+            Hi! I'm Santiago
+          </Text>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={"https://twitter.com/santiviquez"}
+          >
+            <Icon as={FaTwitter} ml={2} color="#1DA1F2"></Icon>
+          </a>
+        </Flex>
+        <Text mt={1} lineHeight="5">
+          I’m Santiago Víquez, a physicist turned data scientist. Creator of
+          Data Science Trivia a Q&A card game to learn key data science concepts
+          by playing.
+        </Text>
+        <Text mt={4} lineHeight="5">
+          I built data science trivia because I always wanted to create a card
+          game and a way for me to learn and remember complex data science
+          concepts. If you have any questions about the game just contact me on
+          twitter.
+        </Text>
+      </Flex>
+    </Flex>
+  </Flex>
+);
+
+export default AuthorSection;

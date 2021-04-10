@@ -48,6 +48,9 @@ const PeopleSection = () => (
         />
       </Flex>
       <Flex direction="column" width={{ base: "100%", lg: "60%" }}>
+        <Text mt={6} alignSelf={{ base: "center", lg: "flex-start" }}>
+          Some questions where submitted by experts in the field
+        </Text>
         <PeopleWall></PeopleWall>
       </Flex>
     </Flex>
