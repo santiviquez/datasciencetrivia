@@ -41,7 +41,7 @@ const Section = () => {
           </Box>
 
           <Text mt={8} fontSize="2xl" fontWeight="bold">
-            Prepare for an interview or test your knowlege with Data Science
+            Prepare for an interview or test your knowledge with Data Science
             Trivia.
           </Text>
           <Text fontWeight="normal" fontSize="large" mt={8}>
