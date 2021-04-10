@@ -7,6 +7,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
+        <script
+          async
+          defer
+          data-domain="datasciencetrivia.com"
+          src="https://plausible.io/js/plausible.js"
+        ></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* HTML Meta Tags */}
         <title>Data Science Trivia - Learn Data Science The Fun Way</title>
         <meta

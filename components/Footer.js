@@ -25,7 +25,7 @@ const Footer = () => (
         rel="noopener noreferrer"
         href="https://twitter.com/santiviquez"
       >
-        <Icon as={FaTwitter} mx={2} color="#939393"></Icon>
+        <Icon boxSize={6} as={FaTwitter} mx={4} color="#939393"></Icon>
       </a>
 
       <a
@@ -33,7 +33,7 @@ const Footer = () => (
         rel="noopener noreferrer"
         href="https://santiviquez.medium.com/"
       >
-        <Icon as={FaMedium} mx={2} color="#939393"></Icon>
+        <Icon boxSize={6} as={FaMedium} mx={4} color="#939393"></Icon>
       </a>
     </Flex>
   </Flex>
