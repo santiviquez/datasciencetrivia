@@ -15,6 +15,10 @@ const Section = () => {
     window.open("https://gumroad.com/l/datasciencetrivia", "_blank");
   };
 
+  document.getElementById("BuyNow").addEventListener("click", function () {
+    plausible("BuyNow");
+  });
+
   return (
     <Flex width="100%" px={{ base: 5, lg: 40 }} pt={20}>
       <Flex
