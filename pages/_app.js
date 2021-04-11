@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
           async
           defer
           data-domain="datasciencetrivia.com"
-          src="https://plausible.io/js/plausible.js"
+          src="https://plausible.io/js/plausible.outbound-links.js"
         ></script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* HTML Meta Tags */}
