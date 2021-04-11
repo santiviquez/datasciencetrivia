@@ -17,6 +17,10 @@ function MyApp({ Component, pageProps }) {
           window.plausible = window.plausible || function(){" "}
           {(window.plausible.q = window.plausible.q || []).push(arguments)}
         </script>
+        <script>
+          document.getElementById("BuyNow").addEventListener("click", function
+          () {plausible("BuyNow")});
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* HTML Meta Tags */}
         <title>Data Science Trivia - Learn Data Science The Fun Way</title>

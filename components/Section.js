@@ -12,7 +12,6 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const Section = () => {
   const onOpen = ({}) => {
-    plausible("BuyNow");
     window.open("https://gumroad.com/l/datasciencetrivia", "_blank");
   };
 
@@ -52,6 +51,7 @@ const Section = () => {
           </Text>
           <Flex justifyContent={{ base: "center", lg: "flex-start" }}>
             <Button
+              id="BuyNow"
               rightIcon={<ExternalLinkIcon mb="4px" />}
               fontSize="x-large"
               size="lg"
