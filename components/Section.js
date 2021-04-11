@@ -12,6 +12,7 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 const Section = () => {
   const onOpen = ({}) => {
+    plausible("BuyNow");
     window.open("https://gumroad.com/l/datasciencetrivia", "_blank");
   };
 

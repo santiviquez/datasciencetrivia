@@ -13,6 +13,10 @@ function MyApp({ Component, pageProps }) {
           data-domain="datasciencetrivia.com"
           src="https://plausible.io/js/plausible.outbound-links.js"
         ></script>
+        <script>
+          window.plausible = window.plausible || function(){" "}
+          {(window.plausible.q = window.plausible.q || []).push(arguments)}
+        </script>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* HTML Meta Tags */}
         <title>Data Science Trivia - Learn Data Science The Fun Way</title>
