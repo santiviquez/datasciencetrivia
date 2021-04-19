@@ -69,7 +69,7 @@ const Section = () => {
               }}
               onClick={onOpen}
             >
-              <Link isExternal>$10 Buy Now</Link>
+              <Link isExternal>$19 Buy Now</Link>
             </Button>
           </Flex>
         </Box>

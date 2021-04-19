@@ -13,10 +13,10 @@ function MyApp({ Component, pageProps }) {
           data-domain="datasciencetrivia.com"
           src="https://plausible.io/js/plausible.outbound-links.js"
         ></script>
-        <script>
+        {/* <script>
           window.plausible = window.plausible || function(){" "}
           {(window.plausible.q = window.plausible.q || []).push(arguments)}
-        </script>
+        </script> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* HTML Meta Tags */}
         <title>Data Science Trivia - Learn Data Science The Fun Way</title>
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
           content="Prepare for an interview or test your knowledge with Data Science Trivia. 197 Q&A to practice the most common and challenging interview questions."
         />
         {/* Facebook Meta Tags */}
-        <meta property="og:url" content="https://ds-trivia-site.vercel.app/" />
+        <meta property="og:url" content="https://www.datasciencetrivia.com/" />
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }) {
         <meta name="twitter:creator" content="santiviquez" />
         <meta
           property="twitter:url"
-          content="https://ds-trivia-site.vercel.app/"
+          content="https://www.datasciencetrivia.com/"
         />
         <meta
           name="twitter:title"
