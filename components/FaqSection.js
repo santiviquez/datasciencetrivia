@@ -45,12 +45,12 @@ const FaqSection = () => (
 
       <Flex
         justifyContent={{ base: "center", lg: "flex-start" }}
+        display={{ base: "none", lg: "inherit" }}
         flexShrink={0}
         ml={{ md: 10 }}
         mt={{ base: 6, lg: 0 }}
       >
         <Image
-          display={{ base: "none", lg: "inherit" }}
           height={444}
           width={317}
           src={dl_card}
@@ -64,11 +64,11 @@ const FaqSection = () => (
     >
       <Flex
         direction="column"
+        display={{ base: "none", lg: "inherit" }}
         justifyContent={{ base: "center", lg: "flex-start" }}
         flexShrink={0}
       >
         <Image
-          display={{ base: "none", lg: "inherit" }}
           height={444}
           width={317}
           src={history_card}
