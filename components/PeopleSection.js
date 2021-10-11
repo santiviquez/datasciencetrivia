@@ -1,6 +1,8 @@
 import React from "react";
-import { Flex, Box, Heading, Text, Button, Image } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text } from "@chakra-ui/react";
 import PeopleWall from "../components/PeopleWall";
+import Image from "next/image";
+import stats_card from "../public/stats_card-37.png";
 
 const PeopleSection = () => (
   <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
@@ -41,9 +43,9 @@ const PeopleSection = () => (
       >
         <Image
           display={{ base: "none", lg: "inherit" }}
-          height="444px"
-          width="317px"
-          src="/stats_card-37.png"
+          height={444}
+          width={317}
+          src={stats_card}
           alt="Data Science Trivia Card Statistics"
         />
       </Flex>

@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Image,
-  Link,
-} from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Flex, Box, Heading } from "@chakra-ui/react";
 import Faq from "./Faq";
+import Image from "next/image";
+import dl_card from "../public/dl_card-9.png";
+import history_card from "../public/history_card-6.png";
 
 const FaqSection = () => (
   <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
@@ -18,7 +12,7 @@ const FaqSection = () => (
       width="100%"
       direction={{ base: "column", lg: "row" }}
       justifyContent={{ base: "center", lg: "space-between" }}
-      alignItems={{ base: "center", lg: "initial" }}
+      alignItems={{ base: "center", lg: "strech" }}
     >
       <Box width="auto" maxW="600px">
         <Heading size="2xl" fontWeight="bold">
@@ -57,9 +51,9 @@ const FaqSection = () => (
       >
         <Image
           display={{ base: "none", lg: "inherit" }}
-          height="444px"
-          width="317px"
-          src="/dl_card-9.png"
+          height={444}
+          width={317}
+          src={dl_card}
           alt="Data Science Trivia Card Deep Learning"
         />
       </Flex>
@@ -75,9 +69,9 @@ const FaqSection = () => (
       >
         <Image
           display={{ base: "none", lg: "inherit" }}
-          height="444px"
-          width="317px"
-          src="/history_card-6.png"
+          height={444}
+          width={317}
+          src={history_card}
           alt="Data Science Trivia Card History"
         />
       </Flex>

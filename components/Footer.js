@@ -1,16 +1,6 @@
 import React from "react";
-import {
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Image,
-  Link,
-  Icon,
-} from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { FaGithub, FaHeart, FaMedium, FaTwitter } from "react-icons/fa";
+import { Flex, Icon } from "@chakra-ui/react";
+import { FaMedium, FaTwitter } from "react-icons/fa";
 
 const Footer = () => (
   <Flex width="100%" px={{ base: 5, lg: 40 }} pt="80px">

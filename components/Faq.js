@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  ChakraProvider,
-  Flex,
-  Box,
-  Text,
-  Icon,
-  Avatar,
-} from "@chakra-ui/react";
-import { FaTwitter } from "react-icons/fa";
+import { Box, Text } from "@chakra-ui/react";
 
 const Faq = ({ question, answer }) => (
   <Box mb={10}>
