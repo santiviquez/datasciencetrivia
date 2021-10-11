@@ -37,12 +37,12 @@ const PeopleSection = () => (
     >
       <Flex
         direction="column"
+        display={{ base: "none", lg: "inherit" }}
         justifyContent={{ base: "center", lg: "flex-start" }}
         flexShrink={0}
         mt={{ base: 6 }}
       >
         <Image
-          display={{ base: "none", lg: "inherit" }}
           height={444}
           width={317}
           src={stats_card}
