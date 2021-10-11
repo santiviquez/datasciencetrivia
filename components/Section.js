@@ -1,14 +1,8 @@
 import React from "react";
-import {
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Image,
-  Link,
-} from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Button, Link } from "@chakra-ui/react";
 import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
+import Image from "next/image";
+import ml_card from "../public/ml_card-6.png";
 
 const Section = () => {
   const onOpen = ({}) => {
@@ -92,9 +86,9 @@ const Section = () => {
           mt={{ base: 6 }}
         >
           <Image
-            height="444px"
-            width="317px"
-            src="/ml_card-6.png"
+            height={444}
+            width={317}
+            src={ml_card}
             alt="Data Science Trivia Card Machine Learning"
           />
         </Flex>

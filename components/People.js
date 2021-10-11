@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  ChakraProvider,
-  Flex,
-  Box,
-  Text,
-  Icon,
-  Avatar,
-} from "@chakra-ui/react";
+import { Flex, Box, Text, Icon, Avatar } from "@chakra-ui/react";
 import { FaTwitter } from "react-icons/fa";
 
 const People = ({ name, bio, photoUrl, twitterUrl }) => (

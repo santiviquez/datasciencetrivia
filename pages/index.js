@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Box, Heading, Text, Button, Image } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Section from "../components/Section";
 import PeopleSection from "../components/PeopleSection";
 import FaqSection from "../components/FaqSection";
