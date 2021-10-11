@@ -8,7 +8,7 @@ import {
   Image,
   Link,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
 
 const Section = () => {
   const onOpen = ({}) => {
@@ -69,8 +69,20 @@ const Section = () => {
               }}
               onClick={onOpen}
             >
-              <Link isExternal>$19 Buy Now</Link>
+              <Link isExternal>$5 Buy Now</Link>
             </Button>
+          </Flex>
+          <Flex mt="2" alignItems="center">
+            <Flex flexDir="row" width="100px" justifyContent="space-between">
+              <StarIcon color="#fdce71"></StarIcon>
+              <StarIcon color="#fdce71"></StarIcon>
+              <StarIcon color="#fdce71"></StarIcon>
+              <StarIcon color="#fdce71"></StarIcon>
+              <StarIcon color="#fdce71"></StarIcon>
+            </Flex>
+            <Text pl="2" color="GrayText" fontWeight="semibold">
+              +160 happy customers!
+            </Text>
           </Flex>
         </Box>
         <Flex
