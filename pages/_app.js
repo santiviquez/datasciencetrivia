@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }) {
         <script
           async
           defer
-          data-domain="datasciencetrivia.com"
+          data-domain="datasciencetrivia.com,blog.datasciencetrivia.com"
           src="https://plausible.io/js/plausible.outbound-links.js"
         ></script>
         {/* <script>
