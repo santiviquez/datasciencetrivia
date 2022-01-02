@@ -5,6 +5,7 @@ import PeopleSection from "../components/PeopleSection";
 import FaqSection from "../components/FaqSection";
 import AuthorSection from "../components/AuthorSection";
 import Footer from "../components/Footer";
+import Script from "next/script";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       width="100%"
       pb="4"
     >
+      <Script src="https://gumroad.com/js/gumroad.js"></Script>
       <Section></Section>
       <PeopleSection></PeopleSection>
       <FaqSection></FaqSection>
