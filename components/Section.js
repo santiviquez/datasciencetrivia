@@ -1,5 +1,13 @@
 import React from "react";
-import { Flex, Box, Heading, Text, Button, Link } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Button,
+  Link,
+  LinkOverlay,
+} from "@chakra-ui/react";
 import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import ml_card from "../public/ml_card-6.png";
@@ -7,7 +15,6 @@ import ml_card from "../public/ml_card-6.png";
 const Section = () => {
   const onOpen = ({}) => {
     plausible("BuyNow");
-    window.open("https://gumroad.com/l/datasciencetrivia", "_blank");
   };
 
   return (
@@ -46,7 +53,7 @@ const Section = () => {
           </Text>
           <Flex justifyContent={{ base: "center", lg: "flex-start" }}>
             <Button
-              rightIcon={<ExternalLinkIcon mb="4px" />}
+              // rightIcon={<ExternalLinkIcon mb="4px" />}
               fontSize="x-large"
               size="lg"
               width={{ base: "100%", lg: "70%" }}
@@ -63,7 +70,9 @@ const Section = () => {
               }}
               onClick={onOpen}
             >
-              <Link isExternal>$5 Buy Now</Link>
+              <LinkOverlay href="https://santiviquez.gumroad.com/l/datasciencetrivia">
+                I want this!
+              </LinkOverlay>
             </Button>
           </Flex>
           <Flex mt="2" alignItems="center">
