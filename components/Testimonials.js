@@ -1,6 +1,5 @@
 import React from "react";
 import { Flex, Box, Heading } from "@chakra-ui/react";
-import Script from "next/script";
 
 const Testimonials = () => (
   <Flex direction="column" width="100%" pt={20}>

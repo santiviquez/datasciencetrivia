@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Flex,
-  Box,
-  Heading,
-  Text,
-  Button,
-  Avatar,
-  Icon,
-} from "@chakra-ui/react";
-import PeopleWall from "../components/PeopleWall";
-import People from "./People";
+import { Flex, Box, Heading, Text, Avatar, Icon } from "@chakra-ui/react";
 import { FaTwitter } from "react-icons/fa";
 
 const AuthorSection = () => (

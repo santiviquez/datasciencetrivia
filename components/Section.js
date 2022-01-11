@@ -5,10 +5,9 @@ import {
   Heading,
   Text,
   Button,
-  Link,
   LinkOverlay,
 } from "@chakra-ui/react";
-import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
+import { StarIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import ml_card from "../public/ml_card-6.png";
 
