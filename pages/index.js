@@ -6,6 +6,7 @@ import FaqSection from "../components/FaqSection";
 import AuthorSection from "../components/AuthorSection";
 import Footer from "../components/Footer";
 import Script from "next/script";
+import Testimonials from "../components/Testimonials";
 
 const App = () => {
   return (
@@ -20,9 +21,14 @@ const App = () => {
       pb="4"
     >
       <Script src="https://gumroad.com/js/gumroad.js"></Script>
+      <Script
+        type="text/javascript"
+        src="https://testimonial.to/js/iframeResizer.min.js"
+      ></Script>
       <Section></Section>
       <PeopleSection></PeopleSection>
       <FaqSection></FaqSection>
+      <Testimonials></Testimonials>
       <AuthorSection></AuthorSection>
       <Footer></Footer>
     </Flex>
