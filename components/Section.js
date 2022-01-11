@@ -43,8 +43,7 @@ const Section = () => {
           </Box>
 
           <Text mt={8} fontSize="2xl" fontWeight="bold">
-            Prepare for an interview or test your knowledge with Data Science
-            Trivia.
+            Prepare for an interview and have fun with Data Science Trivia.
           </Text>
           <Text fontWeight="normal" fontSize="large" mt={8}>
             197 Q&A to practice the most common and challenging interview
@@ -75,7 +74,7 @@ const Section = () => {
               </LinkOverlay>
             </Button>
           </Flex>
-          <Flex mt="2" alignItems="center">
+          <Flex mt="4" alignItems="center">
             <Flex flexDir="row" width="100px" justifyContent="space-between">
               <StarIcon color="#fdce71"></StarIcon>
               <StarIcon color="#fdce71"></StarIcon>

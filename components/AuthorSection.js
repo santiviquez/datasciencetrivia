@@ -13,7 +13,7 @@ import People from "./People";
 import { FaTwitter } from "react-icons/fa";
 
 const AuthorSection = () => (
-  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={10}>
+  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
     <Flex
       display={{ lg: "flex" }}
       width="100%"
@@ -69,7 +69,7 @@ const AuthorSection = () => (
           </a>
         </Flex>
         <Text mt={1} lineHeight="5">
-          I’m Santiago Víquez, a physicist turned data scientist. Creator of
+          I'm Santiago Víquez, a physicist turned data scientist. Creator of
           Data Science Trivia a Q&A card game to learn key data science concepts
           by playing. Over the last 4 years I've been working as a data
           scientist at startups and 500 fortune companies. And a lot of what
