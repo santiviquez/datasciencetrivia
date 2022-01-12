@@ -22,10 +22,6 @@ const App = () => {
       pb="4"
     >
       <Script src="https://gumroad.com/js/gumroad.js"></Script>
-      <Script
-        type="text/javascript"
-        src="https://testimonial.to/js/iframeResizer.min.js"
-      ></Script>
       <Section></Section>
       <PeopleSection></PeopleSection>
       <FaqSection></FaqSection>

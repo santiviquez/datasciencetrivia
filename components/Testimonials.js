@@ -1,5 +1,6 @@
 import React from "react";
 import { Flex, Box, Heading } from "@chakra-ui/react";
+import IframeResizer from "iframe-resizer-react";
 
 const Testimonials = () => (
   <Flex direction="column" width="100%" pt={20}>
@@ -34,16 +35,11 @@ const Testimonials = () => (
       direction={{ base: "column", lg: "row" }}
       justifyContent="flex-start"
       alignItems={{ base: "center" }}
-      height="500px"
     >
-      <iframe
-        id="testimonialto-data-science-trivia-light"
-        src="https://embed.testimonial.to/w/data-science-trivia?theme=light&card=base&loadMore=on&initialCount=20"
-        frameborder="0"
-        scrolling="yes"
-        width="100%"
-        height="100%"
-      ></iframe>
+      <IframeResizer
+        src="https://embed.testimonial.to/w/data-science-trivia?theme=light&card=base&loadMore=on&initialCount=10"
+        style={{ width: "1px", minWidth: "100%" }}
+      />
     </Flex>
   </Flex>
 );
