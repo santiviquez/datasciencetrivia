@@ -733,6 +733,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@fontsource/maven-pro@^4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@fontsource/maven-pro/-/maven-pro-4.5.4.tgz#28a098f6f2d6631d1c86caabb07e62726fbe71c4"
+  integrity sha512-PraH2oGq2ubPQRFgGGvsKBTi6XGH3h3BLcoh/OSmFwu/fZ6Njas9gmH67vLcgfYNKmIt38PRRmeoUkU4YY8TPg==
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"
