@@ -1,16 +1,14 @@
-import { useState } from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import {
   Button,
   Flex,
-  Text,
   IconButton,
   ButtonGroup,
   useDisclosure,
 } from "@chakra-ui/react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
-
+import useMousetrap from "react-hook-mousetrap";
 import Card from "../components/Card";
 
 const cards = {
@@ -32,15 +30,19 @@ const cards = {
 
 const Game = () => {
   const { isOpen, onToggle, onClose } = useDisclosure();
-  const [index, setIndex] = useState(0);
+  var [index, setIndex] = useState(0);
   const [dificulty, setDificulty] = useState([0, 0, 0]);
   function nextCard() {
-    setIndex(++index);
-    onClose();
+    if (index != cards.cards.length - 1) {
+      setIndex(++index);
+      onClose();
+    }
   }
   function previousCard() {
-    setIndex(--index);
-    onClose();
+    if (index != 0) {
+      setIndex(--index);
+      onClose();
+    }
   }
 
   function setDificultyValue(e) {
@@ -60,6 +62,29 @@ const Game = () => {
     }
   }
 
+  useMousetrap("right", () => {
+    nextCard();
+  });
+
+  useMousetrap("left", () => {
+    previousCard();
+  });
+
+  useMousetrap("space", () => {
+    onToggle();
+  });
+
+  useMousetrap("e", () => {
+    setDificultyValue("easy");
+  });
+
+  useMousetrap("n", () => {
+    setDificultyValue("neutral");
+  });
+
+  useMousetrap("h", () => {
+    setDificultyValue("hard");
+  });
   return (
     <Flex
       direction="column"
