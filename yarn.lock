@@ -738,6 +738,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/maven-pro/-/maven-pro-4.5.4.tgz#28a098f6f2d6631d1c86caabb07e62726fbe71c4"
   integrity sha512-PraH2oGq2ubPQRFgGGvsKBTi6XGH3h3BLcoh/OSmFwu/fZ6Njas9gmH67vLcgfYNKmIt38PRRmeoUkU4YY8TPg==
 
+"@fontsource/poppins@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.2.tgz#6da10064b938e66055025122ef8fedc1bdfa3053"
+  integrity sha512-J0ri6LpKck+Bh7ltINNoI6ETvJbMM9vTWzFyVuAp67ybtGjVXPK3mPJFjJkDtmkE0FJ0nUupa5beO0+9tOXRTw==
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"

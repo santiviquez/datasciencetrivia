@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Fade } from "@chakra-ui/react";
 
-const Card = ({ category, question, answer }) => {
+const Card = ({ category, question, answer, isOpen }) => {
   var patternImg = "/ml_pattern.svg";
   var color = "#72D0EA";
   switch (category) {
@@ -44,6 +44,7 @@ const Card = ({ category, question, answer }) => {
           borderColor="black"
           justifyContent="center"
           paddingLeft={6}
+          paddingRight={6}
         >
           <Text
             fontSize="25px"
@@ -63,8 +64,8 @@ const Card = ({ category, question, answer }) => {
             justifyContent="center"
           >
             <Image
-              height={80}
-              width={80}
+              height={100}
+              width={100}
               src={patternImg}
               alt="pattern image"
             />
@@ -81,16 +82,22 @@ const Card = ({ category, question, answer }) => {
           </Flex>
         )}
       </Flex>
-      <Text
-        height="330px"
-        maxHeight="330px"
-        padding={6}
-        fontSize="25px"
-        fontFamily="Maven Pro"
-        textTransform="uppercase"
-      >
-        {question}
-      </Text>
+      <Flex flexDirection="column" height="330px" maxHeight="330px">
+        <Text
+          padding={6}
+          fontSize="25px"
+          fontFamily="Maven Pro"
+          textTransform="uppercase"
+        >
+          {question}
+        </Text>
+        <Fade in={isOpen} unmountOnExit={true}>
+          <Text pl={6} fontSize="25px" fontFamily="Poppins">
+            {answer}
+          </Text>
+        </Fade>
+      </Flex>
+
       <Flex
         flexDirection="column"
         borderTopWidth="10px"

@@ -13,6 +13,7 @@
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@fontsource/maven-pro": "^4.5.4",
+    "@fontsource/poppins": "^4.5.2",
     "framer-motion": "^4",
     "iframe-resizer-react": "^1.1.0",
     "next": "12",

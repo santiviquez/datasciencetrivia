@@ -1,11 +1,65 @@
+import { useState } from "react";
 import Image from "next/image";
-import { Button, Flex, Text, IconButton, ButtonGroup } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Text,
+  IconButton,
+  ButtonGroup,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
 
 import Card from "../components/Card";
 
+const cards = {
+  cards: [
+    {
+      id: "0",
+      category: "machine learning",
+      question: "hola",
+      answer: "chao",
+    },
+    {
+      id: "1",
+      category: "deep learning",
+      question: "hola deep",
+      answer: "chao deep",
+    },
+  ],
+};
+
 const Game = () => {
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  const [index, setIndex] = useState(0);
+  const [dificulty, setDificulty] = useState([0, 0, 0]);
+  function nextCard() {
+    setIndex(++index);
+    onClose();
+  }
+  function previousCard() {
+    setIndex(--index);
+    onClose();
+  }
+
+  function setDificultyValue(e) {
+    switch (e) {
+      case "easy":
+        setDificulty([1, 0, 0]);
+        break;
+      case "neutral":
+        setDificulty([0, 1, 0]);
+        break;
+      case "hard":
+        setDificulty([0, 0, 1]);
+        break;
+      default:
+        setDificulty([0, 0, 0]);
+        break;
+    }
+  }
+
   return (
     <Flex
       direction="column"
@@ -20,37 +74,68 @@ const Game = () => {
       <Flex flexDirection="column" alignItems="center" pt="12">
         <Flex flexDirection="row">
           <IconButton
+            onClick={(e) => previousCard()}
             size="lg"
             icon={<FaChevronLeft />}
             colorScheme="teal"
             variant="link"
             fontSize="25px"
             pr="8"
+            isDisabled={index == 0 ? true : false}
+            // _focus="none"
           ></IconButton>
           <Card
-            category={"machine learning"}
-            question={"What is ensemble learning?"}
+            category={cards.cards[index].category}
+            question={cards.cards[index].question}
+            answer={cards.cards[index].answer}
+            isOpen={isOpen}
           ></Card>
           <IconButton
+            onClick={(e) => nextCard()}
             size="lg"
             icon={<FaChevronRight />}
             colorScheme="teal"
             variant="link"
             fontSize="25px"
             pl="8"
+            isDisabled={index == cards.cards.length - 1 ? true : false}
           ></IconButton>
         </Flex>
         <Flex flexDirection="row" pt="8">
-          <Button> Show Answer</Button>
+          <Button onClick={onToggle}>Show Answer</Button>
         </Flex>
         <ButtonGroup variant="ghost" spacing="4" pt="8">
-          <Button leftIcon={<BiHappy />} colorScheme="green">
+          <Button
+            leftIcon={<BiHappy />}
+            colorScheme="green"
+            onClick={() => setDificultyValue("easy")}
+            variant={dificulty[0] == 1 ? "solid" : "ghost"}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
             Easy
           </Button>
-          <Button leftIcon={<BiMeh />} colorScheme="blackAlpha">
+          <Button
+            leftIcon={<BiMeh />}
+            colorScheme="blackAlpha"
+            onClick={() => setDificultyValue("neutral")}
+            variant={dificulty[1] == 1 ? "solid" : "ghost"}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
             Neutral
           </Button>
-          <Button leftIcon={<BiSad />} colorScheme="red">
+          <Button
+            leftIcon={<BiSad />}
+            colorScheme="red"
+            onClick={() => setDificultyValue("hard")}
+            variant={dificulty[2] == 1 ? "solid" : "ghost"}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
             Hard
           </Button>
         </ButtonGroup>
