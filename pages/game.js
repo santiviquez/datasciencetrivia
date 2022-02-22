@@ -10,6 +10,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
 import useMousetrap from "react-hook-mousetrap";
 import Card from "../components/Card";
+import Keymaps from "../components/Keymaps";
 
 const cards = {
   cards: [
@@ -94,6 +95,7 @@ const Game = () => {
       borderRightColor="#EFAAAD"
       borderBottomColor="#BB92D4"
       width="100%"
+      height="100vh"
       pb="4"
     >
       <Flex flexDirection="column" alignItems="center" pt="12">
@@ -165,6 +167,7 @@ const Game = () => {
           </Button>
         </ButtonGroup>
       </Flex>
+      <Keymaps></Keymaps>
     </Flex>
   );
 };
