@@ -11,21 +11,37 @@ import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
 import useMousetrap from "react-hook-mousetrap";
 import Card from "../components/Card";
 import Keymaps from "../components/Keymaps";
+import AccountMenu from "../components/AccountMenu";
 
 const cards = {
   cards: [
     {
       id: "0",
       category: "machine learning",
-      question: "hola",
-      answer: "chao",
+      question: "What is ensemble learning?",
+      answer:
+        "Combining induvidual models together with the purpose of improving the predictive power of the model.",
     },
     {
       id: "1",
       category: "deep learning",
-      question: "hola deep",
-      answer: "chao deep",
+      question: "What is Adagrad?",
+      answer:
+        "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
     },
+    {
+      id: "2",
+      category: "statistics",
+      question: "What two parameters defined a normal distribution?",
+      answer: "Its mean and its standard deviation.",
+    },
+    // {
+    //   id: "3",
+    //   category: "history",
+    //   question:
+    //     "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+    //   answer: "MNIST dataset",
+    // },
   ],
 };
 
@@ -36,12 +52,14 @@ const Game = () => {
   function nextCard() {
     if (index != cards.cards.length - 1) {
       setIndex(++index);
+      setDificulty([0, 0, 0]);
       onClose();
     }
   }
   function previousCard() {
     if (index != 0) {
       setIndex(--index);
+      setDificulty([0, 0, 0]);
       onClose();
     }
   }
@@ -96,9 +114,12 @@ const Game = () => {
       borderBottomColor="#BB92D4"
       width="100%"
       height="100vh"
-      pb="4"
+      p={6}
+      alignContent="center"
     >
-      <Flex flexDirection="column" alignItems="center" pt="12">
+      <AccountMenu></AccountMenu>
+
+      <Flex flexDirection="column" alignItems="center" pt={4}>
         <Flex flexDirection="row">
           <IconButton
             onClick={(e) => previousCard()}

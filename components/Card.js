@@ -26,8 +26,8 @@ const Card = ({ category, question, answer, isOpen }) => {
     <Flex
       direction="column"
       borderWidth="10px"
-      height="490px"
-      width="350px"
+      height="448px"
+      width="320px"
       borderColor="black"
     >
       <Flex
@@ -92,7 +92,7 @@ const Card = ({ category, question, answer, isOpen }) => {
           {question}
         </Text>
         <Fade in={isOpen} unmountOnExit={true}>
-          <Text pl={6} fontSize="25px" fontFamily="Poppins">
+          <Text px={6} fontSize="16px" fontFamily="Poppins">
             {answer}
           </Text>
         </Fade>
