@@ -35,13 +35,13 @@ const cards = {
       question: "What two parameters defined a normal distribution?",
       answer: "Its mean and its standard deviation.",
     },
-    // {
-    //   id: "3",
-    //   category: "history",
-    //   question:
-    //     "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
-    //   answer: "MNIST dataset",
-    // },
+    {
+      id: "3",
+      category: "history",
+      question:
+        "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+      answer: "MNIST dataset",
+    },
   ],
 };
 

@@ -43,8 +43,8 @@ const Card = ({ category, question, answer, isOpen }) => {
           borderRightWidth="10px"
           borderColor="black"
           justifyContent="center"
-          paddingLeft={6}
-          paddingRight={6}
+          paddingLeft={4}
+          paddingRight={4}
         >
           <Text
             fontSize="25px"
@@ -84,15 +84,16 @@ const Card = ({ category, question, answer, isOpen }) => {
       </Flex>
       <Flex flexDirection="column" height="330px" maxHeight="330px">
         <Text
-          padding={6}
-          fontSize="25px"
+          padding={4}
+          fontSize="20px"
           fontFamily="Maven Pro"
           textTransform="uppercase"
+          lineHeight="7"
         >
           {question}
         </Text>
         <Fade in={isOpen} unmountOnExit={true}>
-          <Text px={6} fontSize="16px" fontFamily="Poppins">
+          <Text px={4} fontSize="16px" fontFamily="Poppins">
             {answer}
           </Text>
         </Fade>
