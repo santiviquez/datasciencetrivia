@@ -30,7 +30,7 @@ const Keymaps = () => {
             <Text>Previous card</Text>
           </Flex>
           <Flex justifyContent="start">
-            <Kbd mr={4}>space</Kbd>
+            <Kbd mr={12}>a</Kbd>
             <Text>Show answer</Text>
           </Flex>
           <Flex justifyContent="start">

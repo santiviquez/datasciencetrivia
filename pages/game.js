@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Flex,
@@ -12,6 +12,8 @@ import useMousetrap from "react-hook-mousetrap";
 import Card from "../components/Card";
 import Keymaps from "../components/Keymaps";
 import AccountMenu from "../components/AccountMenu";
+
+import { supabase } from "../utils/supabaseClient";
 
 const cards = {
   cards: [
@@ -45,12 +47,37 @@ const cards = {
   ],
 };
 
-const Game = () => {
+export default function Game() {
+  const [loading, setLoading] = useState(true);
+  const [cardsData, setCardsData] = useState(null);
   const { isOpen, onToggle, onClose } = useDisclosure();
-  var [index, setIndex] = useState(0);
+  var [index, setIndex] = useState(null);
   const [dificulty, setDificulty] = useState([0, 0, 0]);
+
+  useEffect(() => {
+    getCardsData();
+  }, []);
+
+  async function getCardsData() {
+    try {
+      setLoading(true);
+      // const user = supabase.auth.user();
+      let { data, error, status } = await supabase.from("cards").select("*");
+      if (error && status !== 406) {
+        throw error;
+      }
+      if (data) {
+        setCardsData(data);
+        setIndex(0);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  }
+
   function nextCard() {
-    if (index != cards.cards.length - 1) {
+    if (index != cardsData.length - 1) {
       setIndex(++index);
       setDificulty([0, 0, 0]);
       onClose();
@@ -89,7 +116,7 @@ const Game = () => {
     previousCard();
   });
 
-  useMousetrap("space", () => {
+  useMousetrap("a", () => {
     onToggle();
   });
 
@@ -132,12 +159,24 @@ const Game = () => {
             isDisabled={index == 0 ? true : false}
             // _focus="none"
           ></IconButton>
-          <Card
-            category={cards.cards[index].category}
-            question={cards.cards[index].question}
-            answer={cards.cards[index].answer}
-            isOpen={isOpen}
-          ></Card>
+          {!loading ? (
+            <Card
+              category={cardsData[index].category}
+              question={cardsData[index].question}
+              answer={cardsData[index].answer}
+              isOpen={isOpen}
+              loading={loading}
+            ></Card>
+          ) : (
+            <Card
+              category=""
+              question=""
+              answer=""
+              isOpen={isOpen}
+              loading={loading}
+            ></Card>
+          )}
+
           <IconButton
             onClick={(e) => nextCard()}
             size="lg"
@@ -146,7 +185,7 @@ const Game = () => {
             variant="link"
             fontSize="25px"
             pl="8"
-            isDisabled={index == cards.cards.length - 1 ? true : false}
+            isDisabled={index == cardsData?.length - 1 ? true : false}
           ></IconButton>
         </Flex>
         <Flex flexDirection="row" pt="8">
@@ -191,6 +230,4 @@ const Game = () => {
       <Keymaps></Keymaps>
     </Flex>
   );
-};
-
-export default Game;
+}

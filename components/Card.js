@@ -1,23 +1,28 @@
 import Image from "next/image";
-import { Flex, Text, Fade } from "@chakra-ui/react";
+import { Flex, Text, Fade, Skeleton, SkeletonText } from "@chakra-ui/react";
 
-const Card = ({ category, question, answer, isOpen }) => {
+const Card = ({ category, question, answer, isOpen, loading }) => {
+  var categoryName = "ml";
   var patternImg = "/ml_pattern.svg";
   var color = "#72D0EA";
   switch (category) {
-    case "machine learning":
+    case "ml":
+      categoryName = "Machine Learning";
       patternImg = "/ml_pattern.svg";
       color = "#72D0EA";
       break;
-    case "deep learning":
+    case "dl":
+      categoryName = "Deep Learning";
       patternImg = "/dl_pattern.svg";
       color = "#EFAAAD";
       break;
     case "history":
+      categoryName = "History";
       patternImg = "/hist_pattern.svg";
       color = "#BB92D4";
       break;
-    case "statistics":
+    case "stats":
+      categoryName = "Statistics";
       patternImg = "/stats_pattern.svg";
       color = "#92DCCF";
       break;
@@ -46,17 +51,21 @@ const Card = ({ category, question, answer, isOpen }) => {
           paddingLeft={4}
           paddingRight={4}
         >
-          <Text
-            fontSize="25px"
-            fontFamily="Maven Pro"
-            lineHeight="7"
-            textTransform="uppercase"
-          >
-            {category}
-          </Text>
+          {loading ? (
+            <Skeleton height="20px" />
+          ) : (
+            <Text
+              fontSize="25px"
+              fontFamily="Maven Pro"
+              lineHeight="7"
+              textTransform="uppercase"
+            >
+              {categoryName}
+            </Text>
+          )}
         </Flex>
 
-        {category == "machine learning" ? (
+        {category == "ml" ? (
           <Flex
             flexDirection="column"
             width="100px"
@@ -83,19 +92,25 @@ const Card = ({ category, question, answer, isOpen }) => {
         )}
       </Flex>
       <Flex flexDirection="column" height="330px" maxHeight="330px">
-        <Text
-          padding={4}
-          fontSize="20px"
-          fontFamily="Maven Pro"
-          textTransform="uppercase"
-          lineHeight="7"
-        >
-          {question}
-        </Text>
-        <Fade in={isOpen} unmountOnExit={true}>
-          <Text px={4} fontSize="16px" fontFamily="Poppins">
-            {answer}
+        {loading ? (
+          <SkeletonText fontSize="16px" p={4} noOfLines={3} spacing="4" />
+        ) : (
+          <Text
+            padding={4}
+            fontSize="20px"
+            fontFamily="Maven Pro"
+            textTransform="uppercase"
+            lineHeight="7"
+          >
+            {question}
           </Text>
+        )}
+        <Fade in={isOpen} unmountOnExit={true}>
+          <Skeleton isLoaded={!loading}>
+            <Text px={4} fontSize="16px" fontFamily="Poppins">
+              {answer}
+            </Text>
+          </Skeleton>
         </Fade>
       </Flex>
 
