@@ -15,37 +15,37 @@ import AccountMenu from "../components/AccountMenu";
 
 import { supabase } from "../utils/supabaseClient";
 
-const cards = {
-  cards: [
-    {
-      id: "0",
-      category: "machine learning",
-      question: "What is ensemble learning?",
-      answer:
-        "Combining induvidual models together with the purpose of improving the predictive power of the model.",
-    },
-    {
-      id: "1",
-      category: "deep learning",
-      question: "What is Adagrad?",
-      answer:
-        "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
-    },
-    {
-      id: "2",
-      category: "statistics",
-      question: "What two parameters defined a normal distribution?",
-      answer: "Its mean and its standard deviation.",
-    },
-    {
-      id: "3",
-      category: "history",
-      question:
-        "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
-      answer: "MNIST dataset",
-    },
-  ],
-};
+// const cards = {
+//   cards: [
+//     {
+//       id: "0",
+//       category: "machine learning",
+//       question: "What is ensemble learning?",
+//       answer:
+//         "Combining induvidual models together with the purpose of improving the predictive power of the model.",
+//     },
+//     {
+//       id: "1",
+//       category: "deep learning",
+//       question: "What is Adagrad?",
+//       answer:
+//         "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
+//     },
+//     {
+//       id: "2",
+//       category: "statistics",
+//       question: "What two parameters defined a normal distribution?",
+//       answer: "Its mean and its standard deviation.",
+//     },
+//     {
+//       id: "3",
+//       category: "history",
+//       question:
+//         "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+//       answer: "MNIST dataset",
+//     },
+//   ],
+// };
 
 export default function Game() {
   const [loading, setLoading] = useState(true);
@@ -164,6 +164,7 @@ export default function Game() {
               category={cardsData[index].category}
               question={cardsData[index].question}
               answer={cardsData[index].answer}
+              proposedBy={cardsData[index].proposed_by}
               isOpen={isOpen}
               loading={loading}
             ></Card>
@@ -172,6 +173,7 @@ export default function Game() {
               category=""
               question=""
               answer=""
+              proposedBy=""
               isOpen={isOpen}
               loading={loading}
             ></Card>

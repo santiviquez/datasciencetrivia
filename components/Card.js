@@ -1,7 +1,15 @@
 import Image from "next/image";
-import { Flex, Text, Fade, Skeleton, SkeletonText } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Fade,
+  Skeleton,
+  SkeletonText,
+  Icon,
+} from "@chakra-ui/react";
+import { FaTwitter } from "react-icons/fa";
 
-const Card = ({ category, question, answer, isOpen, loading }) => {
+const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
   var categoryName = "ml";
   var patternImg = "/ml_pattern.svg";
   var color = "#72D0EA";
@@ -113,6 +121,18 @@ const Card = ({ category, question, answer, isOpen, loading }) => {
           </Skeleton>
         </Fade>
       </Flex>
+      {proposedBy ? (
+        <Flex
+          flexDirection="row"
+          padding={4}
+          fontSize="12px"
+          alignItems={"center"}
+        >
+          <Text pr={1}>{"Proposed by: "}</Text>
+          <Text pr={1}>{proposedBy}</Text>
+          <Icon as={FaTwitter} color="#1DA1F2"></Icon>
+        </Flex>
+      ) : null}
 
       <Flex
         flexDirection="column"
