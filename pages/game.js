@@ -9,11 +9,12 @@ import {
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
 import useMousetrap from "react-hook-mousetrap";
+
 import Card from "../components/Card";
 import Keymaps from "../components/Keymaps";
 import AccountMenu from "../components/AccountMenu";
-
 import { supabase } from "../utils/supabaseClient";
+import { useUser } from "../context/user";
 
 // const cards = {
 //   cards: [
@@ -48,6 +49,8 @@ import { supabase } from "../utils/supabaseClient";
 // };
 
 export default function Game() {
+  const { user } = useUser();
+  console.log(user);
   const [loading, setLoading] = useState(true);
   const [cardsData, setCardsData] = useState(null);
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -131,6 +134,7 @@ export default function Game() {
   useMousetrap("h", () => {
     setDificultyValue("hard");
   });
+
   return (
     <Flex
       direction="column"

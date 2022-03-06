@@ -72,6 +72,7 @@ const Section = () => {
                 I want this!
               </LinkOverlay>
             </Button>
+            <Button>Buy it</Button>
           </Flex>
           <Flex mt="4" alignItems="center">
             <Flex flexDir="row" width="100px" justifyContent="space-between">
