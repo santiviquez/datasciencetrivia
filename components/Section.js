@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Flex,
   Box,
@@ -7,7 +7,10 @@ import {
   Button,
   LinkOverlay,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { StarIcon } from "@chakra-ui/icons";
+
+import { useUser } from "../context/user";
 import Image from "next/image";
 import ml_card from "../public/ml_card-6.png";
 
@@ -15,6 +18,16 @@ const Section = () => {
   const onOpen = ({}) => {
     plausible("BuyNow");
   };
+  const router = useRouter();
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/game");
+    }
+  }, []);
+
+  console.log(user);
 
   return (
     <Flex width="100%" px={{ base: 5, lg: 40 }} pt={20}>
@@ -46,7 +59,7 @@ const Section = () => {
           </Text>
           <Text fontWeight="normal" fontSize="large" mt={8}>
             197 Q&A to practice the most common and challenging interview
-            questions. From Machine Learning, Deep Learnig and Statistics to
+            questions. From Machine Learning, Deep Learning and Statistics to
             History (because, why not?)
           </Text>
           <Flex justifyContent={{ base: "center", lg: "flex-start" }}>
@@ -72,7 +85,6 @@ const Section = () => {
                 I want this!
               </LinkOverlay>
             </Button>
-            <Button>Buy it</Button>
           </Flex>
           <Flex mt="4" alignItems="center">
             <Flex flexDir="row" width="100px" justifyContent="space-between">

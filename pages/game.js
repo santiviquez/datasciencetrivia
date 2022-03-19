@@ -16,50 +16,57 @@ import AccountMenu from "../components/AccountMenu";
 import { supabase } from "../utils/supabaseClient";
 import { useUser } from "../context/user";
 
-// const cards = {
-//   cards: [
-//     {
-//       id: "0",
-//       category: "machine learning",
-//       question: "What is ensemble learning?",
-//       answer:
-//         "Combining induvidual models together with the purpose of improving the predictive power of the model.",
-//     },
-//     {
-//       id: "1",
-//       category: "deep learning",
-//       question: "What is Adagrad?",
-//       answer:
-//         "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
-//     },
-//     {
-//       id: "2",
-//       category: "statistics",
-//       question: "What two parameters defined a normal distribution?",
-//       answer: "Its mean and its standard deviation.",
-//     },
-//     {
-//       id: "3",
-//       category: "history",
-//       question:
-//         "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
-//       answer: "MNIST dataset",
-//     },
-//   ],
-// };
+const freeCards = [
+  {
+    id: "0",
+    category: "ml",
+    question: "What is ensemble learning?",
+    answer:
+      "Combining induvidual models together with the purpose of improving the predictive power of the model.",
+  },
+  {
+    id: "1",
+    category: "dl",
+    question: "What is Adagrad?",
+    answer:
+      "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
+  },
+  {
+    id: "2",
+    category: "stats",
+    question: "What two parameters defined a normal distribution?",
+    answer: "Its mean and its standard deviation.",
+  },
+  {
+    id: "3",
+    category: "history",
+    question:
+      "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+    answer: "MNIST dataset",
+  },
+];
 
 export default function Game() {
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
   const [loading, setLoading] = useState(true);
   const [cardsData, setCardsData] = useState(null);
   const { isOpen, onToggle, onClose } = useDisclosure();
-  var [index, setIndex] = useState(null);
+  var [index, setIndex] = useState(0);
   const [dificulty, setDificulty] = useState([0, 0, 0]);
 
   useEffect(() => {
     getCardsData();
   }, []);
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  };
 
   async function getCardsData() {
     try {
@@ -69,8 +76,12 @@ export default function Game() {
       if (error && status !== 406) {
         throw error;
       }
-      if (data) {
+      if (data[0]) {
+        shuffleArray(data);
         setCardsData(data);
+        setIndex(0);
+      } else {
+        setCardsData(freeCards);
         setIndex(0);
       }
     } catch (error) {
