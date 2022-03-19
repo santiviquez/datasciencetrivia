@@ -5,6 +5,7 @@ import {
   IconButton,
   ButtonGroup,
   useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
@@ -161,7 +162,7 @@ export default function Game() {
     >
       <AccountMenu></AccountMenu>
 
-      <Flex flexDirection="column" alignItems="center" pt={4}>
+      <Flex flexDirection="column" alignItems="center">
         <Flex flexDirection="row">
           <IconButton
             onClick={(e) => previousCard()}
@@ -208,7 +209,7 @@ export default function Game() {
         <Flex flexDirection="row" pt="8">
           <Button onClick={onToggle}>Show Answer</Button>
         </Flex>
-        <ButtonGroup variant="ghost" spacing="4" pt="8">
+        <ButtonGroup variant="ghost" spacing="4" pt="6">
           <Button
             leftIcon={<BiHappy />}
             colorScheme="green"
