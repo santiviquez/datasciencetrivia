@@ -25,7 +25,7 @@ const App = () => {
       <Section></Section>
       <PeopleSection></PeopleSection>
       <FaqSection></FaqSection>
-      <Testimonials></Testimonials>
+      {/* <Testimonials></Testimonials> */}
       <AuthorSection></AuthorSection>
       <Footer></Footer>
     </Flex>
