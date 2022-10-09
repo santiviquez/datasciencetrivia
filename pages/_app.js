@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Script from "next/script";
 
 import { ChakraProvider } from "@chakra-ui/react";
 import customTheme from "../styles/theme";
@@ -6,17 +7,12 @@ import customTheme from "../styles/theme";
 function MyApp({ Component, pageProps }) {
   return (
     <>
+      <Script
+        defer
+        data-domain="datasciencetrivia.com"
+        src="https://plausible.io/js/plausible.js"
+      ></Script>
       <Head>
-        <script
-          async
-          defer
-          data-domain="datasciencetrivia.com,blog.datasciencetrivia.com"
-          src="https://plausible.io/js/plausible.outbound-links.js"
-        ></script>
-        {/* <script>
-          window.plausible = window.plausible || function(){" "}
-          {(window.plausible.q = window.plausible.q || []).push(arguments)}
-        </script> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* HTML Meta Tags */}
         <title>Data Science Trivia - Learn Data Science The Fun Way</title>

@@ -12,10 +12,6 @@ import Image from "next/image";
 import ml_card from "../public/ml_card-6.png";
 
 const Section = () => {
-  const onOpen = ({}) => {
-    plausible("BuyNow");
-  };
-
   return (
     <Flex width="100%" px={{ base: 5, lg: 40 }} pt={20}>
       <Flex
@@ -46,7 +42,7 @@ const Section = () => {
           </Text>
           <Text fontWeight="normal" fontSize="large" mt={8}>
             197 Q&A to practice the most common and challenging interview
-            questions. From Machine Learning, Deep Learnig and Statistics to
+            questions. From Machine Learning, Deep Learning and Statistics to
             History (because, why not?)
           </Text>
           <Flex justifyContent={{ base: "center", lg: "flex-start" }}>
@@ -66,7 +62,6 @@ const Section = () => {
                 bg: "#F6ABD6",
                 transform: "scale(0.95)",
               }}
-              onClick={onOpen}
             >
               <LinkOverlay href="https://santiviquez.gumroad.com/l/datasciencetrivia">
                 I want this!
@@ -82,7 +77,7 @@ const Section = () => {
               <StarIcon color="#fdce71"></StarIcon>
             </Flex>
             <Text pl="2" color="GrayText" fontWeight="semibold">
-              +370 happy customers!
+              +430 happy customers!
             </Text>
           </Flex>
         </Box>
