@@ -21,7 +21,7 @@ const App = () => {
       width="100%"
       pb="4"
     >
-      <Script src="https://gumroad.com/js/gumroad.js"></Script>
+      {/* <Script src="https://gumroad.com/js/gumroad.js"></Script> */}
       <Section></Section>
       <PeopleSection></PeopleSection>
       <FaqSection></FaqSection>
