@@ -1,5 +1,4 @@
 const fetcher = async (license_key) => {
-  console.log(license_key);
   const res = await fetch("https://api.gumroad.com/v2/licenses/verify", {
     method: "POST",
     body: new URLSearchParams({

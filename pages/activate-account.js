@@ -19,23 +19,31 @@ import { supabase } from "../utils/supabaseClient";
 import fetcher from "./api/gumroad";
 
 export default function Login() {
-  const { data } = useSWR(`584F52D7-D4BD4CFB-959CE3FD-05BFD712`, fetcher);
-  console.log(data);
-
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [licenseKey, setLicenseKey] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const handleLogin = async ({ email }) => {
+  const { data } = useSWR(licenseKey, fetcher);
+  const email = data?.purchase?.email;
+
+  const handleLogin = async ({ licenseKey }) => {
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signIn({ email });
+      if (data?.success) {
+        // setEmail(data?.purchase?.email);
+        if (email) {
+          const { error } = await supabase.auth.signIn({ email });
+        }
+      } else {
+        throw error;
+      }
       if (error) throw error;
     } catch (error) {
       console.log(error.error_description || error.message);
     } finally {
       setLoading(false);
-      setSuccessMessage("Check your email for the login link!");
+      setSuccessMessage(`Check ${email} for the login link!`);
+      setLicenseKey("");
     }
   };
 
@@ -67,13 +75,13 @@ export default function Login() {
           <Flex flexDirection="column" width="100%">
             <Formik
               initialValues={{
-                email: "",
+                licenseKey: "",
               }}
               onSubmit={handleLogin}
             >
               {(props) => (
                 <Form>
-                  <Field name="email" width="100%">
+                  {/* <Field name="email" width="100%">
                     {({ field, form }) => (
                       <FormControl isRequired pb={4}>
                         <FormLabel htmlFor="email">Email</FormLabel>
@@ -85,16 +93,18 @@ export default function Login() {
                         />
                       </FormControl>
                     )}
-                  </Field>
-                  <Field name="license-key" width="100%">
+                  </Field> */}
+                  <Field name="licenseKey" width="100%">
                     {({ field, form }) => (
                       <FormControl isRequired pb={4}>
                         <FormLabel htmlFor="text">License Key</FormLabel>
                         <Input
                           {...field}
                           type="text"
-                          id="license-key"
+                          id="licenseKey"
                           placeholder="1234ABCD-1234ABCD-1234ABCD-1234ABCD"
+                          onChange={(e) => setLicenseKey(e.target.value)}
+                          value={licenseKey.value}
                         />
                       </FormControl>
                     )}
@@ -102,7 +112,7 @@ export default function Login() {
                   <Button
                     type="submit"
                     width="100%"
-                    disabled={loading}
+                    disabled={loading || !email}
                     backgroundColor="#F6A0D1"
                     fontWeight="bold"
                     borderColor="black"
@@ -112,7 +122,7 @@ export default function Login() {
                       transform: "scale(0.95)",
                     }}
                   >
-                    <span>{loading ? "Loading" : "Send magic link"}</span>
+                    <span>{loading ? "Loading" : "Activate License"}</span>
                   </Button>
                 </Form>
               )}
