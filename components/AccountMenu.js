@@ -5,6 +5,7 @@ import {
   MenuItem,
   Button,
   HStack,
+  Text,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
@@ -33,7 +34,7 @@ const AccountMenu = () => {
       ) : null}
       <Menu>
         <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-          Account
+          {user.email}
         </MenuButton>
         <MenuList>
           <MenuItem>Download digital version</MenuItem>
