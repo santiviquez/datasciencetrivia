@@ -161,7 +161,11 @@ export default function Game() {
     >
       <AccountMenu></AccountMenu>
 
-      <Flex flexDirection="column" alignItems="center" paddingTop={12}>
+      <Flex
+        flexDirection="column"
+        alignItems="center"
+        paddingTop={[4, 4, 4, 12, 12]}
+      >
         <Flex flexDirection="row">
           <IconButton
             onClick={(e) => previousCard()}
@@ -170,7 +174,7 @@ export default function Game() {
             colorScheme="teal"
             variant="link"
             fontSize="25px"
-            pr="8"
+            pr={[2, 8]}
             isDisabled={index == 0 ? true : false}
           ></IconButton>
           {!loading ? (
@@ -200,14 +204,14 @@ export default function Game() {
             colorScheme="teal"
             variant="link"
             fontSize="25px"
-            pl="8"
+            pl={[2, 8]}
             isDisabled={index == cardsData?.length - 1 ? true : false}
           ></IconButton>
         </Flex>
         <Flex flexDirection="row" pt="8">
           <Button onClick={onToggle}>Show Answer</Button>
         </Flex>
-        <ButtonGroup variant="ghost" spacing="4" pt="6">
+        <ButtonGroup variant="ghost" spacing="4" pt={[4, 6]}>
           <Button
             leftIcon={<BiHappy />}
             colorScheme="green"

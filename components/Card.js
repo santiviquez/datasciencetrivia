@@ -53,14 +53,14 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
       <Flex
         direction="column"
         borderWidth="10px"
-        height="448px"
-        width="320px"
+        height={["400px", "448px"]}
+        width={["250px", "320px"]}
         borderColor="black"
       >
         <Flex
           flexDirection="row"
           width="100%"
-          height="100px"
+          height={["75px", "100px"]}
           borderBottomWidth="10px"
           borderColor="black"
         >
@@ -74,12 +74,12 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
             paddingRight={4}
           >
             {loading ? (
-              <Skeleton height="20px" />
+              <Skeleton height={["8px", "20px"]} />
             ) : (
               <Text
-                fontSize="25px"
+                fontSize={["14px", "25px"]}
                 fontFamily="Maven Pro"
-                lineHeight="7"
+                lineHeight={[1, 7]}
                 textTransform="uppercase"
               >
                 {categoryName}
@@ -115,26 +115,31 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
         </Flex>
         <Flex flexDirection="column" height="330px" maxHeight="330px">
           {loading ? (
-            <SkeletonText fontSize="16px" p={4} noOfLines={3} spacing="4" />
+            <SkeletonText
+              fontSize={["12px", "16px"]}
+              p={4}
+              noOfLines={3}
+              spacing="4"
+            />
           ) : (
             <Flex>
               {question.length < 105 ? (
                 <Text
                   padding={4}
-                  fontSize="20px"
+                  fontSize={["12px", "20px"]}
                   fontFamily="Maven Pro"
                   textTransform="uppercase"
-                  lineHeight="7"
+                  lineHeight={["16px", 7]}
                 >
                   {question}
                 </Text>
               ) : (
                 <Text
                   padding={4}
-                  fontSize="13px"
+                  fontSize={["12px", "13px"]}
                   fontFamily="Maven Pro"
                   textTransform="uppercase"
-                  lineHeight="7"
+                  lineHeight={["16px", 7]}
                 >
                   {question}
                 </Text>
@@ -143,7 +148,7 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
           )}
           <Fade in={isOpen} unmountOnExit={true}>
             <Skeleton isLoaded={!loading}>
-              <Text px={4} fontSize="16px" fontFamily="Poppins">
+              <Text px={4} fontSize={["12px", "16px"]} fontFamily="Poppins">
                 {answer}
               </Text>
             </Skeleton>

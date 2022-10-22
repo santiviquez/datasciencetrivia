@@ -15,7 +15,7 @@ const Keymaps = () => {
       fontSize="sm"
       display={{
         lg: "initial",
-        md: "initial",
+        md: "none",
         sm: "none",
         base: "none",
       }}
