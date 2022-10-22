@@ -8,7 +8,6 @@ import {
   Icon,
   Badge,
   VStack,
-  useRadio,
 } from "@chakra-ui/react";
 import { FaTwitter } from "react-icons/fa";
 
@@ -118,15 +117,29 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
           {loading ? (
             <SkeletonText fontSize="16px" p={4} noOfLines={3} spacing="4" />
           ) : (
-            <Text
-              padding={4}
-              fontSize="20px"
-              fontFamily="Maven Pro"
-              textTransform="uppercase"
-              lineHeight="7"
-            >
-              {question}
-            </Text>
+            <Flex>
+              {question.length < 105 ? (
+                <Text
+                  padding={4}
+                  fontSize="20px"
+                  fontFamily="Maven Pro"
+                  textTransform="uppercase"
+                  lineHeight="7"
+                >
+                  {question}
+                </Text>
+              ) : (
+                <Text
+                  padding={4}
+                  fontSize="13px"
+                  fontFamily="Maven Pro"
+                  textTransform="uppercase"
+                  lineHeight="7"
+                >
+                  {question}
+                </Text>
+              )}
+            </Flex>
           )}
           <Fade in={isOpen} unmountOnExit={true}>
             <Skeleton isLoaded={!loading}>
