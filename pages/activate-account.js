@@ -32,7 +32,9 @@ export default function Login() {
       if (data?.success) {
         // setEmail(data?.purchase?.email);
         if (email) {
-          const { error } = await supabase.auth.signIn({ email });
+          const { error } = await supabase.auth.signIn({
+            email,
+          });
         }
       } else {
         throw error;

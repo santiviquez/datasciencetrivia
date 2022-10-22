@@ -15,7 +15,7 @@
     "@fontsource/maven-pro": "^4.5.4",
     "@fontsource/poppins": "^4.5.2",
     "@stripe/stripe-js": "^1.24.0",
-    "@supabase/supabase-js": "^1.30.6",
+    "@supabase/supabase-js": "1.35.6",
     "formik": "^2.2.9",
     "framer-motion": "^4",
     "iframe-resizer-react": "^1.1.0",

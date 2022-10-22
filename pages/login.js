@@ -24,13 +24,20 @@ export default function Login() {
   const handleLogin = async ({ email }) => {
     try {
       setLoading(true);
-      const { error } = await supabase.auth.signIn({ email });
-      if (error) throw error;
+      const { error } = await supabase.auth.signIn(
+        { email },
+        { shouldCreateUser: false }
+      );
+      if (error) {
+        throw error;
+      } else {
+        setSuccessMessage("Check your email for the login link!");
+      }
     } catch (error) {
       console.log(error.error_description || error.message);
+      setSuccessMessage("There is no account with that email.");
     } finally {
       setLoading(false);
-      setSuccessMessage("Check your email for the login link!");
     }
   };
 

@@ -34,7 +34,7 @@ const AccountMenu = () => {
       ) : null}
       <Menu>
         <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-          {user.email}
+          {user?.email}
         </MenuButton>
         <MenuList>
           <MenuItem>Download digital version</MenuItem>
