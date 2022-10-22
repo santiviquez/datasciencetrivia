@@ -11,10 +11,12 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
+  Link,
 } from "@chakra-ui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 import { supabase } from "../utils/supabaseClient";
+import NextLink from "next/link";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
@@ -115,6 +117,15 @@ export default function Login() {
           >
             {successMessage}
           </Text>
+          <Flex>
+            <Text>
+              New user? Activate your license{" "}
+              <NextLink href="/activate-account" passHref>
+                <Link textDecor={"underline"}>here</Link>
+              </NextLink>
+              .
+            </Text>
+          </Flex>
         </VStack>
       </Container>
     </Flex>

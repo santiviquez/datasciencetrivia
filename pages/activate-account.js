@@ -11,9 +11,11 @@ import {
   FormLabel,
   FormErrorMessage,
   FormHelperText,
+  Link,
 } from "@chakra-ui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import useSWR from "swr";
+import NextLink from "next/link";
 
 import { supabase } from "../utils/supabaseClient";
 import fetcher from "./api/gumroad";
@@ -138,6 +140,9 @@ export default function Login() {
           >
             {successMessage}
           </Text>
+          <Flex>
+            <Text>Find your license key in your email receipt.</Text>
+          </Flex>
         </VStack>
       </Container>
     </Flex>
