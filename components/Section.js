@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Flex,
   Box,
@@ -7,7 +7,10 @@ import {
   Button,
   LinkOverlay,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { StarIcon } from "@chakra-ui/icons";
+
+import { useUser } from "../context/user";
 import Image from "next/image";
 import ml_card from "../public/ml_card-6.png";
 
