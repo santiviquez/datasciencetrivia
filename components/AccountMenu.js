@@ -31,16 +31,18 @@ const AccountMenu = () => {
         >
           Get Full Version
         </Button>
-      ) : null}
-      <Menu>
-        <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-          {user?.email}
-        </MenuButton>
-        <MenuList>
-          <MenuItem>Download digital version</MenuItem>
-          <MenuItem>Log out</MenuItem>
-        </MenuList>
-      </Menu>
+      ) : (
+        <Menu>
+          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            {user.email}
+          </MenuButton>
+
+          <MenuList>
+            <MenuItem>Download digital version</MenuItem>
+            <MenuItem>Log out</MenuItem>
+          </MenuList>
+        </Menu>
+      )}
     </HStack>
   );
 };
