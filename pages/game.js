@@ -49,7 +49,6 @@ const freeCards = [
 
 export default function Game() {
   const { user } = useUser();
-  // console.log(user);
   const [loading, setLoading] = useState(true);
   const [cardsData, setCardsData] = useState(null);
   const { isOpen, onToggle, onClose } = useDisclosure();
@@ -162,7 +161,7 @@ export default function Game() {
     >
       <AccountMenu></AccountMenu>
 
-      <Flex flexDirection="column" alignItems="center">
+      <Flex flexDirection="column" alignItems="center" paddingTop={12}>
         <Flex flexDirection="row">
           <IconButton
             onClick={(e) => previousCard()}
@@ -173,7 +172,6 @@ export default function Game() {
             fontSize="25px"
             pr="8"
             isDisabled={index == 0 ? true : false}
-            // _focus="none"
           ></IconButton>
           {!loading ? (
             <Card
@@ -183,7 +181,7 @@ export default function Game() {
               proposedBy={cardsData[index].proposed_by}
               isOpen={isOpen}
               loading={loading}
-            ></Card>
+            />
           ) : (
             <Card
               category=""
@@ -192,7 +190,7 @@ export default function Game() {
               proposedBy=""
               isOpen={isOpen}
               loading={loading}
-            ></Card>
+            />
           )}
 
           <IconButton
@@ -245,7 +243,7 @@ export default function Game() {
           </Button>
         </ButtonGroup>
       </Flex>
-      <Keymaps></Keymaps>
+      <Keymaps />
     </Flex>
   );
 }

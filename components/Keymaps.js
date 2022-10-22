@@ -7,7 +7,8 @@ const Keymaps = () => {
       borderRadius="8px"
       width="220px"
       position="sticky"
-      bottom={6}
+      bottom={12}
+      right={12}
       alignSelf="flex-end"
       p={6}
       color="GrayText"
