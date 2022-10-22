@@ -15,20 +15,6 @@ import Image from "next/image";
 import ml_card from "../public/ml_card-6.png";
 
 const Section = () => {
-  const onOpen = ({}) => {
-    plausible("BuyNow");
-  };
-  const router = useRouter();
-  const { user } = useUser();
-
-  useEffect(() => {
-    if (user) {
-      router.push("/game");
-    }
-  }, []);
-
-  console.log(user);
-
   return (
     <Flex width="100%" px={{ base: 5, lg: 40 }} pt={20}>
       <Flex
@@ -79,7 +65,6 @@ const Section = () => {
                 bg: "#F6ABD6",
                 transform: "scale(0.95)",
               }}
-              onClick={onOpen}
             >
               <LinkOverlay href="https://santiviquez.gumroad.com/l/datasciencetrivia">
                 I want this!
@@ -95,7 +80,7 @@ const Section = () => {
               <StarIcon color="#fdce71"></StarIcon>
             </Flex>
             <Text pl="2" color="GrayText" fontWeight="semibold">
-              +370 happy customers!
+              +430 happy customers!
             </Text>
           </Flex>
         </Box>
