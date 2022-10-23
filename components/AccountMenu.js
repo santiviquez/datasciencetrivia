@@ -5,8 +5,7 @@ import {
   MenuItem,
   Button,
   HStack,
-  Text,
-  Link,
+  LinkOverlay,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
