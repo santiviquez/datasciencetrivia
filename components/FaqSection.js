@@ -39,7 +39,7 @@ const FaqSection = () => (
         ></Faq>
         <Faq
           question="What do I get if I buy it?"
-          answer="A zip file with all the questions and answers in pdf, png, jpg, Anki format and a print ready file!"
+          answer="Access to datasciencetrivia.com and its +190 interactive trivia questions. Plus a zip file with all the questions and answers in pdf, png, jpg, and Anki format and a print-ready file!"
         ></Faq>
       </Box>
 
@@ -78,11 +78,11 @@ const FaqSection = () => (
       <Flex direction="column" width={{ base: "100%", lg: "60%" }}>
         <Faq
           question="Is there a physical version?"
-          answer="Not yet. I am working on this but it is quite expensive. However selling the digital version is how I kickstart the physical one."
+          answer="Not yet. Maybe someday but it is quite expensive. However, selling this version is how I kickstart the physical one."
         ></Faq>
         <Faq
           question="I want the game but right now I can't afford it."
-          answer="Don't worry, just reach out to me at twitter.com/santiviquez and I'll send you a free copy of the game."
+          answer="Don't worry, just reach out to me at twitter.com/santiviquez and I'll send you a free copy of the digital version."
         ></Faq>
         <Faq
           question="What's the refund policy?"

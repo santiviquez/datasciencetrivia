@@ -1,7 +1,7 @@
 import React from "react";
 import Script from "next/script";
-import { Button, Flex } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { Button, Flex } from "@chakra-ui/react";
 
 import Section from "../components/Section";
 import PeopleSection from "../components/PeopleSection";
