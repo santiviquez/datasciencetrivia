@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Box, Heading, Text, Avatar, Icon } from "@chakra-ui/react";
+import { Flex, Box, Heading, Text, Avatar, Icon, Link } from "@chakra-ui/react";
 import { FaTwitter } from "react-icons/fa";
 
 const AuthorSection = () => (
@@ -35,7 +35,7 @@ const AuthorSection = () => (
       <Avatar
         height="246px"
         width="246px"
-        src="/santiago_viquez.jpg"
+        src="/santiago_photo.jpg"
         alt="Santiago Viquez"
       />
 
@@ -59,11 +59,18 @@ const AuthorSection = () => (
           </a>
         </Flex>
         <Text mt={1} lineHeight="5">
-          I'm Santiago Víquez, a physicist turned data scientist. Creator of
-          Data Science Trivia a Q&A card game to learn key data science concepts
-          by playing. Over the last 4 years I've been working as a data
-          scientist at startups and 500 fortune companies. And a lot of what
-          I've learned is on those cards.
+          I'm{" "}
+          <Link
+            href="https://santiviquez.com/"
+            textDecor={"underline"}
+            isExternal
+          >
+            Santiago Víquez
+          </Link>
+          , a physicist turned data scientist. Creator of Data Science Trivia a
+          Q&A card game to learn key data science concepts by playing. Over the
+          last 4 years I've been working as a data scientist at startups and 500
+          fortune companies. And a lot of what I've learned is on those cards.
         </Text>
         <Text mt={4} lineHeight="5">
           I built data science trivia with two intentions in mind. Create a fun

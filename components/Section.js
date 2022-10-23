@@ -16,7 +16,7 @@ import ml_card from "../public/ml_card-6.png";
 
 const Section = () => {
   return (
-    <Flex width="100%" px={{ base: 5, lg: 40 }} pt={20}>
+    <Flex width="100%" px={{ base: 5, lg: 40 }} pt={10}>
       <Flex
         display={{ lg: "flex" }}
         width="100%"
@@ -66,9 +66,7 @@ const Section = () => {
                 transform: "scale(0.95)",
               }}
             >
-              <LinkOverlay href="https://santiviquez.gumroad.com/l/datasciencetrivia">
-                I want this!
-              </LinkOverlay>
+              <LinkOverlay href="#demo">Try an Excercise</LinkOverlay>
             </Button>
           </Flex>
           <Flex mt="4" alignItems="center">
@@ -90,6 +88,7 @@ const Section = () => {
           ml={{ md: 10 }}
           mt={{ base: 6 }}
         >
+          {/* <Game></Game> */}
           <Image
             height={444}
             width={317}

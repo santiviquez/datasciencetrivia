@@ -141,7 +141,13 @@ export default function Login() {
             {successMessage}
           </Text>
           <Flex>
-            <Text>Find your license key in your email receipt.</Text>
+            <Text>
+              Find your license key in your email receipt. No license? Get yours{" "}
+              <NextLink href="/#demo" passHref>
+                <Link textDecor={"underline"}>here</Link>
+              </NextLink>
+              .
+            </Text>
           </Flex>
         </VStack>
       </Container>

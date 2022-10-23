@@ -66,7 +66,7 @@ export default function Login() {
       >
         <VStack spacing="16px">
           <Heading alignSelf="self-start" pb={4}>
-            Login
+            Log in
           </Heading>
           <Flex flexDirection="column" width="100%">
             <Formik
