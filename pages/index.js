@@ -23,7 +23,7 @@ const App = () => {
       width="100%"
       pb="4"
     >
-      {/* <Script src="https://gumroad.com/js/gumroad.js"></Script> */}
+      <Script src="https://gumroad.com/js/gumroad.js"></Script>
       <Flex alignSelf={"end"} pt={8} px={{ base: 5, lg: 40 }}>
         <Button>
           <NextLink href="/login" passHref>
