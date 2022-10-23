@@ -67,8 +67,8 @@ const DemoSection = () => (
           Lifetime access
         </Heading>
         <Text pb={4}>
-          Practice your machine learning, deep learning, stats knowledge with
-          more than 190 questions crafted speciacially for you to ace your next
+          Practice your machine learning, deep learning and stats knowledge with
+          more than 190 questions speciacially crafted for you to ace your next
           interview.
         </Text>
         <Flex flexDirection="column" alignItems="center">

@@ -93,14 +93,15 @@ const Demo = () => {
           pr={[2, 8]}
           isDisabled={index == 0 ? true : false}
         ></IconButton>
-
-        <Card
-          category={freeCards[index].category}
-          question={freeCards[index].question}
-          answer={freeCards[index].answer}
-          proposedBy={freeCards[index].proposed_by}
-          isOpen={isOpen}
-        />
+        {freeCards ? (
+          <Card
+            category={freeCards[index].category}
+            question={freeCards[index].question}
+            answer={freeCards[index].answer}
+            proposedBy={freeCards[index].proposed_by}
+            isOpen={isOpen}
+          />
+        ) : null}
 
         <IconButton
           onClick={(e) => nextCard()}
