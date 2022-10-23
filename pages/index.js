@@ -10,8 +10,15 @@ import AuthorSection from "../components/AuthorSection";
 import Footer from "../components/Footer";
 import Testimonials from "../components/Testimonials";
 import DemoSection from "../components/DemoSection";
+import { useUser } from "../context/user";
+import { useRouter } from "next/router";
 
 const App = () => {
+  const { user } = useUser();
+  const router = useRouter();
+  if (user) {
+    router.push("/game");
+  }
   return (
     <Flex
       direction="column"
