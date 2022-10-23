@@ -20,7 +20,7 @@ const DemoSection = () => (
     direction="column"
     width="100%"
     px={{ base: 5, lg: 40 }}
-    pt={20}
+    pt={[20, 20]}
     id="demo"
   >
     <Flex
@@ -47,7 +47,7 @@ const DemoSection = () => (
 
     <Stack
       direction={["column", "row"]}
-      spacing="80px"
+      spacing={["10px", "80px"]}
       mt={10}
       alignSelf="center"
       //   width={"80%"}
@@ -56,7 +56,6 @@ const DemoSection = () => (
       <Demo></Demo>
       <Container
         marginTop={[4, 4, 4, 12, 12]}
-        // mt={20}
         borderRadius="10"
         border="1px"
         borderColor="gray.200"
@@ -64,7 +63,7 @@ const DemoSection = () => (
         // height="400px"
         // width="450px"
       >
-        <Heading alignSelf="self-start" pb={4}>
+        <Heading alignSelf="center" pb={4}>
           Lifetime access
         </Heading>
         <Text pb={4}>
@@ -102,10 +101,10 @@ const DemoSection = () => (
             }}
           >
             <LinkOverlay href="https://santiviquez.gumroad.com/l/datasciencetrivia">
-              Unlock full version
+              Unlock Full Version
             </LinkOverlay>
           </Button>
-          <List spacing={3} width="85%" pt={8}>
+          <List spacing={3} width={["100%", "85%"]} pt={8}>
             <ListItem>
               <ListIcon as={MdCheckCircle} color="#91DBCE" />
               Access to datasciencetrivia.com and it's +190 interactive trivia

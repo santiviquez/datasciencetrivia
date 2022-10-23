@@ -6,7 +6,7 @@ import dl_card from "../public/dl_card-9.png";
 import history_card from "../public/history_card-6.png";
 
 const FaqSection = () => (
-  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
+  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={[4, 20]}>
     <Flex
       display={{ lg: "flex" }}
       width="100%"

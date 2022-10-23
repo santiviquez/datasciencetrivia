@@ -6,8 +6,10 @@ import {
   Button,
   HStack,
   Text,
+  Link,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 
 import { useUser } from "../context/user";
 
@@ -29,7 +31,9 @@ const AccountMenu = () => {
           }}
           // onClick={onOpen}
         >
-          Get Full Version
+          <NextLink href="/#demo" passHref>
+            Unlock Full Version
+          </NextLink>
         </Button>
       ) : (
         <Menu>
@@ -38,7 +42,14 @@ const AccountMenu = () => {
           </MenuButton>
 
           <MenuList>
-            <MenuItem>Download digital version</MenuItem>
+            <MenuItem as="button">
+              <LinkOverlay
+                href="https://drive.google.com/file/d/1LlSd1oCOIvlh7qJnR5p0UOr4WmP3L1Wo/view?usp=sharing"
+                isExternal
+              >
+                Download digital version
+              </LinkOverlay>
+            </MenuItem>
             <MenuItem>Log out</MenuItem>
           </MenuList>
         </Menu>

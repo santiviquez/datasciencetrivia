@@ -5,7 +5,7 @@ import Image from "next/image";
 import stats_card from "../public/stats_card-37.png";
 
 const PeopleSection = () => (
-  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
+  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={[4, 20]}>
     <Flex
       display={{ lg: "flex" }}
       width="100%"

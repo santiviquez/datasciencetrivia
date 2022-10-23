@@ -3,7 +3,7 @@ import { Flex, Box, Heading, Text, Avatar, Icon, Link } from "@chakra-ui/react";
 import { FaTwitter } from "react-icons/fa";
 
 const AuthorSection = () => (
-  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={20}>
+  <Flex direction="column" width="100%" px={{ base: 5, lg: 40 }} pt={[4, 20]}>
     <Flex
       display={{ lg: "flex" }}
       width="100%"

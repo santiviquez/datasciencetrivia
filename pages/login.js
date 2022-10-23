@@ -62,7 +62,7 @@ export default function Login() {
         border="1px"
         borderColor="gray.200"
         p={8}
-        width="400px"
+        width={["100%", "400px"]}
       >
         <VStack spacing="16px">
           <Heading alignSelf="self-start" pb={4}>
