@@ -66,7 +66,7 @@ const Section = () => {
                 transform: "scale(0.95)",
               }}
             >
-              <LinkOverlay href="#demo">Try an Excercise</LinkOverlay>
+              <LinkOverlay href="#demo">Try an Exercise</LinkOverlay>
             </Button>
           </Flex>
           <Flex mt="4" alignItems="center">
