@@ -78,7 +78,7 @@ const Section = () => {
               <StarIcon color="#fdce71"></StarIcon>
             </Flex>
             <Text pl="2" color="GrayText" fontWeight="semibold">
-              +430 happy customers!
+              +436 happy customers!
             </Text>
           </Flex>
         </Box>
