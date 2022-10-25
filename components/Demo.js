@@ -17,7 +17,7 @@ const freeCards = [
     category: "ml",
     question: "What is ensemble learning?",
     answer:
-      "Combining induvidual models together with the purpose of improving the predictive power of the model.",
+      "Combining individual models together with the purpose of improving the predictive power of the model.",
   },
   {
     id: "1",
