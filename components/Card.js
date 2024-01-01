@@ -42,13 +42,13 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
   const { user } = useUser();
   return (
     <VStack>
-      {!user?.is_subscribed ? (
+      {/* {!user?.is_subscribed ? (
         <Badge alignSelf="start" colorScheme="purple">
           Free Sample
         </Badge>
       ) : (
         <Badge alignSelf="start">{""}</Badge>
-      )}
+      )} */}
 
       <Flex
         direction="column"
