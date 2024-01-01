@@ -17,7 +17,7 @@ const Author = () => {
         <Link href="https://twitter.com/santiviquez/" isExternal>
             <Icon as={FaSquareXTwitter} ml={2} color="black"></Icon>
         </Link>        
-        <Link href="https://twitter.com/santiviquez/" isExternal>
+        <Link href="https://www.linkedin.com/in/santiagoviquez/" isExternal>
         <Icon as={FaLinkedin} ml={2} color="black"></Icon>
         </Link>
         </Flex>
