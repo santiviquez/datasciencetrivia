@@ -1,24 +1,148 @@
-import React from "react";
-import Script from "next/script";
-import NextLink from "next/link";
-import { Button, Flex } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  Flex,
+  IconButton,
+  ButtonGroup,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { BiHappy, BiMeh, BiSad } from "react-icons/bi";
+import useMousetrap from "react-hook-mousetrap";
 
-import Section from "../components/Section";
-import PeopleSection from "../components/PeopleSection";
-import FaqSection from "../components/FaqSection";
-import AuthorSection from "../components/AuthorSection";
-import Footer from "../components/Footer";
-import Testimonials from "../components/Testimonials";
-import DemoSection from "../components/DemoSection";
-import { useUser } from "../context/user";
-import { useRouter } from "next/router";
+import Card from "../components/Card";
+import Keymaps from "../components/Keymaps";
+import Author from "../components/Author";
+import { supabase } from "../utils/supabaseClient";
 
-const App = () => {
-  const { user } = useUser();
-  const router = useRouter();
-  if (user) {
-    router.push("/game");
+const freeCards = [
+  {
+    id: "0",
+    category: "ml",
+    question: "What is ensemble learning?",
+    answer:
+      "Combining individual models together with the purpose of improving the predictive power of the model.",
+  },
+  {
+    id: "1",
+    category: "dl",
+    question: "What is Adagrad?",
+    answer:
+      "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
+  },
+  {
+    id: "2",
+    category: "stats",
+    question: "What two parameters defined a normal distribution?",
+    answer: "Its mean and its standard deviation.",
+  },
+  {
+    id: "3",
+    category: "history",
+    question:
+      "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+    answer: "MNIST dataset",
+  },
+];
+
+export default function Game() {
+  const [loading, setLoading] = useState(true);
+  const [cardsData, setCardsData] = useState(null);
+  const { isOpen, onToggle, onClose } = useDisclosure();
+  var [index, setIndex] = useState(0);
+  const [dificulty, setDificulty] = useState([0, 0, 0]);
+
+  useEffect(() => {
+    getCardsData();
+  }, []);
+
+  const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+  };
+
+  async function getCardsData() {
+    try {
+      setLoading(true);
+      let { data, error, status } = await supabase.from("cards").select("*");
+      if (error && status !== 406) {
+        throw error;
+      }
+      console.log(data)
+      if (data[0]) {
+        shuffleArray(data);
+        setCardsData(data);
+        setIndex(0);
+      } else {
+        setCardsData(freeCards);
+        setIndex(0);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
   }
+
+  function nextCard() {
+    if (index != cardsData.length - 1) {
+      setIndex(++index);
+      setDificulty([0, 0, 0]);
+      onClose();
+    }
+  }
+  function previousCard() {
+    if (index != 0) {
+      setIndex(--index);
+      setDificulty([0, 0, 0]);
+      onClose();
+    }
+  }
+
+  function setDificultyValue(e) {
+    switch (e) {
+      case "easy":
+        setDificulty([1, 0, 0]);
+        break;
+      case "neutral":
+        setDificulty([0, 1, 0]);
+        break;
+      case "hard":
+        setDificulty([0, 0, 1]);
+        break;
+      default:
+        setDificulty([0, 0, 0]);
+        break;
+    }
+  }
+
+  useMousetrap("right", () => {
+    nextCard();
+  });
+
+  useMousetrap("left", () => {
+    previousCard();
+  });
+
+  useMousetrap("a", () => {
+    onToggle();
+  });
+
+  useMousetrap("e", () => {
+    setDificultyValue("easy");
+  });
+
+  useMousetrap("n", () => {
+    setDificultyValue("neutral");
+  });
+
+  useMousetrap("h", () => {
+    setDificultyValue("hard");
+  });
+
   return (
     <Flex
       direction="column"
@@ -28,25 +152,99 @@ const App = () => {
       borderRightColor="#EFAAAD"
       borderBottomColor="#BB92D4"
       width="100%"
-      pb="4"
+      height="100vh"
+      p={6}
+      alignContent="center"
     >
-      {/* <Script src="https://gumroad.com/js/gumroad.js"></Script> */}
-      <Flex alignSelf={"end"} pt={8} px={{ base: 5, lg: 40 }}>
-        <Button>
-          <NextLink href="/login" passHref>
-            Log in
-          </NextLink>
-        </Button>
+
+      <Flex
+        flexDirection="column"
+        alignItems="center"
+        paddingTop={[4, 4, 4, 12, 12]}
+      >
+        <Flex flexDirection="row">
+          <IconButton
+            onClick={(e) => previousCard()}
+            size="lg"
+            icon={<FaChevronLeft />}
+            colorScheme="teal"
+            variant="link"
+            fontSize="25px"
+            pr={[2, 8]}
+            isDisabled={index == 0 ? true : false}
+          ></IconButton>
+          {!loading ? (
+            <Card
+              category={cardsData[index].category}
+              question={cardsData[index].question}
+              answer={cardsData[index].answer}
+              proposedBy={cardsData[index].proposed_by}
+              isOpen={isOpen}
+              loading={loading}
+            />
+          ) : (
+            <Card
+              category=""
+              question=""
+              answer=""
+              proposedBy=""
+              isOpen={isOpen}
+              loading={loading}
+            />
+          )}
+
+          <IconButton
+            onClick={(e) => nextCard()}
+            size="lg"
+            icon={<FaChevronRight />}
+            colorScheme="teal"
+            variant="link"
+            fontSize="25px"
+            pl={[2, 8]}
+            isDisabled={index == cardsData?.length - 1 ? true : false}
+          ></IconButton>
+        </Flex>
+        <Flex flexDirection="row" pt="8">
+          <Button onClick={onToggle}>Show Answer</Button>
+        </Flex>
+        <ButtonGroup variant="ghost" spacing="4" pt={[4, 6]}>
+          <Button
+            leftIcon={<BiHappy />}
+            colorScheme="green"
+            onClick={() => setDificultyValue("easy")}
+            variant={dificulty[0] == 1 ? "solid" : "ghost"}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Easy
+          </Button>
+          <Button
+            leftIcon={<BiMeh />}
+            colorScheme="blackAlpha"
+            onClick={() => setDificultyValue("neutral")}
+            variant={dificulty[1] == 1 ? "solid" : "ghost"}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Neutral
+          </Button>
+          <Button
+            leftIcon={<BiSad />}
+            colorScheme="red"
+            onClick={() => setDificultyValue("hard")}
+            variant={dificulty[2] == 1 ? "solid" : "ghost"}
+            _focus={{
+              boxShadow: "none",
+            }}
+          >
+            Hard
+          </Button>
+        </ButtonGroup>
       </Flex>
-      <Section></Section>
-      <PeopleSection></PeopleSection>
-      <DemoSection></DemoSection>
-      <FaqSection></FaqSection>
-      <Testimonials></Testimonials>
-      <AuthorSection></AuthorSection>
-      <Footer></Footer>
+      <Author/>
+      <Keymaps />
     </Flex>
   );
-};
-
-export default App;
+}

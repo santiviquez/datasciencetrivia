@@ -2,7 +2,6 @@ import Head from "next/head";
 import Script from "next/script";
 
 import { ChakraProvider } from "@chakra-ui/react";
-import UserProvider from "../context/user";
 import customTheme from "../styles/theme";
 import "@fontsource/maven-pro/900.css";
 import "@fontsource/poppins/400.css";
@@ -65,9 +64,7 @@ function MyApp({ Component, pageProps }) {
         />{" "}
       </Head>
       <ChakraProvider theme={customTheme}>
-        <UserProvider>
           <Component {...pageProps} />
-        </UserProvider>
       </ChakraProvider>
     </>
   );

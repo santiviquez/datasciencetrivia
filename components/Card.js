@@ -11,8 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { FaTwitter } from "react-icons/fa";
 
-import { useUser } from "../context/user";
-
 const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
   var categoryName = "ml";
   var patternImg = "/ml_pattern.svg";
@@ -39,17 +37,9 @@ const Card = ({ category, question, answer, proposedBy, isOpen, loading }) => {
       color = "#92DCCF";
       break;
   }
-  const { user } = useUser();
+
   return (
     <VStack>
-      {!user?.is_subscribed ? (
-        <Badge alignSelf="start" colorScheme="purple">
-          Free Sample
-        </Badge>
-      ) : (
-        <Badge alignSelf="start">{""}</Badge>
-      )}
-
       <Flex
         direction="column"
         borderWidth="10px"
