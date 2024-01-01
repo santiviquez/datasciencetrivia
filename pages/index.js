@@ -68,7 +68,6 @@ export default function Game() {
   async function getCardsData() {
     try {
       setLoading(true);
-      // const user = supabase.auth.user();
       let { data, error, status } = await supabase.from("cards").select("*");
       if (error && status !== 406) {
         throw error;
