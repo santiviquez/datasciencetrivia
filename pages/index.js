@@ -207,7 +207,7 @@ export default function Game() {
         <Flex flexDirection="row" pt="8">
           <Button onClick={onToggle}>Show Answer</Button>
         </Flex>
-        <ButtonGroup variant="ghost" spacing="4" pt={[4, 6]}>
+        <ButtonGroup variant="ghost" spacing="4" pt={[4, 6]} pb={[8, 8, 8, 8]}>
           <Button
             leftIcon={<BiHappy />}
             colorScheme="green"

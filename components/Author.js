@@ -4,7 +4,7 @@ import { FaLinkedin, FaSquareXTwitter } from "react-icons/fa6";
 const Author = () => {
   return (
     <Flex
-      position="absolute"
+      position={["relative", "absolute"]}
       bottom={12}
       alignSelf="center"
       p={6}
@@ -21,7 +21,7 @@ const Author = () => {
         <Icon as={FaLinkedin} ml={2} color="black"></Icon>
         </Link>
         </Flex>
-        <Text fontSize="11px" color="RGBA(0, 0, 0, 0.24)" pt={2}>To suggest new questions or report an error send me a dm.</Text>
+        <Text fontSize="11px" color="RGBA(0, 0, 0, 0.24)" textAlign="center" pt={2}>To suggest new questions or report an error send me a dm.</Text>
       </Flex>
     </Flex>
   );
