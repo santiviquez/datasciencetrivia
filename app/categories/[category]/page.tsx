@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Footer from "@/components/Footer";
+import Author from "@/components/Author";
 import { SITE, absoluteUrl } from "@/lib/site";
 import {
   CATEGORIES,
@@ -117,7 +117,7 @@ export default async function CategoryPage({
             ))}
           </div>
 
-          <Footer />
+          <div className="mt-16 border-t border-[var(--rule)] pt-8"><Author /></div>
         </main>
       </div>
     </>

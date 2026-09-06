@@ -6,58 +6,30 @@
   --color-stats: #92dccf;
   --color-history: #bb92d4;
 
-  --color-ink: #000000;
-  --color-paper: #ffffff;
-
   --font-display: var(--font-dela), ui-sans-serif, system-ui, sans-serif;
   --font-card: var(--font-maven), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --page-bg: #fbfbfa;
-  --page-fg: #111111;
-  --page-muted: #5c5c5c;
-  --page-rule: rgb(0 0 0 / 0.12);
-  --card-bg: #ffffff;
-  --card-ink: #000000;
+  --fg: #1a202c;
+  --muted: #718096;
+  --rule: rgb(0 0 0 / 0.1);
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --page-bg: #0e0e10;
-    --page-fg: #f2f2f2;
-    --page-muted: #a1a1a1;
-    --page-rule: rgb(255 255 255 / 0.16);
-    --card-bg: #ffffff;
-    --card-ink: #000000;
-    color-scheme: dark;
-  }
-}
-
-:root[data-theme="dark"] {
-  --page-bg: #0e0e10;
-  --page-fg: #f2f2f2;
-  --page-muted: #a1a1a1;
-  --page-rule: rgb(255 255 255 / 0.16);
-  --card-bg: #ffffff;
-  --card-ink: #000000;
-  color-scheme: dark;
-}
-
-html {
-  background: var(--page-bg);
+html,
+body {
+  background: #ffffff;
+  color: var(--fg);
 }
 
 body {
-  background: var(--page-bg);
-  color: var(--page-fg);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
 }
 
-/* The four-colour frame that has always framed the game. */
+/* The four-colour frame the game has always had. */
 .deck-frame {
   border-style: solid;
   border-top-color: var(--color-ml);
@@ -66,9 +38,8 @@ body {
   border-bottom-color: var(--color-history);
 }
 
-/* Visible, consistent focus ring for keyboard users. */
 :where(a, button, [tabindex]):focus-visible {
-  outline: 3px solid var(--color-ml);
+  outline: 2px solid #319795;
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -78,7 +49,6 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }

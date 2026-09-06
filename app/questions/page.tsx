@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import Footer from "@/components/Footer";
+import Author from "@/components/Author";
 import { SITE, absoluteUrl } from "@/lib/site";
 import {
   CATEGORIES,
@@ -96,7 +96,7 @@ export default function QuestionsIndexPage() {
             );
           })}
 
-          <Footer />
+          <div className="mt-16 border-t border-[var(--rule)] pt-8"><Author /></div>
         </main>
       </div>
     </>
