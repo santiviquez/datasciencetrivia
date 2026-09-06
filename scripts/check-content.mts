@@ -15,16 +15,17 @@ const raw = JSON.parse(
 const VALID_CATEGORIES = new Set(["ml", "dl", "stats", "history"]);
 
 function slugify(text: string): string {
-  return text
+  const base = text
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/['"“”’]/g, "")
+    .replace(/['"\u201c\u201d\u2019]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .split("-")
-    .slice(0, 12)
-    .join("-");
+    .replace(/^-+|-+$/g, "");
+  if (base.length <= 90) return base;
+  const cut = base.slice(0, 90);
+  const lastDash = cut.lastIndexOf("-");
+  return (lastDash > 40 ? cut.slice(0, lastDash) : cut).replace(/-+$/, "");
 }
 
 const errors: string[] = [];
@@ -50,7 +51,8 @@ raw.forEach((q, i) => {
     seenIds.set(id, i);
   }
   if (question) {
-    const slug = slugify(question);
+    // The stored slug is what routing uses; fall back to deriving one.
+    const slug = typeof q.slug === "string" && q.slug ? q.slug : slugify(question);
     if (!slug) errors.push(`${at}: question produces an empty slug`);
     if (seenSlugs.has(slug)) {
       errors.push(`${at}: duplicate slug "${slug}" (also at index ${seenSlugs.get(slug)}) — reword one of the questions`);

@@ -36,16 +36,17 @@ const CATEGORY_ALIASES: Record<string, string> = {
 };
 
 function slugify(text: string): string {
-  return text
+  const base = text
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/['"“”’]/g, "")
+    .replace(/['"\u201c\u201d\u2019]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .split("-")
-    .slice(0, 12)
-    .join("-");
+    .replace(/^-+|-+$/g, "");
+  if (base.length <= 90) return base;
+  const cut = base.slice(0, 90);
+  const lastDash = cut.lastIndexOf("-");
+  return (lastDash > 40 ? cut.slice(0, lastDash) : cut).replace(/-+$/, "");
 }
 
 /** Minimal RFC4180 CSV parser — handles quoted fields containing , and \n. */
@@ -100,6 +101,7 @@ const imported = records.flatMap((rec, i) => {
   const answer = pick(rec, ["answer", "Answer", "back", "response"]);
   const rawCategory = pick(rec, ["category", "Category", "topic", "deck"]).toLowerCase();
   const proposedBy = pick(rec, ["proposed_by", "proposedBy", "author", "credit"]);
+  const sourceId = pick(rec, ["id", "Id", "ID"]);
 
   if (!question || !answer) {
     skipped.push(`row ${i}: missing question or answer`);
@@ -112,7 +114,9 @@ const imported = records.flatMap((rec, i) => {
   }
 
   return [{
-    id: `${category}-${slugify(question).split("-").slice(0, 6).join("-")}`,
+    // Prefer the source's own id: it is unique and stable across re-imports,
+    // which keeps saved card ratings attached to the right question.
+    id: sourceId ? `${category}-${sourceId}` : `${category}-${slugify(question).slice(0, 40)}`,
     category,
     question,
     answer,
@@ -124,12 +128,42 @@ const existing = merge
   ? (JSON.parse(readFileSync(TARGET, "utf8")) as Record<string, string>[])
   : [];
 
-const seen = new Set(existing.map((q) => slugify(q.question)));
-const added = imported.filter((q) => {
-  const s = slugify(q.question);
-  if (seen.has(s)) return false;
-  seen.add(s);
-  return true;
+/**
+ * Slugs are the public URLs, so they must be unique. Two questions can share a
+ * slug when they differ only past the length limit; suffix rather than drop, so
+ * an import never silently loses a question.
+ */
+const takenSlugs = new Set(
+  existing.map((q) => (q.slug as string) || slugify(q.question)),
+);
+const takenIds = new Set(existing.map((q) => q.id));
+
+/** In merge mode an already-present question is skipped, so re-running is safe. */
+const existingQuestions = new Set(existing.map((q) => q.question));
+let alreadyPresent = 0;
+
+const added = imported.flatMap((q) => {
+  if (merge && existingQuestions.has(q.question)) {
+    alreadyPresent++;
+    return [];
+  }
+  let slug = slugify(q.question);
+  if (takenSlugs.has(slug)) {
+    let n = 2;
+    while (takenSlugs.has(`${slug}-${n}`)) n++;
+    slug = `${slug}-${n}`;
+  }
+  takenSlugs.add(slug);
+
+  let id = q.id;
+  if (takenIds.has(id)) {
+    let n = 2;
+    while (takenIds.has(`${id}-${n}`)) n++;
+    id = `${id}-${n}`;
+  }
+  takenIds.add(id);
+
+  return [{ ...q, id, slug }];
 });
 
 const result = [...existing, ...added];
@@ -137,8 +171,8 @@ writeFileSync(TARGET, `${JSON.stringify(result, null, 2)}\n`);
 
 console.log(`imported ${added.length} question${added.length === 1 ? "" : "s"}` +
   (merge ? ` (merged into ${existing.length} existing → ${result.length} total)` : ` (deck replaced → ${result.length} total)`));
-if (imported.length - added.length > 0) {
-  console.log(`skipped ${imported.length - added.length} duplicate slug(s)`);
+if (alreadyPresent > 0) {
+  console.log(`skipped ${alreadyPresent} question(s) already in the deck`);
 }
 if (skipped.length) {
   console.log(`skipped ${skipped.length} unusable row(s):`);

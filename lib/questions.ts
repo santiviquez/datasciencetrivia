@@ -47,6 +47,11 @@ export interface Question {
   answer: string;
   /** Optional X/Twitter handle of whoever suggested the question. */
   proposedBy?: string;
+  /**
+   * Stored so a URL survives rewording the question. Generated at import time;
+   * omit it and one is derived from the question text.
+   */
+  slug?: string;
 }
 
 export interface QuestionWithSlug extends Question {
@@ -58,21 +63,24 @@ export interface QuestionWithSlug extends Question {
  * human-readable permalink. `check:content` fails the build on collisions.
  */
 export function slugify(text: string): string {
-  return text
+  const base = text
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/['"“”’]/g, "")
+    .replace(/['"\u201c\u201d\u2019]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .split("-")
-    .slice(0, 12)
-    .join("-");
+    .replace(/^-+|-+$/g, "");
+
+  if (base.length <= 90) return base;
+  // Trim to the last whole word inside the limit so URLs stay readable.
+  const cut = base.slice(0, 90);
+  const lastDash = cut.lastIndexOf("-");
+  return (lastDash > 40 ? cut.slice(0, lastDash) : cut).replace(/-+$/, "");
 }
 
 const questions: QuestionWithSlug[] = (raw as Question[]).map((q) => ({
   ...q,
-  slug: slugify(q.question),
+  slug: q.slug ?? slugify(q.question),
 }));
 
 export function getAllQuestions(): QuestionWithSlug[] {
