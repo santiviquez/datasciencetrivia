@@ -82,18 +82,14 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
 
       {/* Same game, this card first and already revealed. */}
       <GameScreen questions={getAllQuestions()} focus={q}>
+        {/*
+          The card above already renders the question and its answer into the
+          HTML, so repeating them here would only duplicate the page's content.
+          What is left is internal linking.
+        */}
         <div className="mx-auto w-full max-w-4xl px-6 py-16">
-          <h2 className="font-[family-name:var(--font-display)] text-xl">{q.question}</h2>
-          <p className="mt-3 max-w-2xl leading-relaxed">{q.answer}</p>
-          <p className="mt-4 text-sm text-[var(--muted)]">
-            Category:{" "}
-            <Link href={`/categories/${category.slug}`} className="underline underline-offset-2">
-              {category.name}
-            </Link>
-          </p>
-
           {related.length > 0 ? (
-            <section aria-labelledby="related" className="mt-12">
+            <section aria-labelledby="related">
               <h2 id="related" className="font-[family-name:var(--font-display)] text-lg">
                 More {category.name} questions
               </h2>
