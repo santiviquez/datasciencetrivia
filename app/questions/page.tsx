@@ -10,12 +10,12 @@ import {
 } from "@/lib/questions";
 
 export const metadata: Metadata = {
-  title: `All ${QUESTION_COUNT} data science questions and answers`,
+  title: { absolute: `${QUESTION_COUNT} Data Science Interview Questions & Answers` },
   description: `Every question in the Data Science Trivia deck with its answer — ${QUESTION_COUNT} flashcards across machine learning, statistics, deep learning and the history of AI.`,
   alternates: { canonical: "/questions" },
   openGraph: {
     type: "website",
-    title: `All ${QUESTION_COUNT} data science questions and answers — ${SITE.name}`,
+    title: `Data Science Interview Questions and Answers — ${SITE.name}`,
     description: `Every question in the deck with its answer, grouped by category.`,
     url: absoluteUrl("/questions"),
   },
@@ -36,9 +36,25 @@ export default function QuestionsIndexPage() {
     ),
   };
 
+  const itemListLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "@id": absoluteUrl("/questions#list"),
+    name: `Data science interview questions (${QUESTION_COUNT})`,
+    numberOfItems: QUESTION_COUNT,
+    itemListElement: CATEGORY_KEYS.flatMap((key) =>
+      getQuestionsByCategory(key).map((q) => ({
+        "@type": "ListItem",
+        name: q.question,
+        url: absoluteUrl(`/questions/${q.slug}`),
+      })),
+    ).map((item, i) => ({ ...item, position: i + 1 })),
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListLd) }} />
 
       <div className="deck-frame min-h-screen border-[10px] sm:border-[15px]">
         <main id="main" className="mx-auto w-full max-w-3xl px-4 py-8 sm:py-12">
@@ -49,7 +65,7 @@ export default function QuestionsIndexPage() {
           </nav>
 
           <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl">
-            All {QUESTION_COUNT} questions
+            Data science interview questions and answers
           </h1>
           <p className="mt-3 text-sm text-[var(--page-muted)]">
             The complete deck with answers.{" "}

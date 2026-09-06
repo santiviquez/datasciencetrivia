@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import GameScreen from "@/components/GameScreen";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { SITE, CONTENT_UPDATED, absoluteUrl } from "@/lib/site";
 import {
   CATEGORIES,
   getAllQuestions,
@@ -61,8 +61,11 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
         text: q.answer,
         url: absoluteUrl(`/questions/${q.slug}`),
       },
-      author: { "@type": "Person", name: SITE.author.name },
+      author: { "@type": "Person", name: SITE.author.name, url: SITE.author.x },
+      dateModified: CONTENT_UPDATED,
     },
+    isPartOf: { "@type": "WebSite", "@id": absoluteUrl("/#website") },
+    about: { "@type": "Thing", name: category.name },
   };
 
   const breadcrumbs = {
@@ -88,6 +91,20 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
           What is left is internal linking.
         */}
         <div className="mx-auto w-full max-w-4xl px-6 py-16">
+          <nav aria-label="Breadcrumb" className="mb-10 text-xs text-[var(--muted)]">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li><Link href="/" className="underline underline-offset-2">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/questions" className="underline underline-offset-2">All questions</Link></li>
+              <li aria-hidden="true">/</li>
+              <li>
+                <Link href={`/categories/${category.slug}`} className="underline underline-offset-2">
+                  {category.name}
+                </Link>
+              </li>
+            </ol>
+          </nav>
+
           {related.length > 0 ? (
             <section aria-labelledby="related">
               <h2 id="related" className="font-[family-name:var(--font-display)] text-lg">

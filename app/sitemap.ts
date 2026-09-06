@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { SITE } from "@/lib/site";
+import { SITE, CONTENT_UPDATED } from "@/lib/site";
 import { CATEGORIES, CATEGORY_KEYS, getAllQuestions } from "@/lib/questions";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
+  const lastModified = new Date(CONTENT_UPDATED);
 
   return [
     { url: `${SITE.url}/`, lastModified, changeFrequency: "weekly", priority: 1 },

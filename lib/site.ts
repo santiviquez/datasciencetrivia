@@ -12,6 +12,13 @@ export const SITE = {
   },
 } as const;
 
+/**
+ * Date the question set last changed. Hard-coded rather than derived from the
+ * build, so <lastmod> doesn't claim every page changed on every deploy — which
+ * teaches crawlers to ignore the signal.
+ */
+export const CONTENT_UPDATED = "2026-09-06";
+
 /** Absolute URL helper — canonical + Open Graph tags must never be relative. */
 export function absoluteUrl(path = "/"): string {
   return new URL(path, SITE.url).toString();

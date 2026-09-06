@@ -30,7 +30,7 @@ export async function generateMetadata({
   const count = getQuestionsByCategory(key).length;
 
   return {
-    title: `${c.name} interview questions and answers`,
+    title: { absolute: `${count} ${c.name} Interview Questions & Answers` },
     description: `${count} ${c.name.toLowerCase()} flashcards with answers. ${c.blurb}`,
     alternates: { canonical: `/categories/${c.slug}` },
     openGraph: {
@@ -58,7 +58,7 @@ export default async function CategoryPage({
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": absoluteUrl(`/categories/${c.slug}#faq`),
-    name: `${c.name} questions and answers`,
+    name: `${c.name} interview questions and answers`,
     mainEntity: items.map((q) => ({
       "@type": "Question",
       name: q.question,
@@ -67,9 +67,20 @@ export default async function CategoryPage({
     })),
   };
 
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "All questions", item: absoluteUrl("/questions") },
+      { "@type": "ListItem", position: 3, name: c.name, item: absoluteUrl(`/categories/${c.slug}`) },
+    ],
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
 
       <div className="deck-frame min-h-screen border-[10px] sm:border-[15px]">
         <main id="main" className="mx-auto w-full max-w-3xl px-4 py-8 sm:py-12">
@@ -83,7 +94,7 @@ export default async function CategoryPage({
 
           <span className="mb-4 inline-block h-3 w-16" style={{ backgroundColor: c.color }} aria-hidden="true" />
           <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl">
-            {c.name}
+            {c.name} interview questions
           </h1>
           <p className="mt-3 max-w-xl text-sm text-[var(--page-muted)]">{c.blurb}</p>
           <p className="mt-2 text-sm text-[var(--page-muted)]">
