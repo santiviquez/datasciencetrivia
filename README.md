@@ -73,6 +73,10 @@ re-running is safe. Without `--merge` it replaces the deck.
 
 ## Development
 
+Needs Node 20.9 or newer. Vercel builds on Node 24, set in the project's
+settings rather than in `engines`, so the build version never changes on its
+own when a new major is released.
+
 ```bash
 npm install
 npm run dev          # http://localhost:3000
