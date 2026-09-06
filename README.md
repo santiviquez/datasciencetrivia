@@ -1,34 +1,102 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Data Science Trivia
 
-## Getting Started
+Flashcards for data science interviews and idle curiosity, at
+[datasciencetrivia.com](https://www.datasciencetrivia.com).
 
-First, run the development server:
+Machine learning, statistics, deep learning and the history of AI. Arrow keys to
+move, `A` to reveal, `E`/`N`/`H` to rate a card, `S` to reshuffle.
 
-```bash
-npm run dev
-# or
-yarn dev
+## Stack
+
+- **Next.js 16** (App Router) + **React 19** + **TypeScript**
+- **Tailwind CSS v4**
+- Deployed on **Vercel**
+
+Every route is prerendered at build time. There is no database, no API and no
+runtime data fetching.
+
+## Why there's no database
+
+The site originally read its cards from Supabase in the browser on every page
+load. When that project went away the fetch failed, an empty `catch` swallowed
+the error, and the page crashed for every visitor.
+
+The questions are now plain content in `content/questions.json`, committed to
+the repo and baked into static HTML at build time. That removes the outage
+class entirely, puts every answer in the HTML where search engines and AI
+crawlers can read it, and drops the API keys the browser used to ship.
+
+## Content
+
+All questions live in `content/questions.json`:
+
+```json
+{
+  "id": "ml-ensemble-learning",
+  "category": "ml",
+  "question": "What is ensemble learning?",
+  "answer": "Combining individual models together with the purpose of improving the predictive power of the model.",
+  "proposedBy": "optional-handle"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`category` must be one of `ml`, `dl`, `stats`, `history`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Each question's URL is derived from its text, so `What is ensemble learning?`
+becomes `/questions/what-is-ensemble-learning`. Rewording a question changes its
+URL — add a redirect in `next.config.ts` if the old one has traffic.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Adding questions
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Edit `content/questions.json`, then:
 
-## Learn More
+```bash
+npm run check:content
+```
 
-To learn more about Next.js, take a look at the following resources:
+This validates required fields, category names, and — importantly — that no two
+questions produce the same URL slug. It runs automatically before every build.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Importing a deck
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+To bring in an export (a Supabase table dump, an Anki export converted to CSV,
+or any array of objects with question/answer/category fields):
 
-## Deploy on Vercel
+```bash
+npm run import:questions -- path/to/export.csv --merge
+npm run check:content
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Accepts JSON or CSV. Maps common column names (`question`/`front`/`prompt`,
+`answer`/`back`, `category`/`topic`) and category aliases (`Machine Learning`
+→ `ml`). `--merge` appends only questions whose slug isn't already present, so
+re-running is safe. Without `--merge` it replaces the deck.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Development
+
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # content check + production build
+npm run lint
+npm run typecheck
+```
+
+## SEO
+
+- A static page per question at `/questions/<slug>` with `QAPage` structured data
+- Category hubs at `/categories/<slug>` with `FAQPage` structured data
+- A full deck listing at `/questions`
+- `sitemap.xml` and `robots.txt` generated from the content file
+- Per-question Open Graph images generated at build time
+
+## Security
+
+Response headers are set in `next.config.ts`: CSP, HSTS, `X-Frame-Options`,
+`X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`.
+
+`script-src` allows `'unsafe-inline'` because Next streams its RSC payload
+through inline script tags; a nonce would require rendering every page
+dynamically. The site takes no user input, reflects no query parameters, and has
+no auth, cookies or database, so there is no injection path that inline script
+would be the vector for.

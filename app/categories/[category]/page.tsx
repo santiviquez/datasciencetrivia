@@ -1,0 +1,125 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Footer from "@/components/Footer";
+import { SITE, absoluteUrl } from "@/lib/site";
+import {
+  CATEGORIES,
+  CATEGORY_KEYS,
+  getCategoryBySlug,
+  getQuestionsByCategory,
+} from "@/lib/questions";
+
+type Params = { category: string };
+
+export function generateStaticParams(): Params[] {
+  return CATEGORY_KEYS.map((k) => ({ category: CATEGORIES[k].slug }));
+}
+
+export const dynamicParams = false;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { category: slug } = await params;
+  const key = getCategoryBySlug(slug);
+  if (!key) return {};
+  const c = CATEGORIES[key];
+  const count = getQuestionsByCategory(key).length;
+
+  return {
+    title: `${c.name} interview questions and answers`,
+    description: `${count} ${c.name.toLowerCase()} flashcards with answers. ${c.blurb}`,
+    alternates: { canonical: `/categories/${c.slug}` },
+    openGraph: {
+      type: "website",
+      title: `${c.name} interview questions and answers — ${SITE.name}`,
+      description: c.blurb,
+      url: absoluteUrl(`/categories/${c.slug}`),
+    },
+  };
+}
+
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { category: slug } = await params;
+  const key = getCategoryBySlug(slug);
+  if (!key) notFound();
+
+  const c = CATEGORIES[key];
+  const items = getQuestionsByCategory(key);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": absoluteUrl(`/categories/${c.slug}#faq`),
+    name: `${c.name} questions and answers`,
+    mainEntity: items.map((q) => ({
+      "@type": "Question",
+      name: q.question,
+      url: absoluteUrl(`/questions/${q.slug}`),
+      acceptedAnswer: { "@type": "Answer", text: q.answer },
+    })),
+  };
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+      <div className="deck-frame min-h-screen border-[10px] sm:border-[15px]">
+        <main id="main" className="mx-auto w-full max-w-3xl px-4 py-8 sm:py-12">
+          <nav aria-label="Breadcrumb" className="mb-8 text-xs text-[var(--page-muted)]">
+            <ol className="flex flex-wrap items-center gap-2">
+              <li><Link href="/" className="underline underline-offset-2 hover:text-[var(--page-fg)]">Home</Link></li>
+              <li aria-hidden="true">/</li>
+              <li><Link href="/questions" className="underline underline-offset-2 hover:text-[var(--page-fg)]">All questions</Link></li>
+            </ol>
+          </nav>
+
+          <span className="mb-4 inline-block h-3 w-16" style={{ backgroundColor: c.color }} aria-hidden="true" />
+          <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl">
+            {c.name}
+          </h1>
+          <p className="mt-3 max-w-xl text-sm text-[var(--page-muted)]">{c.blurb}</p>
+          <p className="mt-2 text-sm text-[var(--page-muted)]">
+            {items.length} question{items.length === 1 ? "" : "s"} in this category.
+          </p>
+
+          <dl className="mt-10 space-y-6">
+            {items.map((q) => (
+              <div key={q.id} className="border-l-[3px] pl-4" style={{ borderColor: c.color }}>
+                <dt className="font-medium leading-snug">
+                  <Link href={`/questions/${q.slug}`} className="underline decoration-[var(--page-rule)] underline-offset-2 hover:decoration-current">
+                    {q.question}
+                  </Link>
+                </dt>
+                <dd className="mt-1.5 text-sm leading-relaxed text-[var(--page-muted)]">
+                  {q.answer}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="mt-12 flex flex-wrap gap-3">
+            {CATEGORY_KEYS.filter((k) => k !== key).map((k) => (
+              <Link
+                key={k}
+                href={`/categories/${CATEGORIES[k].slug}`}
+                className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
+              >
+                {CATEGORIES[k].name}
+              </Link>
+            ))}
+          </div>
+
+          <Footer />
+        </main>
+      </div>
+    </>
+  );
+}

@@ -1,0 +1,374 @@
+[
+  {
+    "id": "ml-ensemble-learning",
+    "category": "ml",
+    "question": "What is ensemble learning?",
+    "answer": "Combining individual models together with the purpose of improving the predictive power of the model."
+  },
+  {
+    "id": "ml-bias-variance",
+    "category": "ml",
+    "question": "What is the bias-variance tradeoff?",
+    "answer": "The tension between a model too simple to capture the signal (high bias, underfitting) and one so flexible it captures noise (high variance, overfitting). Lowering one typically raises the other."
+  },
+  {
+    "id": "ml-regularization",
+    "category": "ml",
+    "question": "What is regularization?",
+    "answer": "Adding a penalty on model complexity to the loss function so the model prefers simpler solutions and generalizes better to unseen data."
+  },
+  {
+    "id": "ml-l1-vs-l2",
+    "category": "ml",
+    "question": "What is the practical difference between L1 and L2 regularization?",
+    "answer": "L1 (Lasso) penalizes the absolute value of weights and can drive them exactly to zero, performing feature selection. L2 (Ridge) penalizes squared weights and shrinks them smoothly toward zero without eliminating them."
+  },
+  {
+    "id": "ml-cross-validation",
+    "category": "ml",
+    "question": "What is k-fold cross-validation?",
+    "answer": "Splitting the data into k folds, training on k-1 of them and validating on the held-out fold, repeated k times so every observation is used for validation exactly once. The scores are then averaged."
+  },
+  {
+    "id": "ml-curse-of-dimensionality",
+    "category": "ml",
+    "question": "What is the curse of dimensionality?",
+    "answer": "As the number of features grows, the volume of the space grows exponentially, data becomes sparse, and distances between points become less meaningful — so you need exponentially more data to learn reliably."
+  },
+  {
+    "id": "ml-precision-vs-recall",
+    "category": "ml",
+    "question": "What is the difference between precision and recall?",
+    "answer": "Precision is the fraction of predicted positives that are actually positive. Recall is the fraction of actual positives the model successfully found."
+  },
+  {
+    "id": "ml-f1-score",
+    "category": "ml",
+    "question": "What is the F1 score?",
+    "answer": "The harmonic mean of precision and recall. It is used when you need a single metric that balances both and punishes a model that sacrifices one for the other."
+  },
+  {
+    "id": "ml-roc-auc",
+    "category": "ml",
+    "question": "What does ROC AUC measure?",
+    "answer": "The probability that a randomly chosen positive example is ranked higher than a randomly chosen negative one. It evaluates ranking quality across all thresholds rather than at one cutoff."
+  },
+  {
+    "id": "ml-gradient-boosting",
+    "category": "ml",
+    "question": "How does gradient boosting work?",
+    "answer": "Models are trained sequentially, each new weak learner fitting the residual errors of the ensemble so far, and their predictions are added together to progressively reduce the loss."
+  },
+  {
+    "id": "ml-random-forest-vs-bagging",
+    "category": "ml",
+    "question": "What makes a random forest different from plain bagging of decision trees?",
+    "answer": "In addition to bootstrapping the rows, a random forest samples a random subset of features at each split. This decorrelates the trees and reduces variance further than bagging alone."
+  },
+  {
+    "id": "ml-data-leakage",
+    "category": "ml",
+    "question": "What is data leakage?",
+    "answer": "When information that would not be available at prediction time leaks into training, producing validation scores that look excellent but collapse in production."
+  },
+  {
+    "id": "ml-kmeans",
+    "category": "ml",
+    "question": "How does the k-means algorithm work?",
+    "answer": "It alternates between assigning each point to its nearest centroid and recomputing each centroid as the mean of its assigned points, repeating until the assignments stop changing."
+  },
+  {
+    "id": "ml-kernel-trick",
+    "category": "ml",
+    "question": "What is the kernel trick?",
+    "answer": "Computing inner products in a high-dimensional feature space using a kernel function, without ever explicitly transforming the data into that space."
+  },
+  {
+    "id": "ml-class-imbalance",
+    "category": "ml",
+    "question": "Why is accuracy a poor metric for imbalanced classification?",
+    "answer": "Because a model that always predicts the majority class can score very high while never identifying a single case of the minority class you actually care about."
+  },
+  {
+    "id": "ml-concept-drift",
+    "category": "ml",
+    "question": "What is concept drift?",
+    "answer": "When the statistical relationship between the inputs and the target changes over time, so a model that was accurate at training time silently degrades in production."
+  },
+  {
+    "id": "dl-adagrad",
+    "category": "dl",
+    "question": "What is Adagrad?",
+    "answer": "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate."
+  },
+  {
+    "id": "dl-backpropagation",
+    "category": "dl",
+    "question": "What is backpropagation?",
+    "answer": "The algorithm that computes the gradient of the loss with respect to every weight in the network by applying the chain rule backward from the output layer to the input layer."
+  },
+  {
+    "id": "dl-vanishing-gradient",
+    "category": "dl",
+    "question": "What is the vanishing gradient problem?",
+    "answer": "In deep networks, repeatedly multiplying small derivatives during backpropagation shrinks the gradient toward zero, so early layers receive almost no learning signal and train extremely slowly."
+  },
+  {
+    "id": "dl-dropout",
+    "category": "dl",
+    "question": "What is dropout?",
+    "answer": "A regularization technique that randomly deactivates a fraction of neurons during each training step, preventing the network from relying too heavily on any single unit."
+  },
+  {
+    "id": "dl-batch-normalization",
+    "category": "dl",
+    "question": "What does batch normalization do?",
+    "answer": "It normalizes the inputs of a layer across the mini-batch, then rescales and shifts them with learned parameters. This stabilizes training and allows higher learning rates."
+  },
+  {
+    "id": "dl-relu",
+    "category": "dl",
+    "question": "Why is ReLU preferred over sigmoid in hidden layers?",
+    "answer": "ReLU does not saturate for positive inputs, so it largely avoids the vanishing gradient problem, and it is far cheaper to compute than the exponential in a sigmoid."
+  },
+  {
+    "id": "dl-epoch-batch-iteration",
+    "category": "dl",
+    "question": "What is the difference between an epoch, a batch and an iteration?",
+    "answer": "An epoch is one full pass over the training set. A batch is the subset of samples processed before one weight update. An iteration is a single such update."
+  },
+  {
+    "id": "dl-transfer-learning",
+    "category": "dl",
+    "question": "What is transfer learning?",
+    "answer": "Reusing a model trained on a large source task as the starting point for a related target task, so you need far less data and compute than training from scratch."
+  },
+  {
+    "id": "dl-attention",
+    "category": "dl",
+    "question": "What is an attention mechanism?",
+    "answer": "A mechanism that lets a model weigh the relevance of every input position when producing each output, instead of compressing the whole input into one fixed-size vector."
+  },
+  {
+    "id": "dl-qkv",
+    "category": "dl",
+    "question": "In self-attention, what are the query, key and value?",
+    "answer": "Each token is projected into all three. The query is matched against every key to produce attention weights, and those weights are used to take a weighted sum of the values."
+  },
+  {
+    "id": "dl-convolution-weight-sharing",
+    "category": "dl",
+    "question": "Why do convolutional layers use weight sharing?",
+    "answer": "The same filter is slid across the whole input, so a feature can be detected anywhere in the image. This gives translation equivariance and drastically reduces the number of parameters."
+  },
+  {
+    "id": "dl-embedding",
+    "category": "dl",
+    "question": "What is an embedding?",
+    "answer": "A learned mapping of discrete items into a dense, lower-dimensional vector space where geometric closeness reflects semantic similarity."
+  },
+  {
+    "id": "dl-finetuning-vs-feature-extraction",
+    "category": "dl",
+    "question": "What is the difference between fine-tuning and feature extraction?",
+    "answer": "In feature extraction the pretrained weights are frozen and only a new head is trained. In fine-tuning some or all of the pretrained weights are also updated on the new task."
+  },
+  {
+    "id": "dl-gan",
+    "category": "dl",
+    "question": "How does a generative adversarial network work?",
+    "answer": "A generator creates synthetic samples while a discriminator tries to tell them from real ones. The two are trained against each other until the generator's output is indistinguishable from real data."
+  },
+  {
+    "id": "stats-normal-parameters",
+    "category": "stats",
+    "question": "What two parameters defined a normal distribution?",
+    "answer": "Its mean and its standard deviation."
+  },
+  {
+    "id": "stats-central-limit-theorem",
+    "category": "stats",
+    "question": "What does the Central Limit Theorem say?",
+    "answer": "The distribution of the sample mean approaches a normal distribution as the sample size grows, regardless of the shape of the underlying population distribution."
+  },
+  {
+    "id": "stats-p-value",
+    "category": "stats",
+    "question": "What is a p-value?",
+    "answer": "The probability of observing a result at least as extreme as the one measured, assuming the null hypothesis is true. It is not the probability that the null hypothesis is true."
+  },
+  {
+    "id": "stats-type-i-and-ii-errors",
+    "category": "stats",
+    "question": "What is the difference between a Type I and a Type II error?",
+    "answer": "A Type I error is rejecting a true null hypothesis (a false positive). A Type II error is failing to reject a false null hypothesis (a false negative)."
+  },
+  {
+    "id": "stats-confidence-interval",
+    "category": "stats",
+    "question": "What does a 95% confidence interval actually mean?",
+    "answer": "That if you repeated the experiment many times, about 95% of the intervals constructed this way would contain the true parameter. It is a statement about the procedure, not about one interval."
+  },
+  {
+    "id": "stats-correlation-causation",
+    "category": "stats",
+    "question": "Why does correlation not imply causation?",
+    "answer": "Two variables can move together because one causes the other, because a third confounding variable drives both, or purely by chance. Correlation alone cannot distinguish between these."
+  },
+  {
+    "id": "stats-bayes-theorem",
+    "category": "stats",
+    "question": "What does Bayes' theorem let you do?",
+    "answer": "Update the probability of a hypothesis in light of new evidence, by combining the prior probability with the likelihood of observing that evidence."
+  },
+  {
+    "id": "stats-law-of-large-numbers",
+    "category": "stats",
+    "question": "What is the law of large numbers?",
+    "answer": "As the number of independent trials increases, the sample average converges to the expected value of the underlying distribution."
+  },
+  {
+    "id": "stats-mean-median-skew",
+    "category": "stats",
+    "question": "In a right-skewed distribution, how do the mean and median compare?",
+    "answer": "The mean is pulled above the median by the long right tail, which is why the median is the more robust summary of a skewed distribution."
+  },
+  {
+    "id": "stats-standard-error",
+    "category": "stats",
+    "question": "What is the standard error of the mean?",
+    "answer": "The standard deviation of the sampling distribution of the mean, equal to the population standard deviation divided by the square root of the sample size."
+  },
+  {
+    "id": "stats-null-hypothesis",
+    "category": "stats",
+    "question": "What is the null hypothesis in an A/B test?",
+    "answer": "The assumption that there is no real difference between the variants, and that any observed difference is due to random chance."
+  },
+  {
+    "id": "stats-simpsons-paradox",
+    "category": "stats",
+    "question": "What is Simpson's paradox?",
+    "answer": "When a trend that appears in several groups of data reverses or disappears once the groups are combined, usually because of a confounding variable."
+  },
+  {
+    "id": "stats-population-vs-sample",
+    "category": "stats",
+    "question": "What is the difference between a population and a sample?",
+    "answer": "The population is the complete set of individuals you want to draw conclusions about. A sample is the subset you actually measure in order to make inferences about that population."
+  },
+  {
+    "id": "stats-variance-vs-sd",
+    "category": "stats",
+    "question": "What is the difference between variance and standard deviation?",
+    "answer": "Variance is the average squared deviation from the mean. The standard deviation is its square root, which returns the measure to the original units of the data."
+  },
+  {
+    "id": "stats-p-hacking",
+    "category": "stats",
+    "question": "What is p-hacking?",
+    "answer": "Repeatedly analysing data in different ways, or testing many hypotheses, until something crosses the significance threshold — which makes false positives far more likely than the stated p-value suggests."
+  },
+  {
+    "id": "stats-mle",
+    "category": "stats",
+    "question": "What is maximum likelihood estimation?",
+    "answer": "Choosing the parameter values that make the observed data most probable under the assumed statistical model."
+  },
+  {
+    "id": "hist-mnist",
+    "category": "history",
+    "question": "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+    "answer": "MNIST dataset"
+  },
+  {
+    "id": "hist-arthur-samuel",
+    "category": "history",
+    "question": "Who coined the term \"machine learning\", and while working on what?",
+    "answer": "Arthur Samuel, in 1959, while working on a checkers-playing program at IBM."
+  },
+  {
+    "id": "hist-perceptron",
+    "category": "history",
+    "question": "Who invented the perceptron, and in what year?",
+    "answer": "Frank Rosenblatt, in 1958."
+  },
+  {
+    "id": "hist-turing-test",
+    "category": "history",
+    "question": "In which 1950 paper did Alan Turing propose what became known as the Turing test?",
+    "answer": "\"Computing Machinery and Intelligence\", where he called it the imitation game."
+  },
+  {
+    "id": "hist-dartmouth",
+    "category": "history",
+    "question": "At which 1956 event was the term \"artificial intelligence\" introduced?",
+    "answer": "The Dartmouth Summer Research Project on Artificial Intelligence, organised by John McCarthy."
+  },
+  {
+    "id": "hist-alexnet",
+    "category": "history",
+    "question": "Which 2012 network won the ImageNet competition and triggered the deep learning boom?",
+    "answer": "AlexNet, by Alex Krizhevsky, Ilya Sutskever and Geoffrey Hinton."
+  },
+  {
+    "id": "hist-deep-blue",
+    "category": "history",
+    "question": "Which IBM system defeated world chess champion Garry Kasparov, and in what year?",
+    "answer": "Deep Blue, in 1997."
+  },
+  {
+    "id": "hist-alphago",
+    "category": "history",
+    "question": "Which DeepMind program beat Lee Sedol at Go in 2016?",
+    "answer": "AlphaGo, which won the five-game match 4-1."
+  },
+  {
+    "id": "hist-imagenet",
+    "category": "history",
+    "question": "Who led the creation of ImageNet?",
+    "answer": "Fei-Fei Li, whose team built a labelled dataset of millions of images that reshaped computer vision research."
+  },
+  {
+    "id": "hist-attention-paper",
+    "category": "history",
+    "question": "Which 2017 paper introduced the Transformer architecture?",
+    "answer": "\"Attention Is All You Need\", by Vaswani et al. at Google."
+  },
+  {
+    "id": "hist-eliza",
+    "category": "history",
+    "question": "What was ELIZA?",
+    "answer": "An early natural language program written by Joseph Weizenbaum in the 1960s that imitated a psychotherapist using simple pattern matching."
+  },
+  {
+    "id": "hist-backprop-1986",
+    "category": "history",
+    "question": "Which 1986 Nature paper popularised backpropagation for training neural networks?",
+    "answer": "\"Learning representations by back-propagating errors\", by Rumelhart, Hinton and Williams."
+  },
+  {
+    "id": "hist-lstm",
+    "category": "history",
+    "question": "Who introduced the LSTM, and in what year?",
+    "answer": "Sepp Hochreiter and Jürgen Schmidhuber, in 1997."
+  },
+  {
+    "id": "hist-ai-winter",
+    "category": "history",
+    "question": "What is meant by an \"AI winter\"?",
+    "answer": "A period of reduced funding and interest in artificial intelligence following unmet expectations, most notably in the 1970s and again in the late 1980s."
+  },
+  {
+    "id": "hist-random-forests",
+    "category": "history",
+    "question": "Who introduced random forests?",
+    "answer": "Leo Breiman, in his 2001 paper of the same name."
+  },
+  {
+    "id": "hist-iris-dataset",
+    "category": "history",
+    "question": "Which statistician popularised the Iris flower dataset still used in teaching today?",
+    "answer": "Ronald A. Fisher, who used it in 1936 to demonstrate linear discriminant analysis. The measurements were collected by botanist Edgar Anderson."
+  }
+]
