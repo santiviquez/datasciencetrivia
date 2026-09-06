@@ -36,15 +36,14 @@ All questions live in `content/questions.json`:
   "category": "ml",
   "question": "What is ensemble learning?",
   "answer": "Combining individual models together with the purpose of improving the predictive power of the model.",
-  "proposedBy": "optional-handle"
+  "slug": "what-is-ensemble-learning",
+  "proposedBy": "@optional_handle"
 }
 ```
 
-`category` must be one of `ml`, `dl`, `stats`, `history`.
-
-Each question's URL is derived from its text, so `What is ensemble learning?`
-becomes `/questions/what-is-ensemble-learning`. Rewording a question changes its
-URL — add a redirect in `next.config.ts` if the old one has traffic.
+`category` must be one of `ml`, `dl`, `stats`, `history`. `slug` is the page's
+URL and is written once at import time, so rewording a question does not break
+its link. Omit it and one is derived from the question text.
 
 ### Adding questions
 
@@ -55,7 +54,7 @@ npm run check:content
 ```
 
 This validates required fields, category names, and — importantly — that no two
-questions produce the same URL slug. It runs automatically before every build.
+questions share a URL slug. It runs automatically before every build.
 
 ### Importing a deck
 

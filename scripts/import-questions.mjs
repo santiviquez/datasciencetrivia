@@ -1,12 +1,14 @@
 /**
  * Import a question deck into content/questions.json.
  *
+ * Plain JavaScript on purpose — it runs on whatever Node is available.
+ *
  * Written for the day the original Supabase deck comes back. It accepts the
  * shapes that export tool actually produces — a Supabase table export (JSON or
  * CSV), or any array of objects with question/answer/category fields — and
  * normalises them into the repo's content format.
  *
- *   node --experimental-strip-types scripts/import-questions.mts <file> [--merge]
+ *   node scripts/import-questions.mjs <file> [--merge]
  *
  * Default behaviour replaces the deck. --merge keeps the existing questions and
  * appends only the ones whose slug isn't already present, so re-running an
@@ -28,14 +30,14 @@ if (!file) {
 }
 
 /** Category aliases seen across the old exports and the current schema. */
-const CATEGORY_ALIASES: Record<string, string> = {
+const CATEGORY_ALIASES = {
   ml: "ml", "machine learning": "ml", "machine-learning": "ml",
   dl: "dl", "deep learning": "dl", "deep-learning": "dl",
   stats: "stats", statistics: "stats", stat: "stats",
   history: "history", hist: "history",
 };
 
-function slugify(text: string): string {
+function slugify(text) {
   const base = text
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -50,9 +52,9 @@ function slugify(text: string): string {
 }
 
 /** Minimal RFC4180 CSV parser — handles quoted fields containing , and \n. */
-function parseCsv(text: string): Record<string, string>[] {
-  const rows: string[][] = [];
-  let row: string[] = [];
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
   let field = "";
   let quoted = false;
 
@@ -78,7 +80,7 @@ function parseCsv(text: string): Record<string, string>[] {
 }
 
 const rawText = readFileSync(file, "utf8");
-const records: Record<string, unknown>[] = file.endsWith(".csv")
+const records = file.endsWith(".csv")
   ? parseCsv(rawText)
   : JSON.parse(rawText);
 
@@ -87,7 +89,7 @@ if (!Array.isArray(records)) {
   process.exit(1);
 }
 
-function pick(rec: Record<string, unknown>, keys: string[]): string {
+function pick(rec, keys) {
   for (const k of keys) {
     const v = rec[k];
     if (typeof v === "string" && v.trim()) return v.trim();
@@ -95,7 +97,7 @@ function pick(rec: Record<string, unknown>, keys: string[]): string {
   return "";
 }
 
-const skipped: string[] = [];
+const skipped = [];
 const imported = records.flatMap((rec, i) => {
   const question = pick(rec, ["question", "Question", "front", "prompt"]);
   const answer = pick(rec, ["answer", "Answer", "back", "response"]);
@@ -124,9 +126,7 @@ const imported = records.flatMap((rec, i) => {
   }];
 });
 
-const existing = merge
-  ? (JSON.parse(readFileSync(TARGET, "utf8")) as Record<string, string>[])
-  : [];
+const existing = merge ? JSON.parse(readFileSync(TARGET, "utf8")) : [];
 
 /**
  * Slugs are the public URLs, so they must be unique. Two questions can share a
@@ -134,7 +134,7 @@ const existing = merge
  * an import never silently loses a question.
  */
 const takenSlugs = new Set(
-  existing.map((q) => (q.slug as string) || slugify(q.question)),
+  existing.map((q) => q.slug || slugify(q.question)),
 );
 const takenIds = new Set(existing.map((q) => q.id));
 
