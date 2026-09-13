@@ -3,8 +3,8 @@
 Flashcards for data science interviews and idle curiosity, at
 [datasciencetrivia.com](https://www.datasciencetrivia.com).
 
-Machine learning, statistics, deep learning and the history of AI. Arrow keys to
-move, `A` to reveal, `E`/`N`/`H` to rate a card, `S` to reshuffle.
+Machine learning, statistics, deep learning, LLMs and the history of AI. Arrow
+keys to move, `A` to reveal, `E`/`N`/`H` to rate a card, `S` to reshuffle.
 
 ## Stack
 
@@ -41,9 +41,9 @@ All questions live in `content/questions.json`:
 }
 ```
 
-`category` must be one of `ml`, `dl`, `stats`, `history`. `slug` is the page's
-URL and is written once at import time, so rewording a question does not break
-its link. Omit it and one is derived from the question text.
+`category` must be one of `ml`, `dl`, `genai`, `stats`, `history`. `slug` is the
+page's URL and is written once at import time, so rewording a question does not
+break its link. Omit it and one is derived from the question text.
 
 ### Adding questions
 

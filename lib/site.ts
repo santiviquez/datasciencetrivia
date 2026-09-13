@@ -3,7 +3,7 @@ export const SITE = {
   url: "https://www.datasciencetrivia.com",
   tagline: "Learn Data Science The Fun Way",
   description:
-    "Free data science flashcards. Test your knowledge and prepare for interviews with questions on machine learning, statistics, deep learning and the history of AI.",
+    "Free data science flashcards. Test your knowledge and prepare for interviews with questions on machine learning, statistics, deep learning, LLMs and the history of AI.",
   author: {
     name: "Santiago Víquez",
     handle: "santiviquez",
@@ -18,7 +18,7 @@ export const SITE = {
  * build, so <lastmod> doesn't claim every page changed on every deploy — which
  * teaches crawlers to ignore the signal.
  */
-export const CONTENT_UPDATED = "2026-09-06";
+export const CONTENT_UPDATED = "2026-09-13";
 
 /**
  * Date /about last changed. Tracked separately from the deck so neither date

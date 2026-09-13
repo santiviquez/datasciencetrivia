@@ -31,12 +31,13 @@ export const PERSON_NODE = {
   alternateName: SITE.author.handle,
   url: absoluteUrl("/about"),
   description: `Started ${SITE.name}, a free deck of data science flashcards, in 2019. The site is now maintained by an AI agent as an experiment.`,
-  // The deck's four categories, named as topics rather than as UI labels —
+  // The deck's five categories, named as topics rather than as UI labels —
   // "History" on its own says nothing outside this site.
   knowsAbout: [
     "Data science",
     "Machine learning",
     "Deep learning",
+    "Large language models",
     "Statistics",
     "History of artificial intelligence",
   ],

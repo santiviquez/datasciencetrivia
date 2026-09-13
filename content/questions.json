@@ -1429,5 +1429,117 @@
     "answer": "True",
     "proposedBy": "@svpino",
     "slug": "a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values"
+  },
+  {
+    "id": "genai-1",
+    "category": "genai",
+    "question": "What do temperature, top-p and top-k control?",
+    "answer": "How the next token is sampled: temperature flattens or sharpens the distribution, top-k keeps the k likeliest tokens, top-p the smallest set whose mass reaches p. Near zero for extraction and code; raise it only when you want variety.",
+    "slug": "what-do-temperature-top-p-and-top-k-control"
+  },
+  {
+    "id": "genai-2",
+    "category": "genai",
+    "question": "When do you use RAG instead of fine-tuning?",
+    "answer": "RAG when the model lacks knowledge: facts that change, are private, or need a citation. Fine-tuning when it lacks behaviour: a format, a tone, a narrow task. An index is cheaper to update than weights, so reach for RAG first.",
+    "slug": "when-do-you-use-rag-instead-of-fine-tuning"
+  },
+  {
+    "id": "genai-3",
+    "category": "genai",
+    "question": "What are the tradeoffs in RAG chunk size?",
+    "answer": "Small chunks retrieve precisely but strip the context that qualifies a fact; large ones keep context but dilute the embedding and spend tokens. Start near a few hundred tokens with some overlap, split on document structure, then tune against an eval set.",
+    "slug": "what-are-the-tradeoffs-in-rag-chunk-size"
+  },
+  {
+    "id": "genai-4",
+    "category": "genai",
+    "question": "Why combine embeddings with keyword search?",
+    "answer": "Because they fail differently: embeddings match paraphrase but miss rare exact strings like error codes and part numbers, while BM25 matches those tokens and misses paraphrase. Hybrid search fuses both rankings, usually with a reranker on top.",
+    "slug": "why-combine-embeddings-with-keyword-search"
+  },
+  {
+    "id": "genai-5",
+    "category": "genai",
+    "question": "How do you evaluate a RAG system?",
+    "answer": "Retrieval and generation separately. Retrieval: recall@k and nDCG on labelled question-document pairs. Generation: faithfulness (every claim supported by the context), relevance and citations. Most bad answers are retrieval failures.",
+    "slug": "how-do-you-evaluate-a-rag-system"
+  },
+  {
+    "id": "genai-6",
+    "category": "genai",
+    "question": "What actually reduces hallucinations?",
+    "answer": "Grounding, not scolding: retrieval with citations, permission to answer that it does not know, tool calls for facts and arithmetic, and a verification pass. The model optimises for the likeliest next token, not for truth, so instructions alone will not.",
+    "slug": "what-actually-reduces-hallucinations"
+  },
+  {
+    "id": "genai-7",
+    "category": "genai",
+    "question": "Why is a bigger context window not always the answer?",
+    "answer": "Tokens cost money and latency, and accuracy sags for material buried mid-prompt. Retrieving the 2k tokens that matter usually beats pasting 200k. Long windows are for genuinely long documents; prompt caching makes a stable prefix cheaper, not free.",
+    "slug": "why-is-a-bigger-context-window-not-always-the-answer"
+  },
+  {
+    "id": "genai-8",
+    "category": "genai",
+    "question": "Prompt, system prompt, tools: what does each do?",
+    "answer": "The system prompt sets durable role, rules and output format; the user prompt carries the request; tool definitions are schemas the model can call so your code fetches data or acts. The model never runs a tool itself, your application does.",
+    "slug": "prompt-system-prompt-tools-what-does-each-do"
+  },
+  {
+    "id": "genai-9",
+    "category": "genai",
+    "question": "Why did transformers replace RNNs for most NLP tasks?",
+    "answer": "Self-attention lets every token weigh every other token in one parallel step, instead of pushing information down a recurrent chain, so long-range dependencies survive and training parallelises. The cost is attention quadratic in sequence length.",
+    "slug": "why-did-transformers-replace-rnns-for-most-nlp-tasks"
+  },
+  {
+    "id": "genai-10",
+    "category": "genai",
+    "question": "How does BERT differ from a GPT-style model?",
+    "answer": "BERT is an encoder: bidirectional, trained by masking tokens, so every position sees both sides, which suits classification and embeddings but cannot generate. GPT is a causal decoder trained to predict the next token, which is what enables generation.",
+    "slug": "how-does-bert-differ-from-a-gpt-style-model"
+  },
+  {
+    "id": "genai-11",
+    "category": "genai",
+    "question": "When should you build a workflow instead of an agent?",
+    "answer": "Whenever the steps are known ahead of time. A fixed sequence of model calls and code is cheaper, faster and testable, and you can see which step broke. An agent earns its loop only when the next action depends on intermediate results.",
+    "slug": "when-should-you-build-a-workflow-instead-of-an-agent"
+  },
+  {
+    "id": "genai-12",
+    "category": "genai",
+    "question": "What is an embedding?",
+    "answer": "A fixed-length vector for text, an image or audio, placed so similar meanings land near each other, which turns search into a nearest-neighbour lookup. Vectors only compare within one model, and closeness is not relevance, hence rerankers.",
+    "slug": "what-is-an-embedding"
+  },
+  {
+    "id": "genai-13",
+    "category": "genai",
+    "question": "When do few-shot examples beat zero-shot prompting?",
+    "answer": "When the output format or labelling rule is easier to show than to describe: examples let the model infer the pattern in context, with no weight updates. They cost tokens on every call and can bias style, so add them where an eval shows a gain.",
+    "slug": "when-do-few-shot-examples-beat-zero-shot-prompting"
+  },
+  {
+    "id": "genai-14",
+    "category": "genai",
+    "question": "What does RLHF change about a base model?",
+    "answer": "Behaviour, not knowledge. Supervised fine-tuning on demonstrations, then a reward model trained on human comparisons of response pairs, then policy optimisation against it with a KL penalty to stay near the base. DPO skips the reward model.",
+    "slug": "what-does-rlhf-change-about-a-base-model"
+  },
+  {
+    "id": "genai-15",
+    "category": "genai",
+    "question": "How does byte pair encoding tokenization work?",
+    "answer": "Text is cut into subword tokens from a fixed vocabulary; BPE builds that vocabulary from characters up, repeatedly merging the most frequent adjacent pair. So common words are one token, rare and non-English text cost more, and letters are invisible.",
+    "slug": "how-does-byte-pair-encoding-tokenization-work"
+  },
+  {
+    "id": "genai-16",
+    "category": "genai",
+    "question": "What is the KV cache, and why does it cap concurrency?",
+    "answer": "Attention keys and values for the prefix, cached per layer, so each new token attends over saved state instead of recomputing the sequence. The cache grows with batch size, sequence length and layers, so GPU memory rather than compute limits throughput.",
+    "slug": "what-is-the-kv-cache-and-why-does-it-cap-concurrency"
   }
 ]
