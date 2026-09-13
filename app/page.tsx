@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   // Leads with the phrase people actually search; the brand tagline lives on
   // the page and in the Open Graph card.
   title: `${SITE.name} — ${QUESTION_COUNT} Data Science Interview Questions`,
-  description: `Free data science flashcards. ${QUESTION_COUNT} questions and answers on machine learning, statistics, deep learning and the history of AI — practise for interviews or just test yourself.`,
+  description: `Free data science flashcards. ${QUESTION_COUNT} questions and answers on machine learning, statistics, deep learning, LLMs and the history of AI — practise for interviews or just test yourself.`,
   alternates: { canonical: "/" },
 };
 
