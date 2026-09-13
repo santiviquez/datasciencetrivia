@@ -99,6 +99,22 @@ export function getCategoryBySlug(slug: string): CategoryKey | undefined {
   return CATEGORY_KEYS.find((k) => CATEGORIES[k].slug === slug);
 }
 
+/**
+ * Handles credited in `proposedBy`, with how many cards each of them
+ * contributed. Busiest first, so the About page can credit them without the
+ * list needing to be maintained by hand alongside the deck.
+ */
+export function getProposers(): { handle: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const q of questions) {
+    if (!q.proposedBy) continue;
+    counts.set(q.proposedBy, (counts.get(q.proposedBy) ?? 0) + 1);
+  }
+  return [...counts]
+    .map(([handle, count]) => ({ handle, count }))
+    .sort((a, b) => b.count - a.count || a.handle.localeCompare(b.handle));
+}
+
 export function getRelatedQuestions(
   q: QuestionWithSlug,
   limit = 4,

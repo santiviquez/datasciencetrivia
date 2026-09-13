@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE, CONTENT_UPDATED } from "@/lib/site";
+import { SITE, CONTENT_UPDATED, ABOUT_UPDATED } from "@/lib/site";
 import { CATEGORIES, CATEGORY_KEYS, getAllQuestions } from "@/lib/questions";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -8,6 +8,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE.url}/`, lastModified, changeFrequency: "weekly", priority: 1 },
     { url: `${SITE.url}/questions`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+    {
+      url: `${SITE.url}/about`,
+      lastModified: new Date(ABOUT_UPDATED),
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
     ...CATEGORY_KEYS.map((k) => ({
       url: `${SITE.url}/categories/${CATEGORIES[k].slug}`,
       lastModified,

@@ -9,6 +9,7 @@ export const SITE = {
     handle: "santiviquez",
     x: "https://x.com/santiviquez",
     linkedin: "https://www.linkedin.com/in/santiagoviquez/",
+    github: "https://github.com/santiviquez",
   },
 } as const;
 
@@ -18,6 +19,12 @@ export const SITE = {
  * teaches crawlers to ignore the signal.
  */
 export const CONTENT_UPDATED = "2026-09-06";
+
+/**
+ * Date /about last changed. Tracked separately from the deck so neither date
+ * has to lie about the other when only one of them is edited.
+ */
+export const ABOUT_UPDATED = "2026-09-13";
 
 /** Absolute URL helper — canonical + Open Graph tags must never be relative. */
 export function absoluteUrl(path = "/"): string {
