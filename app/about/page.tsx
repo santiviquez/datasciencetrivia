@@ -96,7 +96,8 @@ export default function AboutPage() {
           <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
             Data Science Trivia is a free deck of {QUESTION_COUNT} flashcards on machine learning,
             statistics, deep learning and the history of AI. There is no account to make and nothing
-            to install: open the site and you get a card, press a key to see the answer.{" "}
+            to install: open the site and you get a card, reveal the answer, and decide whether you
+            knew it.{" "}
             <Link href="/" className="underline underline-offset-2">
               Play the deck
             </Link>{" "}
