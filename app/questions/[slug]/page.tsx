@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import GameScreen from "@/components/GameScreen";
 import { SITE, CONTENT_UPDATED, absoluteUrl } from "@/lib/site";
+import { SCHEMA_ID } from "@/lib/schema";
 import {
   CATEGORIES,
   getAllQuestions,
@@ -61,10 +62,17 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
         text: q.answer,
         url: absoluteUrl(`/questions/${q.slug}`),
       },
-      author: { "@type": "Person", name: SITE.author.name, url: SITE.author.x },
+      // Carries the same @id as the Person on /about, so all 197 answers are
+      // attributed to one author instead of 197 look-alike ones.
+      author: {
+        "@type": "Person",
+        "@id": SCHEMA_ID.person,
+        name: SITE.author.name,
+        url: absoluteUrl("/about"),
+      },
       dateModified: CONTENT_UPDATED,
     },
-    isPartOf: { "@type": "WebSite", "@id": absoluteUrl("/#website") },
+    isPartOf: { "@type": "WebSite", "@id": SCHEMA_ID.website },
     about: { "@type": "Thing", name: category.name },
   };
 

@@ -90,8 +90,18 @@ npm run typecheck
 - A static page per question at `/questions/<slug>` with `QAPage` structured data
 - Category hubs at `/categories/<slug>` with `FAQPage` structured data
 - A full deck listing at `/questions`
+- `/about` with the `Person` and `WebSite` nodes the rest of the site points at
 - `sitemap.xml` and `robots.txt` generated from the content file
 - Per-question Open Graph images generated at build time
+
+### Structured data
+
+`lib/schema.ts` holds the `Person` and `WebSite` nodes and their `@id`s. Pages
+reference them by `@id` rather than repeating them, so crawlers merge them into
+one author and one site instead of one of each per URL. **Those `@id` strings
+must not change** — they are the identity search engines accumulate signals
+against. The `Person` is anchored on `/about` because that is the page that
+describes it.
 
 ## Security
 
