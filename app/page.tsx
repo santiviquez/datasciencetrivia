@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import GameScreen from "@/components/GameScreen";
 import BelowFold from "@/components/BelowFold";
-import { SITE, absoluteUrl } from "@/lib/site";
+import { SITE, CONTENT_UPDATED, absoluteUrl } from "@/lib/site";
+import { PERSON_NODE, WEBSITE_NODE, SCHEMA_ID, ref } from "@/lib/schema";
 import { CATEGORIES, CATEGORY_KEYS, QUESTION_COUNT, getAllQuestions } from "@/lib/questions";
 
 export const metadata: Metadata = {
@@ -16,29 +17,23 @@ export default function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": absoluteUrl("/#website"),
-        url: absoluteUrl("/"),
-        name: SITE.name,
-        description: SITE.description,
-        inLanguage: "en",
-        publisher: { "@id": absoluteUrl("/#person") },
-      },
-      {
-        "@type": "Person",
-        "@id": absoluteUrl("/#person"),
-        name: SITE.author.name,
-        url: SITE.author.x,
-        sameAs: [SITE.author.x, SITE.author.linkedin],
-      },
+      WEBSITE_NODE,
+      PERSON_NODE,
       {
         "@type": "Quiz",
+        "@id": absoluteUrl("/#quiz"),
         name: `${SITE.name} — ${QUESTION_COUNT} data science questions`,
         description: SITE.description,
         url: absoluteUrl("/"),
         numberOfQuestions: QUESTION_COUNT,
         about: CATEGORY_KEYS.map((k) => ({ "@type": "Thing", name: CATEGORIES[k].name })),
+        isPartOf: ref(SCHEMA_ID.website),
+        author: ref(SCHEMA_ID.person),
+        publisher: ref(SCHEMA_ID.person),
+        dateModified: CONTENT_UPDATED,
+        inLanguage: "en",
+        isAccessibleForFree: true,
+        learningResourceType: "Flashcards",
       },
     ],
   };
