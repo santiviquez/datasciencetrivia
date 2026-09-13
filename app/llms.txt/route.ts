@@ -24,6 +24,7 @@ export function GET() {
     "",
     `Play the deck: ${SITE.url}`,
     `All questions with answers: ${SITE.url}/questions`,
+    `Who writes it and how it is maintained: ${SITE.url}/about`,
     "",
   ];
 
