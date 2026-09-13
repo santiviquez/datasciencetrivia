@@ -11,7 +11,7 @@ import {
   getQuestionsByCategory,
 } from "@/lib/questions";
 
-const DESCRIPTION = `Who writes Data Science Trivia and how the deck of ${QUESTION_COUNT} data science flashcards is maintained. A free, static question set by ${SITE.author.name}.`;
+const DESCRIPTION = `${SITE.author.name} started this deck of ${QUESTION_COUNT} data science flashcards in 2019. It is now looked after by an AI agent that ships a small improvement every week.`;
 
 export const metadata: Metadata = {
   title: "About",
@@ -94,10 +94,9 @@ export default function AboutPage() {
             About Data Science Trivia
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-            Data Science Trivia is a free deck of {QUESTION_COUNT} flashcards on machine learning,
-            statistics, deep learning and the history of AI. There is no account to make and nothing
-            to install: open the site and you get a card, reveal the answer, and decide whether you
-            knew it.{" "}
+            {QUESTION_COUNT} flashcards about machine learning, statistics, deep learning and the
+            history of AI. You get a card, you guess, you flip it over and see how you did. It&apos;s
+            free, and there&apos;s nothing to sign up for.{" "}
             <Link href="/" className="underline underline-offset-2">
               Play the deck
             </Link>{" "}
@@ -110,12 +109,16 @@ export default function AboutPage() {
 
           <section aria-labelledby="who" className="mt-12">
             <h2 id="who" className="font-[family-name:var(--font-card)] text-lg font-bold uppercase">
-              Who writes it
+              Who&apos;s behind it
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-              {SITE.author.name} writes the cards and builds the site. It is a personal project
-              rather than a company: one person choosing the questions, writing the answers and
-              deciding what is worth putting on a flashcard.
+              {SITE.author.name} made the first version in 2019 and has been adding cards to it ever
+              since. It has always been a side project, never a company.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
+              The new part is who does the work. As an experiment, the site is now maintained by an
+              AI agent that ships an improvement every week. Santiago still owns it and decides what
+              the deck should be. The agent writes the code.
             </p>
             <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-sm">
               {PROFILES.map((p) => (
@@ -136,7 +139,7 @@ export default function AboutPage() {
 
           <section aria-labelledby="deck" className="mt-12">
             <h2 id="deck" className="font-[family-name:var(--font-card)] text-lg font-bold uppercase">
-              What is in the deck
+              What&apos;s in the deck
             </h2>
             <ul className="mt-5 grid gap-3 sm:grid-cols-2">
               {CATEGORY_KEYS.map((key) => {
@@ -170,26 +173,25 @@ export default function AboutPage() {
               id="maintained"
               className="font-[family-name:var(--font-card)] text-lg font-bold uppercase"
             >
-              How the deck is maintained
+              Under the hood
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-              There is no database and nothing is fetched while you read. Every card lives in one
-              file, <Code>content/questions.json</Code>, and is rendered into static HTML when the
-              site is built — so the answer on the screen is the answer in the file, and there is no
-              service that can go down and take the deck with it.
+              All {QUESTION_COUNT} cards sit in one file, <Code>content/questions.json</Code>. The
+              site is built straight from it, so every page here is plain static HTML. No database,
+              no loading spinner.
             </p>
             <ul className="mt-5 space-y-3 text-sm leading-relaxed text-[var(--muted)]">
               <li className="border-l-[3px] border-[var(--rule)] pl-4">
-                Each card&apos;s URL is written once and stored with it, so rewording a question
-                never breaks the link to it.
+                A card&apos;s URL is set once and kept, so a question can be reworded without
+                breaking links to it.
               </li>
               <li className="border-l-[3px] border-[var(--rule)] pl-4">
-                A check runs before every build: required fields, a valid category, and no two cards
-                claiming the same URL.
+                A script runs before each build and complains about missing fields, made-up
+                categories, or two cards claiming the same URL.
               </li>
               <li className="border-l-[3px] border-[var(--rule)] pl-4">
-                Questions suggested by other people keep a <Code>proposedBy</Code> handle in the same
-                file, and that credit is printed on the card itself.
+                When someone suggests a question, their handle goes in the file as{" "}
+                <Code>proposedBy</Code> and gets printed on the card.
               </li>
             </ul>
           </section>
@@ -203,7 +205,8 @@ export default function AboutPage() {
                 Suggested by
               </h2>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-                {proposedCount} of the {QUESTION_COUNT} cards came from someone else. Thank you:
+                {proposedCount} of the {QUESTION_COUNT} cards were someone else&apos;s idea. Thanks
+                to:
               </p>
               <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm">
                 {proposers.map((p) => (
@@ -228,11 +231,11 @@ export default function AboutPage() {
               id="contribute"
               className="font-[family-name:var(--font-card)] text-lg font-bold uppercase"
             >
-              Suggest a question or report an error
+              Found a mistake?
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-              Some answers are shorter than the truth and a few are probably wrong. If you spot one,
-              or you have a question the deck should ask,{" "}
+              Some answers are shorter than they should be and a few are probably wrong. If you find
+              one, or you think of a question the deck is missing,{" "}
               <a
                 href={SITE.author.x}
                 target="_blank"
@@ -241,7 +244,7 @@ export default function AboutPage() {
               >
                 send me a dm on X
               </a>
-              . Suggestions that make it in are credited by handle.
+              . If your question makes it into the deck, your handle goes on the card.
             </p>
           </section>
 
