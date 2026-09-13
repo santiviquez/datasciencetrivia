@@ -33,6 +33,8 @@ if (!file) {
 const CATEGORY_ALIASES = {
   ml: "ml", "machine learning": "ml", "machine-learning": "ml",
   dl: "dl", "deep learning": "dl", "deep-learning": "dl",
+  genai: "genai", "generative ai": "genai", "generative-ai": "genai",
+  llm: "genai", llms: "genai", "large language models": "genai",
   stats: "stats", statistics: "stats", stat: "stats",
   history: "history", hist: "history",
 };

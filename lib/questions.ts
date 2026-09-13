@@ -17,6 +17,14 @@ export const CATEGORIES = {
     blurb:
       "Neural networks from backpropagation to attention, and the tricks that make them trainable.",
   },
+  genai: {
+    slug: "generative-ai",
+    name: "Generative AI",
+    color: "#F2C86B",
+    pattern: "/genai_pattern.svg",
+    blurb:
+      "Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them.",
+  },
   stats: {
     slug: "statistics",
     name: "Statistics",

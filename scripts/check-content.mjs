@@ -15,7 +15,7 @@ const raw = JSON.parse(
   readFileSync(join(here, "..", "content", "questions.json"), "utf8"),
 );
 
-const VALID_CATEGORIES = new Set(["ml", "dl", "stats", "history"]);
+const VALID_CATEGORIES = new Set(["ml", "dl", "genai", "stats", "history"]);
 
 function slugify(text) {
   const base = text
