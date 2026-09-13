@@ -1,5 +1,4 @@
 import { SITE, absoluteUrl } from "./site";
-import { CATEGORIES, CATEGORY_KEYS } from "./questions";
 
 /**
  * Stable identifiers for the two entities every page on the site refers to.
@@ -32,7 +31,15 @@ export const PERSON_NODE = {
   alternateName: SITE.author.handle,
   url: absoluteUrl("/about"),
   description: `Writes and maintains ${SITE.name}, a free deck of data science flashcards.`,
-  knowsAbout: ["Data science", ...CATEGORY_KEYS.map((k) => CATEGORIES[k].name)],
+  // The deck's four categories, named as topics rather than as UI labels —
+  // "History" on its own says nothing outside this site.
+  knowsAbout: [
+    "Data science",
+    "Machine learning",
+    "Deep learning",
+    "Statistics",
+    "History of artificial intelligence",
+  ],
   sameAs: [SITE.author.x, SITE.author.linkedin, SITE.author.github],
 } as const;
 
