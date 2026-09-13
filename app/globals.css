@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ml: #72d0ea;
+  --color-dl: #efaaad;
+  --color-stats: #92dccf;
+  --color-history: #bb92d4;
+
+  --font-display: var(--font-dela), ui-sans-serif, system-ui, sans-serif;
+  --font-card: var(--font-maven), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --fg: #1a202c;
+  --muted: #718096;
+  --rule: rgb(0 0 0 / 0.1);
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #ffffff;
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The four-colour frame the game has always had. */
+.deck-frame {
+  border-style: solid;
+  border-top-color: var(--color-ml);
+  border-left-color: var(--color-stats);
+  border-right-color: var(--color-dl);
+  border-bottom-color: var(--color-history);
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid #319795;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,1433 @@
+[
+  {
+    "id": "ml-1",
+    "category": "ml",
+    "question": "Name three supervised learning algorithms.",
+    "answer": "Support Vector Machines, Regression, Naive Bayes, Decision Trees, Neural Networks, etc.",
+    "slug": "name-three-supervised-learning-algorithms"
+  },
+  {
+    "id": "ml-2",
+    "category": "ml",
+    "question": "Name three unsupervised learning algorithms.",
+    "answer": "Clustering, Anomaly Detection, Latent variable models, Autoencoders, etc.",
+    "slug": "name-three-unsupervised-learning-algorithms"
+  },
+  {
+    "id": "ml-3",
+    "category": "ml",
+    "question": "What is the type of machine learning algorithms used to draw inferences from labeled data?",
+    "answer": "Supervised Learning.",
+    "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data"
+  },
+  {
+    "id": "ml-4",
+    "category": "ml",
+    "question": "What is the type of machine learning algorithms used to draw inferences from data without labels?",
+    "answer": "Unsupervised Learning.",
+    "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without"
+  },
+  {
+    "id": "ml-5",
+    "category": "ml",
+    "question": "Graphical representation of the contrast between true positives and false positives rates at various thresholds.",
+    "answer": "ROC curve.",
+    "slug": "graphical-representation-of-the-contrast-between-true-positives-and-false-positives-rates"
+  },
+  {
+    "id": "ml-6",
+    "category": "ml",
+    "question": "Name three types of kernels in SVM.",
+    "answer": "Linear, polynomial, radical, sigmoid",
+    "slug": "name-three-types-of-kernels-in-svm"
+  },
+  {
+    "id": "ml-7",
+    "category": "ml",
+    "question": "What is pruning in a decision tree?",
+    "answer": "When we remove the sub-nodes of the decision tree.",
+    "slug": "what-is-pruning-in-a-decision-tree"
+  },
+  {
+    "id": "ml-8",
+    "category": "ml",
+    "question": "What is ensemble learning?",
+    "answer": "Combining individual models together with the purpose of improving the predictive power of the model.",
+    "slug": "what-is-ensemble-learning"
+  },
+  {
+    "id": "ml-9",
+    "category": "ml",
+    "question": "Would you use k-fold cross validation on time series data? Explain.",
+    "answer": "No, you should be aware to the fact that a time series is not randomly distributed data.",
+    "slug": "would-you-use-k-fold-cross-validation-on-time-series-data-explain"
+  },
+  {
+    "id": "ml-10",
+    "category": "ml",
+    "question": "What is the process of adding tuning parameters to a model to induce smoothness in order to prevent overfitting?",
+    "answer": "Regularization.",
+    "slug": "what-is-the-process-of-adding-tuning-parameters-to-a-model-to-induce-smoothness-in-order"
+  },
+  {
+    "id": "ml-11",
+    "category": "ml",
+    "question": "What is count encoding?",
+    "answer": "Count encoding replaces each categorical value with the number of times it appears in the dataset.",
+    "slug": "what-is-count-encoding"
+  },
+  {
+    "id": "ml-12",
+    "category": "ml",
+    "question": "What is one hot encoding?",
+    "answer": "A sparse vector in which: One element is set to 1 and all other elements are set to 0.",
+    "slug": "what-is-one-hot-encoding"
+  },
+  {
+    "id": "ml-13",
+    "category": "ml",
+    "question": "What is target encoding?",
+    "answer": "Target encoding replaces a categorical value with the average value of the target for that value of the feature.",
+    "slug": "what-is-target-encoding"
+  },
+  {
+    "id": "ml-14",
+    "category": "ml",
+    "question": "What is data leakage?",
+    "answer": "When information from outside the training dataset is used to create the model. For example, including any information from the validation or test sets into the model.",
+    "slug": "what-is-data-leakage"
+  },
+  {
+    "id": "ml-15",
+    "category": "ml",
+    "question": "Imagine you are applying a decision tree based model to a numerical dataset and you run a experiment where you scale the features. What model would give the best results the original or the scaleted one?",
+    "answer": "They should give the same result because tree-based models are scale invariant.",
+    "slug": "imagine-you-are-applying-a-decision-tree-based-model-to-a-numerical-dataset-and-you-run-a"
+  },
+  {
+    "id": "ml-16",
+    "category": "ml",
+    "question": "What is the difference between L1 (Lasso) and L2 (Ridge) regularization?",
+    "answer": "L1 penalizes the absolute magnitude of the coefficients while L2 penalizes the square of the coefficients.",
+    "slug": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization"
+  },
+  {
+    "id": "ml-17",
+    "category": "ml",
+    "question": "What is a confusion matrix?",
+    "answer": "A confusion matrix lets you see for a given model how your predictions compare with the actual results. It’s a 2x2 grid that has four parts: the number of true positives, false positives, true negatives, and false negatives.",
+    "slug": "what-is-a-confusion-matrix"
+  },
+  {
+    "id": "ml-18",
+    "category": "ml",
+    "question": "Confusion Matrix should be used for supervised or unsupervised learning problems?",
+    "answer": "Supervised.",
+    "slug": "confusion-matrix-should-be-used-for-supervised-or-unsupervised-learning-problems"
+  },
+  {
+    "id": "ml-19",
+    "category": "ml",
+    "question": "What is boosting when referring to machine learning algorithms?",
+    "answer": "Boosting refers to a whole class of machine learning algorithms that are built on taking a weak model and reusing it enough times so that it becomes a strong one.",
+    "slug": "what-is-boosting-when-referring-to-machine-learning-algorithms"
+  },
+  {
+    "id": "ml-20",
+    "category": "ml",
+    "question": "Explain what is bucketing.",
+    "answer": "Converting a (usually continuous) feature into multiple binary features called buckets or bins, typically based on value range.",
+    "slug": "explain-what-is-bucketing"
+  },
+  {
+    "id": "ml-21",
+    "category": "ml",
+    "question": "How many centroids a k-means algorithm with k = 3 would find?",
+    "answer": "3",
+    "slug": "how-many-centroids-a-k-means-algorithm-with-k-3-would-find"
+  },
+  {
+    "id": "ml-22",
+    "category": "ml",
+    "question": "What is the difference between a dense and a sparse feature?",
+    "answer": "A dense feature is one in which most values are non-zero in contrast with a sparse one where most values are zeros or empty.",
+    "slug": "what-is-the-difference-between-a-dense-and-a-sparse-feature"
+  },
+  {
+    "id": "ml-23",
+    "category": "ml",
+    "question": "What is downsampling in the context of class-imbalanced dataset?",
+    "answer": "Training on a disproportionately low percentage of over-represented class examples in order to improve model training on under-represented classes.",
+    "slug": "what-is-downsampling-in-the-context-of-class-imbalanced-dataset"
+  },
+  {
+    "id": "ml-24",
+    "category": "ml",
+    "question": "What is early stopping?",
+    "answer": "A method for regularization that involves ending model training before training loss finishes decreasing. In early stopping, you end model training when the loss on a validation dataset starts to increase.",
+    "slug": "what-is-early-stopping"
+  },
+  {
+    "id": "ml-25",
+    "category": "ml",
+    "question": "Logistic regression is useful for estimating continuous variables?",
+    "answer": "No.",
+    "slug": "logistic-regression-is-useful-for-estimating-continuous-variables"
+  },
+  {
+    "id": "ml-26",
+    "category": "ml",
+    "question": "Creating a model that matches the training data so closely that the model fails to make correct predictions on new data.",
+    "answer": "Overfitting.",
+    "slug": "creating-a-model-that-matches-the-training-data-so-closely-that-the-model-fails-to-make"
+  },
+  {
+    "id": "ml-27",
+    "category": "ml",
+    "question": "Explain the basic concept of random forest.",
+    "answer": "An ensemble approach to finding the decision tree that best fits the training data by creating many decision trees and then determining the \"average\" one.",
+    "slug": "explain-the-basic-concept-of-random-forest"
+  },
+  {
+    "id": "ml-28",
+    "category": "ml",
+    "question": "What does random means in the random forest term?",
+    "answer": "The \"random\" part of the term refers to building each of the decision trees from a random selection of features.",
+    "slug": "what-does-random-means-in-the-random-forest-term"
+  },
+  {
+    "id": "ml-29",
+    "category": "ml",
+    "question": "If someone ask you: Out of all the possible positive labels, how many did the model correctly identify? Which metric should you calculate?",
+    "answer": "Recall.",
+    "slug": "if-someone-ask-you-out-of-all-the-possible-positive-labels-how-many-did-the-model"
+  },
+  {
+    "id": "ml-30",
+    "category": "ml",
+    "question": "Producing a model with poor predictive ability because the model hasn't captured the complexity of the training data.",
+    "answer": "Underfitting.",
+    "slug": "producing-a-model-with-poor-predictive-ability-because-the-model-hasnt-captured-the"
+  },
+  {
+    "id": "ml-31",
+    "category": "ml",
+    "question": "What is precision?",
+    "answer": "Precision is the number of the correct predictions of the positive class divided by the all the predicted positive class. TP/(TP + FP)",
+    "slug": "what-is-precision"
+  },
+  {
+    "id": "ml-32",
+    "category": "ml",
+    "question": "What is recall?",
+    "answer": "Recall is the number of the correct predictions of the positive class divided by the number of predictions that should have been classified in the positive class. TP/(TP + FN)",
+    "slug": "what-is-recall"
+  },
+  {
+    "id": "ml-33",
+    "category": "ml",
+    "question": "What is F1-score?",
+    "answer": "Is a measure of a test's accuracy. F1-score is the harmonic mean of the precision and recall.",
+    "slug": "what-is-f1-score"
+  },
+  {
+    "id": "ml-34",
+    "category": "ml",
+    "question": "What is better to have a F1-score equals to 1 or to 0?",
+    "answer": "F1-score reaches its best value at 1 (perfect precision and recall).",
+    "slug": "what-is-better-to-have-a-f1-score-equals-to-1-or-to-0"
+  },
+  {
+    "id": "ml-35",
+    "category": "ml",
+    "question": "Which regularization technique penalizes the sum of absolute value of weights? L1 or L2?",
+    "answer": "L1.",
+    "slug": "which-regularization-technique-penalizes-the-sum-of-absolute-value-of-weights-l1-or-l2"
+  },
+  {
+    "id": "ml-36",
+    "category": "ml",
+    "question": "Which regularization technique penalizes the sum of square weights? L1 or L2?",
+    "answer": "L2.",
+    "slug": "which-regularization-technique-penalizes-the-sum-of-square-weights-l1-or-l2"
+  },
+  {
+    "id": "ml-37",
+    "category": "ml",
+    "question": "L1 regularization is also called?",
+    "answer": "Lasso or L1 norm.",
+    "slug": "l1-regularization-is-also-called"
+  },
+  {
+    "id": "ml-38",
+    "category": "ml",
+    "question": "L2 regularization is also called?",
+    "answer": "Ridge.",
+    "slug": "l2-regularization-is-also-called"
+  },
+  {
+    "id": "ml-39",
+    "category": "ml",
+    "question": "Can we have both L1 and L2 regularization components in a linear model?",
+    "answer": "Yes, it is called Elastic net regularization.",
+    "slug": "can-we-have-both-l1-and-l2-regularization-components-in-a-linear-model"
+  },
+  {
+    "id": "ml-40",
+    "category": "ml",
+    "question": "What is Elastic net regularization?",
+    "answer": "It is regularization technique that linearly combines L1 and L2 penalties.",
+    "slug": "what-is-elastic-net-regularization"
+  },
+  {
+    "id": "ml-41",
+    "category": "ml",
+    "question": "What is unsupervised learning?",
+    "answer": "Unsupervised learning aims to detect patterns in data where no labels are given.",
+    "slug": "what-is-unsupervised-learning"
+  },
+  {
+    "id": "ml-42",
+    "category": "ml",
+    "question": "Does feature selection tends to increase overfitting?",
+    "answer": "No. It actually could help to reduce overfitting.",
+    "slug": "does-feature-selection-tends-to-increase-overfitting"
+  },
+  {
+    "id": "ml-43",
+    "category": "ml",
+    "question": "Mean Squared Error, Root Mean Squared Error, Mean Absolute Error, R-squared are metrics for evaluation which type of models?",
+    "answer": "Regression models.",
+    "slug": "mean-squared-error-root-mean-squared-error-mean-absolute-error-r-squared-are-metrics-for"
+  },
+  {
+    "id": "ml-44",
+    "category": "ml",
+    "question": "Model simplification tends to decrease the bias and increase the variance which leads to underfitting. True or False?",
+    "answer": "False. Model simplification decreases the variance but increases the bias.",
+    "slug": "model-simplification-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to"
+  },
+  {
+    "id": "ml-45",
+    "category": "ml",
+    "question": "Model complexity tends to decrease the bias and increase the variance which leads to overfitting. True or False?",
+    "answer": "True.",
+    "slug": "model-complexity-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to"
+  },
+  {
+    "id": "ml-46",
+    "category": "ml",
+    "question": "Accuracy, Precision, Recall, F1 score, ... are metrics to evaluate which types of models?",
+    "answer": "Classification models.",
+    "slug": "accuracy-precision-recall-f1-score-are-metrics-to-evaluate-which-types-of-models"
+  },
+  {
+    "id": "ml-47",
+    "category": "ml",
+    "question": "Why is naive Bayes 'naive'?",
+    "answer": "Because it assumes that all of the features in a data set are equally important and independent.",
+    "slug": "why-is-naive-bayes-naive"
+  },
+  {
+    "id": "ml-48",
+    "category": "ml",
+    "question": "Is KNN a clustering algorithm?",
+    "answer": "No. It is and supervised learning method that could be used for classification and regression problems.",
+    "slug": "is-knn-a-clustering-algorithm"
+  },
+  {
+    "id": "ml-49",
+    "category": "ml",
+    "question": "How is random forest different from gradient boosting algorithm?",
+    "answer": "The fundamental difference is, random forest uses bagging technique to make predictions. GBM uses boosting techniques to make predictions.",
+    "slug": "how-is-random-forest-different-from-gradient-boosting-algorithm"
+  },
+  {
+    "id": "ml-50",
+    "category": "ml",
+    "question": "It is possible to design a Linear regression algorithm using a neural network?",
+    "answer": "Yes.",
+    "slug": "it-is-possible-to-design-a-linear-regression-algorithm-using-a-neural-network"
+  },
+  {
+    "id": "ml-51",
+    "category": "ml",
+    "question": "Which regularization would you use if your model is underfitting?",
+    "answer": "None, because regularization is used in case of overfitting.",
+    "slug": "which-regularization-would-you-use-if-your-model-is-underfitting"
+  },
+  {
+    "id": "ml-52",
+    "category": "ml",
+    "question": "Standardization of features is required before training a Logistic Regression?",
+    "answer": "No.",
+    "slug": "standardization-of-features-is-required-before-training-a-logistic-regression"
+  },
+  {
+    "id": "ml-53",
+    "category": "ml",
+    "question": "What is the difference between online and batch Learning?",
+    "answer": "Online: you would use the \"most recent\" sample at each iteration. Batch: Learning over groups of patterns.",
+    "slug": "what-is-the-difference-between-online-and-batch-learning"
+  },
+  {
+    "id": "ml-54",
+    "category": "ml",
+    "question": "Bagging stands for?",
+    "answer": "Bootstrap Aggregation.",
+    "slug": "bagging-stands-for"
+  },
+  {
+    "id": "ml-55",
+    "category": "ml",
+    "question": "What is the difference between boosting and bagging?",
+    "answer": "In bagging we take boostrap samples of the data (with replacement) and each sample trains a weak learner. And boosting uses all data to train each learner and then average the result using a weighted average approach.",
+    "slug": "what-is-the-difference-between-boosting-and-bagging"
+  },
+  {
+    "id": "ml-56",
+    "category": "ml",
+    "question": "High bias can cause an algorithm to underfit? True or False?",
+    "answer": "True.",
+    "slug": "high-bias-can-cause-an-algorithm-to-underfit-true-or-false"
+  },
+  {
+    "id": "ml-57",
+    "category": "ml",
+    "question": "High variance can cause an algorithm to overfit? True of False?",
+    "answer": "True.",
+    "slug": "high-variance-can-cause-an-algorithm-to-overfit-true-of-false"
+  },
+  {
+    "id": "ml-58",
+    "category": "ml",
+    "question": "What is variance in the context of Machine Learning?",
+    "answer": "Is a type of error that occurs due to a model's sensitivity to small fluctuations in the training set. High variance can cause an algorithm to model the random noise in the training data.",
+    "slug": "what-is-variance-in-the-context-of-machine-learning"
+  },
+  {
+    "id": "ml-59",
+    "category": "ml",
+    "question": "Explain what is Bias-Variance tradeoff?",
+    "answer": "Usually models with low bias have high variance and vice versa.",
+    "slug": "explain-what-is-bias-variance-tradeoff"
+  },
+  {
+    "id": "ml-60",
+    "category": "ml",
+    "question": "What happens to our linear regression if we have columns x, y, z. And z is a sum of x and y?",
+    "answer": "We would not be able to perform the resgression. Beacuse z is linear dependent of x and y.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-happens-to-our-linear-regression-if-we-have-columns-x-y-z-and-z-is-a-sum-of-x-and-y"
+  },
+  {
+    "id": "ml-61",
+    "category": "ml",
+    "question": "Is logistic regression a linear model? Why?",
+    "answer": "Logistic regression is considered a generalized linear model because the outcome always depends on the sum of the inputs and parameters.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "is-logistic-regression-a-linear-model-why"
+  },
+  {
+    "id": "ml-62",
+    "category": "ml",
+    "question": "What is TF-IDF?",
+    "answer": "Term Frequency (TF) is a scoring of the frequency of the word in the current document. Inverse Document Frequency(IDF) is a scoring of how rare the word is across documents.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-tf-idf"
+  },
+  {
+    "id": "ml-63",
+    "category": "ml",
+    "question": "What is overfitting?",
+    "answer": "When your model perform very well on your training set but can’t generalize the test set, because it adjusted a lot to the training set.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-overfitting"
+  },
+  {
+    "id": "ml-64",
+    "category": "ml",
+    "question": "What is the precision-recall curve?",
+    "answer": "A precision-recall curve (or PR Curve) is a plot of the precision (y-axis) and the recall (x-axis) for different probability thresholds.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-the-precision-recall-curve"
+  },
+  {
+    "id": "ml-65",
+    "category": "ml",
+    "question": "Can we use L1 regularization for feature selection?",
+    "answer": "Yes, because the nature of L1 regularization will lead to sparse coefficients of features. Feature selection can be done by keeping only features with non-zero coefficients.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "can-we-use-l1-regularization-for-feature-selection"
+  },
+  {
+    "id": "ml-66",
+    "category": "ml",
+    "question": "What is bag of words?",
+    "answer": "Bag of Words is a representation of text that describes the occurrence of words within a document.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-bag-of-words"
+  },
+  {
+    "id": "ml-67",
+    "category": "ml",
+    "question": "What is clustering?",
+    "answer": "Clustering algorithms group objects such that similar feature points are put into the same groups (clusters).",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-clustering"
+  },
+  {
+    "id": "ml-68",
+    "category": "ml",
+    "question": "What is a time series?",
+    "answer": "A time series is a set of observations ordered in time usually collected at regular intervals.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-a-time-series"
+  },
+  {
+    "id": "ml-69",
+    "category": "ml",
+    "question": "When building your vocabulary set, it’s ok to use the tokens from the entire dataset to reduce the size of your out-of-vocab list?",
+    "answer": "False, any tokens not seen in the training set need to be UNK tokens.",
+    "proposedBy": "@GokuMohandas",
+    "slug": "when-building-your-vocabulary-set-its-ok-to-use-the-tokens-from-the-entire-dataset-to"
+  },
+  {
+    "id": "ml-70",
+    "category": "ml",
+    "question": "What is the main data structure used in causal modelling?",
+    "answer": "Graphs! More specifically, directed acyclic graphs.",
+    "proposedBy": "@rctatman",
+    "slug": "what-is-the-main-data-structure-used-in-causal-modelling"
+  },
+  {
+    "id": "stats-71",
+    "category": "stats",
+    "question": "What is the generalization of the median?",
+    "answer": "The Quantile.",
+    "slug": "what-is-the-generalization-of-the-median"
+  },
+  {
+    "id": "stats-72",
+    "category": "stats",
+    "question": "What is the difference between \"long\" and \"wide\" format data?",
+    "answer": "Wide: categorical data is grouped in a single row, long: each row is an observation belonging to a particular category.",
+    "slug": "what-is-the-difference-between-long-and-wide-format-data"
+  },
+  {
+    "id": "stats-73",
+    "category": "stats",
+    "question": "Technique used to sample based on a probability where each sample unit is a collection of a cluster element.",
+    "answer": "Cluster sampling.",
+    "slug": "technique-used-to-sample-based-on-a-probability-where-each-sample-unit-is-a-collection-of"
+  },
+  {
+    "id": "stats-74",
+    "category": "stats",
+    "question": "What is a Type I and a Type II error?",
+    "answer": "Basically Type I errors are the False Positive and Type II error are the False Negative.",
+    "slug": "what-is-a-type-i-and-a-type-ii-error"
+  },
+  {
+    "id": "stats-75",
+    "category": "stats",
+    "question": "What two parameters defined a normal distribution?",
+    "answer": "Its mean and its standard deviation.",
+    "slug": "what-two-parameters-defined-a-normal-distribution"
+  },
+  {
+    "id": "stats-76",
+    "category": "stats",
+    "question": "In a normal distribution which parameter indicates where the bell is centered?",
+    "answer": "The mean.",
+    "slug": "in-a-normal-distribution-which-parameter-indicates-where-the-bell-is-centered"
+  },
+  {
+    "id": "stats-77",
+    "category": "stats",
+    "question": "In a normal distribution which parameter indicates how wide is the bell?",
+    "answer": "The standard deviation.",
+    "slug": "in-a-normal-distribution-which-parameter-indicates-how-wide-is-the-bell"
+  },
+  {
+    "id": "stats-78",
+    "category": "stats",
+    "question": "What is the difference of and nominal and ordinal feature?",
+    "answer": "Nominal data assigns names to each data point without placing it in some sort of order, ex: pass, fail. And ordinal data groups data according to some sort of ranking system: it orders the data, ex: grades A, B, C, D, E and F.",
+    "slug": "what-is-the-difference-of-and-nominal-and-ordinal-feature"
+  },
+  {
+    "id": "stats-79",
+    "category": "stats",
+    "question": "What does high and low cardinality mean?",
+    "answer": "High cardinality refers to columns with values that are very uncommon or unique, example: email addresses, or user names. And low cardinality: refers to columns with few unique values, example: status flags, boolean values.",
+    "slug": "what-does-high-and-low-cardinality-mean"
+  },
+  {
+    "id": "stats-80",
+    "category": "stats",
+    "question": "What is R-squared?",
+    "answer": "R-squared is a statistical measure of how close the data are to the fitted regression line. It is also known as the coefficient of determination.",
+    "slug": "what-is-r-squared"
+  },
+  {
+    "id": "stats-81",
+    "category": "stats",
+    "question": "What is a residual?",
+    "answer": "Is the difference between the observed value and the estimated value of the quantity of interest.",
+    "slug": "what-is-a-residual"
+  },
+  {
+    "id": "stats-82",
+    "category": "stats",
+    "question": "What is dimensionality reduction?",
+    "answer": "It is the process of reducing the number of variables under consideration by obtaining a set of principal variables.",
+    "slug": "what-is-dimensionality-reduction"
+  },
+  {
+    "id": "stats-83",
+    "category": "stats",
+    "question": "What is a false negative?",
+    "answer": "An example in which the model mistakenly predicted the negative class.",
+    "slug": "what-is-a-false-negative"
+  },
+  {
+    "id": "stats-84",
+    "category": "stats",
+    "question": "What is a false positive?",
+    "answer": "An example in which the model mistakenly predicted the positive class.",
+    "slug": "what-is-a-false-positive"
+  },
+  {
+    "id": "stats-85",
+    "category": "stats",
+    "question": "Values distant from most other values are?",
+    "answer": "Outliers.",
+    "slug": "values-distant-from-most-other-values-are"
+  },
+  {
+    "id": "stats-86",
+    "category": "stats",
+    "question": "Precision is the rate between?",
+    "answer": "True Positives / (True Positives + False Positives)",
+    "slug": "precision-is-the-rate-between"
+  },
+  {
+    "id": "stats-87",
+    "category": "stats",
+    "question": "What does stationarity in a dataset means?",
+    "answer": "A property of data in a dataset, in which the data distribution stays constant across one or more dimensions. Most commonly, that dimension is time.",
+    "slug": "what-does-stationarity-in-a-dataset-means"
+  },
+  {
+    "id": "stats-88",
+    "category": "stats",
+    "question": "The normal distribution derives its importance from which famous theorem?",
+    "answer": "Central Limit Theorem.",
+    "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
+  },
+  {
+    "id": "stats-89",
+    "category": "stats",
+    "question": "What does MSE mean?",
+    "answer": "Mean Square Error.",
+    "slug": "what-does-mse-mean"
+  },
+  {
+    "id": "stats-90",
+    "category": "stats",
+    "question": "What does RMSE mean?",
+    "answer": "Root Mean Square Error.",
+    "slug": "what-does-rmse-mean"
+  },
+  {
+    "id": "stats-91",
+    "category": "stats",
+    "question": "Name three techniques of dimensionality reduction.",
+    "answer": "Singular Value Decomposition (SVD), Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Autoencoders, Fourier and Wavelet Transforms.",
+    "slug": "name-three-techniques-of-dimensionality-reduction"
+  },
+  {
+    "id": "stats-92",
+    "category": "stats",
+    "question": "Measures how far a set of (random) numbers are spread out from their average value.",
+    "answer": "Variance.",
+    "slug": "measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value"
+  },
+  {
+    "id": "stats-93",
+    "category": "stats",
+    "question": "What values could you infer from a boxplot?",
+    "answer": "Min, 1 quantile, mean, 3 quantile, max and outliers.",
+    "slug": "what-values-could-you-infer-from-a-boxplot"
+  },
+  {
+    "id": "stats-94",
+    "category": "stats",
+    "question": "Is rotation necessary in PCA?",
+    "answer": "Yes, rotation is necessary because it maximizes the difference between variance captured by the component.",
+    "slug": "is-rotation-necessary-in-pca"
+  },
+  {
+    "id": "stats-95",
+    "category": "stats",
+    "question": "What is the difference between covariance and correlation?",
+    "answer": "Correlation is the standardized form of covariance.",
+    "slug": "what-is-the-difference-between-covariance-and-correlation"
+  },
+  {
+    "id": "stats-96",
+    "category": "stats",
+    "question": "Is it possible capture the correlation between continuous and categorical variable?",
+    "answer": "Yes, we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.",
+    "slug": "is-it-possible-capture-the-correlation-between-continuous-and-categorical-variable"
+  },
+  {
+    "id": "stats-97",
+    "category": "stats",
+    "question": "If pearson correlation is 0 between two variables can we assume that there isn't any relation between them?",
+    "answer": "No. Pearson correlation coefficient between 2 variables might be zero even when they have a relationship between them. Example: x and x^2",
+    "slug": "if-pearson-correlation-is-0-between-two-variables-can-we-assume-that-there-isnt-any"
+  },
+  {
+    "id": "stats-98",
+    "category": "stats",
+    "question": "Does mean imputation takes into account feature correlation?",
+    "answer": "No.",
+    "slug": "does-mean-imputation-takes-into-account-feature-correlation"
+  },
+  {
+    "id": "stats-99",
+    "category": "stats",
+    "question": "Give 3 techniques for handling missing values.",
+    "answer": "Delete rows with missing data, Imputation, Predicting the missing values.",
+    "slug": "give-3-techniques-for-handling-missing-values"
+  },
+  {
+    "id": "stats-100",
+    "category": "stats",
+    "question": "What is the Law of Large Numbers?",
+    "answer": "Is a theory that states that as the number of trials increases, the average of the result will become closer to the expected value.",
+    "slug": "what-is-the-law-of-large-numbers"
+  },
+  {
+    "id": "stats-101",
+    "category": "stats",
+    "question": "What is Survivorship bias?",
+    "answer": "Is the logical error of concentrating on the people or things that made it past some selection process and overlooking those that did not.",
+    "slug": "what-is-survivorship-bias"
+  },
+  {
+    "id": "stats-102",
+    "category": "stats",
+    "question": "What is a confounding variable?",
+    "answer": "Is a variable that influences both the dependent variable and the independent variable, causing a spurious association.",
+    "slug": "what-is-a-confounding-variable"
+  },
+  {
+    "id": "stats-103",
+    "category": "stats",
+    "question": "How Interquartile Range is calculated?",
+    "answer": "Q3 - Q1",
+    "slug": "how-interquartile-range-is-calculated"
+  },
+  {
+    "id": "stats-104",
+    "category": "stats",
+    "question": "What is autocorrelation?",
+    "answer": "Is the correlation of a signal with a delayed copy of itself as a function of delay.",
+    "slug": "what-is-autocorrelation"
+  },
+  {
+    "id": "stats-105",
+    "category": "stats",
+    "question": "What is MSE?",
+    "answer": "MSE stands for Mean Squared Error. And is a measure of how close a fitted line is to data points by measuring the average squared of the errors.",
+    "slug": "what-is-mse"
+  },
+  {
+    "id": "stats-106",
+    "category": "stats",
+    "question": "What is RMSE?",
+    "answer": "RMSE stands for Root Mean Squared Error. Is the squared root of MSE.",
+    "slug": "what-is-rmse"
+  },
+  {
+    "id": "stats-107",
+    "category": "stats",
+    "question": "How can we select K for K-means?",
+    "answer": "Domain knowledge, Elbow method or Average silhouette method.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "how-can-we-select-k-for-k-means"
+  },
+  {
+    "id": "stats-108",
+    "category": "stats",
+    "question": "What is precision and recall at k?",
+    "answer": "Precision at k and recall at k are evaluation metrics for ranking algorithms.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-precision-and-recall-at-k"
+  },
+  {
+    "id": "history-109",
+    "category": "history",
+    "question": "Who is knows as the creator of the GANs architecture?",
+    "answer": "Ian Goodfellow.",
+    "slug": "who-is-knows-as-the-creator-of-the-gans-architecture"
+  },
+  {
+    "id": "history-110",
+    "category": "history",
+    "question": "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+    "answer": "MNIST dataset.",
+    "slug": "lecun-cortes-and-burges-compiled-a-very-famous-dataset-containing-60000-images-of"
+  },
+  {
+    "id": "history-111",
+    "category": "history",
+    "question": "The least squares method was published by a famous french mathematician called.",
+    "answer": "Adrien-Marie Legendre.",
+    "slug": "the-least-squares-method-was-published-by-a-famous-french-mathematician-called"
+  },
+  {
+    "id": "history-112",
+    "category": "history",
+    "question": "In 1812 Laplace published \"Théorie Analytique des Probabilités\" in which he defines a famous theorem. Which theorem was it?",
+    "answer": "Bayes' Theorem.",
+    "slug": "in-1812-laplace-published-theorie-analytique-des-probabilites-in-which-he-defines-a"
+  },
+  {
+    "id": "history-113",
+    "category": "history",
+    "question": "Andrey Markov first describes techniques he used to analyse a poem. Later this techniques become known as Markov chains. True or False.",
+    "answer": "True.",
+    "slug": "andrey-markov-first-describes-techniques-he-used-to-analyse-a-poem-later-this-techniques"
+  },
+  {
+    "id": "history-114",
+    "category": "history",
+    "question": "In 1951 Marvin Minsky and Dean Edmonds conceived what is known as the firts neural network machine. What is it's name?",
+    "answer": "SNARC.",
+    "slug": "in-1951-marvin-minsky-and-dean-edmonds-conceived-what-is-known-as-the-firts-neural"
+  },
+  {
+    "id": "history-115",
+    "category": "history",
+    "question": "Who invented the perceptron?",
+    "answer": "Frank Rosenblatt. Bonus. The invention of the perceptron generated a great deal of excitement and was widely covered in the media.",
+    "slug": "who-invented-the-perceptron"
+  },
+  {
+    "id": "history-116",
+    "category": "history",
+    "question": "In 1970 Seppo Linnainmaa published the general method for automatic differentiation. This corresponds to the modern version of:",
+    "answer": "Backpropagation.",
+    "slug": "in-1970-seppo-linnainmaa-published-the-general-method-for-automatic-differentiation-this"
+  },
+  {
+    "id": "history-117",
+    "category": "history",
+    "question": "In which decade does Tin Kam Ho published a paper describing random decision forests?",
+    "answer": "90s (1995).",
+    "slug": "in-which-decade-does-tin-kam-ho-published-a-paper-describing-random-decision-forests"
+  },
+  {
+    "id": "history-118",
+    "category": "history",
+    "question": "In 1995 Corinna Cortes and Vladimir Vapnik publish their work explaining a new supervised learning algorithm called:",
+    "answer": "Support Vector Machines",
+    "slug": "in-1995-corinna-cortes-and-vladimir-vapnik-publish-their-work-explaining-a-new-supervised"
+  },
+  {
+    "id": "history-119",
+    "category": "history",
+    "question": "What was the name of the first computer that beat against the the world champion at chess?",
+    "answer": "Deep Blue.",
+    "slug": "what-was-the-name-of-the-first-computer-that-beat-against-the-the-world-champion-at-chess"
+  },
+  {
+    "id": "history-120",
+    "category": "history",
+    "question": "Who invented the LSTM architecture in deep learning?",
+    "answer": "Sepp Hochreiter and Jürgen Schmidhuber in 1997.",
+    "slug": "who-invented-the-lstm-architecture-in-deep-learning"
+  },
+  {
+    "id": "history-121",
+    "category": "history",
+    "question": "When was Torch released?",
+    "answer": "2002",
+    "slug": "when-was-torch-released"
+  },
+  {
+    "id": "history-122",
+    "category": "history",
+    "question": "Who envisioned and created the ImageNet dataset?",
+    "answer": "Fei-Fei Li.",
+    "slug": "who-envisioned-and-created-the-imagenet-dataset"
+  },
+  {
+    "id": "history-123",
+    "category": "history",
+    "question": "What is the name of the computer that beat a professional player at Go?",
+    "answer": "AlphaGo.",
+    "slug": "what-is-the-name-of-the-computer-that-beat-a-professional-player-at-go"
+  },
+  {
+    "id": "history-124",
+    "category": "history",
+    "question": "Which computer scientists received the Turing Award for their contributions in deep learning?",
+    "answer": "Yoshua Bengio, Geoffrey Hinton, and Yann LeCun.",
+    "slug": "which-computer-scientists-received-the-turing-award-for-their-contributions-in-deep"
+  },
+  {
+    "id": "history-125",
+    "category": "history",
+    "question": "When was the nearest neighbor algorithm was created?",
+    "answer": "1967",
+    "slug": "when-was-the-nearest-neighbor-algorithm-was-created"
+  },
+  {
+    "id": "history-126",
+    "category": "history",
+    "question": "When was the Turing Test created?",
+    "answer": "1950",
+    "slug": "when-was-the-turing-test-created"
+  },
+  {
+    "id": "history-127",
+    "category": "history",
+    "question": "How coined the term deep learning in 2006?",
+    "answer": "Geoffrey Hinton.",
+    "slug": "how-coined-the-term-deep-learning-in-2006"
+  },
+  {
+    "id": "history-128",
+    "category": "history",
+    "question": "When was TensorFlow launched?",
+    "answer": "2015",
+    "slug": "when-was-tensorflow-launched"
+  },
+  {
+    "id": "history-129",
+    "category": "history",
+    "question": "How is the creator of Keras?",
+    "answer": "François Chollet.",
+    "slug": "how-is-the-creator-of-keras"
+  },
+  {
+    "id": "history-130",
+    "category": "history",
+    "question": "PyTorch was primarily developed by which company?",
+    "answer": "Facebook.",
+    "slug": "pytorch-was-primarily-developed-by-which-company"
+  },
+  {
+    "id": "history-131",
+    "category": "history",
+    "question": "The R language was designed by statisticians?",
+    "answer": "Yes.",
+    "slug": "the-r-language-was-designed-by-statisticians"
+  },
+  {
+    "id": "history-132",
+    "category": "history",
+    "question": "Who are credited by the creation of R?",
+    "answer": "Ross Ihaka and Robert Gentleman.",
+    "slug": "who-are-credited-by-the-creation-of-r"
+  },
+  {
+    "id": "history-133",
+    "category": "history",
+    "question": "In 1989 Christopher Watkins published his PhD thesis “Learning from Delayed Rewards” where he introduced the concept of:",
+    "answer": "Q-learning.",
+    "slug": "in-1989-christopher-watkins-published-his-phd-thesis-learning-from-delayed-rewards-where"
+  },
+  {
+    "id": "history-134",
+    "category": "history",
+    "question": "Who is known of the founding father of convolutional nets?",
+    "answer": "Yann LeCun.",
+    "slug": "who-is-known-of-the-founding-father-of-convolutional-nets"
+  },
+  {
+    "id": "history-135",
+    "category": "history",
+    "question": "Who are known as the \"Good Parents of AI\"?",
+    "answer": "Geoffrey Hinton, Yann LeCun, and Yoshua Bengio.",
+    "slug": "who-are-known-as-the-good-parents-of-ai"
+  },
+  {
+    "id": "history-136",
+    "category": "history",
+    "question": "Was Bayes's Theorem published after his death?",
+    "answer": "Yes. The underpinnings of Bayes' Theorem was published 2 years after his death (1763) and was until 1812 that Laplace published it as we know it today. 49 years later!",
+    "slug": "was-bayess-theorem-published-after-his-death"
+  },
+  {
+    "id": "history-137",
+    "category": "history",
+    "question": "What object did Yann Lecunn use in NIPS 2016 to describe the ’layers’ of intelligence?",
+    "answer": "Cake",
+    "proposedBy": "@GokuMohandas",
+    "slug": "what-object-did-yann-lecunn-use-in-nips-2016-to-describe-the-layers-of-intelligence"
+  },
+  {
+    "id": "history-138",
+    "category": "history",
+    "question": "What defunct deep learning library was published in 2007 by Montreal Institute for Learning Algorithms?",
+    "answer": "Theano",
+    "proposedBy": "@GokuMohandas",
+    "slug": "what-defunct-deep-learning-library-was-published-in-2007-by-montreal-institute-for"
+  },
+  {
+    "id": "history-139",
+    "category": "history",
+    "question": "What language was the original AlexNet (ILSVRC 2012) written in?",
+    "answer": "CUDA/C++",
+    "proposedBy": "@GokuMohandas",
+    "slug": "what-language-was-the-original-alexnet-ilsvrc-2012-written-in"
+  },
+  {
+    "id": "history-140",
+    "category": "history",
+    "question": "What was the final score of the 2016 match between Google DeepMind’s AlphaGo and Go grandmaster Lee Sedol?",
+    "answer": "4-1 (AlphaGo - Sedol).",
+    "proposedBy": "@GokuMohandas",
+    "slug": "what-was-the-final-score-of-the-2016-match-between-google-deepminds-alphago-and-go"
+  },
+  {
+    "id": "history-141",
+    "category": "history",
+    "question": "This person’s notable students include Ruslan Salakhutdinov, Ilya Sutskever, and Yann LeCun?",
+    "answer": "Geoffrey Hinton.",
+    "proposedBy": "@GokuMohandas",
+    "slug": "this-persons-notable-students-include-ruslan-salakhutdinov-ilya-sutskever-and-yann-lecun"
+  },
+  {
+    "id": "history-142",
+    "category": "history",
+    "question": "What was the dimension of all the embedding and sublayers of the original Transformer (Attention is All You Need 2017)?",
+    "answer": "512",
+    "proposedBy": "@GokuMohandas",
+    "slug": "what-was-the-dimension-of-all-the-embedding-and-sublayers-of-the-original-transformer"
+  },
+  {
+    "id": "history-143",
+    "category": "history",
+    "question": "In 2016 Google’s AlphaGo won four out of five games of Go against Lee Sedol, a professional Go player from South Korea (9 dan rank). What hardware powered the AlphaGo software to victory?",
+    "answer": "Tensor Processing Unit (TPU).",
+    "proposedBy": "@kierisi",
+    "slug": "in-2016-googles-alphago-won-four-out-of-five-games-of-go-against-lee-sedol-a-professional"
+  },
+  {
+    "id": "dl-144",
+    "category": "dl",
+    "question": "Type of backpropagation where we use only a single training example for calculation of the gradient and update parameters.",
+    "answer": "Stochastic Gradient Descent.",
+    "slug": "type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of"
+  },
+  {
+    "id": "dl-145",
+    "category": "dl",
+    "question": "Type of backpropagation where we use the whole dataset to perform a single step.",
+    "answer": "Batch Gradient Descent.",
+    "slug": "type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step"
+  },
+  {
+    "id": "dl-146",
+    "category": "dl",
+    "question": "Type of backpropagation where we use a fixed number of training examples which is lees than the actual dataset to perform a calculation of the gradient",
+    "answer": "Mini-batch Gradient Descent.",
+    "slug": "type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees"
+  },
+  {
+    "id": "dl-147",
+    "category": "dl",
+    "question": "Name three different deep learning frameworks.",
+    "answer": "TensorFlow, PyTorch, Keras, Caffe, etc.",
+    "slug": "name-three-different-deep-learning-frameworks"
+  },
+  {
+    "id": "dl-148",
+    "category": "dl",
+    "question": "What is AdaGrad?",
+    "answer": "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
+    "slug": "what-is-adagrad"
+  },
+  {
+    "id": "dl-149",
+    "category": "dl",
+    "question": "Which ones are two actors in a convolutional operation?",
+    "answer": "Convolutional filter and a slice of an input matrix.",
+    "slug": "which-ones-are-two-actors-in-a-convolutional-operation"
+  },
+  {
+    "id": "dl-150",
+    "category": "dl",
+    "question": "How does dropout regularization works in deep learning?",
+    "answer": "Dropout regularization works by removing a random selection of a fixed number of the units in a network layer for a single gradient step.",
+    "slug": "how-does-dropout-regularization-works-in-deep-learning"
+  },
+  {
+    "id": "dl-151",
+    "category": "dl",
+    "question": "What is an epoch?",
+    "answer": "A full training pass over the entire dataset such that each example has been seen once.",
+    "slug": "what-is-an-epoch"
+  },
+  {
+    "id": "dl-152",
+    "category": "dl",
+    "question": "What is a batch?",
+    "answer": "Number of training samples in 1 Forward/1 Backward pass.",
+    "slug": "what-is-a-batch"
+  },
+  {
+    "id": "dl-153",
+    "category": "dl",
+    "question": "Which are the two components of a Generative Adversarial Network?",
+    "answer": "A generator and a discriminator.",
+    "slug": "which-are-the-two-components-of-a-generative-adversarial-network"
+  },
+  {
+    "id": "dl-154",
+    "category": "dl",
+    "question": "What is the function of the generator in a GAN?",
+    "answer": "It creates new examples.",
+    "slug": "what-is-the-function-of-the-generator-in-a-gan"
+  },
+  {
+    "id": "dl-155",
+    "category": "dl",
+    "question": "What is the function of the discriminator in a GAN?",
+    "answer": "Determine whether examples are real or fake.",
+    "slug": "what-is-the-function-of-the-discriminator-in-a-gan"
+  },
+  {
+    "id": "dl-156",
+    "category": "dl",
+    "question": "What does gradient descent tries to minimize?",
+    "answer": "A loss function.",
+    "slug": "what-does-gradient-descent-tries-to-minimize"
+  },
+  {
+    "id": "dl-157",
+    "category": "dl",
+    "question": "Which activation function follows these rules: If input is negative or zero, output is 0 and if input is positive, output is equal to input.",
+    "answer": "Rectified Linear Unit (ReLU).",
+    "slug": "which-activation-function-follows-these-rules-if-input-is-negative-or-zero-output-is-0"
+  },
+  {
+    "id": "dl-158",
+    "category": "dl",
+    "question": "Explain what a softmax function does?",
+    "answer": "Provides probabilities for each possible class in a multi-class classification model. The probabilities add up to exactly 1.0",
+    "slug": "explain-what-a-softmax-function-does"
+  },
+  {
+    "id": "dl-159",
+    "category": "dl",
+    "question": "What is learning rate?",
+    "answer": "Is a tuning parameter in an optimization algorithm that determines the step size at each iteration while moving toward a minimum of a loss function.",
+    "slug": "what-is-learning-rate"
+  },
+  {
+    "id": "dl-160",
+    "category": "dl",
+    "question": "What does LSTM means?",
+    "answer": "Long Short-Term Memory.",
+    "slug": "what-does-lstm-means"
+  },
+  {
+    "id": "dl-161",
+    "category": "dl",
+    "question": "Type of layer that tipically has a cell, input gate, output gate and a forget gate?",
+    "answer": "LSTM layer.",
+    "slug": "type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate"
+  },
+  {
+    "id": "dl-162",
+    "category": "dl",
+    "question": "Sigmoid squishes values to be between?",
+    "answer": "0 and 1",
+    "slug": "sigmoid-squishes-values-to-be-between"
+  },
+  {
+    "id": "dl-163",
+    "category": "dl",
+    "question": "What does GRU means?",
+    "answer": "Gated Recurrent Unit.",
+    "slug": "what-does-gru-means"
+  },
+  {
+    "id": "dl-164",
+    "category": "dl",
+    "question": "Tanh function squishes values to be between?",
+    "answer": "-1 and 1",
+    "slug": "tanh-function-squishes-values-to-be-between"
+  },
+  {
+    "id": "dl-165",
+    "category": "dl",
+    "question": "Type of layer that tipically has a reset gate and a output gate?",
+    "answer": "GRU layer.",
+    "slug": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate"
+  },
+  {
+    "id": "dl-166",
+    "category": "dl",
+    "question": "What if we set all the weights of a neural network to 0?",
+    "answer": "The equations of the learning algorithm would fail to make any changes to the network weights, and the model will be stuck.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-if-we-set-all-the-weights-of-a-neural-network-to-0"
+  },
+  {
+    "id": "dl-167",
+    "category": "dl",
+    "question": "What happens when the learning rate is too large?",
+    "answer": "Can accelerate the training. However, it is possible that we “shoot” too far and miss the minimum of the function that we want to optimize.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-happens-when-the-learning-rate-is-too-large"
+  },
+  {
+    "id": "dl-168",
+    "category": "dl",
+    "question": "What happens when the learning rate is too small?",
+    "answer": "Takes more time to train but it is possible to find a more precise minimum. The downside can be that the solution is stuck in a local minimum.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-happens-when-the-learning-rate-is-too-small"
+  },
+  {
+    "id": "dl-169",
+    "category": "dl",
+    "question": "Why do we need activation functions?",
+    "answer": "The main idea of using neural networks is to learn complex nonlinear functions. The Nonlinearity comes only with the activation function without them we are just stacking up multiple linear layers.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "why-do-we-need-activation-functions"
+  },
+  {
+    "id": "dl-170",
+    "category": "dl",
+    "question": "What are the problems with sigmoid as an activation function?",
+    "answer": "The output of the sigmoid function for large positive or negative numbers is almost zero. From this comes the problem of vanishing gradient.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-are-the-problems-with-sigmoid-as-an-activation-function"
+  },
+  {
+    "id": "dl-171",
+    "category": "dl",
+    "question": "What is ReLU? How is it better than sigmoid?",
+    "answer": "ReLU is an activation function and it solves the problem of vanishing gradient since it doesn't saturates on higher values.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "what-is-relu-how-is-it-better-than-sigmoid"
+  },
+  {
+    "id": "dl-172",
+    "category": "dl",
+    "question": "What’s pooling in CNN? Why do we need it?",
+    "answer": "Pooling is a technique to downsample the feature map. It allows layers which receive relatively undistorted versions of the input to learn low level features such as lines.",
+    "proposedBy": "@Al_Grigor",
+    "slug": "whats-pooling-in-cnn-why-do-we-need-it"
+  },
+  {
+    "id": "dl-173",
+    "category": "dl",
+    "question": "Why did the output dimension of all the embedding and sublayers of original Transformer (Attention is All You Need 2017) need to be the same?",
+    "answer": "Because of the residual connections.",
+    "proposedBy": "@GokuMohandas",
+    "slug": "why-did-the-output-dimension-of-all-the-embedding-and-sublayers-of-original-transformer"
+  },
+  {
+    "id": "dl-177",
+    "category": "dl",
+    "question": "One hot encoding is an excellent solution to transform categorical features with high cardinality.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "one-hot-encoding-is-an-excellent-solution-to-transform-categorical-features-with-high"
+  },
+  {
+    "id": "dl-178",
+    "category": "dl",
+    "question": "The F1 Score is a metric defined as the harmonic mean of precision, recall, and accuracy.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy"
+  },
+  {
+    "id": "dl-179",
+    "category": "dl",
+    "question": "As the number of hidden layers increases in a neural network, its capacity also increases.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "as-the-number-of-hidden-layers-increases-in-a-neural-network-its-capacity-also-increases"
+  },
+  {
+    "id": "dl-180",
+    "category": "dl",
+    "question": "Initializing a neural network’s weights with zero is our best bet to allow the network to converge.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "initializing-a-neural-networks-weights-with-zero-is-our-best-bet-to-allow-the-network-to"
+  },
+  {
+    "id": "dl-181",
+    "category": "dl",
+    "question": "As the dropout ratio used in a neural network increases, the network’s capacity also increases.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "as-the-dropout-ratio-used-in-a-neural-network-increases-the-networks-capacity-also"
+  },
+  {
+    "id": "dl-182",
+    "category": "dl",
+    "question": "Stochastic Gradient Descent is the proper technique to use when the full dataset doesn’t fit in memory.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "stochastic-gradient-descent-is-the-proper-technique-to-use-when-the-full-dataset-doesnt"
+  },
+  {
+    "id": "dl-183",
+    "category": "dl",
+    "question": "Batch Normalization is an efficient backpropagation technique that allows neural networks to learn.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "batch-normalization-is-an-efficient-backpropagation-technique-that-allows-neural-networks"
+  },
+  {
+    "id": "dl-184",
+    "category": "dl",
+    "question": "Gradient Descent is an algorithm used to minimize overfitting in neural networks.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "gradient-descent-is-an-algorithm-used-to-minimize-overfitting-in-neural-networks"
+  },
+  {
+    "id": "dl-185",
+    "category": "dl",
+    "question": "Having high bias means the model is too simple and can’t capture many features during the training phase. This is also known as overfitting.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the"
+  },
+  {
+    "id": "dl-175",
+    "category": "dl",
+    "question": "Precision is a performance metric that defines a classification models ability to identify only relevant samples.",
+    "answer": "True",
+    "proposedBy": "@svpino",
+    "slug": "precision-is-a-performance-metric-that-defines-a-classification-models-ability-to"
+  },
+  {
+    "id": "dl-176",
+    "category": "dl",
+    "question": "Recall is a performance metric that defines a classification models ability to identify all relevant samples.",
+    "answer": "True",
+    "proposedBy": "@svpino",
+    "slug": "recall-is-a-performance-metric-that-defines-a-classification-models-ability-to-identify"
+  },
+  {
+    "id": "dl-186",
+    "category": "dl",
+    "question": "Softmax is an activation function that always returns the input value if it’s positive and zeroes otherwise.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "softmax-is-an-activation-function-that-always-returns-the-input-value-if-its-positive-and"
+  },
+  {
+    "id": "dl-187",
+    "category": "dl",
+    "question": "In neural networks, an activation function’s most essential role is to decide whether a unit or neuron should fire.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "in-neural-networks-an-activation-functions-most-essential-role-is-to-decide-whether-a"
+  },
+  {
+    "id": "dl-188",
+    "category": "dl",
+    "question": "Using a learning rate that’s too low will cause the training process to be very slow.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow"
+  },
+  {
+    "id": "dl-189",
+    "category": "dl",
+    "question": "ReLU is an activation function that, given an input vector, generates an output where the sum of the values in the vector is equal to one.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "relu-is-an-activation-function-that-given-an-input-vector-generates-an-output-where-the"
+  },
+  {
+    "id": "dl-190",
+    "category": "dl",
+    "question": "An autoencoder is a neural network that automatically learns by using its inputs as the expected output.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the"
+  },
+  {
+    "id": "dl-191",
+    "category": "dl",
+    "question": "Convolutional neural networks are translation invariant.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "convolutional-neural-networks-are-translation-invariant"
+  },
+  {
+    "id": "dl-192",
+    "category": "dl",
+    "question": "Autoencoders are one of the most popular supervised learning methods.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "autoencoders-are-one-of-the-most-popular-supervised-learning-methods"
+  },
+  {
+    "id": "dl-193",
+    "category": "dl",
+    "question": "The type of problem where you need to classify the input into a single class is called multi class classification.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "the-type-of-problem-where-you-need-to-classify-the-input-into-a-single-class-is-called"
+  },
+  {
+    "id": "dl-194",
+    "category": "dl",
+    "question": "Dropout is an excellent regularization technique that speeds the training process.",
+    "answer": "false",
+    "proposedBy": "@svpino",
+    "slug": "dropout-is-an-excellent-regularization-technique-that-speeds-the-training-process"
+  },
+  {
+    "id": "dl-195",
+    "category": "dl",
+    "question": "A neural network with a single layer is capable of approximating any function.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "a-neural-network-with-a-single-layer-is-capable-of-approximating-any-function"
+  },
+  {
+    "id": "dl-196",
+    "category": "dl",
+    "question": "Leaky ReLU is an activation function that allows the passing of small sized negative values if the network’s input value is less than zero.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative"
+  },
+  {
+    "id": "dl-197",
+    "category": "dl",
+    "question": "Bagging is the concept of splitting a dataset and randomly placing it into bags for training a model.",
+    "answer": "true",
+    "proposedBy": "@svpino",
+    "slug": "bagging-is-the-concept-of-splitting-a-dataset-and-randomly-placing-it-into-bags-for"
+  },
+  {
+    "id": "dl-174",
+    "category": "dl",
+    "question": "A Categorical feature is a feature that can only take a limited number of possible values.",
+    "answer": "True",
+    "proposedBy": "@svpino",
+    "slug": "a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values"
+  }
+]
