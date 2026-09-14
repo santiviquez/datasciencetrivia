@@ -38,14 +38,14 @@
     "id": "ml-6",
     "category": "ml",
     "question": "Name three types of kernels in SVM.",
-    "answer": "Linear, polynomial, radical, sigmoid",
+    "answer": "Linear, polynomial and RBF (radial basis function), with sigmoid a fourth. A kernel computes inner products in a higher-dimensional space without ever building that space, so linear is the default for wide sparse text and RBF for low-dimensional, curved boundaries.",
     "slug": "name-three-types-of-kernels-in-svm"
   },
   {
     "id": "ml-7",
     "category": "ml",
     "question": "What is pruning in a decision tree?",
-    "answer": "When we remove the sub-nodes of the decision tree.",
+    "answer": "Removing sub-nodes that do not earn their keep, so a fully grown tree stops fitting noise. Pre-pruning caps growth up front with max depth or minimum samples per leaf; post-pruning grows the tree, then collapses branches whose removal does not hurt held-out error.",
     "slug": "what-is-pruning-in-a-decision-tree"
   },
   {
@@ -66,7 +66,7 @@
     "id": "ml-10",
     "category": "ml",
     "question": "What is the process of adding tuning parameters to a model to induce smoothness in order to prevent overfitting?",
-    "answer": "Regularization.",
+    "answer": "Regularization: a penalty on parameter size added to the loss, so the fit stays smooth rather than chasing every training point. L1 (lasso) zeroes weights outright and selects features, L2 (ridge) shrinks them all. Its strength is tuned on validation data, never training loss.",
     "slug": "what-is-the-process-of-adding-tuning-parameters-to-a-model-to-induce-smoothness-in-order"
   },
   {
@@ -178,7 +178,7 @@
     "id": "ml-26",
     "category": "ml",
     "question": "Creating a model that matches the training data so closely that the model fails to make correct predictions on new data.",
-    "answer": "Overfitting.",
+    "answer": "Overfitting: the model has memorised noise particular to the training set, so training error keeps falling while validation error turns back up. The fixes matter as much as the name: more data, regularization, early stopping, a simpler model, and cross-validation to detect it.",
     "slug": "creating-a-model-that-matches-the-training-data-so-closely-that-the-model-fails-to-make"
   },
   {
@@ -199,14 +199,14 @@
     "id": "ml-29",
     "category": "ml",
     "question": "If someone ask you: Out of all the possible positive labels, how many did the model correctly identify? Which metric should you calculate?",
-    "answer": "Recall.",
+    "answer": "Recall: true positives over all actual positives, TP / (TP + FN). It is the metric to optimise when a miss is the expensive error, as in fraud or disease screening. You can always buy recall by lowering the threshold, which is why it is quoted next to precision.",
     "slug": "if-someone-ask-you-out-of-all-the-possible-positive-labels-how-many-did-the-model"
   },
   {
     "id": "ml-30",
     "category": "ml",
     "question": "Producing a model with poor predictive ability because the model hasn't captured the complexity of the training data.",
-    "answer": "Underfitting.",
+    "answer": "Underfitting: high bias, a model too simple for the signal, so training and validation error are both high and close to each other. Add capacity or better features, weaken the regularization, or train longer. More data will not rescue a model that cannot fit what it already has.",
     "slug": "producing-a-model-with-poor-predictive-ability-because-the-model-hasnt-captured-the"
   },
   {
@@ -360,7 +360,7 @@
     "id": "ml-52",
     "category": "ml",
     "question": "Standardization of features is required before training a Logistic Regression?",
-    "answer": "No.",
+    "answer": "No — rescaling a feature just rescales its coefficient, so the predictions are unchanged. It still matters in practice: gradient descent converges far faster when features share a scale, and any L1 or L2 penalty is scale-dependent, so unscaled features get penalised unevenly.",
     "slug": "standardization-of-features-is-required-before-training-a-logistic-regression"
   },
   {
@@ -374,7 +374,7 @@
     "id": "ml-54",
     "category": "ml",
     "question": "Bagging stands for?",
-    "answer": "Bootstrap Aggregation.",
+    "answer": "Bootstrap aggregating: train the same learner on many bootstrap resamples and average the predictions, which cuts variance and leaves bias roughly untouched. That is why it suits deep unstable trees, while boosting attacks bias by fitting each model to the last one's errors.",
     "slug": "bagging-stands-for"
   },
   {
@@ -409,7 +409,7 @@
     "id": "ml-59",
     "category": "ml",
     "question": "Explain what is Bias-Variance tradeoff?",
-    "answer": "Usually models with low bias have high variance and vice versa.",
+    "answer": "Expected error splits into bias (a model too simple for the truth), variance (sensitivity to which training sample you drew) and irreducible noise. Pushing one down usually lifts the other, so you tune capacity and regularization to minimise the sum, not either term alone.",
     "slug": "explain-what-is-bias-variance-tradeoff"
   },
   {
@@ -609,7 +609,7 @@
     "id": "stats-86",
     "category": "stats",
     "question": "Precision is the rate between?",
-    "answer": "True Positives / (True Positives + False Positives)",
+    "answer": "True positives over predicted positives, TP / (TP + FP): of the cases you flagged, how many were right. It says nothing about the positives you missed, so it is read alongside recall, and it is the metric to favour when a false alarm is the costly error.",
     "slug": "precision-is-the-rate-between"
   },
   {
@@ -623,7 +623,7 @@
     "id": "stats-88",
     "category": "stats",
     "question": "The normal distribution derives its importance from which famous theorem?",
-    "answer": "Central Limit Theorem.",
+    "answer": "The Central Limit Theorem: the sampling distribution of a mean of independent draws approaches a normal as n grows, whatever the population's shape, provided variance is finite. That is what licenses normal-based confidence intervals and t-tests on decidedly non-normal data.",
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
   },
   {
@@ -658,7 +658,7 @@
     "id": "stats-93",
     "category": "stats",
     "question": "What values could you infer from a boxplot?",
-    "answer": "Min, 1 quantile, mean, 3 quantile, max and outliers.",
+    "answer": "Minimum, Q1, median, Q3 and maximum, plus points flagged as outliers — the line inside the box is the median, not the mean. The box is the interquartile range and whiskers usually stretch to 1.5 x IQR, so a boxplot shows spread and skew but hides multimodality.",
     "slug": "what-values-could-you-infer-from-a-boxplot"
   },
   {
@@ -672,7 +672,7 @@
     "id": "stats-95",
     "category": "stats",
     "question": "What is the difference between covariance and correlation?",
-    "answer": "Correlation is the standardized form of covariance.",
+    "answer": "Correlation is covariance divided by the two standard deviations, so it is unitless and bounded in [-1, 1], while covariance carries the units of both variables and has no fixed scale. That is what makes correlation comparable across pairs; both only capture linear association.",
     "slug": "what-is-the-difference-between-covariance-and-correlation"
   },
   {
@@ -749,14 +749,14 @@
     "id": "stats-106",
     "category": "stats",
     "question": "What is RMSE?",
-    "answer": "RMSE stands for Root Mean Squared Error. Is the squared root of MSE.",
+    "answer": "Root Mean Squared Error: the square root of MSE, which puts the error back in the units of the target. Squaring first lets large misses dominate, so RMSE is always at least MAE and far more outlier-sensitive — report MAE too when a handful of extreme rows drives the number.",
     "slug": "what-is-rmse"
   },
   {
     "id": "stats-107",
     "category": "stats",
     "question": "How can we select K for K-means?",
-    "answer": "Domain knowledge, Elbow method or Average silhouette method.",
+    "answer": "Domain knowledge first, then the elbow of inertia against k, average silhouette, or the gap statistic. Inertia falls monotonically, so the elbow is often ambiguous; silhouette scores separation as well as compactness. If a downstream use defines the segments, let that pick k.",
     "proposedBy": "@Al_Grigor",
     "slug": "how-can-we-select-k-for-k-means"
   },
@@ -821,7 +821,7 @@
     "id": "history-116",
     "category": "history",
     "question": "In 1970 Seppo Linnainmaa published the general method for automatic differentiation. This corresponds to the modern version of:",
-    "answer": "Backpropagation.",
+    "answer": "Backpropagation — reverse-mode automatic differentiation, which gets the gradient of a scalar loss with respect to every parameter in roughly one backward pass. Rumelhart, Hinton and Williams rediscovered and popularised it for neural networks in 1986.",
     "slug": "in-1970-seppo-linnainmaa-published-the-general-method-for-automatic-differentiation-this"
   },
   {
@@ -863,7 +863,7 @@
     "id": "history-122",
     "category": "history",
     "question": "Who envisioned and created the ImageNet dataset?",
-    "answer": "Fei-Fei Li.",
+    "answer": "Fei-Fei Li, who argued from 2007 that models were starved of data rather than ideas and used crowdsourced labelling to reach roughly 14 million images across 20,000+ categories. The 2012 ILSVRC contest run on it is where AlexNet made deep learning mainstream.",
     "slug": "who-envisioned-and-created-the-imagenet-dataset"
   },
   {
@@ -891,7 +891,7 @@
     "id": "history-126",
     "category": "history",
     "question": "When was the Turing Test created?",
-    "answer": "1950",
+    "answer": "1950, in Turing's paper \"Computing Machinery and Intelligence\", which swapped the question of whether machines think for an imitation game judged over text. Its weakness is that it rewards convincing conversation rather than understanding — a critique now aimed straight at LLMs.",
     "slug": "when-was-the-turing-test-created"
   },
   {
@@ -1087,7 +1087,7 @@
     "id": "dl-153",
     "category": "dl",
     "question": "Which are the two components of a Generative Adversarial Network?",
-    "answer": "A generator and a discriminator.",
+    "answer": "A generator that turns noise into samples and a discriminator that judges them real or fake, trained against each other in a minimax game. The tension is the point and also the difficulty: unstable training and mode collapse, where the generator serves one convincing output.",
     "slug": "which-are-the-two-components-of-a-generative-adversarial-network"
   },
   {
@@ -1115,7 +1115,7 @@
     "id": "dl-157",
     "category": "dl",
     "question": "Which activation function follows these rules: If input is negative or zero, output is 0 and if input is positive, output is equal to input.",
-    "answer": "Rectified Linear Unit (ReLU).",
+    "answer": "ReLU, the rectified linear unit, max(0, x). It is cheap and its gradient is exactly 1 on the positive side, so it does not saturate as sigmoid and tanh do, which is much of why deep stacks became trainable. Its failure mode is dead units stuck at zero.",
     "slug": "which-activation-function-follows-these-rules-if-input-is-negative-or-zero-output-is-0"
   },
   {
@@ -1143,14 +1143,14 @@
     "id": "dl-161",
     "category": "dl",
     "question": "Type of layer that tipically has a cell, input gate, output gate and a forget gate?",
-    "answer": "LSTM layer.",
+    "answer": "An LSTM. The cell state carries information along a mostly additive path while the gates learn what to write, forget and read, which is how it survives the vanishing gradients that stall plain RNNs on long sequences. Attention has since displaced it for most sequence work.",
     "slug": "type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate"
   },
   {
     "id": "dl-162",
     "category": "dl",
     "question": "Sigmoid squishes values to be between?",
-    "answer": "0 and 1",
+    "answer": "0 and 1, which is what makes it the right output layer for a binary probability. Inside a deep network it is a poor choice: gradients vanish once inputs saturate at either tail, and its output is not zero-centred, so ReLU-family activations replaced it in hidden layers.",
     "slug": "sigmoid-squishes-values-to-be-between"
   },
   {
@@ -1171,7 +1171,7 @@
     "id": "dl-165",
     "category": "dl",
     "question": "Type of layer that tipically has a reset gate and a output gate?",
-    "answer": "GRU layer.",
+    "answer": "A GRU — though the two gates are properly the reset and the update gate. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.",
     "slug": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate"
   },
   {
@@ -1266,7 +1266,7 @@
     "id": "dl-180",
     "category": "dl",
     "question": "Initializing a neural network’s weights with zero is our best bet to allow the network to converge.",
-    "answer": "false",
+    "answer": "False — with zero weights every unit in a layer computes the same thing and receives the same gradient, so the symmetry never breaks and the layer behaves like a single neuron. Use small random values scaled to fan-in: He for ReLU, Xavier for tanh. Biases can start at zero.",
     "proposedBy": "@svpino",
     "slug": "initializing-a-neural-networks-weights-with-zero-is-our-best-bet-to-allow-the-network-to"
   },
@@ -1290,7 +1290,7 @@
     "id": "dl-183",
     "category": "dl",
     "question": "Batch Normalization is an efficient backpropagation technique that allows neural networks to learn.",
-    "answer": "false",
+    "answer": "False — it is a normalization layer, not a backpropagation technique. It standardises each activation across the mini-batch, then rescales with learned parameters, which smooths optimisation and allows higher learning rates. Batch statistics also add noise, so it regularises mildly.",
     "proposedBy": "@svpino",
     "slug": "batch-normalization-is-an-efficient-backpropagation-technique-that-allows-neural-networks"
   },
