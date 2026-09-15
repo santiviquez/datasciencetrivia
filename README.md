@@ -94,6 +94,17 @@ npm run typecheck
 - `sitemap.xml` and `robots.txt` generated from the content file
 - Per-question Open Graph images generated at build time
 
+### Internal linking
+
+The links between cards are the point, not decoration: they are how a visitor
+who searched one question finds the rest of the cluster, and how a crawler
+finds a card no one links to from outside.
+
+- Each category hub opens with an intro naming the clusters its list covers,
+  and a **Start with these** cluster of canonical cards. Both live next to
+  `CATEGORIES` in `lib/questions.ts`; `check:content` fails the build if a
+  starter id is not in the deck.
+
 ### Structured data
 
 `lib/schema.ts` holds the `Person` and `WebSite` nodes and their `@id`s. Pages

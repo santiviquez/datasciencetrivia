@@ -33,7 +33,14 @@ export function GET() {
     const items = getQuestionsByCategory(key);
     if (items.length === 0) continue;
 
-    lines.push(`## ${category.name} (${items.length})`, "", category.blurb, "");
+    lines.push(
+      `## ${category.name} (${items.length})`,
+      "",
+      category.blurb,
+      "",
+      category.intro,
+      "",
+    );
     for (const q of items) {
       lines.push(`### ${q.question}`);
       lines.push(q.answer);

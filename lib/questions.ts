@@ -1,5 +1,13 @@
 import raw from "../content/questions.json";
 
+/**
+ * `blurb` is the one-line summary used in metadata and on the deck. `intro`
+ * names the topic clusters a hub's list actually covers, for someone who
+ * landed on it from a search and needs to know whether their question is in
+ * here. `starters` are the cards to read first: the canonical questions of the
+ * category, each one a doorway into a different cluster. `check:content`
+ * fails the build if a starter id is not in the deck.
+ */
 export const CATEGORIES = {
   ml: {
     slug: "machine-learning",
@@ -8,6 +16,9 @@ export const CATEGORIES = {
     pattern: "/ml_pattern.svg",
     blurb:
       "Models, metrics and the tradeoffs that decide whether a model survives contact with real data.",
+    intro:
+      "The cards below cluster into the themes machine learning interviews keep circling back to: the bias-variance tradeoff and the regularization that moves it, picking metrics when the classes are imbalanced, cross-validation and the leakage that quietly inflates it, ensembles from bagging to boosting, and the encoding choices that decide what a model ever gets to see.",
+    starters: ["ml-59", "ml-63", "ml-16", "ml-55", "ml-17"],
   },
   dl: {
     slug: "deep-learning",
@@ -16,6 +27,9 @@ export const CATEGORIES = {
     pattern: "/dl_pattern.svg",
     blurb:
       "Neural networks from backpropagation to attention, and the tricks that make them trainable.",
+    intro:
+      "These cards group around what you get asked to explain at a whiteboard: activation functions and why a network is a linear model without them, gradient descent and the learning rate that makes or breaks it, dropout and batch normalization, and the architectures that stack the pieces into something useful — CNNs, LSTMs and GRUs, GANs, autoencoders, Transformers.",
+    starters: ["dl-169", "dl-171", "dl-159", "dl-150", "dl-172"],
   },
   genai: {
     slug: "generative-ai",
@@ -24,6 +38,9 @@ export const CATEGORIES = {
     pattern: "/genai_pattern.svg",
     blurb:
       "Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them.",
+    intro:
+      "Four clusters run through these cards: the decoding knobs of temperature, top-p and top-k; retrieval from chunk size through hybrid search to evaluating the pipeline; when prompting beats fine-tuning or RLHF; and the serving details that set latency and cost, like tokenization, the KV cache and how much context is actually worth paying for.",
+    starters: ["genai-2", "genai-1", "genai-12", "genai-5", "genai-16"],
   },
   stats: {
     slug: "statistics",
@@ -32,6 +49,9 @@ export const CATEGORIES = {
     pattern: "/stats_pattern.svg",
     blurb:
       "Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.",
+    intro:
+      "These cards cluster around inference and error: the two ways a test can be wrong, the distributions and limit theorems behind them, correlation and the confounders that fake it, regression diagnostics from residuals to R-squared, and the missing-data and dimensionality-reduction decisions that come before any of it.",
+    starters: ["stats-74", "stats-88", "stats-95", "stats-80", "stats-82"],
   },
   history: {
     slug: "history",
@@ -40,6 +60,9 @@ export const CATEGORIES = {
     pattern: "/hist_pattern.svg",
     blurb:
       "The people, papers and moments that built the field, from the perceptron to the Transformer.",
+    intro:
+      "The cards run from least squares and Bayes through the perceptron, backpropagation and MNIST to AlexNet, AlphaGo and the Transformer: the papers, datasets and people whose names turn up in interview small talk, and in the citations behind everything else in the deck.",
+    starters: ["history-115", "history-126", "history-122", "history-124", "history-123"],
   },
 } as const;
 
@@ -121,6 +144,16 @@ export function getProposers(): { handle: string; count: number }[] {
   return [...counts]
     .map(([handle, count]) => ({ handle, count }))
     .sort((a, b) => b.count - a.count || a.handle.localeCompare(b.handle));
+}
+
+/**
+ * The cards a hub recommends reading first, in the order they are listed.
+ */
+export function getCategoryStarters(key: CategoryKey): QuestionWithSlug[] {
+  const byId = new Map(questions.map((q) => [q.id, q]));
+  return CATEGORIES[key].starters
+    .map((id) => byId.get(id))
+    .filter((q): q is QuestionWithSlug => q !== undefined);
 }
 
 export function getRelatedQuestions(

@@ -65,10 +65,37 @@ raw.forEach((q, i) => {
   }
 });
 
+/**
+ * Each category hub recommends a handful of cards by id in `lib/questions.ts`.
+ * A typo there, or an id that a later edit removed, drops a starter from the
+ * hub without anything failing — the same class of silent break the slug check
+ * exists for. The ids are read out of the source text rather than imported,
+ * because this script deliberately runs without type stripping.
+ */
+const categorySource = readFileSync(join(here, "..", "lib", "questions.ts"), "utf8");
+const starterLists = [...categorySource.matchAll(/starters:\s*\[([^\]]*)\]/g)];
+
+if (starterLists.length !== VALID_CATEGORIES.size) {
+  errors.push(
+    `lib/questions.ts: found ${starterLists.length} "starters" lists for ${VALID_CATEGORIES.size} categories`,
+  );
+}
+for (const [, list] of starterLists) {
+  const ids = [...list.matchAll(/"([^"]+)"/g)].map(([, id]) => id);
+  if (ids.length === 0) errors.push(`lib/questions.ts: empty "starters" list`);
+  for (const id of ids) {
+    if (!seenIds.has(id)) {
+      errors.push(`lib/questions.ts: starter "${id}" is not a question id`);
+    }
+  }
+}
+
 if (errors.length > 0) {
   console.error(`content check failed (${errors.length} problem${errors.length === 1 ? "" : "s"}):`);
   for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
 }
 
-console.log(`content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs`);
+console.log(
+  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists`,
+);
