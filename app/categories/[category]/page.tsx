@@ -102,7 +102,7 @@ export default async function CategoryPage({
           <p className="mt-2 text-sm text-[var(--page-muted)]">
             {items.length} question{items.length === 1 ? "" : "s"} in this category.
           </p>
-          <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[var(--page-muted)]">
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-[var(--page-muted)]">
             {c.intro}
           </p>
 
