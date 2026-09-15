@@ -1,4 +1,5 @@
 import raw from "../content/questions.json";
+import { buildRelatedIndex, type RelatedIndex } from "./related";
 
 /**
  * `blurb` is the one-line summary used in metadata and on the deck. `intro`
@@ -156,13 +157,25 @@ export function getCategoryStarters(key: CategoryKey): QuestionWithSlug[] {
     .filter((q): q is QuestionWithSlug => q !== undefined);
 }
 
+// One index per category, built on first use and reused for the rest of the
+// build. Every question page asks for its own related list, and the term
+// weights only depend on the category the page belongs to.
+const relatedIndexes = new Map<CategoryKey, RelatedIndex<QuestionWithSlug>>();
+
+/**
+ * Same-category cards ranked by how much of the topic they share, most
+ * relevant first. See `lib/related.ts` for the scoring.
+ */
 export function getRelatedQuestions(
   q: QuestionWithSlug,
   limit = 4,
 ): QuestionWithSlug[] {
-  return questions
-    .filter((o) => o.category === q.category && o.slug !== q.slug)
-    .slice(0, limit);
+  let index = relatedIndexes.get(q.category);
+  if (!index) {
+    index = buildRelatedIndex(getQuestionsByCategory(q.category));
+    relatedIndexes.set(q.category, index);
+  }
+  return index.related(q, limit);
 }
 
 export const QUESTION_COUNT = questions.length;

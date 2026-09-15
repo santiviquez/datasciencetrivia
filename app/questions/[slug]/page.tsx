@@ -46,7 +46,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
   if (!q) notFound();
 
   const category = CATEGORIES[q.category];
-  const related = getRelatedQuestions(q, 6);
+  const related = getRelatedQuestions(q, 8);
 
   const jsonLd = {
     "@context": "https://schema.org",
