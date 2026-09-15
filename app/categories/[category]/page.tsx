@@ -7,6 +7,7 @@ import {
   CATEGORIES,
   CATEGORY_KEYS,
   getCategoryBySlug,
+  getCategoryStarters,
   getQuestionsByCategory,
 } from "@/lib/questions";
 
@@ -53,6 +54,7 @@ export default async function CategoryPage({
 
   const c = CATEGORIES[key];
   const items = getQuestionsByCategory(key);
+  const starters = getCategoryStarters(key);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -100,6 +102,29 @@ export default async function CategoryPage({
           <p className="mt-2 text-sm text-[var(--page-muted)]">
             {items.length} question{items.length === 1 ? "" : "s"} in this category.
           </p>
+          <p className="mt-5 max-w-xl text-sm leading-relaxed text-[var(--page-muted)]">
+            {c.intro}
+          </p>
+
+          {starters.length > 0 ? (
+            <section aria-labelledby="start-here" className="mt-8 border border-[var(--rule)] p-5 sm:p-6">
+              <h2 id="start-here" className="font-[family-name:var(--font-card)] text-sm font-bold uppercase">
+                Start with these
+              </h2>
+              <ol className="mt-4 space-y-2.5">
+                {starters.map((q, i) => (
+                  <li key={q.id} className="flex gap-3 text-sm leading-snug">
+                    <span className="shrink-0 font-[family-name:var(--font-card)] text-xs text-[var(--page-muted)]" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <Link href={`/questions/${q.slug}`} className="underline decoration-[var(--page-rule)] underline-offset-2 hover:decoration-current">
+                      {q.question}
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
 
           <dl className="mt-10 space-y-6">
             {items.map((q) => (
