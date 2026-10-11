@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import TriviaCard from "./TriviaCard";
+import { Arrow, RateButton, RevealButton } from "./DeckControls";
+import type { CategoryKey } from "@/lib/questions";
 
 export interface QuizCard {
   id: string;
+  category: CategoryKey;
   question: string;
   answer: string;
-  slug: string;
+  proposedBy?: string;
 }
 
 type Mark = "got" | "missed";
@@ -15,7 +18,6 @@ type Mark = "got" | "missed";
 interface QuizProps {
   name: string;
   url: string;
-  color: string;
   /** The run rendered on the server; "New quiz" draws a fresh one from `pool`. */
   initial: QuizCard[];
   pool: QuizCard[];
@@ -38,156 +40,154 @@ function draw(pool: readonly QuizCard[], n: number): QuizCard[] {
 
 function verdict(score: number, total: number): string {
   const share = score / total;
-  if (share === 1) return "Perfect run.";
+  if (share === 1) return "Perfect run. Share it before it goes to your head.";
   if (share >= 0.8) return "Interview ready on this one.";
-  if (share >= 0.5) return "Solid, with a few gaps worth a look.";
-  return "Plenty to review. The cards you missed are linked below.";
+  if (share >= 0.5) return "Solid, with a few gaps. Go back with the arrows to see the ones you missed.";
+  return "Plenty to review. Go back with the arrows to see the ones you missed.";
 }
 
 /**
- * A self-marked quiz: read the question, answer in your head, reveal, then say
- * whether you got it. The cards have free-text answers, so self-marking is the
- * honest format; multiple choice would mean inventing wrong answers for them.
+ * The deck, played as a quiz: the same card, arrows and buttons, with the face
+ * buttons answering "did you get it?" instead of "how hard was it?". After the
+ * last card, one more card holds the score. Cards have free-text answers, so
+ * you mark yourself; multiple choice would mean inventing wrong answers.
  */
-export default function Quiz({ name, url, color, initial, pool }: QuizProps) {
+export default function Quiz({ name, url, initial, pool }: QuizProps) {
   const [run, setRun] = useState(initial);
-  const [revealed, setRevealed] = useState<Record<string, boolean>>({});
+  const [index, setIndex] = useState(0);
+  const [revealed, setRevealed] = useState(false);
   const [marks, setMarks] = useState<Record<string, Mark>>({});
 
   const total = run.length;
-  const marked = run.filter((q) => marks[q.id]).length;
   const score = run.filter((q) => marks[q.id] === "got").length;
-  const done = marked === total;
+  const done = run.every((q) => marks[q.id]);
+  // Once every card is marked there is one more card: the score.
+  const last = done ? total : total - 1;
+  const onScore = done && index === total;
+  const current = onScore ? undefined : run[index];
 
-  function mark(id: string, m: Mark) {
-    const next = { ...marks, [id]: m };
-    setMarks(next);
-    if (run.every((q) => next[q.id])) {
-      const finalScore = run.filter((q) => next[q.id] === "got").length;
-      window.plausible?.("Quiz completed", { props: { quiz: name, score: finalScore } });
-    }
-  }
+  const go = useCallback(
+    (delta: number) => {
+      setIndex((i) => Math.min(Math.max(i + delta, 0), last));
+      setRevealed(false);
+    },
+    [last],
+  );
 
-  function restart() {
+  const mark = useCallback(
+    (m: Mark) => {
+      if (!current || !revealed) return;
+      const next = { ...marks, [current.id]: m };
+      setMarks(next);
+      setRevealed(false);
+      const firstOpen = run.findIndex((q) => !next[q.id]);
+      if (firstOpen === -1) {
+        setIndex(total);
+        window.plausible?.("Quiz completed", {
+          props: { quiz: name, score: run.filter((q) => next[q.id] === "got").length },
+        });
+      } else {
+        // Carry on from here, or wrap back to a card that was skipped.
+        const after = run.findIndex((q, i) => i > index && !next[q.id]);
+        setIndex(after === -1 ? firstOpen : after);
+      }
+    },
+    [current, revealed, marks, run, index, total, name],
+  );
+
+  const restart = useCallback(() => {
     setRun(draw(pool, initial.length));
-    setRevealed({});
     setMarks({});
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+    setIndex(0);
+    setRevealed(false);
+  }, [pool, initial.length]);
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const t = e.target as HTMLElement | null;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      switch (e.key.toLowerCase()) {
+        case "arrowright": e.preventDefault(); go(1); break;
+        case "arrowleft": e.preventDefault(); go(-1); break;
+        case "a": setRevealed((r) => !r); break;
+        case "g": mark("got"); break;
+        case "m": mark("missed"); break;
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [go, mark]);
 
   const shareText = `I scored ${score}/${total} on the ${name} at Data Science Trivia. Can you beat it?`;
   const xShare = `https://x.com/intent/post?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`;
   const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-  const missed = run.filter((q) => marks[q.id] === "missed");
+  const answered = Object.keys(marks).length;
+  const m = current ? marks[current.id] : undefined;
 
   return (
-    <div>
-      <p className="sticky top-0 z-10 -mx-4 border-b border-[var(--rule)] bg-white px-4 py-2 text-sm" aria-live="polite">
-        <span className="font-semibold">{marked}</span> of {total} answered
-        {marked > 0 ? (
-          <>
-            {" · "}
-            <span className="font-semibold">{score}</span> right
-          </>
-        ) : null}
+    <div className="flex h-full w-full flex-col items-center">
+      {/* Where the deck has its category filter: where you are in the run. */}
+      <p className="mb-4 flex shrink-0 items-center gap-x-5 text-[13px] text-[var(--muted)]" aria-live="polite">
+        <span className="text-[#1a202c]">{name}</span>
+        <span>{onScore ? "Done" : `${index + 1} of ${total}`}</span>
+        {answered > 0 ? <span>{score} right</span> : null}
       </p>
 
-      <ol className="mt-6 space-y-6">
-        {run.map((q, i) => {
-          const isRevealed = revealed[q.id];
-          const m = marks[q.id];
-          return (
-            <li key={q.id} className="border-l-[3px] pl-4" style={{ borderColor: color }}>
-              <p className="font-[family-name:var(--font-card)] text-xs font-bold text-[var(--muted)]">
-                Question {i + 1}
-              </p>
-              <h2 className="mt-1 font-medium leading-snug">{q.question}</h2>
+      <div className="flex min-h-0 w-full flex-1 items-center justify-center">
+        <Arrow dir="left" label="Previous card" onClick={() => go(-1)} disabled={index === 0} />
+        {current ? (
+          <TriviaCard
+            category={current.category}
+            question={current.question}
+            answer={current.answer}
+            proposedBy={current.proposedBy}
+            revealed={revealed || Boolean(m)}
+          />
+        ) : (
+          <TriviaCard
+            category={run[0].category}
+            question={`You scored ${score}/${total}`}
+            answer={verdict(score, total)}
+            revealed
+          />
+        )}
+        <Arrow dir="right" label="Next card" onClick={() => go(1)} disabled={index >= last} />
+      </div>
 
-              {/* In the HTML from the start, so crawlers and the Quiz markup see it. */}
-              <p hidden={!isRevealed} className="mt-3 text-sm leading-relaxed">
-                {q.answer}
-              </p>
-
-              {isRevealed ? (
-                <div>
-                  {m ? (
-                    <p className="mt-2 text-sm text-[var(--muted)]">
-                      {m === "got" ? "You got it." : "Missed."}{" "}
-                      <Link href={`/questions/${q.slug}`} className="underline underline-offset-2">
-                        Read the card
-                      </Link>
-                    </p>
-                  ) : (
-                    <div className="mt-3 flex gap-2">
-                      <button
-                        type="button"
-                        onClick={() => mark(q.id, "got")}
-                        className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
-                      >
-                        I got it
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => mark(q.id, "missed")}
-                        className="border-2 border-black/30 px-3 py-1.5 text-xs font-semibold transition hover:border-black"
-                      >
-                        I missed it
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => setRevealed({ ...revealed, [q.id]: true })}
-                  className="mt-3 border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
-                >
-                  Show answer
-                </button>
-              )}
-            </li>
-          );
-        })}
-      </ol>
-
-      {done ? (
-        <section aria-labelledby="result" className="mt-10 border-2 border-black p-5 sm:p-6">
-          <h2 id="result" className="font-[family-name:var(--font-display)] text-xl">
-            You scored {score}/{total}
-          </h2>
-          <p className="mt-2 text-sm">{verdict(score, total)}</p>
-          <div className="mt-4 flex flex-wrap gap-2">
-            <a href={xShare} target="_blank" rel="noopener noreferrer" className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white">
+      {current ? (
+        <>
+          {m ? (
+            <p className="mt-6 shrink-0 py-2 text-sm text-[var(--muted)]">
+              {m === "got" ? "You got this one." : "You missed this one."}
+            </p>
+          ) : (
+            <RevealButton revealed={revealed} onClick={() => setRevealed((r) => !r)} />
+          )}
+          <div className={`mt-4 flex shrink-0 items-center gap-1 ${revealed || m ? "" : "invisible"}`}>
+            <RateButton active={m === "got"} tone="#38a169" onClick={() => mark("got")} icon="happy">
+              Got it
+            </RateButton>
+            <RateButton active={m === "missed"} tone="#e53e3e" onClick={() => mark("missed")} icon="sad">
+              Missed it
+            </RateButton>
+          </div>
+        </>
+      ) : (
+        <>
+          <RevealButton revealed onClick={restart}>
+            New quiz
+          </RevealButton>
+          <div className="mt-4 flex shrink-0 items-center gap-1 text-sm font-semibold text-[#319795]">
+            <a href={xShare} target="_blank" rel="noopener noreferrer" className="rounded-md px-4 py-1.5 transition hover:bg-[#edf2f7]">
               Share on X
             </a>
-            <a href={linkedInShare} target="_blank" rel="noopener noreferrer" className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white">
+            <a href={linkedInShare} target="_blank" rel="noopener noreferrer" className="rounded-md px-4 py-1.5 transition hover:bg-[#edf2f7]">
               Share on LinkedIn
             </a>
-            <button type="button" onClick={restart} className="border-2 border-black bg-black px-3 py-1.5 text-xs font-semibold text-white">
-              New quiz
-            </button>
           </div>
-          {missed.length > 0 ? (
-            <div className="mt-5">
-              <p className="text-sm font-semibold">Worth another look</p>
-              <ul className="mt-2 space-y-1.5">
-                {missed.map((q) => (
-                  <li key={q.id} className="text-sm leading-snug">
-                    <Link href={`/questions/${q.slug}`} className="underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current">
-                      {q.question}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-        </section>
-      ) : (
-        <p className="mt-8 text-sm">
-          <button type="button" onClick={restart} className="underline underline-offset-2">
-            Draw 10 different questions
-          </button>
-        </p>
+        </>
       )}
     </div>
   );

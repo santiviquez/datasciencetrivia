@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Author from "@/components/Author";
+import GameScreen from "@/components/GameScreen";
 import Quiz, { type QuizCard } from "@/components/Quiz";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { SCHEMA_ID } from "@/lib/schema";
 import { CATEGORIES, type QuestionWithSlug } from "@/lib/questions";
 import {
   QUESTIONS_PER_QUIZ,
+  QUIZ_KEYS,
   QUIZZES,
   QUIZ_SLUGS,
   getInitialRun,
@@ -24,7 +25,7 @@ export function generateStaticParams(): Params[] {
 export const dynamicParams = false;
 
 function toCard(q: QuestionWithSlug): QuizCard {
-  return { id: q.id, question: q.question, answer: q.answer, slug: q.slug };
+  return { id: q.id, category: q.category, question: q.question, answer: q.answer, proposedBy: q.proposedBy };
 }
 
 export async function generateMetadata({
@@ -53,7 +54,6 @@ export default async function QuizPage({ params }: { params: Promise<Params> }) 
   const quiz = QUIZZES[slug];
   const pool = getQuizPool(slug);
   const initial = getInitialRun(slug);
-  const color = CATEGORIES[quiz.categories[0]].color;
   const url = absoluteUrl(`/quiz/${slug}`);
 
   // Google's education Q&A markup: a Quiz made of flashcard Questions.
@@ -92,42 +92,28 @@ export default async function QuizPage({ params }: { params: Promise<Params> }) 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
 
-      <div className="deck-frame min-h-screen border-[10px] sm:border-[15px]">
-        <main id="main" className="mx-auto w-full max-w-3xl px-4 py-8 sm:py-12">
-          <nav aria-label="Breadcrumb" className="mb-8 text-xs text-[var(--muted)]">
+      <GameScreen
+        heading={quiz.name}
+        keys={QUIZ_KEYS}
+        game={<Quiz name={quiz.name} url={url} initial={initial.map(toCard)} pool={pool.map(toCard)} />}
+      >
+        <div className="mx-auto w-full max-w-4xl px-6 py-16">
+          <nav aria-label="Breadcrumb" className="mb-10 text-xs text-[var(--muted)]">
             <ol className="flex flex-wrap items-center gap-2">
-              <li><Link href="/" className="underline underline-offset-2 hover:text-[var(--fg)]">Home</Link></li>
+              <li><Link href="/" className="underline underline-offset-2">Home</Link></li>
               <li aria-hidden="true">/</li>
-              <li><Link href="/quiz" className="underline underline-offset-2 hover:text-[var(--fg)]">Quizzes</Link></li>
+              <li><Link href="/quiz" className="underline underline-offset-2">Quizzes</Link></li>
             </ol>
           </nav>
 
-          <span className="mb-4 inline-block h-3 w-16" style={{ backgroundColor: color }} aria-hidden="true" />
-          <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl">{quiz.name}</h1>
-          <p className="mt-4 max-w-xl leading-relaxed">{quiz.intro}</p>
-          <p className="mt-2 text-sm text-[var(--muted)]">
-            {QUESTIONS_PER_QUIZ} questions per run, drawn from {pool.length}. Free, no sign-up.
-          </p>
-
-          <div className="mt-8">
-            <Quiz name={quiz.name} url={url} color={color} initial={initial.map(toCard)} pool={pool.map(toCard)} />
-          </div>
-
-          <section aria-labelledby="more" className="mt-14 border-t border-[var(--rule)] pt-8">
-            <h2 id="more" className="font-[family-name:var(--font-display)] text-lg">More quizzes</h2>
-            <div className="mt-4 flex flex-wrap gap-3">
-              {QUIZ_SLUGS.filter((s) => s !== slug).map((s) => (
-                <Link
-                  key={s}
-                  href={`/quiz/${s}`}
-                  className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
-                >
-                  {QUIZZES[s].name}
-                </Link>
-              ))}
-            </div>
-            <p className="mt-6 text-sm text-[var(--muted)]">
-              Prefer to study than be tested? Every question in this quiz comes from the{" "}
+          <section aria-labelledby="about-quiz" className="max-w-2xl">
+            <h2 id="about-quiz" className="font-[family-name:var(--font-display)] text-lg">
+              About the {quiz.name.toLowerCase()}
+            </h2>
+            <p className="mt-4 leading-relaxed">{quiz.intro}</p>
+            <p className="mt-3 text-sm text-[var(--muted)]">
+              {QUESTIONS_PER_QUIZ} questions per run, drawn from {pool.length}. Free, no sign-up.
+              Every question comes from the{" "}
               {quiz.categories.map((c, i) => (
                 <span key={c}>
                   {i > 0 ? (i === quiz.categories.length - 1 ? " and " : ", ") : null}
@@ -140,16 +126,29 @@ export default async function QuizPage({ params }: { params: Promise<Params> }) 
                 <>
                   , and the{" "}
                   <Link href="/ai-history" className="underline underline-offset-2">AI history timeline</Link>{" "}
-                  puts them in order
+                  puts the history ones in order
                 </>
               ) : null}
               .
             </p>
           </section>
 
-          <div className="mt-16 border-t border-[var(--rule)] pt-8"><Author /></div>
-        </main>
-      </div>
+          <section aria-labelledby="more" className="mt-14">
+            <h2 id="more" className="font-[family-name:var(--font-display)] text-lg">More quizzes</h2>
+            <div className="mt-4 flex flex-wrap gap-3">
+              {QUIZ_SLUGS.filter((s) => s !== slug).map((s) => (
+                <Link
+                  key={s}
+                  href={`/quiz/${s}`}
+                  className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
+                >
+                  {QUIZZES[s].name}
+                </Link>
+              ))}
+            </div>
+          </section>
+        </div>
+      </GameScreen>
     </>
   );
 }
