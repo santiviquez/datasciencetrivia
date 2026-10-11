@@ -1,0 +1,36 @@
+{
+  "brand": {
+    "names": ["Data Science Trivia", "DataScienceTrivia", "datasciencetrivia.com"],
+    "domain": "datasciencetrivia.com"
+  },
+  "competitors": [
+    {"name": "Brainscape", "domain": "brainscape.com"},
+    {"name": "Quizlet", "domain": "quizlet.com"},
+    {"name": "EasyDeepLearn", "domain": "easydeeplearn.com"},
+    {"name": "DataLemur", "domain": "datalemur.com"},
+    {"name": "Interview Query", "domain": "interviewquery.com"},
+    {"name": "StrataScratch", "domain": "stratascratch.com"},
+    {"name": "GeeksforGeeks", "domain": "geeksforgeeks.org"},
+    {"name": "Analytics Vidhya", "domain": "analyticsvidhya.com"}
+  ],
+  "models": {
+    "chat_gpt": "gpt-6.1-sol",
+    "gemini": "gemini-3.8-flash",
+    "claude": "claude-sonnet-5-5",
+    "perplexity": "sonar-pro"
+  },
+  "prompts": [
+    {"id": "practice-sites", "type": "unbranded", "text": "What are the best websites to practice data science interview questions?"},
+    {"id": "ml-flashcards", "type": "unbranded", "text": "Are there good flashcards for machine learning interview prep?"},
+    {"id": "stats-questions", "type": "unbranded", "text": "Where can I find statistics interview questions with answers for a data scientist role?"},
+    {"id": "dl-questions", "type": "unbranded", "text": "Give me a resource with deep learning interview questions and answers."},
+    {"id": "ds-trivia-quiz", "type": "unbranded", "text": "Is there a data science trivia quiz I can use to test myself?"},
+    {"id": "mle-prep", "type": "unbranded", "text": "How should I prepare for a machine learning engineer interview, and which free resources should I use?"},
+    {"id": "llm-questions", "type": "unbranded", "text": "Where can I practice LLM and generative AI interview questions?"},
+    {"id": "free-ml-quiz", "type": "unbranded", "text": "Recommend a free quiz to test my machine learning fundamentals."},
+    {"id": "bias-variance", "type": "unbranded", "text": "Explain the bias-variance tradeoff the way I should answer it in a data science interview, and link a good source."},
+    {"id": "ai-history-trivia", "type": "unbranded", "text": "What are some fun history of AI trivia questions?"},
+    {"id": "brand-what", "type": "branded", "text": "What is datasciencetrivia.com?"},
+    {"id": "brand-good", "type": "branded", "text": "Is Data Science Trivia a good way to prepare for data science interviews?"}
+  ]
+}
