@@ -1,7 +1,8 @@
 {
   "brand": {
     "names": ["Data Science Trivia", "DataScienceTrivia", "datasciencetrivia.com"],
-    "domain": "datasciencetrivia.com"
+    "domain": "datasciencetrivia.com",
+    "generic_names": ["Data Science Trivia"]
   },
   "competitors": [
     {"name": "Brainscape", "domain": "brainscape.com"},

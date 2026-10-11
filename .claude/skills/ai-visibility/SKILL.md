@@ -36,6 +36,12 @@ the tracked brands, every cited domain, and our cited URLs. Headline rates and t
 visibility score (`0.6 × mention% + 0.4 × citation%`) use **unbranded prompts only**.
 Branded prompts check what assistants say about the site itself.
 
+"Data Science Trivia" is also an ordinary phrase ("a data science trivia quiz",
+"BrainPickle's Data Science Trivia Quiz"), so names listed in `generic_names` only
+count in title case as a standalone name. If the matching rules change, re-score
+old runs without paying again:
+`python3 scripts/seo/ai_visibility.py --rescore /mnt/project-files/seo/ai-visibility/<date>.json`.
+
 ## Reading the results
 
 - `invisible_prompts`: questions where no assistant mentions us. These are content
