@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import TriviaCard from "./TriviaCard";
 import { Arrow, RateButton, RevealButton } from "./DeckControls";
+import { LinkedInIcon, XIcon } from "./SocialIcons";
 import type { CategoryKey } from "@/lib/questions";
 
 export interface QuizCard {
@@ -179,16 +180,57 @@ export default function Quiz({ name, url, initial, pool }: QuizProps) {
           <RevealButton revealed onClick={restart}>
             New quiz
           </RevealButton>
-          <div className="mt-4 flex shrink-0 items-center gap-1 text-sm font-semibold text-[#319795]">
-            <a href={xShare} target="_blank" rel="noopener noreferrer" className="rounded-md px-4 py-1.5 transition hover:bg-[#edf2f7]">
+          <div className="mt-4 flex shrink-0 items-center gap-2">
+            <ShareButton href={xShare} text={shareText} url={url} className="bg-black">
+              <XIcon size={14} />
               Share on X
-            </a>
-            <a href={linkedInShare} target="_blank" rel="noopener noreferrer" className="rounded-md px-4 py-1.5 transition hover:bg-[#edf2f7]">
+            </ShareButton>
+            <ShareButton href={linkedInShare} text={shareText} url={url} className="bg-[#0a66c2]">
+              <LinkedInIcon size={14} />
               Share on LinkedIn
-            </a>
+            </ShareButton>
           </div>
         </>
       )}
     </div>
+  );
+}
+
+/**
+ * A link to the network's own share page. On a phone it opens the system share
+ * sheet instead, because that is the only way a web page can hand the post to
+ * the X or LinkedIn app; their web share pages open in the browser.
+ */
+function ShareButton({
+  href,
+  text,
+  url,
+  className,
+  children,
+}: {
+  href: string;
+  text: string;
+  url: string;
+  className: string;
+  children: React.ReactNode;
+}) {
+  function onClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    const touch = window.matchMedia("(pointer: coarse)").matches;
+    if (!touch || typeof navigator.share !== "function") return;
+    e.preventDefault();
+    // Rejected when the sheet is dismissed; nothing to do then.
+    navigator.share({ text, url }).catch(() => {});
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={onClick}
+      className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-semibold text-white transition hover:opacity-85 ${className}`}
+    >
+      {children}
+    </a>
   );
 }
