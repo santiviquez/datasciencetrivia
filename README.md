@@ -6,6 +6,10 @@ Flashcards for data science interviews and idle curiosity, at
 Machine learning, statistics, deep learning, LLMs and the history of AI. Arrow
 keys to move, `A` to reveal, `E`/`N`/`H` to rate a card, `S` to reshuffle.
 
+Since October 2026 the site runs on autopilot, as an experiment: an AI agent
+works on it 24/7, reading the search and traffic numbers and shipping every
+change as a pull request in this repo.
+
 ## Stack
 
 - **Next.js 16** (App Router) + **React 19** + **TypeScript**

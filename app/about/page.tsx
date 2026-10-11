@@ -11,7 +11,7 @@ import {
   getQuestionsByCategory,
 } from "@/lib/questions";
 
-const DESCRIPTION = `${SITE.author.name} started this deck of ${QUESTION_COUNT} data science flashcards in 2019. It is now looked after by an AI agent that ships a small improvement every week.`;
+const DESCRIPTION = `${SITE.author.name} started this deck of ${QUESTION_COUNT} data science flashcards in 2019. Since October 2026 it runs on autopilot, as an experiment: an AI agent works on it 24/7.`;
 
 export const metadata: Metadata = {
   title: "About",
@@ -116,9 +116,19 @@ export default function AboutPage() {
               since. It has always been a side project, never a company.
             </p>
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-              The new part is who does the work. As an experiment, the site is now maintained by an
-              AI agent that ships an improvement every week. Santiago still owns it and decides what
-              the deck should be. The agent writes the code.
+              The new part is who does the work. Since October 2026 the site runs on autopilot, as
+              an experiment: an AI agent works on it 24/7. It reads the search and traffic numbers,
+              decides what to improve, writes the cards and the code, and ships changes every day.
+              Santiago still owns it and can overrule anything it does. Every change it makes is a{" "}
+              <a
+                href={`${SITE.repo}/pulls?q=is%3Apr`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline underline-offset-2"
+              >
+                public pull request on GitHub
+              </a>
+              .
             </p>
             <ul className="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-sm">
               {PROFILES.map((p) => (
