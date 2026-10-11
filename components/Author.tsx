@@ -34,6 +34,14 @@ export default function Author() {
         <Link href="/about" className="underline underline-offset-2 hover:text-[var(--fg)]">
           About
         </Link>
+        {" · "}
+        <Link href="/quiz" className="underline underline-offset-2 hover:text-[var(--fg)]">
+          Quizzes
+        </Link>
+        {" · "}
+        <Link href="/ai-history" className="underline underline-offset-2 hover:text-[var(--fg)]">
+          History of AI
+        </Link>
         <span className="text-black/25">
           {" "}
           · To suggest new questions or report an error send me a dm.

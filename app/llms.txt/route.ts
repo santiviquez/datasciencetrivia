@@ -25,6 +25,8 @@ export function GET() {
     `Play the deck: ${SITE.url}`,
     `All questions with answers: ${SITE.url}/questions`,
     `Who made it and how it works: ${SITE.url}/about`,
+    `Timeline of the history of AI: ${SITE.url}/ai-history`,
+    `Quizzes (10 questions each, with answers): ${SITE.url}/quiz`,
     "",
   ];
 
