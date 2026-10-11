@@ -1,0 +1,20 @@
+name: IndexNow
+
+# Pings Bing and the other IndexNow engines with every sitemap URL after a
+# push to master. Vercel deploys on the same push, so the job waits for the
+# new build to be serving before it submits.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: sleep 180
+      - run: node scripts/indexnow.mjs
