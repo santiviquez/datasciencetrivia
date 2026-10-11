@@ -18,6 +18,11 @@
     "category": "ml",
     "question": "What is the type of machine learning algorithms used to draw inferences from labeled data?",
     "answer": "Supervised Learning.",
+    "explanation": [
+      "Supervised learning. It trains on examples that come with the correct output, the label, and learns a mapping from inputs to outputs that it can then apply to new, unlabeled inputs.",
+      "When the label is a category, such as spam or not spam, the task is classification; when it is a number, such as a house price, it is regression. Common algorithms include linear and logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors and neural networks.",
+      "It contrasts with unsupervised learning, which finds structure in unlabeled data (clustering, dimensionality reduction), semi-supervised learning, which mixes a few labels with many unlabeled examples, and reinforcement learning, which learns from rewards instead of labels. Self-supervised learning, used to pretrain large language models, creates its labels from the data itself, for example by predicting the next word."
+    ],
     "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data"
   },
   {
@@ -46,6 +51,11 @@
     "category": "ml",
     "question": "What is pruning in a decision tree?",
     "answer": "Removing sub-nodes that do not earn their keep, so a fully grown tree stops fitting noise. Pre-pruning caps growth up front with max depth or minimum samples per leaf; post-pruning grows the tree, then collapses branches whose removal does not hurt held-out error.",
+    "explanation": [
+      "Pruning removes branches of a decision tree that add complexity without improving predictions on new data, so the tree stops memorizing noise in the training set. It is the main way to control a single tree's overfitting.",
+      "Pre-pruning stops the tree from growing in the first place, with limits such as max_depth, min_samples_split, min_samples_leaf or a minimum impurity decrease. Post-pruning grows the full tree and then cuts it back. The standard method is cost-complexity pruning, used by CART and exposed in scikit-learn as ccp_alpha, which trades the tree's error against its number of leaves and picks the strength by cross-validation.",
+      "Pruned trees are smaller, faster and easier to explain. Ensembles change the picture: random forests usually grow deep, unpruned trees and rely on averaging to cut variance, while gradient boosting uses shallow trees that are effectively pre-pruned."
+    ],
     "slug": "what-is-pruning-in-a-decision-tree"
   },
   {
@@ -100,6 +110,11 @@
     "category": "ml",
     "question": "What is data leakage?",
     "answer": "When information from outside the training dataset is used to create the model. For example, including any information from the validation or test sets into the model.",
+    "explanation": [
+      "Data leakage is when information that would not be available at prediction time gets into the training data or the features. The model looks great in validation and then fails in production, because it learned from a signal it will never see again.",
+      "The two common forms are target leakage and train-test contamination. Target leakage is a feature that is a consequence of the label, such as \"days in hospital\" when predicting whether a patient will be admitted, or a refund flag when predicting fraud. Contamination happens when preprocessing such as scaling, imputation or feature selection is fit on the full dataset before splitting, or when random splits put the same customer, or future rows of a time series, on both sides.",
+      "To prevent it: split before any fitting, put all preprocessing inside a pipeline that is fit on training folds only, split by time or by group when rows are related, and be suspicious of any single feature with implausibly high importance or validation scores that seem too good to be true."
+    ],
     "slug": "what-is-data-leakage"
   },
   {
@@ -231,6 +246,11 @@
     "category": "ml",
     "question": "What is recall?",
     "answer": "Recall is the number of the correct predictions of the positive class divided by the number of predictions that should have been classified in the positive class. TP/(TP + FN)",
+    "explanation": [
+      "Recall, also called sensitivity or the true positive rate, is the share of actual positives the model finds: recall = TP / (TP + FN). It answers \"of everything that was really positive, how much did we catch?\"",
+      "Example: there are 50 fraudulent transactions and the model flags 40 of them. Recall is 40/50 = 0.8, no matter how many legitimate transactions it also flagged by mistake. That is why recall is always reported with precision, which counts those false alarms.",
+      "Prioritize recall when missing a positive is expensive, as in cancer screening or fraud detection. You raise it by lowering the decision threshold, which usually lowers precision. Predicting everything as positive gives a recall of 1.0 and is useless, which is the tradeoff the F1 score and the precision-recall curve capture."
+    ],
     "slug": "what-is-recall"
   },
   {
@@ -238,6 +258,11 @@
     "category": "ml",
     "question": "What is F1-score?",
     "answer": "Is a measure of a test's accuracy. F1-score is the harmonic mean of the precision and recall.",
+    "explanation": [
+      "The F1 score is the harmonic mean of precision and recall: F1 = 2 · precision · recall / (precision + recall). It runs from 0 to 1 and is high only when both precision and recall are high.",
+      "Example: a fraud model flags 100 transactions, 60 of which are fraud, out of 120 frauds in total. Precision is 60/100 = 0.6, recall is 60/120 = 0.5, and F1 = 2 · 0.6 · 0.5 / 1.1 ≈ 0.55. The harmonic mean punishes imbalance, so precision 1.0 with recall 0.1 gives an F1 of only about 0.18.",
+      "F1 is the usual choice on imbalanced data, where accuracy is misleading, but it ignores true negatives and assumes precision and recall matter equally. When they don't, use F-beta (F2 weights recall more, F0.5 weights precision more). For multi-class problems, macro-F1 averages the per-class scores and micro-F1 pools all predictions first."
+    ],
     "slug": "what-is-f1-score"
   },
   {
@@ -469,6 +494,11 @@
     "category": "ml",
     "question": "What is the precision-recall curve?",
     "answer": "A precision-recall curve (or PR Curve) is a plot of the precision (y-axis) and the recall (x-axis) for different probability thresholds.",
+    "explanation": [
+      "A precision-recall (PR) curve plots precision on the y-axis against recall on the x-axis as you sweep the classifier's decision threshold from high to low. Each point is one threshold; together they show the tradeoff between catching more positives and raising more false alarms.",
+      "The area under it, usually reported as average precision (AP), summarizes the curve in one number. A random classifier's PR curve is a flat line at the positive-class rate, so on a dataset with 1% positives the baseline is 0.01, not 0.5.",
+      "PR curves are preferred over ROC curves when positives are rare, as in fraud, disease screening or search. ROC uses the false positive rate, whose denominator is the huge pool of negatives, so it can look excellent while precision is terrible. The PR curve shows that problem directly. It is also how you pick an operating threshold: choose the point whose precision and recall fit the cost of each kind of error."
+    ],
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-the-precision-recall-curve"
   },
@@ -537,6 +567,11 @@
     "category": "stats",
     "question": "What is the difference between \"long\" and \"wide\" format data?",
     "answer": "Wide: categorical data is grouped in a single row, long: each row is an observation belonging to a particular category.",
+    "explanation": [
+      "In wide format each subject has one row and repeated measurements spread across columns, such as one row per student with columns math, physics and chemistry. In long format each row is a single observation, so the same student appears three times with a subject column and a score column.",
+      "Long format is what most plotting and modelling tools expect, because every variable is one column; it matches the \"tidy data\" convention. Wide format is easier for people to read and is what many spreadsheets and some algorithms, like a feature matrix for scikit-learn, need.",
+      "Converting between them is called melting or pivoting. In pandas, melt goes from wide to long and pivot or pivot_table goes from long to wide; in R the tidyr functions pivot_longer and pivot_wider do the same."
+    ],
     "slug": "what-is-the-difference-between-long-and-wide-format-data"
   },
   {
@@ -703,6 +738,11 @@
     "category": "stats",
     "question": "What is the difference between covariance and correlation?",
     "answer": "Correlation is covariance divided by the two standard deviations, so it is unitless and bounded in [-1, 1], while covariance carries the units of both variables and has no fixed scale. That is what makes correlation comparable across pairs; both only capture linear association.",
+    "explanation": [
+      "Covariance measures whether two variables move together, and correlation is covariance rescaled to a fixed range: corr(X, Y) = cov(X, Y) / (σX · σY). Covariance can be any number and carries the units of both variables; correlation is unitless and always between −1 and 1.",
+      "That is why correlation is the one you compare across pairs. The covariance between height in centimetres and weight in kilograms changes by a factor of 100 if you switch to metres; the correlation stays the same. A correlation of 0.8 means a strong positive linear relationship whatever the units.",
+      "Both only capture linear association and both are sensitive to outliers. A correlation of 0 does not mean the variables are independent, and neither measure says anything about causation. The covariance matrix is still the more useful object in practice: PCA, portfolio risk and the multivariate normal distribution are all built on it."
+    ],
     "slug": "what-is-the-difference-between-covariance-and-correlation"
   },
   {
@@ -750,6 +790,11 @@
     "category": "stats",
     "question": "What is Survivorship bias?",
     "answer": "Is the logical error of concentrating on the people or things that made it past some selection process and overlooking those that did not.",
+    "explanation": [
+      "Survivorship bias is drawing conclusions from the cases that made it through some filter while ignoring the ones that didn't, which makes the survivors look more typical, or more successful, than they are.",
+      "The classic example is from World War II: the statistician Abraham Wald was asked where to add armour to bombers based on the bullet holes in planes that came back. He argued for armouring the places with no holes, because planes hit there were the ones that never returned. Everyday versions include studying only successful startups or funds that still exist, which makes risky strategies look safe.",
+      "In data science it shows up whenever the dataset is defined by an outcome: analysing only customers who are still active, training a credit model only on approved applicants, or measuring a feature's impact only on users who stuck around. The fix is to ask what process removed records from the data and, where possible, to include the failures."
+    ],
     "slug": "what-is-survivorship-bias"
   },
   {
@@ -790,6 +835,11 @@
     "category": "stats",
     "question": "What is RMSE?",
     "answer": "Root Mean Squared Error: the square root of MSE, which puts the error back in the units of the target. Squaring first lets large misses dominate, so RMSE is always at least MAE and far more outlier-sensitive — report MAE too when a handful of extreme rows drives the number.",
+    "explanation": [
+      "RMSE, root mean squared error, is the square root of the average squared difference between predictions and actual values: RMSE = √((1/n) Σ (yᵢ − ŷᵢ)²). It is the most common error metric for regression and is in the same units as the target.",
+      "Example: errors of 2, −1 and 4 give squared errors of 4, 1 and 16, a mean of 7 and an RMSE of about 2.65. The mean absolute error (MAE) of the same errors is 2.33. RMSE is always at least as large as MAE, and the gap grows when a few errors are large, because squaring lets big misses dominate.",
+      "Use RMSE when large errors are disproportionately costly; use MAE when every unit of error costs the same or the data has outliers you don't want to dominate the metric. RMSE is the metric least-squares regression implicitly optimizes. It is scale-dependent, so it can only be compared across models predicting the same target."
+    ],
     "slug": "what-is-rmse"
   },
   {
@@ -1119,6 +1169,11 @@
     "category": "dl",
     "question": "What is an epoch?",
     "answer": "A full training pass over the entire dataset such that each example has been seen once.",
+    "explanation": [
+      "An epoch is one full pass of the training algorithm over the entire training dataset, so that every example has been used once to update the model.",
+      "Epochs are split into batches. With 10,000 examples and a batch size of 100, one epoch is 100 iterations, meaning 100 gradient updates. Batch size sets how many examples go into each update; the number of epochs sets how many times the model sees the whole dataset.",
+      "Training usually runs for many epochs, since one pass is rarely enough to converge. Too few epochs underfit and too many overfit, so the number is normally chosen with early stopping: watch the validation loss after each epoch and stop when it stops improving. Data is typically reshuffled at the start of every epoch."
+    ],
     "slug": "what-is-an-epoch"
   },
   {
@@ -1175,6 +1230,11 @@
     "category": "dl",
     "question": "What is learning rate?",
     "answer": "Is a tuning parameter in an optimization algorithm that determines the step size at each iteration while moving toward a minimum of a loss function.",
+    "explanation": [
+      "The learning rate is the hyperparameter that sets how big a step gradient descent takes on each update: new weights = old weights − learning rate × gradient. It is usually written η or α, and it is often the single most important hyperparameter to tune.",
+      "Too small, and training crawls and can stall on plateaus or in poor local minima. Too large, and the updates overshoot the minimum, so the loss oscillates or diverges. Typical starting values are 0.1 to 0.01 for SGD and around 0.001 (3e-4 is a popular default) for Adam.",
+      "In practice the rate is rarely constant. Schedules such as step decay, cosine annealing or warmup followed by decay change it during training, and adaptive optimizers like Adam and RMSProp scale it per parameter. A learning-rate range test, which raises the rate every batch and watches the loss, is a quick way to find a good value."
+    ],
     "slug": "what-is-learning-rate"
   },
   {
