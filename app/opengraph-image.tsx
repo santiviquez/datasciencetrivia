@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
-import { QUESTION_COUNT } from "@/lib/questions";
+import { ogFonts } from "@/lib/og";
+import { CATEGORIES, CATEGORY_KEYS, QUESTION_COUNT } from "@/lib/questions";
 
 export const alt = "Data Science Trivia — Learn Data Science The Fun Way";
 export const size = { width: 1200, height: 630 };
@@ -17,33 +18,34 @@ export default function OpengraphImage() {
           justifyContent: "center",
           alignItems: "center",
           background: "#fbfbfa",
+          fontFamily: "Maven Pro",
           borderTop: "24px solid #72D0EA",
           borderLeft: "24px solid #92DCCF",
           borderRight: "24px solid #EFAAAD",
           borderBottom: "24px solid #BB92D4",
         }}
       >
-        <div style={{ display: "flex", fontSize: 82, fontWeight: 800, color: "#111", letterSpacing: -2 }}>
+        <div style={{ display: "flex", fontSize: 84, fontWeight: 700, color: "#111", letterSpacing: -2 }}>
           Data Science Trivia
         </div>
-        <div style={{ display: "flex", marginTop: 20, fontSize: 34, color: "#444" }}>
+        <div style={{ display: "flex", marginTop: 20, fontFamily: "Poppins", fontSize: 34, color: "#444" }}>
           {QUESTION_COUNT} flashcards to test what you actually know
         </div>
         <div style={{ display: "flex", marginTop: 44, gap: 16 }}>
-          {["Machine Learning", "Statistics", "Deep Learning", "History"].map((label, i) => (
+          {CATEGORY_KEYS.map((k) => (
             <div
-              key={label}
+              key={k}
               style={{
                 display: "flex",
                 padding: "10px 22px",
                 fontSize: 24,
-                fontWeight: 600,
+                fontWeight: 700,
                 color: "#111",
                 border: "4px solid #000",
-                background: ["#72D0EA", "#92DCCF", "#EFAAAD", "#BB92D4"][i],
+                background: CATEGORIES[k].color,
               }}
             >
-              {label}
+              {CATEGORIES[k].name}
             </div>
           ))}
         </div>
@@ -52,6 +54,6 @@ export default function OpengraphImage() {
         </div>
       </div>
     ),
-    size,
+    { ...size, fonts: ogFonts() },
   );
 }
