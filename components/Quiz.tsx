@@ -218,8 +218,10 @@ function ShareButton({
     const touch = window.matchMedia("(pointer: coarse)").matches;
     if (!touch || typeof navigator.share !== "function") return;
     e.preventDefault();
-    // Rejected when the sheet is dismissed; nothing to do then.
-    navigator.share({ text, url }).catch(() => {});
+    // The link goes inside the text: given a separate url, the X and LinkedIn
+    // apps keep only the link and drop the score. Rejected when the sheet is
+    // dismissed; nothing to do then.
+    navigator.share({ text: `${text} ${url}` }).catch(() => {});
   }
 
   return (
