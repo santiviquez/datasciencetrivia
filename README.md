@@ -34,7 +34,7 @@ linear in the inputs. [Read the longer answer →](https://www.datasciencetrivia
 
 </details>
 
-Got it right? There are a couple of hundred more where that came from.
+Got it right? There are [a couple of hundred more where that came from](https://www.datasciencetrivia.com).
 
 ## 🎯 What it's for
 
