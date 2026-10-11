@@ -1,85 +1,110 @@
-# Data Science Trivia
+<p align="center">
+  <a href="https://www.datasciencetrivia.com">
+    <img src="https://www.datasciencetrivia.com/opengraph-image" alt="Data Science Trivia: flashcards on machine learning, deep learning, generative AI, statistics and the history of AI" width="720">
+  </a>
+</p>
 
-Flashcards for data science interviews and idle curiosity, at
-[datasciencetrivia.com](https://www.datasciencetrivia.com).
+<h1 align="center">Data Science Trivia</h1>
 
-Machine learning, statistics, deep learning, LLMs and the history of AI. Arrow
-keys to move, `A` to reveal, `E`/`N`/`H` to rate a card, `S` to reshuffle.
+<p align="center">
+  Free flashcards for data science and machine learning interviews.<br>
+  Guess, flip the card, see how you did. No sign-up, no paywall.
+</p>
 
-Since October 2026 the site runs on autopilot, as an experiment: an AI agent
-works on it 24/7, reading the search and traffic numbers and shipping every
-change as a pull request in this repo.
+<p align="center">
+  <a href="https://www.datasciencetrivia.com"><img src="https://img.shields.io/badge/play-datasciencetrivia.com-72D0EA?style=flat-square" alt="Play at datasciencetrivia.com"></a>
+  <a href="https://www.datasciencetrivia.com/quiz"><img src="https://img.shields.io/badge/quizzes-7-F2C86B?style=flat-square" alt="7 quizzes"></a>
+  <a href="#-on-autopilot"><img src="https://img.shields.io/badge/autopilot-on-BB92D4?style=flat-square" alt="Autopilot on"></a>
+</p>
 
-## Stack
+---
 
-- **Next.js 16** (App Router) + **React 19** + **TypeScript**
-- **Tailwind CSS v4**
-- Deployed on **Vercel**
+## 🃏 Try one
 
-Every route is prerendered at build time. There is no database, no API and no
+> **Is logistic regression a linear model? Why?**
+
+<details>
+<summary>Flip the card</summary>
+<br>
+
+Yes. Logistic regression computes a linear combination of the inputs, and its
+decision boundary is the hyperplane where that combination is zero. The sigmoid
+on top only squashes the score into a probability; the log-odds are exactly
+linear in the inputs. [Read the longer answer →](https://www.datasciencetrivia.com/questions/is-logistic-regression-a-linear-model-why)
+
+</details>
+
+Got it right? There are a couple of hundred more where that came from.
+
+## 🎯 What it's for
+
+Data science interviews love the same few hundred questions: the
+bias-variance tradeoff, why accuracy lies on imbalanced data, what the learning
+rate actually does, who invented the perceptron. Data Science Trivia turns
+them into a deck you can flip through in a coffee break.
+
+The goal is simple: be the place people land when they search one of those
+questions, on Google or in an AI assistant, and give them a clear, correct
+answer they can learn from in a minute.
+
+## 📚 What's inside
+
+| | Category | What it covers |
+|---|---|---|
+| 🟦 | [Machine Learning](https://www.datasciencetrivia.com/categories/machine-learning) | Bias and variance, regularization, metrics, cross-validation, ensembles, encodings |
+| 🟥 | [Deep Learning](https://www.datasciencetrivia.com/categories/deep-learning) | Activations, gradient descent, dropout, batch norm, CNNs, LSTMs, Transformers |
+| 🟨 | [Generative AI](https://www.datasciencetrivia.com/categories/generative-ai) | Decoding, RAG, prompting vs fine-tuning, tokenization, the KV cache |
+| 🟩 | [Statistics](https://www.datasciencetrivia.com/categories/statistics) | Hypothesis tests, distributions, correlation, regression diagnostics |
+| 🟪 | [History](https://www.datasciencetrivia.com/categories/history) | The people, papers and datasets behind the field, from Bayes to the Transformer |
+
+And around the deck:
+
+- **Every card has its own page**, many with a longer answer: the reasoning, a
+  worked example and the follow-up question an interviewer would ask.
+- **[Quizzes](https://www.datasciencetrivia.com/quiz)**: ten cards on one
+  topic, scored, with a result you can share.
+- **[The history of AI](https://www.datasciencetrivia.com/ai-history)** as a
+  timeline, each milestone with a card to test yourself.
+- **[llms.txt](https://www.datasciencetrivia.com/llms.txt)**: the whole deck
+  as plain text, for AI assistants that want to quote it.
+
+On a keyboard: <kbd>←</kbd> <kbd>→</kbd> to move, <kbd>A</kbd> to flip,
+<kbd>E</kbd> / <kbd>N</kbd> / <kbd>H</kbd> to rate a card easy, neutral or hard.
+
+## 🤖 On autopilot
+
+Since October 2026 this project runs on autopilot, as an experiment: an AI
+agent works on it 24/7.
+
+Every day it:
+
+1. reads the numbers: Google Search Console, Plausible analytics, keyword
+   data, and whether AI assistants mention the site;
+2. picks the change most likely to help people find and learn from the deck;
+3. writes the cards or the code, checks the build, and opens a pull request;
+4. merges it once CI is green, which deploys the site.
+
+[Santiago Víquez](https://x.com/santiviquez) started the deck in 2019,
+still owns it and can overrule anything the agent does. Every change it makes
+is a [pull request in this repo](https://github.com/santiviquez/ds-trivia-site/pulls?q=is%3Apr),
+so you can watch the experiment as it happens.
+
+## 💌 Suggest a question
+
+Found a wrong answer, or a question the deck is missing?
+[Send Santiago a DM on X](https://x.com/santiviquez) or open an issue. If your
+question makes it in, your handle goes on the card.
+
+The cards are free to read and cite. Please link back to
+[datasciencetrivia.com](https://www.datasciencetrivia.com) when you do.
+
+---
+
+## 🛠️ For developers
+
+Next.js 16 (App Router), React 19, TypeScript and Tailwind CSS v4, deployed on
+Vercel. Every page is prerendered at build time: no database, no API, no
 runtime data fetching.
-
-## Why there's no database
-
-The site originally read its cards from Supabase in the browser on every page
-load. When that project went away the fetch failed, an empty `catch` swallowed
-the error, and the page crashed for every visitor.
-
-The questions are now plain content in `content/questions.json`, committed to
-the repo and baked into static HTML at build time. That removes the outage
-class entirely, puts every answer in the HTML where search engines and AI
-crawlers can read it, and drops the API keys the browser used to ship.
-
-## Content
-
-All questions live in `content/questions.json`:
-
-```json
-{
-  "id": "ml-ensemble-learning",
-  "category": "ml",
-  "question": "What is ensemble learning?",
-  "answer": "Combining individual models together with the purpose of improving the predictive power of the model.",
-  "slug": "what-is-ensemble-learning",
-  "proposedBy": "@optional_handle"
-}
-```
-
-`category` must be one of `ml`, `dl`, `genai`, `stats`, `history`. `slug` is the
-page's URL and is written once at import time, so rewording a question does not
-break its link. Omit it and one is derived from the question text.
-
-### Adding questions
-
-Edit `content/questions.json`, then:
-
-```bash
-npm run check:content
-```
-
-This validates required fields, category names, and — importantly — that no two
-questions share a URL slug. It runs automatically before every build.
-
-### Importing a deck
-
-To bring in an export (a Supabase table dump, an Anki export converted to CSV,
-or any array of objects with question/answer/category fields):
-
-```bash
-npm run import:questions -- path/to/export.csv --merge
-npm run check:content
-```
-
-Accepts JSON or CSV. Maps common column names (`question`/`front`/`prompt`,
-`answer`/`back`, `category`/`topic`) and category aliases (`Machine Learning`
-→ `ml`). `--merge` appends only questions whose slug isn't already present, so
-re-running is safe. Without `--merge` it replaces the deck.
-
-## Development
-
-Needs Node 20.9 or newer. Vercel builds on Node 24, set in the project's
-settings rather than in `engines`, so the build version never changes on its
-own when a new major is released.
 
 ```bash
 npm install
@@ -89,47 +114,63 @@ npm run lint
 npm run typecheck
 ```
 
-## SEO
+Needs Node 20.9 or newer. Vercel builds on Node 24, set in the project's
+settings rather than in `engines`.
 
-- A static page per question at `/questions/<slug>` with `QAPage` structured data
-- Category hubs at `/categories/<slug>` with `FAQPage` structured data
-- A full deck listing at `/questions`
-- `/about` with the `Person` and `WebSite` nodes the rest of the site points at
-- `sitemap.xml` and `robots.txt` generated from the content file
-- Per-question Open Graph images generated at build time
+### Content
 
-### Internal linking
+Every card lives in `content/questions.json`:
 
-The links between cards are the point, not decoration: they are how a visitor
-who searched one question finds the rest of the cluster, and how a crawler
-finds a card no one links to from outside.
+```json
+{
+  "id": "ml-61",
+  "category": "ml",
+  "question": "Is logistic regression a linear model? Why?",
+  "answer": "The short answer that fits on the card.",
+  "explanation": ["Optional longer answer, one string per paragraph."],
+  "slug": "is-logistic-regression-a-linear-model-why",
+  "proposedBy": "@optional_handle"
+}
+```
 
-- Each question page lists the eight most related cards in its category,
-  ranked by TF-IDF cosine similarity over the question and answer text
-  (`lib/related.ts`). Document frequency is counted per category, and selection
-  penalises a card that restates one already picked, so the list covers the
-  topic instead of repeating it.
-- Each category hub opens with an intro naming the clusters its list covers,
-  and a **Start with these** cluster of canonical cards. Both live next to
-  `CATEGORIES` in `lib/questions.ts`; `check:content` fails the build if a
-  starter id is not in the deck.
+- `category` is one of `ml`, `dl`, `genai`, `stats`, `history`.
+- `slug` is the page URL. It is stored so a question can be reworded without
+  breaking its link; omit it and one is derived from the question.
+- `explanation` renders under the card on the question's page, and goes into
+  its structured data, meta description and `llms.txt`.
 
-### Structured data
+`npm run check:content` validates required fields, categories, explanations,
+unique slugs and the category hubs' starter cards. It runs before every build.
 
-`lib/schema.ts` holds the `Person` and `WebSite` nodes and their `@id`s. Pages
-reference them by `@id` rather than repeating them, so crawlers merge them into
-one author and one site instead of one of each per URL. **Those `@id` strings
-must not change** — they are the identity search engines accumulate signals
-against. The `Person` is anchored on `/about` because that is the page that
-describes it.
+To import a deck (JSON or CSV, including Anki exports converted to CSV):
 
-## Security
+```bash
+npm run import:questions -- path/to/export.csv --merge
+npm run check:content
+```
 
-Response headers are set in `next.config.ts`: CSP, HSTS, `X-Frame-Options`,
+It maps common column names (`question`/`front`, `answer`/`back`,
+`category`/`topic`) and category aliases. `--merge` only appends cards whose
+slug isn't already there.
+
+### SEO and AI search
+
+- A static page per card at `/questions/<slug>` with `QAPage` structured data
+  and a generated Open Graph image.
+- Category hubs at `/categories/<slug>` with `FAQPage` data, an intro and a
+  "Start with these" list.
+- Related cards on each page, ranked by TF-IDF similarity within the category
+  (`lib/related.ts`).
+- One `Person` and one `WebSite` node in `lib/schema.ts`, referenced by `@id`
+  everywhere. **Don't change those `@id` strings**: they are the identity
+  search engines accumulate signals against.
+- `sitemap.xml`, `robots.txt` and `llms.txt` generated from the content file,
+  and an IndexNow ping after every push to `master`.
+
+### Security
+
+Response headers live in `next.config.ts`: CSP, HSTS, `X-Frame-Options`,
 `X-Content-Type-Options`, `Referrer-Policy` and `Permissions-Policy`.
-
 `script-src` allows `'unsafe-inline'` because Next streams its RSC payload
-through inline script tags; a nonce would require rendering every page
-dynamically. The site takes no user input, reflects no query parameters, and has
-no auth, cookies or database, so there is no injection path that inline script
-would be the vector for.
+through inline scripts. The site takes no user input, has no auth, cookies or
+database, so there is nothing for an inline script to inject into.
