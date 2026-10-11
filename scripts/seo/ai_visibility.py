@@ -54,8 +54,32 @@ def resolve_redirect(url):
     return url
 
 
-def name_pattern(names):
-    return re.compile(r"(?<![\w.])(" + "|".join(re.escape(n) for n in names) + r")(?![\w])", re.I)
+def name_pattern(names, flags=re.I):
+    return re.compile(r"(?<![\w.])(" + "|".join(re.escape(n) for n in names) + r")(?![\w])", flags)
+
+
+QUIZ_WORDS = {"quiz", "quizzes", "question", "questions", "game", "games", "night", "deck", "set"}
+
+
+def find_mention(text, names, generic):
+    """First brand mention in text. Names in `generic` are also ordinary phrases
+    ("a data science trivia quiz", "BrainPickle's Data Science Trivia Quiz"), so they
+    only count when written in title case as a standalone name, not as part of another
+    product's title."""
+    m = name_pattern([n for n in names if n not in generic]).search(text) if set(names) - set(generic) else None
+    for g in name_pattern(generic, 0).finditer(text) if generic else []:
+        before = text[: g.start()].rstrip(" *_[\"“'")
+        prev = before.split()[-1].lstrip("*_([\"“'") if before.split() else ""
+        nxt = re.match(r"[\s*_\]\"”']*(\w+)", text[g.end():])
+        sentence_start = not prev or prev.endswith((".", ":", "|", "!", "?"))
+        if (prev[:1].isupper() and not sentence_start) or prev.endswith(("'s", "’s")):
+            continue
+        if nxt and nxt.group(1).lower() in QUIZ_WORDS:
+            continue
+        if m is None or g.start() < m.start():
+            m = g
+        break
+    return m
 
 
 def pick_model(llm, wanted):
@@ -68,14 +92,15 @@ def pick_model(llm, wanted):
 
 
 def classify(text, urls, cfg):
-    entities = [{"name": cfg["brand"]["names"][0], "names": cfg["brand"]["names"],
-                 "domain": cfg["brand"]["domain"], "brand": True}]
-    entities += [{"name": c["name"], "names": [c["name"], c["domain"]], "domain": c["domain"],
-                  "brand": False} for c in cfg["competitors"]]
+    b = cfg["brand"]
+    entities = [{"name": b["names"][0], "names": b["names"], "generic": b.get("generic_names", []),
+                 "domain": b["domain"], "brand": True}]
+    entities += [{"name": c["name"], "names": [c["name"], c["domain"]], "generic": c.get("generic_names", []),
+                  "domain": c["domain"], "brand": False} for c in cfg["competitors"]]
     hosts = [host(u) for u in urls]
     found = []
     for e in entities:
-        m = name_pattern(e["names"]).search(text)
+        m = find_mention(text, e["names"], e["generic"])
         cited = any(h == e["domain"] or h.endswith("." + e["domain"]) for h in hosts)
         cited = cited or e["domain"] in text.lower()
         if m or cited:
@@ -188,6 +213,28 @@ def markdown(meta, s, prev):
     return "\n".join(lines) + "\n"
 
 
+def rescore(path, cfg):
+    """Re-run classify() over a saved run's answer excerpts, e.g. after a matching fix."""
+    with open(path) as f:
+        run = json.load(f)
+    for c in run["cells"]:
+        if "error" in c:
+            continue
+        urls = ["https://" + d + "/" for d in c["cited_domains"]] + c["our_cited_urls"]
+        entities = classify(c["answer_excerpt"], urls, cfg)
+        brand = next((e for e in entities if e["brand"]), None)
+        c.update(mentioned=bool(brand and brand["mentioned"]), cited=bool(brand and brand["cited"]),
+                 brand_rank=brand["rank"] if brand else None, brands_in_answer=entities)
+    run["summary"] = summarise(run["cells"], cfg)
+    run["meta"]["rescored"] = dt.date.today().isoformat()
+    with open(path, "w") as f:
+        json.dump(run, f, indent=1)
+    md = markdown(run["meta"], run["summary"], None)
+    with open(path[:-5] + ".md", "w") as f:
+        f.write(md)
+    print(md)
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--config", default=DEFAULT_CONFIG)
@@ -196,10 +243,13 @@ def main():
     p.add_argument("--max-cost", type=float, default=3.00, help="hard DataForSEO spend cap in USD")
     p.add_argument("--out-dir", default=None)
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--rescore", metavar="JSON", help="re-classify a saved run with the current rules (no API calls)")
     args = p.parse_args()
 
     with open(args.config) as f:
         cfg = json.load(f)
+    if args.rescore:
+        return rescore(args.rescore, cfg)
     llms = [x for x in args.llms.split(",") if x]
     prompts = cfg["prompts"]
     if args.prompts:
