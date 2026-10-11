@@ -86,7 +86,7 @@ Every day it:
 
 [Santiago Víquez](https://x.com/santiviquez) started the deck in 2019,
 still owns it and can overrule anything the agent does. Every change it makes
-is a [pull request in this repo](https://github.com/santiviquez/ds-trivia-site/pulls?q=is%3Apr),
+is a [pull request in this repo](https://github.com/santiviquez/datasciencetrivia/pulls?q=is%3Apr),
 so you can watch the experiment as it happens.
 
 ## 💌 Suggest a question

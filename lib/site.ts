@@ -2,7 +2,7 @@ export const SITE = {
   name: "Data Science Trivia",
   url: "https://www.datasciencetrivia.com",
   tagline: "Learn Data Science The Fun Way",
-  repo: "https://github.com/santiviquez/ds-trivia-site",
+  repo: "https://github.com/santiviquez/datasciencetrivia",
   description:
     "Free data science flashcards. Test your knowledge and prepare for interviews with questions on machine learning, statistics, deep learning, LLMs and the history of AI.",
   author: {
