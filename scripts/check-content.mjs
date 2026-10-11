@@ -43,6 +43,15 @@ raw.forEach((q, i) => {
     }
   }
 
+  if (
+    q.explanation !== undefined &&
+    (!Array.isArray(q.explanation) ||
+      q.explanation.length === 0 ||
+      q.explanation.some((para) => typeof para !== "string" || !para.trim()))
+  ) {
+    errors.push(`${at}: "explanation" must be a non-empty list of non-empty paragraphs`);
+  }
+
   if (q.category && !VALID_CATEGORIES.has(q.category)) {
     errors.push(`${at}: unknown category "${q.category}"`);
   }

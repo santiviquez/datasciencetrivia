@@ -74,6 +74,11 @@
     "category": "ml",
     "question": "What is count encoding?",
     "answer": "Count encoding replaces each categorical value with the number of times it appears in the dataset.",
+    "explanation": [
+      "Count encoding, also called frequency encoding, replaces each value of a categorical feature with how many times that value appears in the training data. A city that appears 1,200 times becomes 1,200; a city that appears 3 times becomes 3.",
+      "It is useful for high-cardinality columns, where one-hot encoding would create thousands of sparse columns. It produces a single numeric column, tree models can split on it directly, and how common a category is often carries signal, as with rare merchant IDs in fraud detection.",
+      "Its weakness is that different categories with the same count become indistinguishable, so it is often combined with other encodings. Compute the counts on the training data only and map unseen categories to 0 or 1, otherwise information from the test set leaks into the features."
+    ],
     "slug": "what-is-count-encoding"
   },
   {
@@ -151,6 +156,11 @@
     "category": "ml",
     "question": "What is the difference between a dense and a sparse feature?",
     "answer": "A dense feature is one in which most values are non-zero in contrast with a sparse one where most values are zeros or empty.",
+    "explanation": [
+      "A dense feature has a meaningful, mostly non-zero value for almost every row, like age, price or a 300-dimensional word embedding. A sparse feature is zero or missing for most rows, like a one-hot encoded city column or a bag-of-words vector where each document uses a few hundred words out of a vocabulary of 50,000.",
+      "The difference changes how you store and model the data. Sparse matrices are kept in formats such as CSR that only record the non-zero entries, so a million-column one-hot matrix still fits in memory. Linear models and gradient-boosted trees handle sparse inputs well; distance-based methods like KNN and k-means struggle, because in a sparse space most points look almost equally far apart.",
+      "A common move in interviews and in practice is to turn sparse features into dense ones: embeddings compress a high-cardinality category into a short dense vector, and techniques like truncated SVD do the same for text."
+    ],
     "slug": "what-is-the-difference-between-a-dense-and-a-sparse-feature"
   },
   {
@@ -333,6 +343,11 @@
     "category": "ml",
     "question": "Is KNN a clustering algorithm?",
     "answer": "No. It is and supervised learning method that could be used for classification and regression problems.",
+    "explanation": [
+      "No. KNN, k-nearest neighbors, is a supervised learning algorithm for classification and regression. It needs labeled training data and predicts a new point's label from the labels of its k closest neighbors. Clustering is unsupervised: it groups unlabeled data.",
+      "The confusion comes from k-means, which is a clustering algorithm and also has a k and also uses distances. In KNN, k is the number of neighbors that vote on a prediction. In k-means, k is the number of clusters to find, and there are no labels at all.",
+      "KNN is also a lazy learner: it does no training beyond storing the data and does all its work at prediction time, which makes it slow on large datasets. Because it relies on distances, features need scaling, and it degrades in high dimensions where nearest neighbors stop being meaningfully near."
+    ],
     "slug": "is-knn-a-clustering-algorithm"
   },
   {
@@ -425,6 +440,11 @@
     "category": "ml",
     "question": "Is logistic regression a linear model? Why?",
     "answer": "Logistic regression is considered a generalized linear model because the outcome always depends on the sum of the inputs and parameters.",
+    "explanation": [
+      "Yes. Logistic regression is a linear model because it computes a linear combination of the inputs, w·x + b, and the decision boundary where the predicted probability equals 0.5 is the hyperplane w·x + b = 0. It belongs to the family of generalized linear models.",
+      "The sigmoid on top is what confuses people. It squashes the linear score into a probability between 0 and 1, so the output is a non-linear function of x, but the log-odds, log(p / (1 − p)), is exactly linear in x. That is the sense in which the model is linear: in the parameters and in the log-odds, not in the probability.",
+      "The practical consequence is that logistic regression can only separate classes with a straight line or flat hyperplane. To fit curved boundaries you add features yourself, such as polynomial terms or interactions, or switch to a non-linear model like a tree ensemble or a neural network."
+    ],
     "proposedBy": "@Al_Grigor",
     "slug": "is-logistic-regression-a-linear-model-why"
   },
@@ -457,6 +477,11 @@
     "category": "ml",
     "question": "Can we use L1 regularization for feature selection?",
     "answer": "Yes, because the nature of L1 regularization will lead to sparse coefficients of features. Feature selection can be done by keeping only features with non-zero coefficients.",
+    "explanation": [
+      "Yes. L1 regularization, as in Lasso regression, adds the sum of the absolute values of the coefficients to the loss, and that penalty drives the coefficients of weak features to exactly zero. Keeping the features with non-zero coefficients is a built-in form of feature selection.",
+      "The reason is geometric. The L1 constraint region is a diamond with corners on the axes, and the loss contours usually first touch it at a corner, where some coefficients are exactly zero. L2 regularization uses a circle, so it shrinks coefficients toward zero but almost never to zero.",
+      "Two caveats come up in interviews. Scale the features first, since the penalty treats every coefficient the same. And when features are highly correlated, Lasso tends to keep one of them somewhat arbitrarily and drop the rest; Elastic Net, which mixes L1 and L2, spreads the weight across the group and gives more stable selections."
+    ],
     "proposedBy": "@Al_Grigor",
     "slug": "can-we-use-l1-regularization-for-feature-selection"
   },
@@ -561,6 +586,11 @@
     "category": "stats",
     "question": "What does high and low cardinality mean?",
     "answer": "High cardinality refers to columns with values that are very uncommon or unique, example: email addresses, or user names. And low cardinality: refers to columns with few unique values, example: status flags, boolean values.",
+    "explanation": [
+      "Cardinality is the number of distinct values a column holds. A high-cardinality column has many unique values, often close to one per row, like user IDs, email addresses or ZIP codes. A low-cardinality column has only a handful, like order status, gender or a yes/no flag.",
+      "It matters most when encoding categorical features. One-hot encoding a low-cardinality column is cheap and safe. One-hot encoding a high-cardinality one creates thousands of sparse columns, slows training and invites overfitting to rare values, so people reach for target encoding, count encoding, hashing or learned embeddings instead.",
+      "In databases the same word describes how selective a column is: indexing a high-cardinality column narrows a query a lot, while an index on a low-cardinality column rarely helps."
+    ],
     "slug": "what-does-high-and-low-cardinality-mean"
   },
   {
@@ -687,6 +717,11 @@
     "category": "stats",
     "question": "If pearson correlation is 0 between two variables can we assume that there isn't any relation between them?",
     "answer": "No. Pearson correlation coefficient between 2 variables might be zero even when they have a relationship between them. Example: x and x^2",
+    "explanation": [
+      "No. A Pearson correlation of 0 only means there is no linear relationship between the two variables. They can still be strongly, even perfectly, related in a non-linear way.",
+      "The classic example is y = x² with x spread symmetrically around zero, say from −3 to 3. y is completely determined by x, yet the correlation is 0, because the rising half of the curve cancels the falling half. A circle, a U-shape or a sine wave over a full period can all produce correlations near zero.",
+      "Always plot the data before trusting the coefficient, as Anscombe's quartet famously shows. To detect monotonic relationships use Spearman's rank correlation, and for general dependence use mutual information or distance correlation, which is zero only when the variables are truly independent. The reverse direction does hold: independent variables always have zero correlation."
+    ],
     "slug": "if-pearson-correlation-is-0-between-two-variables-can-we-assume-that-there-isnt-any"
   },
   {
@@ -743,6 +778,11 @@
     "category": "stats",
     "question": "What is MSE?",
     "answer": "MSE stands for Mean Squared Error. And is a measure of how close a fitted line is to data points by measuring the average squared of the errors.",
+    "explanation": [
+      "MSE, or mean squared error, is the average of the squared differences between predicted and actual values: MSE = (1/n) Σ (yᵢ − ŷᵢ)². It is the standard loss for regression and the quantity ordinary least squares minimizes.",
+      "Squaring does two things. It makes every error positive, so over- and under-predictions don't cancel out, and it punishes large errors much more than small ones: missing by 10 costs 100 times more than missing by 1. That makes MSE sensitive to outliers, which is a feature when big misses really are costly and a problem when the data has noisy extremes.",
+      "Because the units are squared (dollars squared, for a price model), people usually report RMSE, the square root of MSE, which is back in the target's units. When outliers should count less, MAE or the Huber loss are the common alternatives."
+    ],
     "slug": "what-is-mse"
   },
   {
@@ -765,6 +805,11 @@
     "category": "stats",
     "question": "What is precision and recall at k?",
     "answer": "Precision at k and recall at k are evaluation metrics for ranking algorithms.",
+    "explanation": [
+      "Precision at k is the fraction of the top k recommended items that are relevant. Recall at k is the fraction of all relevant items that appear in the top k. They are the standard metrics for recommenders and search ranking, where only the first few results get seen.",
+      "Example: a user has 5 relevant items and the model's top 10 contain 3 of them. Precision@10 = 3/10 = 0.3 and recall@10 = 3/5 = 0.6. Raising k usually raises recall and lowers precision, the same tradeoff as moving a classification threshold.",
+      "Both ignore the order inside the top k: a relevant item at position 1 counts the same as one at position 10. When order matters, use mean average precision (MAP), MRR or NDCG. Pick k to match what users actually see, such as 5 results on a mobile screen."
+    ],
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-precision-and-recall-at-k"
   },
@@ -1187,6 +1232,11 @@
     "category": "dl",
     "question": "What happens when the learning rate is too large?",
     "answer": "Can accelerate the training. However, it is possible that we “shoot” too far and miss the minimum of the function that we want to optimize.",
+    "explanation": [
+      "When the learning rate is too large, each gradient descent step overshoots the minimum. The loss bounces around instead of settling, and if the rate is large enough it grows from step to step until it diverges, often ending in NaN values.",
+      "The learning rate scales how far the weights move along the negative gradient. Near a minimum the right step is small; a step that is too big jumps to the other side of the valley, sometimes higher up than where it started. Symptoms are a loss curve that oscillates wildly, spikes, or climbs, and in deep networks exploding activations or gradients.",
+      "The usual fixes are to lower the rate by a factor of 3 to 10, add a warmup period so early steps are small, use a decay schedule, or use an adaptive optimizer like Adam. A learning-rate range test, which raises the rate each batch and plots the loss, is a quick way to find the largest rate that still trains stably."
+    ],
     "proposedBy": "@Al_Grigor",
     "slug": "what-happens-when-the-learning-rate-is-too-large"
   },
@@ -1211,6 +1261,11 @@
     "category": "dl",
     "question": "What are the problems with sigmoid as an activation function?",
     "answer": "The output of the sigmoid function for large positive or negative numbers is almost zero. From this comes the problem of vanishing gradient.",
+    "explanation": [
+      "Sigmoid has three problems as a hidden-layer activation: it saturates, causing vanishing gradients; its output is not zero-centered; and it is relatively expensive to compute.",
+      "Saturation is the big one. For large positive or negative inputs the curve is flat, so its derivative is close to zero, and even at its peak the derivative is only 0.25. Backpropagation multiplies these derivatives layer after layer, so in a deep network the gradient reaching the early layers shrinks toward zero and those layers barely learn.",
+      "Because sigmoid outputs are always positive, the gradients for a neuron's weights all share the same sign, which pushes updates into an inefficient zig-zag. That is why ReLU and its variants replaced sigmoid in hidden layers, and tanh is preferred when a bounded output is needed. Sigmoid is still the right choice in the output layer for binary classification and inside the gates of LSTMs and GRUs."
+    ],
     "proposedBy": "@Al_Grigor",
     "slug": "what-are-the-problems-with-sigmoid-as-an-activation-function"
   },
@@ -1251,6 +1306,11 @@
     "category": "dl",
     "question": "The F1 Score is a metric defined as the harmonic mean of precision, recall, and accuracy.",
     "answer": "false",
+    "explanation": [
+      "False. The F1 score is the harmonic mean of precision and recall only: F1 = 2 · precision · recall / (precision + recall). Accuracy is not part of the formula.",
+      "The harmonic mean is used because it is dragged down by the smaller of the two numbers. A classifier with precision 1.0 and recall 0.1 has an arithmetic mean of 0.55 but an F1 of about 0.18, which reflects how poorly it actually finds the positive class.",
+      "Accuracy is left out on purpose. F1 is mostly used on imbalanced problems such as fraud or disease detection, where accuracy is misleading: predicting the majority class every time can score 99% accuracy while catching nothing. When precision and recall are not equally important, the F-beta score weights recall beta times as much as precision."
+    ],
     "proposedBy": "@svpino",
     "slug": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy"
   },
