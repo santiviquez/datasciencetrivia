@@ -77,6 +77,12 @@ export interface Question {
   category: CategoryKey;
   question: string;
   answer: string;
+  /**
+   * Optional longer answer, one string per paragraph, shown under the card on
+   * the question's own page. The card answer stays card-sized; this is where a
+   * page gets the depth a search result or an assistant needs to quote it.
+   */
+  explanation?: string[];
   /** Optional X/Twitter handle of whoever suggested the question. */
   proposedBy?: string;
   /**

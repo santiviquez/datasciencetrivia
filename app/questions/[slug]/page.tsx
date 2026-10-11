@@ -24,7 +24,10 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const q = getQuestionBySlug(slug);
   if (!q) return {};
 
-  const description = q.answer.length > 155 ? `${q.answer.slice(0, 152).trimEnd()}…` : q.answer;
+  // A longer answer opens with a self-contained summary, which makes a better
+  // snippet than a card answer that can be a single word.
+  const summary = q.explanation?.[0] ?? q.answer;
+  const description = summary.length > 155 ? `${summary.slice(0, 152).trimEnd()}…` : summary;
 
   return {
     title: q.question,
@@ -59,7 +62,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
       answerCount: 1,
       acceptedAnswer: {
         "@type": "Answer",
-        text: q.answer,
+        text: q.explanation ? [q.answer, ...q.explanation].join("\n\n") : q.answer,
         url: absoluteUrl(`/questions/${q.slug}`),
       },
       // Carries the same @id as the Person on /about, so all 197 answers are
@@ -96,7 +99,8 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
         {/*
           The card above already renders the question and its answer into the
           HTML, so repeating them here would only duplicate the page's content.
-          What is left is internal linking.
+          What is left is the longer answer, where a card has one, and internal
+          linking.
         */}
         <div className="mx-auto w-full max-w-4xl px-6 py-16">
           <nav aria-label="Breadcrumb" className="mb-10 text-xs text-[var(--muted)]">
@@ -112,6 +116,19 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
               </li>
             </ol>
           </nav>
+
+          {q.explanation ? (
+            <section aria-labelledby="explained" className="mb-14 max-w-2xl">
+              <h2 id="explained" className="font-[family-name:var(--font-display)] text-lg">
+                The longer answer
+              </h2>
+              <div className="mt-4 space-y-4 leading-relaxed">
+                {q.explanation.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+            </section>
+          ) : null}
 
           {related.length > 0 ? (
             <section aria-labelledby="related">

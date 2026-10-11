@@ -44,6 +44,7 @@ export function GET() {
     for (const q of items) {
       lines.push(`### ${q.question}`);
       lines.push(q.answer);
+      if (q.explanation) lines.push("", ...q.explanation);
       lines.push(`Source: ${SITE.url}/questions/${q.slug}`);
       if (q.proposedBy) lines.push(`Proposed by: ${q.proposedBy}`);
       lines.push("");
