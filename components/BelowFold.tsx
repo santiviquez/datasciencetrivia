@@ -6,6 +6,7 @@ import {
   getAllQuestions,
   getQuestionsByCategory,
 } from "@/lib/questions";
+import { QUIZZES, QUIZ_SLUGS } from "@/lib/quiz";
 
 /**
  * Everything under the game. It exists so the deck is readable by search
@@ -38,6 +39,31 @@ export default function BelowFold() {
               </li>
             );
           })}
+        </ul>
+      </section>
+
+      <section aria-labelledby="quizzes" className="mt-14">
+        <h2 id="quizzes" className="font-[family-name:var(--font-display)] text-xl">
+          Take a quiz
+        </h2>
+        <p className="mt-2 text-sm text-[var(--muted)]">
+          Ten questions, answers included, score at the end. Or read the{" "}
+          <Link href="/ai-history" className="underline underline-offset-2">
+            history of AI as a timeline
+          </Link>
+          .
+        </p>
+        <ul className="mt-5 flex flex-wrap gap-3">
+          {QUIZ_SLUGS.map((s) => (
+            <li key={s}>
+              <Link
+                href={`/quiz/${s}`}
+                className="inline-block border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
+              >
+                {QUIZZES[s].name}
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
 
