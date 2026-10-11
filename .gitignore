@@ -36,3 +36,7 @@ next-env.d.ts
 # database dumps — never commit
 *.backup
 *.sql.gz
+
+# local SEO script output (cloud runs write to /mnt/project-files/seo)
+/.seo-output
+__pycache__/
