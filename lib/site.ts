@@ -2,6 +2,7 @@ export const SITE = {
   name: "Data Science Trivia",
   url: "https://www.datasciencetrivia.com",
   tagline: "Learn Data Science The Fun Way",
+  repo: "https://github.com/santiviquez/ds-trivia-site",
   description:
     "Free data science flashcards. Test your knowledge and prepare for interviews with questions on machine learning, statistics, deep learning, LLMs and the history of AI.",
   author: {
@@ -24,7 +25,7 @@ export const CONTENT_UPDATED = "2026-10-11";
  * Date /about last changed. Tracked separately from the deck so neither date
  * has to lie about the other when only one of them is edited.
  */
-export const ABOUT_UPDATED = "2026-09-13";
+export const ABOUT_UPDATED = "2026-10-11";
 
 /** Absolute URL helper — canonical + Open Graph tags must never be relative. */
 export function absoluteUrl(path = "/"): string {
