@@ -52,7 +52,7 @@ export default function QuizIndexPage() {
                 <li key={s}>
                   <Link
                     href={`/quiz/${s}`}
-                    className="flex h-full flex-col gap-1 border border-[var(--rule)] px-4 py-3 transition hover:border-black/30"
+                    className="flex h-full flex-col gap-1 rounded-md border border-[var(--rule)] px-4 py-3 transition hover:border-black/30"
                   >
                     <span className="flex items-center gap-2">
                       <span className="h-3 w-3 shrink-0" style={{ backgroundColor: CATEGORIES[quiz.categories[0]].color }} aria-hidden="true" />

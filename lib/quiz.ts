@@ -11,6 +11,15 @@ import {
  */
 export const QUESTIONS_PER_QUIZ = 10;
 
+/** Shortcut hints shown beside a quiz, in place of the deck's. */
+export const QUIZ_KEYS: [string, string][] = [
+  ["→", "Next card"],
+  ["←", "Previous card"],
+  ["a", "Show answer"],
+  ["g", "Got it"],
+  ["m", "Missed it"],
+];
+
 interface QuizDef {
   /** Name as people search for it; used in the h1 and <title>. */
   name: string;
