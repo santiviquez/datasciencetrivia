@@ -73,7 +73,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
         name: SITE.author.name,
         url: absoluteUrl("/about"),
       },
-      dateModified: CONTENT_UPDATED,
+      dateModified: q.updated ?? CONTENT_UPDATED,
     },
     isPartOf: { "@type": "WebSite", "@id": SCHEMA_ID.website },
     about: { "@type": "Thing", name: category.name },

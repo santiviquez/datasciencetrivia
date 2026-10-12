@@ -4,6 +4,7 @@
     "category": "ml",
     "question": "Name three supervised learning algorithms.",
     "answer": "Support Vector Machines, Regression, Naive Bayes, Decision Trees, Neural Networks, etc.",
+    "updated": "2026-09-06",
     "slug": "name-three-supervised-learning-algorithms"
   },
   {
@@ -11,6 +12,7 @@
     "category": "ml",
     "question": "Name three unsupervised learning algorithms.",
     "answer": "Clustering, Anomaly Detection, Latent variable models, Autoencoders, etc.",
+    "updated": "2026-09-06",
     "slug": "name-three-unsupervised-learning-algorithms"
   },
   {
@@ -23,6 +25,7 @@
       "When the label is a category, such as spam or not spam, the task is classification; when it is a number, such as a house price, it is regression. Common algorithms include linear and logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors and neural networks.",
       "It contrasts with unsupervised learning, which finds structure in unlabeled data (clustering, dimensionality reduction), semi-supervised learning, which mixes a few labels with many unlabeled examples, and reinforcement learning, which learns from rewards instead of labels. Self-supervised learning, used to pretrain large language models, creates its labels from the data itself, for example by predicting the next word."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data"
   },
   {
@@ -30,13 +33,20 @@
     "category": "ml",
     "question": "What is the type of machine learning algorithms used to draw inferences from data without labels?",
     "answer": "Unsupervised Learning.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without"
   },
   {
     "id": "ml-5",
     "category": "ml",
-    "question": "Graphical representation of the contrast between true positives and false positives rates at various thresholds.",
+    "question": "Which graph plots the true positive rate against the false positive rate at various classification thresholds?",
     "answer": "ROC curve.",
+    "explanation": [
+      "The ROC curve, short for receiver operating characteristic. It plots the true positive rate, TPR = TP / (TP + FN), against the false positive rate, FPR = FP / (FP + TN), as the decision threshold varies. The name comes from signal detection theory, developed for radar receivers around World War II.",
+      "Each threshold gives one point. At a very high threshold nothing is flagged, so the curve starts at (0, 0); at a very low one everything is, giving (1, 1). A model might reach TPR 0.80 at FPR 0.10 with a 0.5 threshold, and TPR 0.95 at FPR 0.30 with 0.2. Random guessing follows the diagonal; a perfect model hugs the top-left corner.",
+      "The usual follow-up is AUC, the area under the curve: 0.5 for random, 1.0 for perfect, and equal to the probability that a random positive is scored above a random negative. On heavily imbalanced data a small FPR can still mean many false positives, so a precision-recall curve is often more informative."
+    ],
+    "updated": "2026-10-12",
     "slug": "graphical-representation-of-the-contrast-between-true-positives-and-false-positives-rates"
   },
   {
@@ -44,6 +54,7 @@
     "category": "ml",
     "question": "Name three types of kernels in SVM.",
     "answer": "Linear, polynomial and RBF (radial basis function), with sigmoid a fourth. A kernel computes inner products in a higher-dimensional space without ever building that space, so linear is the default for wide sparse text and RBF for low-dimensional, curved boundaries.",
+    "updated": "2026-09-14",
     "slug": "name-three-types-of-kernels-in-svm"
   },
   {
@@ -56,6 +67,7 @@
       "Pre-pruning stops the tree from growing in the first place, with limits such as max_depth, min_samples_split, min_samples_leaf or a minimum impurity decrease. Post-pruning grows the full tree and then cuts it back. The standard method is cost-complexity pruning, used by CART and exposed in scikit-learn as ccp_alpha, which trades the tree's error against its number of leaves and picks the strength by cross-validation.",
       "Pruned trees are smaller, faster and easier to explain. Ensembles change the picture: random forests usually grow deep, unpruned trees and rely on averaging to cut variance, while gradient boosting uses shallow trees that are effectively pre-pruned."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-pruning-in-a-decision-tree"
   },
   {
@@ -63,6 +75,7 @@
     "category": "ml",
     "question": "What is ensemble learning?",
     "answer": "Combining individual models together with the purpose of improving the predictive power of the model.",
+    "updated": "2026-09-06",
     "slug": "what-is-ensemble-learning"
   },
   {
@@ -70,6 +83,7 @@
     "category": "ml",
     "question": "Would you use k-fold cross validation on time series data? Explain.",
     "answer": "No, you should be aware to the fact that a time series is not randomly distributed data.",
+    "updated": "2026-09-06",
     "slug": "would-you-use-k-fold-cross-validation-on-time-series-data-explain"
   },
   {
@@ -77,6 +91,7 @@
     "category": "ml",
     "question": "What is the process of adding tuning parameters to a model to induce smoothness in order to prevent overfitting?",
     "answer": "Regularization: a penalty on parameter size added to the loss, so the fit stays smooth rather than chasing every training point. L1 (lasso) zeroes weights outright and selects features, L2 (ridge) shrinks them all. Its strength is tuned on validation data, never training loss.",
+    "updated": "2026-09-14",
     "slug": "what-is-the-process-of-adding-tuning-parameters-to-a-model-to-induce-smoothness-in-order"
   },
   {
@@ -89,6 +104,7 @@
       "It is useful for high-cardinality columns, where one-hot encoding would create thousands of sparse columns. It produces a single numeric column, tree models can split on it directly, and how common a category is often carries signal, as with rare merchant IDs in fraud detection.",
       "Its weakness is that different categories with the same count become indistinguishable, so it is often combined with other encodings. Compute the counts on the training data only and map unseen categories to 0 or 1, otherwise information from the test set leaks into the features."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-count-encoding"
   },
   {
@@ -96,6 +112,7 @@
     "category": "ml",
     "question": "What is one hot encoding?",
     "answer": "A sparse vector in which: One element is set to 1 and all other elements are set to 0.",
+    "updated": "2026-09-06",
     "slug": "what-is-one-hot-encoding"
   },
   {
@@ -103,6 +120,7 @@
     "category": "ml",
     "question": "What is target encoding?",
     "answer": "Target encoding replaces a categorical value with the average value of the target for that value of the feature.",
+    "updated": "2026-09-06",
     "slug": "what-is-target-encoding"
   },
   {
@@ -115,6 +133,7 @@
       "The two common forms are target leakage and train-test contamination. Target leakage is a feature that is a consequence of the label, such as \"days in hospital\" when predicting whether a patient will be admitted, or a refund flag when predicting fraud. Contamination happens when preprocessing such as scaling, imputation or feature selection is fit on the full dataset before splitting, or when random splits put the same customer, or future rows of a time series, on both sides.",
       "To prevent it: split before any fitting, put all preprocessing inside a pipeline that is fit on training folds only, split by time or by group when rows are related, and be suspicious of any single feature with implausibly high importance or validation scores that seem too good to be true."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-data-leakage"
   },
   {
@@ -122,6 +141,7 @@
     "category": "ml",
     "question": "Imagine you are applying a decision tree based model to a numerical dataset and you run a experiment where you scale the features. What model would give the best results the original or the scaleted one?",
     "answer": "They should give the same result because tree-based models are scale invariant.",
+    "updated": "2026-09-06",
     "slug": "imagine-you-are-applying-a-decision-tree-based-model-to-a-numerical-dataset-and-you-run-a"
   },
   {
@@ -129,6 +149,7 @@
     "category": "ml",
     "question": "What is the difference between L1 (Lasso) and L2 (Ridge) regularization?",
     "answer": "L1 penalizes the absolute magnitude of the coefficients while L2 penalizes the square of the coefficients.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization"
   },
   {
@@ -136,13 +157,20 @@
     "category": "ml",
     "question": "What is a confusion matrix?",
     "answer": "A confusion matrix lets you see for a given model how your predictions compare with the actual results. It’s a 2x2 grid that has four parts: the number of true positives, false positives, true negatives, and false negatives.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-confusion-matrix"
   },
   {
     "id": "ml-18",
     "category": "ml",
-    "question": "Confusion Matrix should be used for supervised or unsupervised learning problems?",
-    "answer": "Supervised.",
+    "question": "Should a confusion matrix be used for supervised or unsupervised learning problems?",
+    "answer": "Supervised, specifically classification: it compares predicted classes with true labels.",
+    "explanation": [
+      "Supervised learning, specifically classification. A confusion matrix is a table that counts how a classifier's predictions line up with the true labels: one axis is the actual class, the other the predicted class. Building it requires ground-truth labels, which unsupervised problems do not have.",
+      "For a binary problem it is a 2 × 2 table. Example: on 100 test cases a model gets 40 true positives, 10 false positives, 5 false negatives and 45 true negatives. Accuracy is 85/100 = 0.85, precision is 40/50 = 0.80 and recall is 40/45 ≈ 0.89. With k classes it becomes a k × k table, and the off-diagonal cells show which classes get mistaken for which.",
+      "Watch the layout: scikit-learn puts true labels on rows and predictions on columns, so its binary output is [[TN, FP], [FN, TP]], while some textbooks transpose it. In clustering, cluster IDs are arbitrary, so even when labels exist you compare clusters to them with a contingency table and scores such as the adjusted Rand index."
+    ],
+    "updated": "2026-10-12",
     "slug": "confusion-matrix-should-be-used-for-supervised-or-unsupervised-learning-problems"
   },
   {
@@ -150,13 +178,20 @@
     "category": "ml",
     "question": "What is boosting when referring to machine learning algorithms?",
     "answer": "Boosting refers to a whole class of machine learning algorithms that are built on taking a weak model and reusing it enough times so that it becomes a strong one.",
+    "updated": "2026-09-06",
     "slug": "what-is-boosting-when-referring-to-machine-learning-algorithms"
   },
   {
     "id": "ml-20",
     "category": "ml",
-    "question": "Explain what is bucketing.",
+    "question": "Explain what bucketing is.",
     "answer": "Converting a (usually continuous) feature into multiple binary features called buckets or bins, typically based on value range.",
+    "explanation": [
+      "Bucketing, also called binning or discretization, turns a continuous feature into a categorical one by splitting its range into intervals called buckets or bins. Each value is then represented by its bucket, usually as one binary feature per bucket.",
+      "Example: with age buckets of under 18, 18 to 34, 35 to 54, and 55 and over, a 40-year-old is encoded as 0, 0, 1, 0. Boundaries can be equal-width, or quantile-based so that each bucket holds the same number of rows, which suits skewed data like income. A linear model then gets one weight per bucket and can learn a non-linear effect, such as risk that is high for the young and the old.",
+      "The cost is lost information: 35 and 54 look identical, while 34 and 35 look entirely different. Interviewers may ask how to choose boundaries (on training data only) and whether trees need bucketing (they don't; they pick split points themselves). Don't confuse it with Hive or Spark bucketing, which hash-partitions rows to speed up joins."
+    ],
+    "updated": "2026-10-12",
     "slug": "explain-what-is-bucketing"
   },
   {
@@ -164,6 +199,7 @@
     "category": "ml",
     "question": "How many centroids a k-means algorithm with k = 3 would find?",
     "answer": "3",
+    "updated": "2026-09-06",
     "slug": "how-many-centroids-a-k-means-algorithm-with-k-3-would-find"
   },
   {
@@ -176,6 +212,7 @@
       "The difference changes how you store and model the data. Sparse matrices are kept in formats such as CSR that only record the non-zero entries, so a million-column one-hot matrix still fits in memory. Linear models and gradient-boosted trees handle sparse inputs well; distance-based methods like KNN and k-means struggle, because in a sparse space most points look almost equally far apart.",
       "A common move in interviews and in practice is to turn sparse features into dense ones: embeddings compress a high-cardinality category into a short dense vector, and techniques like truncated SVD do the same for text."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-the-difference-between-a-dense-and-a-sparse-feature"
   },
   {
@@ -183,6 +220,7 @@
     "category": "ml",
     "question": "What is downsampling in the context of class-imbalanced dataset?",
     "answer": "Training on a disproportionately low percentage of over-represented class examples in order to improve model training on under-represented classes.",
+    "updated": "2026-09-06",
     "slug": "what-is-downsampling-in-the-context-of-class-imbalanced-dataset"
   },
   {
@@ -190,6 +228,7 @@
     "category": "ml",
     "question": "What is early stopping?",
     "answer": "A method for regularization that involves ending model training before training loss finishes decreasing. In early stopping, you end model training when the loss on a validation dataset starts to increase.",
+    "updated": "2026-09-06",
     "slug": "what-is-early-stopping"
   },
   {
@@ -197,6 +236,7 @@
     "category": "ml",
     "question": "Logistic regression is useful for estimating continuous variables?",
     "answer": "No.",
+    "updated": "2026-09-06",
     "slug": "logistic-regression-is-useful-for-estimating-continuous-variables"
   },
   {
@@ -204,6 +244,12 @@
     "category": "ml",
     "question": "Creating a model that matches the training data so closely that the model fails to make correct predictions on new data.",
     "answer": "Overfitting: the model has memorised noise particular to the training set, so training error keeps falling while validation error turns back up. The fixes matter as much as the name: more data, regularization, early stopping, a simpler model, and cross-validation to detect it.",
+    "explanation": [
+      "Overfitting. A model overfits when it learns the noise in its training set along with the real signal, so it scores well on the training data and badly on new data. The telltale sign is a gap: training error keeps falling while validation error stalls and then rises.",
+      "Example: fit a degree-9 polynomial to 10 noisy points from a straight line. The curve passes through every point, so training error is zero, but it swings wildly between points and predicts new values poorly; a straight line has some training error but generalizes far better. The overfit model has low bias and high variance: small changes in the training data change it a lot.",
+      "Detecting and fixing it is the usual follow-up. Detect it with a held-out validation set, cross-validation or learning curves. Fix it with more data, regularization such as L1, L2 or dropout, early stopping or a simpler model. Don't confuse it with data leakage: a leaky model also looks good on validation, so the gap never appears."
+    ],
+    "updated": "2026-10-12",
     "slug": "creating-a-model-that-matches-the-training-data-so-closely-that-the-model-fails-to-make"
   },
   {
@@ -211,6 +257,7 @@
     "category": "ml",
     "question": "Explain the basic concept of random forest.",
     "answer": "An ensemble approach to finding the decision tree that best fits the training data by creating many decision trees and then determining the \"average\" one.",
+    "updated": "2026-09-06",
     "slug": "explain-the-basic-concept-of-random-forest"
   },
   {
@@ -218,13 +265,20 @@
     "category": "ml",
     "question": "What does random means in the random forest term?",
     "answer": "The \"random\" part of the term refers to building each of the decision trees from a random selection of features.",
+    "updated": "2026-09-06",
     "slug": "what-does-random-means-in-the-random-forest-term"
   },
   {
     "id": "ml-29",
     "category": "ml",
-    "question": "If someone ask you: Out of all the possible positive labels, how many did the model correctly identify? Which metric should you calculate?",
+    "question": "If someone asks you: out of all the actual positive labels, how many did the model correctly identify? Which metric should you calculate?",
     "answer": "Recall: true positives over all actual positives, TP / (TP + FN). It is the metric to optimise when a miss is the expensive error, as in fraud or disease screening. You can always buy recall by lowering the threshold, which is why it is quoted next to precision.",
+    "explanation": [
+      "Recall. It answers exactly that question: of all the examples that are actually positive, what fraction did the model label positive? Recall = TP / (TP + FN), where FN counts the positives the model missed. It is also called sensitivity, hit rate or the true positive rate.",
+      "Example: a test set holds 100 fraudulent transactions. The model flags 120 transactions, 80 of them real fraud. Recall is 80 / 100 = 0.80, because 20 frauds slipped through. Precision, the share of flagged transactions that are fraud, is 80 / 120 ≈ 0.67. The two metrics answer different questions from the same confusion matrix.",
+      "Recall matters most when a miss is costly: cancer screening, fraud, safety defects. It can always be pushed to 1.0 by predicting everything as positive, so it means little on its own. Interviewers expect you to pair it with precision, explain how lowering the threshold trades one for the other, and mention the F1 score or the precision-recall curve as ways to summarize both."
+    ],
+    "updated": "2026-10-12",
     "slug": "if-someone-ask-you-out-of-all-the-possible-positive-labels-how-many-did-the-model"
   },
   {
@@ -232,6 +286,12 @@
     "category": "ml",
     "question": "Producing a model with poor predictive ability because the model hasn't captured the complexity of the training data.",
     "answer": "Underfitting: high bias, a model too simple for the signal, so training and validation error are both high and close to each other. Add capacity or better features, weaken the regularization, or train longer. More data will not rescue a model that cannot fit what it already has.",
+    "explanation": [
+      "Underfitting. A model underfits when it is too simple or too constrained to capture the real pattern in the data, so it performs poorly on the training set itself and on new data too. In bias-variance terms it has high bias, and more training data will not fix it.",
+      "Example: fit a straight line to y = x² with x spread evenly from −3 to 3. Because the curve is symmetric, the best line is flat at about y = 3, its training R² is close to 0, and validation error is about as high. Learning curves show the signature: training and validation error converge quickly and plateau at a high level with little gap.",
+      "Fixes run the opposite way from overfitting: add features or interactions, use a more flexible model, weaken regularization or train longer. Interviewers often ask how you tell underfitting from noisy data. Compare training error with a baseline or human-level error: if it is far above what is achievable, the model is underfitting."
+    ],
+    "updated": "2026-10-12",
     "slug": "producing-a-model-with-poor-predictive-ability-because-the-model-hasnt-captured-the"
   },
   {
@@ -239,6 +299,7 @@
     "category": "ml",
     "question": "What is precision?",
     "answer": "Precision is the number of the correct predictions of the positive class divided by the all the predicted positive class. TP/(TP + FP)",
+    "updated": "2026-09-06",
     "slug": "what-is-precision"
   },
   {
@@ -251,6 +312,7 @@
       "Example: there are 50 fraudulent transactions and the model flags 40 of them. Recall is 40/50 = 0.8, no matter how many legitimate transactions it also flagged by mistake. That is why recall is always reported with precision, which counts those false alarms.",
       "Prioritize recall when missing a positive is expensive, as in cancer screening or fraud detection. You raise it by lowering the decision threshold, which usually lowers precision. Predicting everything as positive gives a recall of 1.0 and is useless, which is the tradeoff the F1 score and the precision-recall curve capture."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-recall"
   },
   {
@@ -263,6 +325,7 @@
       "Example: a fraud model flags 100 transactions, 60 of which are fraud, out of 120 frauds in total. Precision is 60/100 = 0.6, recall is 60/120 = 0.5, and F1 = 2 · 0.6 · 0.5 / 1.1 ≈ 0.55. The harmonic mean punishes imbalance, so precision 1.0 with recall 0.1 gives an F1 of only about 0.18.",
       "F1 is the usual choice on imbalanced data, where accuracy is misleading, but it ignores true negatives and assumes precision and recall matter equally. When they don't, use F-beta (F2 weights recall more, F0.5 weights precision more). For multi-class problems, macro-F1 averages the per-class scores and micro-F1 pools all predictions first."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-f1-score"
   },
   {
@@ -270,6 +333,7 @@
     "category": "ml",
     "question": "What is better to have a F1-score equals to 1 or to 0?",
     "answer": "F1-score reaches its best value at 1 (perfect precision and recall).",
+    "updated": "2026-09-06",
     "slug": "what-is-better-to-have-a-f1-score-equals-to-1-or-to-0"
   },
   {
@@ -277,6 +341,7 @@
     "category": "ml",
     "question": "Which regularization technique penalizes the sum of absolute value of weights? L1 or L2?",
     "answer": "L1.",
+    "updated": "2026-09-06",
     "slug": "which-regularization-technique-penalizes-the-sum-of-absolute-value-of-weights-l1-or-l2"
   },
   {
@@ -284,13 +349,20 @@
     "category": "ml",
     "question": "Which regularization technique penalizes the sum of square weights? L1 or L2?",
     "answer": "L2.",
+    "updated": "2026-09-06",
     "slug": "which-regularization-technique-penalizes-the-sum-of-square-weights-l1-or-l2"
   },
   {
     "id": "ml-37",
     "category": "ml",
     "question": "L1 regularization is also called?",
-    "answer": "Lasso or L1 norm.",
+    "answer": "Lasso, short for least absolute shrinkage and selection operator. It adds λ times the L1 norm of the weights, λ Σ |wᵢ|, to the loss, which drives some weights exactly to zero.",
+    "explanation": [
+      "L1 regularization is also called lasso (least absolute shrinkage and selection operator), the name of L1-penalized linear regression. It adds λ Σ |wᵢ|, λ times the L1 norm of the weights, to the loss. The L1 norm is the quantity penalized, not another name for the method. L2 is ridge.",
+      "Robert Tibshirani introduced it in 1996. It sets some weights exactly to zero, selecting features. With orthonormal features and loss ½ ‖y − Xw‖² + λ Σ |wᵢ|, each weight is its least-squares value shrunk by λ and clipped at zero: ŵ = sign(β̂) · max(|β̂| − λ, 0). With λ = 0.5, coefficients 3.0, 0.4 and −1.2 become 2.5, 0 and −0.7.",
+      "The usual follow-up: why does L1 give zeros and L2 not? The L1 penalty pushes with constant force λ all the way to zero, while the L2 push, 2λw, fades as w shrinks, so weights get small but stay nonzero. Among correlated features lasso keeps one arbitrarily, which is why elastic net mixes L1 and L2."
+    ],
+    "updated": "2026-10-12",
     "slug": "l1-regularization-is-also-called"
   },
   {
@@ -298,6 +370,7 @@
     "category": "ml",
     "question": "L2 regularization is also called?",
     "answer": "Ridge.",
+    "updated": "2026-09-06",
     "slug": "l2-regularization-is-also-called"
   },
   {
@@ -305,6 +378,7 @@
     "category": "ml",
     "question": "Can we have both L1 and L2 regularization components in a linear model?",
     "answer": "Yes, it is called Elastic net regularization.",
+    "updated": "2026-09-06",
     "slug": "can-we-have-both-l1-and-l2-regularization-components-in-a-linear-model"
   },
   {
@@ -312,6 +386,7 @@
     "category": "ml",
     "question": "What is Elastic net regularization?",
     "answer": "It is regularization technique that linearly combines L1 and L2 penalties.",
+    "updated": "2026-09-06",
     "slug": "what-is-elastic-net-regularization"
   },
   {
@@ -319,6 +394,7 @@
     "category": "ml",
     "question": "What is unsupervised learning?",
     "answer": "Unsupervised learning aims to detect patterns in data where no labels are given.",
+    "updated": "2026-09-06",
     "slug": "what-is-unsupervised-learning"
   },
   {
@@ -326,6 +402,7 @@
     "category": "ml",
     "question": "Does feature selection tends to increase overfitting?",
     "answer": "No. It actually could help to reduce overfitting.",
+    "updated": "2026-09-06",
     "slug": "does-feature-selection-tends-to-increase-overfitting"
   },
   {
@@ -333,20 +410,33 @@
     "category": "ml",
     "question": "Mean Squared Error, Root Mean Squared Error, Mean Absolute Error, R-squared are metrics for evaluation which type of models?",
     "answer": "Regression models.",
+    "updated": "2026-09-06",
     "slug": "mean-squared-error-root-mean-squared-error-mean-absolute-error-r-squared-are-metrics-for"
   },
   {
     "id": "ml-44",
     "category": "ml",
-    "question": "Model simplification tends to decrease the bias and increase the variance which leads to underfitting. True or False?",
+    "question": "Model simplification tends to decrease bias and increase variance, which leads to underfitting. True or False?",
     "answer": "False. Model simplification decreases the variance but increases the bias.",
+    "explanation": [
+      "False. Simplifying a model does the opposite: it increases bias and decreases variance. The statement's conclusion is right, since a model simplified too far underfits, but the cause is the extra bias. A simple model makes strong assumptions, so it misses real structure, yet changes little when trained on a different sample.",
+      "Example: prune a decision tree from depth 20 to depth 2. The deep tree memorizes its training set and changes shape with every new sample: low bias, high variance. The depth-2 tree has at most four leaves, so it misses real structure but looks almost the same across samples: high bias, low variance. Stronger regularization or dropping features moves a model the same way.",
+      "That is why simplification is the standard fix for overfitting: it trades a little bias for a large cut in variance, and test error falls as long as variance was the bigger problem. A rule of thumb for interviews: high training error points to bias, while a large train-validation gap points to variance."
+    ],
+    "updated": "2026-10-12",
     "slug": "model-simplification-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to"
   },
   {
     "id": "ml-45",
     "category": "ml",
-    "question": "Model complexity tends to decrease the bias and increase the variance which leads to overfitting. True or False?",
+    "question": "Increasing model complexity tends to decrease bias and increase variance, which leads to overfitting. True or False?",
     "answer": "True.",
+    "explanation": [
+      "True. Making a model more complex, with more parameters, deeper trees or higher-degree features, tends to lower bias and raise variance. Bias is error from overly rigid assumptions; variance is how much the fitted model changes with the training sample. Once variance dominates, the model overfits.",
+      "Expected test error = bias² + variance + irreducible noise. In k-nearest neighbors, k = 50 averages many points, giving smooth, stable, biased predictions; k = 1 copies the nearest training point, so bias is low but predictions jump with each new sample. As complexity grows, test error usually falls, then climbs once variance rises faster than bias drops: a U-shape.",
+      "Interviewers often ask how to find the bottom of the U: cross-validate over a complexity knob such as tree depth, k or regularization strength. One known exception is double descent: heavily overparameterized models such as large neural networks can see test error fall again after they fit the training data perfectly, so parameter count alone is a poor measure of complexity."
+    ],
+    "updated": "2026-10-12",
     "slug": "model-complexity-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to"
   },
   {
@@ -354,6 +444,12 @@
     "category": "ml",
     "question": "Accuracy, Precision, Recall, F1 score, ... are metrics to evaluate which types of models?",
     "answer": "Classification models.",
+    "explanation": [
+      "Classification models. Accuracy, precision, recall and F1 all compare predicted class labels with true labels, so they apply to any model that outputs a discrete class. They come from the counts in a confusion matrix: true positives (TP), false positives (FP), true negatives (TN) and false negatives (FN).",
+      "Accuracy = (TP + TN) / total. Precision = TP / (TP + FP), the share of predicted positives that are correct. Recall = TP / (TP + FN), the share of actual positives found. F1 = 2 · precision · recall / (precision + recall), their harmonic mean. Example: if 10 of 1,000 transactions are fraud, a model that always predicts \"not fraud\" scores 99% accuracy but 0 recall.",
+      "Regression models use other metrics, such as MAE, RMSE and R². A common follow-up is multi-class problems: compute each metric per class, then combine with macro, micro or weighted averaging. Interviewers also check that you know precision and recall depend on the decision threshold."
+    ],
+    "updated": "2026-10-12",
     "slug": "accuracy-precision-recall-f1-score-are-metrics-to-evaluate-which-types-of-models"
   },
   {
@@ -361,18 +457,20 @@
     "category": "ml",
     "question": "Why is naive Bayes 'naive'?",
     "answer": "Because it assumes that all of the features in a data set are equally important and independent.",
+    "updated": "2026-09-06",
     "slug": "why-is-naive-bayes-naive"
   },
   {
     "id": "ml-48",
     "category": "ml",
     "question": "Is KNN a clustering algorithm?",
-    "answer": "No. It is and supervised learning method that could be used for classification and regression problems.",
+    "answer": "No. It is a supervised learning method that could be used for classification and regression problems.",
     "explanation": [
       "No. KNN, k-nearest neighbors, is a supervised learning algorithm for classification and regression. It needs labeled training data and predicts a new point's label from the labels of its k closest neighbors. Clustering is unsupervised: it groups unlabeled data.",
       "The confusion comes from k-means, which is a clustering algorithm and also has a k and also uses distances. In KNN, k is the number of neighbors that vote on a prediction. In k-means, k is the number of clusters to find, and there are no labels at all.",
       "KNN is also a lazy learner: it does no training beyond storing the data and does all its work at prediction time, which makes it slow on large datasets. Because it relies on distances, features need scaling, and it degrades in high dimensions where nearest neighbors stop being meaningfully near."
     ],
+    "updated": "2026-10-12",
     "slug": "is-knn-a-clustering-algorithm"
   },
   {
@@ -380,6 +478,12 @@
     "category": "ml",
     "question": "How is random forest different from gradient boosting algorithm?",
     "answer": "The fundamental difference is, random forest uses bagging technique to make predictions. GBM uses boosting techniques to make predictions.",
+    "explanation": [
+      "Random forest builds many trees independently and averages them (bagging), while gradient boosting builds trees one after another, each correcting the errors of the ensemble so far (boosting). Both are ensembles of decision trees, but they attack different parts of the error: random forest mainly reduces variance, boosting mainly reduces bias.",
+      "In a random forest each tree is grown deep on a bootstrap sample of the rows, and each split considers only a random subset of features, which decorrelates the trees. In gradient boosting each new tree is usually shallow and is fit to the negative gradient of the loss; for squared error that is the residuals. Its output is scaled by a learning rate, such as 0.1.",
+      "Random forest trains trees in parallel, needs little tuning, and adding more trees does not cause overfitting. Boosting is sequential and usually more accurate on tabular data when tuned, but sensitive to learning rate, depth and tree count, so it relies on early stopping. XGBoost, LightGBM and CatBoost are popular implementations."
+    ],
+    "updated": "2026-10-12",
     "slug": "how-is-random-forest-different-from-gradient-boosting-algorithm"
   },
   {
@@ -387,6 +491,7 @@
     "category": "ml",
     "question": "It is possible to design a Linear regression algorithm using a neural network?",
     "answer": "Yes.",
+    "updated": "2026-09-06",
     "slug": "it-is-possible-to-design-a-linear-regression-algorithm-using-a-neural-network"
   },
   {
@@ -394,6 +499,7 @@
     "category": "ml",
     "question": "Which regularization would you use if your model is underfitting?",
     "answer": "None, because regularization is used in case of overfitting.",
+    "updated": "2026-09-06",
     "slug": "which-regularization-would-you-use-if-your-model-is-underfitting"
   },
   {
@@ -401,6 +507,7 @@
     "category": "ml",
     "question": "Standardization of features is required before training a Logistic Regression?",
     "answer": "No — rescaling a feature just rescales its coefficient, so the predictions are unchanged. It still matters in practice: gradient descent converges far faster when features share a scale, and any L1 or L2 penalty is scale-dependent, so unscaled features get penalised unevenly.",
+    "updated": "2026-09-14",
     "slug": "standardization-of-features-is-required-before-training-a-logistic-regression"
   },
   {
@@ -408,6 +515,7 @@
     "category": "ml",
     "question": "What is the difference between online and batch Learning?",
     "answer": "Online: you would use the \"most recent\" sample at each iteration. Batch: Learning over groups of patterns.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-difference-between-online-and-batch-learning"
   },
   {
@@ -415,6 +523,12 @@
     "category": "ml",
     "question": "Bagging stands for?",
     "answer": "Bootstrap aggregating: train the same learner on many bootstrap resamples and average the predictions, which cuts variance and leaves bias roughly untouched. That is why it suits deep unstable trees, while boosting attacks bias by fitting each model to the last one's errors.",
+    "explanation": [
+      "Bagging stands for bootstrap aggregating. It trains many copies of one model, each on a bootstrap sample of the training data (n rows drawn with replacement from the n available), then aggregates their predictions: an average for regression, a majority vote for classification. Leo Breiman introduced it in 1994 and published \"Bagging Predictors\" in 1996.",
+      "Each bootstrap sample contains about 63.2% of the distinct rows, since a row is never drawn with probability (1 − 1/n)ⁿ ≈ 1/e ≈ 0.368. These out-of-bag rows give a free validation estimate. Averaging B models with variance σ² and pairwise correlation ρ gives variance ρσ² + (1 − ρ)σ²/B: more models help, but correlation sets a floor.",
+      "Bagging helps unstable, high-variance learners such as deep decision trees and does little for stable ones like linear regression. Random forests also sample features at each split to lower ρ. Boosting is the contrast: it trains models in sequence, each fixing the errors of the previous ones, and mainly reduces bias."
+    ],
+    "updated": "2026-10-12",
     "slug": "bagging-stands-for"
   },
   {
@@ -422,6 +536,7 @@
     "category": "ml",
     "question": "What is the difference between boosting and bagging?",
     "answer": "In bagging we take boostrap samples of the data (with replacement) and each sample trains a weak learner. And boosting uses all data to train each learner and then average the result using a weighted average approach.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-difference-between-boosting-and-bagging"
   },
   {
@@ -429,6 +544,7 @@
     "category": "ml",
     "question": "High bias can cause an algorithm to underfit? True or False?",
     "answer": "True.",
+    "updated": "2026-09-06",
     "slug": "high-bias-can-cause-an-algorithm-to-underfit-true-or-false"
   },
   {
@@ -436,6 +552,7 @@
     "category": "ml",
     "question": "High variance can cause an algorithm to overfit? True of False?",
     "answer": "True.",
+    "updated": "2026-09-06",
     "slug": "high-variance-can-cause-an-algorithm-to-overfit-true-of-false"
   },
   {
@@ -443,13 +560,20 @@
     "category": "ml",
     "question": "What is variance in the context of Machine Learning?",
     "answer": "Is a type of error that occurs due to a model's sensitivity to small fluctuations in the training set. High variance can cause an algorithm to model the random noise in the training data.",
+    "updated": "2026-09-06",
     "slug": "what-is-variance-in-the-context-of-machine-learning"
   },
   {
     "id": "ml-59",
     "category": "ml",
-    "question": "Explain what is Bias-Variance tradeoff?",
-    "answer": "Expected error splits into bias (a model too simple for the truth), variance (sensitivity to which training sample you drew) and irreducible noise. Pushing one down usually lifts the other, so you tune capacity and regularization to minimise the sum, not either term alone.",
+    "question": "Explain the bias-variance tradeoff.",
+    "answer": "Expected squared error splits into squared bias (a model too simple for the truth), variance (sensitivity to which training sample you drew) and irreducible noise. Pushing one down usually lifts the other, so you tune capacity and regularization to minimise the sum, not either term alone.",
+    "explanation": [
+      "The bias-variance tradeoff is the tension between underfitting and overfitting. Bias is error from wrong assumptions, such as fitting a straight line to a curve. Variance is how much the fitted model changes when trained on a different sample. Simple models have high bias and low variance; flexible models the reverse.",
+      "For squared error the expected test error at a point decomposes exactly: E[(y − f̂(x))²] = Bias[f̂(x)]² + Var[f̂(x)] + σ², where σ² is irreducible noise. Fit polynomials to 20 noisy points: degree 1 underfits with high bias, degree 15 chases nearly every point and swings wildly between them, showing high variance. A middle degree minimizes the total.",
+      "To diagnose: high training and validation error points to bias, so add features or capacity. Low training error with much higher validation error points to variance, so add data, regularize or simplify. Bagging mainly cuts variance, boosting mainly cuts bias. Very large neural networks can show double descent, where test error falls again past the point of perfect training fit."
+    ],
+    "updated": "2026-10-12",
     "slug": "explain-what-is-bias-variance-tradeoff"
   },
   {
@@ -457,6 +581,7 @@
     "category": "ml",
     "question": "What happens to our linear regression if we have columns x, y, z. And z is a sum of x and y?",
     "answer": "We would not be able to perform the resgression. Beacuse z is linear dependent of x and y.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-happens-to-our-linear-regression-if-we-have-columns-x-y-z-and-z-is-a-sum-of-x-and-y"
   },
@@ -470,6 +595,7 @@
       "The sigmoid on top is what confuses people. It squashes the linear score into a probability between 0 and 1, so the output is a non-linear function of x, but the log-odds, log(p / (1 − p)), is exactly linear in x. That is the sense in which the model is linear: in the parameters and in the log-odds, not in the probability.",
       "The practical consequence is that logistic regression can only separate classes with a straight line or flat hyperplane. To fit curved boundaries you add features yourself, such as polynomial terms or interactions, or switch to a non-linear model like a tree ensemble or a neural network."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@Al_Grigor",
     "slug": "is-logistic-regression-a-linear-model-why"
   },
@@ -478,6 +604,7 @@
     "category": "ml",
     "question": "What is TF-IDF?",
     "answer": "Term Frequency (TF) is a scoring of the frequency of the word in the current document. Inverse Document Frequency(IDF) is a scoring of how rare the word is across documents.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-tf-idf"
   },
@@ -486,6 +613,7 @@
     "category": "ml",
     "question": "What is overfitting?",
     "answer": "When your model perform very well on your training set but can’t generalize the test set, because it adjusted a lot to the training set.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-overfitting"
   },
@@ -499,6 +627,7 @@
       "The area under it, usually reported as average precision (AP), summarizes the curve in one number. A random classifier's PR curve is a flat line at the positive-class rate, so on a dataset with 1% positives the baseline is 0.01, not 0.5.",
       "PR curves are preferred over ROC curves when positives are rare, as in fraud, disease screening or search. ROC uses the false positive rate, whose denominator is the huge pool of negatives, so it can look excellent while precision is terrible. The PR curve shows that problem directly. It is also how you pick an operating threshold: choose the point whose precision and recall fit the cost of each kind of error."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-the-precision-recall-curve"
   },
@@ -512,6 +641,7 @@
       "The reason is geometric. The L1 constraint region is a diamond with corners on the axes, and the loss contours usually first touch it at a corner, where some coefficients are exactly zero. L2 regularization uses a circle, so it shrinks coefficients toward zero but almost never to zero.",
       "Two caveats come up in interviews. Scale the features first, since the penalty treats every coefficient the same. And when features are highly correlated, Lasso tends to keep one of them somewhat arbitrarily and drop the rest; Elastic Net, which mixes L1 and L2, spreads the weight across the group and gives more stable selections."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@Al_Grigor",
     "slug": "can-we-use-l1-regularization-for-feature-selection"
   },
@@ -520,6 +650,7 @@
     "category": "ml",
     "question": "What is bag of words?",
     "answer": "Bag of Words is a representation of text that describes the occurrence of words within a document.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-bag-of-words"
   },
@@ -528,6 +659,7 @@
     "category": "ml",
     "question": "What is clustering?",
     "answer": "Clustering algorithms group objects such that similar feature points are put into the same groups (clusters).",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-clustering"
   },
@@ -536,6 +668,7 @@
     "category": "ml",
     "question": "What is a time series?",
     "answer": "A time series is a set of observations ordered in time usually collected at regular intervals.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-a-time-series"
   },
@@ -544,6 +677,7 @@
     "category": "ml",
     "question": "When building your vocabulary set, it’s ok to use the tokens from the entire dataset to reduce the size of your out-of-vocab list?",
     "answer": "False, any tokens not seen in the training set need to be UNK tokens.",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "when-building-your-vocabulary-set-its-ok-to-use-the-tokens-from-the-entire-dataset-to"
   },
@@ -552,6 +686,7 @@
     "category": "ml",
     "question": "What is the main data structure used in causal modelling?",
     "answer": "Graphs! More specifically, directed acyclic graphs.",
+    "updated": "2026-09-06",
     "proposedBy": "@rctatman",
     "slug": "what-is-the-main-data-structure-used-in-causal-modelling"
   },
@@ -560,6 +695,7 @@
     "category": "stats",
     "question": "What is the generalization of the median?",
     "answer": "The Quantile.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-generalization-of-the-median"
   },
   {
@@ -572,6 +708,7 @@
       "Long format is what most plotting and modelling tools expect, because every variable is one column; it matches the \"tidy data\" convention. Wide format is easier for people to read and is what many spreadsheets and some algorithms, like a feature matrix for scikit-learn, need.",
       "Converting between them is called melting or pivoting. In pandas, melt goes from wide to long and pivot or pivot_table goes from long to wide; in R the tidyr functions pivot_longer and pivot_wider do the same."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-the-difference-between-long-and-wide-format-data"
   },
   {
@@ -579,6 +716,7 @@
     "category": "stats",
     "question": "Technique used to sample based on a probability where each sample unit is a collection of a cluster element.",
     "answer": "Cluster sampling.",
+    "updated": "2026-09-06",
     "slug": "technique-used-to-sample-based-on-a-probability-where-each-sample-unit-is-a-collection-of"
   },
   {
@@ -586,6 +724,7 @@
     "category": "stats",
     "question": "What is a Type I and a Type II error?",
     "answer": "Basically Type I errors are the False Positive and Type II error are the False Negative.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-type-i-and-a-type-ii-error"
   },
   {
@@ -593,6 +732,7 @@
     "category": "stats",
     "question": "What two parameters defined a normal distribution?",
     "answer": "Its mean and its standard deviation.",
+    "updated": "2026-09-06",
     "slug": "what-two-parameters-defined-a-normal-distribution"
   },
   {
@@ -600,6 +740,7 @@
     "category": "stats",
     "question": "In a normal distribution which parameter indicates where the bell is centered?",
     "answer": "The mean.",
+    "updated": "2026-09-06",
     "slug": "in-a-normal-distribution-which-parameter-indicates-where-the-bell-is-centered"
   },
   {
@@ -607,6 +748,7 @@
     "category": "stats",
     "question": "In a normal distribution which parameter indicates how wide is the bell?",
     "answer": "The standard deviation.",
+    "updated": "2026-09-06",
     "slug": "in-a-normal-distribution-which-parameter-indicates-how-wide-is-the-bell"
   },
   {
@@ -614,6 +756,7 @@
     "category": "stats",
     "question": "What is the difference of and nominal and ordinal feature?",
     "answer": "Nominal data assigns names to each data point without placing it in some sort of order, ex: pass, fail. And ordinal data groups data according to some sort of ranking system: it orders the data, ex: grades A, B, C, D, E and F.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-difference-of-and-nominal-and-ordinal-feature"
   },
   {
@@ -626,13 +769,20 @@
       "It matters most when encoding categorical features. One-hot encoding a low-cardinality column is cheap and safe. One-hot encoding a high-cardinality one creates thousands of sparse columns, slows training and invites overfitting to rare values, so people reach for target encoding, count encoding, hashing or learned embeddings instead.",
       "In databases the same word describes how selective a column is: indexing a high-cardinality column narrows a query a lot, while an index on a low-cardinality column rarely helps."
     ],
+    "updated": "2026-10-11",
     "slug": "what-does-high-and-low-cardinality-mean"
   },
   {
     "id": "stats-80",
     "category": "stats",
     "question": "What is R-squared?",
-    "answer": "R-squared is a statistical measure of how close the data are to the fitted regression line. It is also known as the coefficient of determination.",
+    "answer": "R-squared, the coefficient of determination, is the proportion of variance in the target that the model explains: R² = 1 − SS_res / SS_tot. 1 is a perfect fit, 0 is no better than predicting the mean, and on new data it can even be negative.",
+    "explanation": [
+      "R-squared, the coefficient of determination, is the proportion of the target's variance that a regression model explains: R² = 1 − SS_res / SS_tot. SS_res = Σ (yᵢ − ŷᵢ)² is the error left after the fit, and SS_tot = Σ (yᵢ − ȳ)² the error of always predicting the mean.",
+      "Example: if SS_tot = 200 and SS_res = 50, R² = 1 − 50/200 = 0.75, so the model explains 75% of the variance. R² = 1 is a perfect fit; 0 is no better than the mean. In simple linear regression with an intercept, R² equals the squared Pearson correlation of x and y.",
+      "Follow-ups: adding a predictor never lowers training R² in least squares, so adjusted R² = 1 − (1 − R²)(n − 1)/(n − p − 1) penalizes extra predictors. On test data R² is negative when the model does worse than the mean. A high R² does not prove a model correct or causal; a low R² is normal in noisy domains."
+    ],
+    "updated": "2026-10-12",
     "slug": "what-is-r-squared"
   },
   {
@@ -640,6 +790,7 @@
     "category": "stats",
     "question": "What is a residual?",
     "answer": "Is the difference between the observed value and the estimated value of the quantity of interest.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-residual"
   },
   {
@@ -647,6 +798,7 @@
     "category": "stats",
     "question": "What is dimensionality reduction?",
     "answer": "It is the process of reducing the number of variables under consideration by obtaining a set of principal variables.",
+    "updated": "2026-09-06",
     "slug": "what-is-dimensionality-reduction"
   },
   {
@@ -654,6 +806,7 @@
     "category": "stats",
     "question": "What is a false negative?",
     "answer": "An example in which the model mistakenly predicted the negative class.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-false-negative"
   },
   {
@@ -661,6 +814,7 @@
     "category": "stats",
     "question": "What is a false positive?",
     "answer": "An example in which the model mistakenly predicted the positive class.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-false-positive"
   },
   {
@@ -668,6 +822,12 @@
     "category": "stats",
     "question": "Values distant from most other values are?",
     "answer": "Outliers.",
+    "explanation": [
+      "Outliers. An outlier is an observation unusually far from the bulk of the data, such as a recorded adult height of 250 cm. It may be a measurement or data-entry error, or a genuine but rare event.",
+      "A standard rule is Tukey's fences: flag values below Q1 − 1.5 × IQR or above Q3 + 1.5 × IQR, where IQR = Q3 − Q1. If Q1 = 20 and Q3 = 30, the fences are 5 and 45, so 52 is an outlier; box plots draw such points individually. The rule |z| > 3 is also common, but outliers inflate the mean and standard deviation that z uses, so robust versions use the median and median absolute deviation.",
+      "Interviewers ask what you would do with one. Do not delete it automatically: check whether it is an error; if real, consider robust methods such as the median, Huber loss or tree models. In regression, separate outliers in y from high-leverage points in x and influential points, measured by Cook's distance."
+    ],
+    "updated": "2026-10-12",
     "slug": "values-distant-from-most-other-values-are"
   },
   {
@@ -675,6 +835,7 @@
     "category": "stats",
     "question": "Precision is the rate between?",
     "answer": "True positives over predicted positives, TP / (TP + FP): of the cases you flagged, how many were right. It says nothing about the positives you missed, so it is read alongside recall, and it is the metric to favour when a false alarm is the costly error.",
+    "updated": "2026-09-14",
     "slug": "precision-is-the-rate-between"
   },
   {
@@ -682,6 +843,7 @@
     "category": "stats",
     "question": "What does stationarity in a dataset means?",
     "answer": "A property of data in a dataset, in which the data distribution stays constant across one or more dimensions. Most commonly, that dimension is time.",
+    "updated": "2026-09-06",
     "slug": "what-does-stationarity-in-a-dataset-means"
   },
   {
@@ -689,6 +851,7 @@
     "category": "stats",
     "question": "The normal distribution derives its importance from which famous theorem?",
     "answer": "The Central Limit Theorem: the sampling distribution of a mean of independent draws approaches a normal as n grows, whatever the population's shape, provided variance is finite. That is what licenses normal-based confidence intervals and t-tests on decidedly non-normal data.",
+    "updated": "2026-09-14",
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
   },
   {
@@ -696,6 +859,7 @@
     "category": "stats",
     "question": "What does MSE mean?",
     "answer": "Mean Square Error.",
+    "updated": "2026-09-06",
     "slug": "what-does-mse-mean"
   },
   {
@@ -703,6 +867,7 @@
     "category": "stats",
     "question": "What does RMSE mean?",
     "answer": "Root Mean Square Error.",
+    "updated": "2026-09-06",
     "slug": "what-does-rmse-mean"
   },
   {
@@ -710,6 +875,12 @@
     "category": "stats",
     "question": "Name three techniques of dimensionality reduction.",
     "answer": "Singular Value Decomposition (SVD), Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Autoencoders, Fourier and Wavelet Transforms.",
+    "explanation": [
+      "Three standard answers are principal component analysis (PCA), singular value decomposition (SVD) and linear discriminant analysis (LDA); autoencoders, t-SNE and UMAP are also common. Dimensionality reduction maps many features to fewer while keeping the useful structure, which cuts noise, speeds up training and makes data plottable.",
+      "PCA projects data onto the orthogonal directions of maximum variance. It is usually computed from the SVD of the centered data, X = UΣVᵀ, keeping the first k columns of V. LDA is supervised: it finds directions that best separate known classes, at most C − 1 of them for C classes. Autoencoders learn a non-linear compression through a narrow hidden layer. Fourier and wavelet transforms re-express a signal so a few coefficients carry most of it.",
+      "Interviewers often ask how to choose k for PCA: keep enough components to explain, say, 95% of the variance, after standardizing features so the largest-scale one does not dominate. Also distinguish feature extraction, which builds new features, from feature selection, which keeps a subset of the originals."
+    ],
+    "updated": "2026-10-12",
     "slug": "name-three-techniques-of-dimensionality-reduction"
   },
   {
@@ -717,6 +888,7 @@
     "category": "stats",
     "question": "Measures how far a set of (random) numbers are spread out from their average value.",
     "answer": "Variance.",
+    "updated": "2026-09-06",
     "slug": "measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value"
   },
   {
@@ -724,6 +896,7 @@
     "category": "stats",
     "question": "What values could you infer from a boxplot?",
     "answer": "Minimum, Q1, median, Q3 and maximum, plus points flagged as outliers — the line inside the box is the median, not the mean. The box is the interquartile range and whiskers usually stretch to 1.5 x IQR, so a boxplot shows spread and skew but hides multimodality.",
+    "updated": "2026-09-14",
     "slug": "what-values-could-you-infer-from-a-boxplot"
   },
   {
@@ -731,6 +904,7 @@
     "category": "stats",
     "question": "Is rotation necessary in PCA?",
     "answer": "Yes, rotation is necessary because it maximizes the difference between variance captured by the component.",
+    "updated": "2026-09-06",
     "slug": "is-rotation-necessary-in-pca"
   },
   {
@@ -743,13 +917,20 @@
       "That is why correlation is the one you compare across pairs. The covariance between height in centimetres and weight in kilograms changes by a factor of 100 if you switch to metres; the correlation stays the same. A correlation of 0.8 means a strong positive linear relationship whatever the units.",
       "Both only capture linear association and both are sensitive to outliers. A correlation of 0 does not mean the variables are independent, and neither measure says anything about causation. The covariance matrix is still the more useful object in practice: PCA, portfolio risk and the multivariate normal distribution are all built on it."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-the-difference-between-covariance-and-correlation"
   },
   {
     "id": "stats-96",
     "category": "stats",
-    "question": "Is it possible capture the correlation between continuous and categorical variable?",
-    "answer": "Yes, we can use ANCOVA (analysis of covariance) technique to capture association between continuous and categorical variables.",
+    "question": "Is it possible to capture the correlation between a continuous and a categorical variable?",
+    "answer": "Yes. Use the point-biserial correlation when the category has two levels, or one-way ANOVA with eta squared (the correlation ratio) for more levels; Kruskal-Wallis if the data are skewed. ANCOVA answers a different question: it compares group means while adjusting for a continuous covariate.",
+    "explanation": [
+      "Yes, but ANCOVA is not the usual tool. Use the point-biserial correlation when the categorical variable has two levels, and one-way ANOVA with eta squared (η²) when it has more. ANCOVA compares group means of an outcome while adjusting for a continuous covariate, which is a different question.",
+      "The point-biserial correlation is Pearson's r with the groups coded 0 and 1; its significance test is equivalent to Student's two-sample t-test. For several groups, η² = SS_between / SS_total, the share of the continuous variable's variance explained by group; its square root η is the correlation ratio. Example: exam scores with SS_total = 1200 and SS_between = 300 across three teaching methods give η² = 0.25.",
+      "Do not feed arbitrary codes like 1, 2, 3 into Pearson's r: the result changes with the coding. For skewed groups, use Kruskal-Wallis. Interviewers often ask about other pairings: Pearson or Spearman for two continuous variables, Cramér's V for two categorical ones, and mutual information for any mix."
+    ],
+    "updated": "2026-10-12",
     "slug": "is-it-possible-capture-the-correlation-between-continuous-and-categorical-variable"
   },
   {
@@ -762,6 +943,7 @@
       "The classic example is y = x² with x spread symmetrically around zero, say from −3 to 3. y is completely determined by x, yet the correlation is 0, because the rising half of the curve cancels the falling half. A circle, a U-shape or a sine wave over a full period can all produce correlations near zero.",
       "Always plot the data before trusting the coefficient, as Anscombe's quartet famously shows. To detect monotonic relationships use Spearman's rank correlation, and for general dependence use mutual information or distance correlation, which is zero only when the variables are truly independent. The reverse direction does hold: independent variables always have zero correlation."
     ],
+    "updated": "2026-10-11",
     "slug": "if-pearson-correlation-is-0-between-two-variables-can-we-assume-that-there-isnt-any"
   },
   {
@@ -769,6 +951,7 @@
     "category": "stats",
     "question": "Does mean imputation takes into account feature correlation?",
     "answer": "No.",
+    "updated": "2026-09-06",
     "slug": "does-mean-imputation-takes-into-account-feature-correlation"
   },
   {
@@ -776,6 +959,7 @@
     "category": "stats",
     "question": "Give 3 techniques for handling missing values.",
     "answer": "Delete rows with missing data, Imputation, Predicting the missing values.",
+    "updated": "2026-09-06",
     "slug": "give-3-techniques-for-handling-missing-values"
   },
   {
@@ -783,6 +967,7 @@
     "category": "stats",
     "question": "What is the Law of Large Numbers?",
     "answer": "Is a theory that states that as the number of trials increases, the average of the result will become closer to the expected value.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-law-of-large-numbers"
   },
   {
@@ -795,6 +980,7 @@
       "The classic example is from World War II: the statistician Abraham Wald was asked where to add armour to bombers based on the bullet holes in planes that came back. He argued for armouring the places with no holes, because planes hit there were the ones that never returned. Everyday versions include studying only successful startups or funds that still exist, which makes risky strategies look safe.",
       "In data science it shows up whenever the dataset is defined by an outcome: analysing only customers who are still active, training a credit model only on approved applicants, or measuring a feature's impact only on users who stuck around. The fix is to ask what process removed records from the data and, where possible, to include the failures."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-survivorship-bias"
   },
   {
@@ -802,6 +988,7 @@
     "category": "stats",
     "question": "What is a confounding variable?",
     "answer": "Is a variable that influences both the dependent variable and the independent variable, causing a spurious association.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-confounding-variable"
   },
   {
@@ -809,6 +996,7 @@
     "category": "stats",
     "question": "How Interquartile Range is calculated?",
     "answer": "Q3 - Q1",
+    "updated": "2026-09-06",
     "slug": "how-interquartile-range-is-calculated"
   },
   {
@@ -816,6 +1004,7 @@
     "category": "stats",
     "question": "What is autocorrelation?",
     "answer": "Is the correlation of a signal with a delayed copy of itself as a function of delay.",
+    "updated": "2026-09-06",
     "slug": "what-is-autocorrelation"
   },
   {
@@ -828,6 +1017,7 @@
       "Squaring does two things. It makes every error positive, so over- and under-predictions don't cancel out, and it punishes large errors much more than small ones: missing by 10 costs 100 times more than missing by 1. That makes MSE sensitive to outliers, which is a feature when big misses really are costly and a problem when the data has noisy extremes.",
       "Because the units are squared (dollars squared, for a price model), people usually report RMSE, the square root of MSE, which is back in the target's units. When outliers should count less, MAE or the Huber loss are the common alternatives."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-mse"
   },
   {
@@ -840,6 +1030,7 @@
       "Example: errors of 2, −1 and 4 give squared errors of 4, 1 and 16, a mean of 7 and an RMSE of about 2.65. The mean absolute error (MAE) of the same errors is 2.33. RMSE is always at least as large as MAE, and the gap grows when a few errors are large, because squaring lets big misses dominate.",
       "Use RMSE when large errors are disproportionately costly; use MAE when every unit of error costs the same or the data has outliers you don't want to dominate the metric. RMSE is the metric least-squares regression implicitly optimizes. It is scale-dependent, so it can only be compared across models predicting the same target."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-rmse"
   },
   {
@@ -847,6 +1038,12 @@
     "category": "stats",
     "question": "How can we select K for K-means?",
     "answer": "Domain knowledge first, then the elbow of inertia against k, average silhouette, or the gap statistic. Inertia falls monotonically, so the elbow is often ambiguous; silhouette scores separation as well as compactness. If a downstream use defines the segments, let that pick k.",
+    "explanation": [
+      "There is no single correct rule. Use domain knowledge first, then diagnostics such as the elbow method, the average silhouette score and the gap statistic, which compares clustering tightness with random reference data. Each fits k-means over a range of k and compares results.",
+      "The elbow method plots inertia, the within-cluster sum of squared distances, against k. Inertia keeps falling as k grows, so you look for the bend: if k = 1 to 5 give 1000, 450, 200, 170 and 150, the gains flatten after k = 3. A point's silhouette is (b − a) / max(a, b), with a its mean distance to its own cluster and b to the nearest other cluster; pick the k with the highest average.",
+      "Scale features first and run several initializations, since k-means finds local optima. If no k looks clean, the data may lack round clusters: try a Gaussian mixture chosen by BIC, or DBSCAN. If a downstream use defines the segments, such as five sales tiers, let it set k."
+    ],
+    "updated": "2026-10-12",
     "proposedBy": "@Al_Grigor",
     "slug": "how-can-we-select-k-for-k-means"
   },
@@ -860,6 +1057,7 @@
       "Example: a user has 5 relevant items and the model's top 10 contain 3 of them. Precision@10 = 3/10 = 0.3 and recall@10 = 3/5 = 0.6. Raising k usually raises recall and lowers precision, the same tradeoff as moving a classification threshold.",
       "Both ignore the order inside the top k: a relevant item at position 1 counts the same as one at position 10. When order matters, use mean average precision (MAP), MRR or NDCG. Pick k to match what users actually see, such as 5 results on a mobile screen."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-precision-and-recall-at-k"
   },
@@ -868,27 +1066,46 @@
     "category": "history",
     "question": "Who is knows as the creator of the GANs architecture?",
     "answer": "Ian Goodfellow.",
+    "updated": "2026-09-06",
     "slug": "who-is-knows-as-the-creator-of-the-gans-architecture"
   },
   {
     "id": "history-110",
     "category": "history",
-    "question": "LeCun, Cortes, and Burges compiled a very famous dataset containing 60000 images of handwritten digits. What is the name of this dataset?",
+    "question": "LeCun, Cortes, and Burges compiled a very famous dataset with 60,000 training images of handwritten digits. What is the name of this dataset?",
     "answer": "MNIST dataset.",
+    "explanation": [
+      "MNIST, the Modified National Institute of Standards and Technology database. It holds 70,000 grayscale images of handwritten digits 0 to 9, each 28 × 28 pixels, split into 60,000 for training and 10,000 for testing. Yann LeCun, Corinna Cortes and Christopher Burges built it from NIST data in the 1990s.",
+      "NIST's Special Database 3 was written by Census Bureau employees and Special Database 1 by high school students, and NIST used them as training and test sets, making the test set much harder. MNIST mixed them, 30,000 training images from each, with different writers in training and test. Digits were scaled to fit a 20 × 20 box and centered in the 28 × 28 frame. LeNet-5, in LeCun's 1998 paper, reached 0.95% test error.",
+      "Modern convolutional networks get well below 0.5% error and even a linear classifier reaches about 90% accuracy, so MNIST is now a sanity check rather than a real benchmark. Fashion-MNIST, released by Zalando in 2017 in the same format, is a harder drop-in replacement."
+    ],
+    "updated": "2026-10-12",
     "slug": "lecun-cortes-and-burges-compiled-a-very-famous-dataset-containing-60000-images-of"
   },
   {
     "id": "history-111",
     "category": "history",
-    "question": "The least squares method was published by a famous french mathematician called.",
+    "question": "The least squares method was first published by which famous French mathematician?",
     "answer": "Adrien-Marie Legendre.",
+    "explanation": [
+      "Adrien-Marie Legendre. He published the method of least squares in 1805, in an appendix to his book on determining the orbits of comets. Least squares fits a model by choosing the parameters that minimize the sum of squared residuals, Σ (yᵢ − ŷᵢ)².",
+      "Carl Friedrich Gauss published his own treatment in 1809 in Theoria motus corporum coelestium and claimed he had used the method since 1795, starting one of the best-known priority disputes in mathematics. Historians such as Stephen Stigler think Gauss probably had it first, but Legendre has priority of publication. Robert Adrain also published it in the United States around 1808. Gauss also gave it a probabilistic justification by assuming normally distributed errors.",
+      "For a straight line the slope is b = Σ (xᵢ − x̄)(yᵢ − ȳ) / Σ (xᵢ − x̄)², and in general β̂ = (XᵀX)⁻¹Xᵀy. Interviewers ask why squared errors: they are differentiable, give a unique closed-form solution, and match maximum likelihood under Gaussian noise. The cost is sensitivity to outliers."
+    ],
+    "updated": "2026-10-12",
     "slug": "the-least-squares-method-was-published-by-a-famous-french-mathematician-called"
   },
   {
     "id": "history-112",
     "category": "history",
-    "question": "In 1812 Laplace published \"Théorie Analytique des Probabilités\" in which he defines a famous theorem. Which theorem was it?",
-    "answer": "Bayes' Theorem.",
+    "question": "In 1812 Laplace published \"Théorie analytique des probabilités\", in which he stated a famous theorem. Which theorem was it?",
+    "answer": "Bayes' theorem, which Laplace had found independently in 1774 and set out here as a general principle for inferring causes from observed events. The same book is also known for Laplace's central limit theorem.",
+    "explanation": [
+      "Bayes' theorem is the expected answer. In Théorie analytique des probabilités (1812), Laplace set out as a general principle the rule for reasoning from an observed event back to its probable causes, now written P(A | B) = P(B | A) P(A) / P(B).",
+      "The name credits Thomas Bayes, an English minister whose essay was read to the Royal Society by Richard Price in 1763, two years after Bayes died. Laplace reached the idea independently in his 1774 memoir on the probability of causes and went further, applying it to birth records and deriving the rule of succession: after s successes in n trials, the next trial succeeds with probability (s + 1)/(n + 2).",
+      "The card has a catch: the same book is just as famous for the central limit theorem, Laplace's extension of de Moivre's normal approximation to sums of many independent variables. Some historians argue that Bayesian inference is largely Laplace's work, since he turned Bayes' special case into a general method."
+    ],
+    "updated": "2026-10-12",
     "slug": "in-1812-laplace-published-theorie-analytique-des-probabilites-in-which-he-defines-a"
   },
   {
@@ -896,13 +1113,20 @@
     "category": "history",
     "question": "Andrey Markov first describes techniques he used to analyse a poem. Later this techniques become known as Markov chains. True or False.",
     "answer": "True.",
+    "updated": "2026-09-06",
     "slug": "andrey-markov-first-describes-techniques-he-used-to-analyse-a-poem-later-this-techniques"
   },
   {
     "id": "history-114",
     "category": "history",
-    "question": "In 1951 Marvin Minsky and Dean Edmonds conceived what is known as the firts neural network machine. What is it's name?",
+    "question": "In 1951 Marvin Minsky and Dean Edmonds conceived what is known as the first neural network machine. What is its name?",
     "answer": "SNARC.",
+    "explanation": [
+      "SNARC, the Stochastic Neural Analog Reinforcement Calculator. Marvin Minsky and Dean Edmonds, Princeton graduate students in mathematics and physics, built it in the summer of 1951 with Office of Naval Research money that Harvard psychologist George Miller helped secure. It is usually called the first artificial neural network machine.",
+      "It had about 40 neuron-like units, each storing recent activity on a capacitor and its long-term connection strength on a potentiometer. When the machine was rewarded, motors turned the potentiometers of recently active units, making them more likely to pass a signal again: a hardware form of reinforcement learning. It simulated a rat learning a maze, using vacuum tubes, motors, clutches and a surplus B-24 bomber autopilot.",
+      "Interviewers may contrast it with Frank Rosenblatt's perceptron of the late 1950s, which learned to classify patterns from labeled examples rather than from reward. Minsky went on to co-organize the 1956 Dartmouth workshop and to co-write Perceptrons (1969) with Seymour Papert, a critique often blamed for cooling interest in neural networks."
+    ],
+    "updated": "2026-10-12",
     "slug": "in-1951-marvin-minsky-and-dean-edmonds-conceived-what-is-known-as-the-firts-neural"
   },
   {
@@ -910,27 +1134,46 @@
     "category": "history",
     "question": "Who invented the perceptron?",
     "answer": "Frank Rosenblatt. Bonus. The invention of the perceptron generated a great deal of excitement and was widely covered in the media.",
+    "updated": "2026-09-06",
     "slug": "who-invented-the-perceptron"
   },
   {
     "id": "history-116",
     "category": "history",
-    "question": "In 1970 Seppo Linnainmaa published the general method for automatic differentiation. This corresponds to the modern version of:",
+    "question": "In 1970 Seppo Linnainmaa described reverse-mode automatic differentiation in his master's thesis. This corresponds to the modern version of:",
     "answer": "Backpropagation — reverse-mode automatic differentiation, which gets the gradient of a scalar loss with respect to every parameter in roughly one backward pass. Rumelhart, Hinton and Williams rediscovered and popularised it for neural networks in 1986.",
+    "explanation": [
+      "Backpropagation. Linnainmaa's 1970 master's thesis at the University of Helsinki described reverse-mode automatic differentiation: computing the derivatives of a function built from elementary operations by applying the chain rule from the output back to the inputs. Backpropagation is this method applied to a neural network's loss.",
+      "He wrote the thesis in Finnish to study how rounding errors accumulate in numerical algorithms, with no mention of neural networks, and published the method in English in the journal BIT in 1976. Paul Werbos proposed using it to train neural networks in the 1970s and early 1980s, and Rumelhart, Hinton and Williams popularized it with their 1986 Nature paper \"Learning representations by back-propagating errors\".",
+      "Interviewers probe the cost. Reverse mode gives the gradient for every parameter in one backward pass costing a small constant multiple of the forward pass; forward mode needs one pass per input, so a million parameters would mean a million passes. The price is memory, since intermediate activations must be stored."
+    ],
+    "updated": "2026-10-12",
     "slug": "in-1970-seppo-linnainmaa-published-the-general-method-for-automatic-differentiation-this"
   },
   {
     "id": "history-117",
     "category": "history",
-    "question": "In which decade does Tin Kam Ho published a paper describing random decision forests?",
+    "question": "In which decade did Tin Kam Ho publish a paper describing random decision forests?",
     "answer": "90s (1995).",
+    "explanation": [
+      "The 1990s. Tin Kam Ho's paper \"Random Decision Forests\" appeared in 1995 in the proceedings of the Third International Conference on Document Analysis and Recognition (ICDAR) in Montreal, written at AT&T Bell Labs. A random forest is an ensemble of decision trees whose votes or averaged outputs form the prediction.",
+      "Ho's idea was to grow each tree on a randomly chosen subset of the features, the random subspace method, which she expanded in a 1998 IEEE TPAMI paper. Leo Breiman's 2001 paper \"Random Forests\" combined random feature selection at each split with bagging, giving every tree a bootstrap sample of the rows. The randomness decorrelates the trees: averaging B trees with variance σ² and pairwise correlation ρ gives variance ρσ² + (1 − ρ)σ²/B.",
+      "Interviewers follow up with why adding trees does not overfit, what max_features controls, and how out-of-bag rows give a free validation estimate. Do not credit it all to Breiman: Ho introduced random decision forests, and Breiman built the modern algorithm and popularized the name."
+    ],
+    "updated": "2026-10-12",
     "slug": "in-which-decade-does-tin-kam-ho-published-a-paper-describing-random-decision-forests"
   },
   {
     "id": "history-118",
     "category": "history",
-    "question": "In 1995 Corinna Cortes and Vladimir Vapnik publish their work explaining a new supervised learning algorithm called:",
+    "question": "In 1995 Corinna Cortes and Vladimir Vapnik published their work on a supervised learning algorithm called:",
     "answer": "Support Vector Machines",
+    "explanation": [
+      "Support vector machines. Cortes and Vapnik's paper \"Support-Vector Networks\" appeared in Machine Learning in 1995. An SVM is a classifier that finds the hyperplane separating two classes with the widest margin, the distance to the nearest training points, which are called the support vectors.",
+      "The idea was not entirely new. Vapnik and colleagues had described maximum-margin linear classifiers in the 1960s, and Boser, Guyon and Vapnik added the kernel trick in 1992. Cortes and Vapnik's main addition was the soft margin, for data that cannot be separated perfectly: minimize ½‖w‖² + C Σ ξᵢ subject to yᵢ(w·xᵢ + b) ≥ 1 − ξᵢ and ξᵢ ≥ 0. The margin width is 2/‖w‖.",
+      "Interviewers ask what C does: a large C punishes violations and gives a narrow margin that can overfit; a small C allows violations for a wider margin. Expect questions on kernels such as the RBF, K(x, z) = exp(−γ‖x − z‖²), on feature scaling, and on why kernel SVMs struggle beyond tens of thousands of rows."
+    ],
+    "updated": "2026-10-12",
     "slug": "in-1995-corinna-cortes-and-vladimir-vapnik-publish-their-work-explaining-a-new-supervised"
   },
   {
@@ -938,6 +1181,7 @@
     "category": "history",
     "question": "What was the name of the first computer that beat against the the world champion at chess?",
     "answer": "Deep Blue.",
+    "updated": "2026-09-06",
     "slug": "what-was-the-name-of-the-first-computer-that-beat-against-the-the-world-champion-at-chess"
   },
   {
@@ -945,6 +1189,7 @@
     "category": "history",
     "question": "Who invented the LSTM architecture in deep learning?",
     "answer": "Sepp Hochreiter and Jürgen Schmidhuber in 1997.",
+    "updated": "2026-09-06",
     "slug": "who-invented-the-lstm-architecture-in-deep-learning"
   },
   {
@@ -952,6 +1197,7 @@
     "category": "history",
     "question": "When was Torch released?",
     "answer": "2002",
+    "updated": "2026-09-06",
     "slug": "when-was-torch-released"
   },
   {
@@ -959,6 +1205,7 @@
     "category": "history",
     "question": "Who envisioned and created the ImageNet dataset?",
     "answer": "Fei-Fei Li, who argued from 2007 that models were starved of data rather than ideas and used crowdsourced labelling to reach roughly 14 million images across 20,000+ categories. The 2012 ILSVRC contest run on it is where AlexNet made deep learning mainstream.",
+    "updated": "2026-09-14",
     "slug": "who-envisioned-and-created-the-imagenet-dataset"
   },
   {
@@ -966,6 +1213,7 @@
     "category": "history",
     "question": "What is the name of the computer that beat a professional player at Go?",
     "answer": "AlphaGo.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-name-of-the-computer-that-beat-a-professional-player-at-go"
   },
   {
@@ -973,6 +1221,7 @@
     "category": "history",
     "question": "Which computer scientists received the Turing Award for their contributions in deep learning?",
     "answer": "Yoshua Bengio, Geoffrey Hinton, and Yann LeCun.",
+    "updated": "2026-09-06",
     "slug": "which-computer-scientists-received-the-turing-award-for-their-contributions-in-deep"
   },
   {
@@ -980,6 +1229,7 @@
     "category": "history",
     "question": "When was the nearest neighbor algorithm was created?",
     "answer": "1967",
+    "updated": "2026-09-06",
     "slug": "when-was-the-nearest-neighbor-algorithm-was-created"
   },
   {
@@ -987,13 +1237,20 @@
     "category": "history",
     "question": "When was the Turing Test created?",
     "answer": "1950, in Turing's paper \"Computing Machinery and Intelligence\", which swapped the question of whether machines think for an imitation game judged over text. Its weakness is that it rewards convincing conversation rather than understanding — a critique now aimed straight at LLMs.",
+    "updated": "2026-09-14",
     "slug": "when-was-the-turing-test-created"
   },
   {
     "id": "history-127",
     "category": "history",
-    "question": "How coined the term deep learning in 2006?",
-    "answer": "Geoffrey Hinton.",
+    "question": "Who coined the term deep learning in 2006?",
+    "answer": "Geoffrey Hinton is usually credited: his 2006 deep belief net paper with Osindero and Teh made the term popular. Strictly, he didn't coin it. Rina Dechter used \"deep learning\" in 1986, and Igor Aizenberg and colleagues applied it to neural networks in 2000.",
+    "explanation": [
+      "Geoffrey Hinton is the usual answer, but \"popularized\" is more accurate than \"coined\". In 2006 Hinton, Simon Osindero and Yee-Whye Teh published \"A fast learning algorithm for deep belief nets\" in Neural Computation, the paper usually credited with making \"deep learning\" the name for training neural networks with many layers.",
+      "The phrase itself is older. Rina Dechter used \"deep learning\" in a 1986 AAAI paper on constraint satisfaction, which was not about neural networks. Igor Aizenberg and colleagues applied it to neural networks in a 2000 book on multi-valued and universal binary neurons. Hinton himself has said that the term's current popularity started with the 2006 paper.",
+      "What was new in 2006 was a method: pretrain a deep network one layer at a time as a stack of restricted Boltzmann machines, then fine-tune it. That made many-layer networks trainable when many researchers had given up on them. Hinton later shared the 2018 Turing Award with Yoshua Bengio and Yann LeCun."
+    ],
+    "updated": "2026-10-12",
     "slug": "how-coined-the-term-deep-learning-in-2006"
   },
   {
@@ -1001,13 +1258,20 @@
     "category": "history",
     "question": "When was TensorFlow launched?",
     "answer": "2015",
+    "updated": "2026-09-06",
     "slug": "when-was-tensorflow-launched"
   },
   {
     "id": "history-129",
     "category": "history",
-    "question": "How is the creator of Keras?",
+    "question": "Who is the creator of Keras?",
     "answer": "François Chollet.",
+    "explanation": [
+      "François Chollet created Keras, the high-level Python library for building and training neural networks. He released it as open source on 27 March 2015 and led its development through his years at Google, from 2015 to November 2024.",
+      "Chollet started Keras during research for a project called ONEIROS (Open-ended Neuro-Electronic Intelligent Robot Operating System). The name is Greek: κέρας means horn, after the gate of horn in Homer's Odyssey, through which dreams that come true reach people. Keras first ran on Theano, then also on TensorFlow, and as tf.keras became the standard high-level API of TensorFlow 2.0 (2019). Keras 3, released in November 2023, runs on JAX, TensorFlow or PyTorch.",
+      "Chollet also wrote the book Deep Learning with Python (Manning, first edition 2017), and in 2019 introduced the ARC benchmark (Abstraction and Reasoning Corpus) in his paper \"On the Measure of Intelligence\". In 2025 he co-founded the research lab Ndea with Mike Knoop."
+    ],
+    "updated": "2026-10-12",
     "slug": "how-is-the-creator-of-keras"
   },
   {
@@ -1015,13 +1279,25 @@
     "category": "history",
     "question": "PyTorch was primarily developed by which company?",
     "answer": "Facebook.",
+    "explanation": [
+      "Facebook, now Meta. PyTorch was built at Facebook AI Research (FAIR) and released as open source in January 2017. It is a Python library for deep learning that provides tensors with GPU acceleration and automatic differentiation.",
+      "It grew out of Torch, a Lua-based library FAIR already used, and its original authors include Adam Paszke, Sam Gross, Soumith Chintala and Gregory Chanan. Its defining feature, inspired by Chainer, is define-by-run: the computation graph is built as ordinary Python code executes, so standard debuggers and control flow just work. Facebook merged its Caffe2 framework into PyTorch in 2018, and in September 2022 Meta moved the project to the PyTorch Foundation under the Linux Foundation.",
+      "Interviewers often contrast it with TensorFlow, released by Google in 2015, whose 1.x versions made you define a static graph first; TensorFlow 2.0 switched to eager execution by default in 2019. PyTorch 2.0 (2023) added torch.compile to get compiled-graph speedups from eager code. Do not confuse PyTorch with the older Lua Torch, which is no longer developed."
+    ],
+    "updated": "2026-10-12",
     "slug": "pytorch-was-primarily-developed-by-which-company"
   },
   {
     "id": "history-131",
     "category": "history",
-    "question": "The R language was designed by statisticians?",
+    "question": "Was the R language designed by statisticians?",
     "answer": "Yes.",
+    "explanation": [
+      "Yes. R was created by Ross Ihaka and Robert Gentleman, two statisticians at the University of Auckland, New Zealand, starting in the early 1990s. R is a free language and environment for statistical computing and graphics.",
+      "They based its syntax on S, the statistics language John Chambers and colleagues developed at Bell Labs from 1976, and its internals on Scheme, a dialect of Lisp. The name is a nod to S and to the authors' first names. They announced R in 1993, released it under the GNU GPL in 1995, described it in a 1996 Journal of Computational and Graphical Statistics paper, and shipped version 1.0.0 on 29 February 2000.",
+      "The statistics-first design shows: vectors are the basic data type, missing values (NA) are built in, and data frames and model formulas like y ~ x1 + x2 are native. Interviewers may ask about R versus Python: R is strongest for statistical modeling and visualization through CRAN packages, while Python dominates production machine learning."
+    ],
+    "updated": "2026-10-12",
     "slug": "the-r-language-was-designed-by-statisticians"
   },
   {
@@ -1029,6 +1305,7 @@
     "category": "history",
     "question": "Who are credited by the creation of R?",
     "answer": "Ross Ihaka and Robert Gentleman.",
+    "updated": "2026-09-06",
     "slug": "who-are-credited-by-the-creation-of-r"
   },
   {
@@ -1036,6 +1313,12 @@
     "category": "history",
     "question": "In 1989 Christopher Watkins published his PhD thesis “Learning from Delayed Rewards” where he introduced the concept of:",
     "answer": "Q-learning.",
+    "explanation": [
+      "Q-learning. Christopher Watkins introduced it in his 1989 University of Cambridge PhD thesis \"Learning from Delayed Rewards\". Q-learning is a model-free reinforcement learning algorithm that learns Q(s, a), the expected discounted future reward of taking action a in state s and acting optimally afterwards.",
+      "Each step updates Q(s, a) ← Q(s, a) + α [r + γ maxₐ′ Q(s′, a′) − Q(s, a)]. With Q(s, a) = 2, r = 1, γ = 0.9, maxₐ′ Q(s′, a′) = 5 and α = 0.1, the target is 1 + 0.9 × 5 = 5.5, so Q(s, a) moves to 2 + 0.1 × 3.5 = 2.35. Watkins and Peter Dayan published a full convergence proof in 1992.",
+      "Interviewers ask why Q-learning is off-policy: the max learns the greedy policy's values while the agent explores, unlike SARSA, which learns the values of the policy it follows. Lookup tables fail for large state spaces, which led to DeepMind's Deep Q-Network (Nature, 2015), and the max overestimates values, which Double Q-learning reduces."
+    ],
+    "updated": "2026-10-12",
     "slug": "in-1989-christopher-watkins-published-his-phd-thesis-learning-from-delayed-rewards-where"
   },
   {
@@ -1043,6 +1326,7 @@
     "category": "history",
     "question": "Who is known of the founding father of convolutional nets?",
     "answer": "Yann LeCun.",
+    "updated": "2026-09-06",
     "slug": "who-is-known-of-the-founding-father-of-convolutional-nets"
   },
   {
@@ -1050,13 +1334,20 @@
     "category": "history",
     "question": "Who are known as the \"Good Parents of AI\"?",
     "answer": "Geoffrey Hinton, Yann LeCun, and Yoshua Bengio.",
+    "updated": "2026-09-06",
     "slug": "who-are-known-as-the-good-parents-of-ai"
   },
   {
     "id": "history-136",
     "category": "history",
     "question": "Was Bayes's Theorem published after his death?",
-    "answer": "Yes. The underpinnings of Bayes' Theorem was published 2 years after his death (1763) and was until 1812 that Laplace published it as we know it today. 49 years later!",
+    "answer": "Yes. Bayes died in 1761, and his friend Richard Price edited his essay and presented it to the Royal Society in December 1763, two years later. Pierre-Simon Laplace, working independently, stated the same principle in 1774 and developed it further over the following decades, notably in his Théorie analytique des probabilités (1812).",
+    "explanation": [
+      "Yes. Thomas Bayes, an English Presbyterian minister, died on 7 April 1761, and his result was published two years later. Bayes' theorem updates the probability of a hypothesis H after seeing evidence E: P(H | E) = P(E | H) P(H) / P(E).",
+      "His friend Richard Price edited the manuscript and sent it to the Royal Society as \"An Essay towards solving a Problem in the Doctrine of Chances\", read on 23 December 1763 and printed in Philosophical Transactions. Bayes never wrote the modern formula; he solved one problem, inferring a binomial probability from observed successes and failures with a uniform prior. Laplace, unaware of Bayes, stated the principle in 1774 and developed it further in his Théorie analytique des probabilités (1812).",
+      "Interview staple: a disease has 1% prevalence, the test catches 90% of cases and wrongly flags 9% of healthy people. P(positive) = 0.009 + 0.0891 = 0.0981, so P(disease | positive) = 0.009 / 0.0981 ≈ 9%. Ignoring the prior is the base rate fallacy."
+    ],
+    "updated": "2026-10-12",
     "slug": "was-bayess-theorem-published-after-his-death"
   },
   {
@@ -1064,6 +1355,7 @@
     "category": "history",
     "question": "What object did Yann Lecunn use in NIPS 2016 to describe the ’layers’ of intelligence?",
     "answer": "Cake",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "what-object-did-yann-lecunn-use-in-nips-2016-to-describe-the-layers-of-intelligence"
   },
@@ -1072,6 +1364,7 @@
     "category": "history",
     "question": "What defunct deep learning library was published in 2007 by Montreal Institute for Learning Algorithms?",
     "answer": "Theano",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "what-defunct-deep-learning-library-was-published-in-2007-by-montreal-institute-for"
   },
@@ -1080,6 +1373,7 @@
     "category": "history",
     "question": "What language was the original AlexNet (ILSVRC 2012) written in?",
     "answer": "CUDA/C++",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "what-language-was-the-original-alexnet-ilsvrc-2012-written-in"
   },
@@ -1088,6 +1382,7 @@
     "category": "history",
     "question": "What was the final score of the 2016 match between Google DeepMind’s AlphaGo and Go grandmaster Lee Sedol?",
     "answer": "4-1 (AlphaGo - Sedol).",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "what-was-the-final-score-of-the-2016-match-between-google-deepminds-alphago-and-go"
   },
@@ -1096,6 +1391,7 @@
     "category": "history",
     "question": "This person’s notable students include Ruslan Salakhutdinov, Ilya Sutskever, and Yann LeCun?",
     "answer": "Geoffrey Hinton.",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "this-persons-notable-students-include-ruslan-salakhutdinov-ilya-sutskever-and-yann-lecun"
   },
@@ -1104,6 +1400,7 @@
     "category": "history",
     "question": "What was the dimension of all the embedding and sublayers of the original Transformer (Attention is All You Need 2017)?",
     "answer": "512",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "what-was-the-dimension-of-all-the-embedding-and-sublayers-of-the-original-transformer"
   },
@@ -1112,6 +1409,7 @@
     "category": "history",
     "question": "In 2016 Google’s AlphaGo won four out of five games of Go against Lee Sedol, a professional Go player from South Korea (9 dan rank). What hardware powered the AlphaGo software to victory?",
     "answer": "Tensor Processing Unit (TPU).",
+    "updated": "2026-09-06",
     "proposedBy": "@kierisi",
     "slug": "in-2016-googles-alphago-won-four-out-of-five-games-of-go-against-lee-sedol-a-professional"
   },
@@ -1120,6 +1418,7 @@
     "category": "dl",
     "question": "Type of backpropagation where we use only a single training example for calculation of the gradient and update parameters.",
     "answer": "Stochastic Gradient Descent.",
+    "updated": "2026-09-06",
     "slug": "type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of"
   },
   {
@@ -1127,6 +1426,7 @@
     "category": "dl",
     "question": "Type of backpropagation where we use the whole dataset to perform a single step.",
     "answer": "Batch Gradient Descent.",
+    "updated": "2026-09-06",
     "slug": "type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step"
   },
   {
@@ -1134,13 +1434,20 @@
     "category": "dl",
     "question": "Type of backpropagation where we use a fixed number of training examples which is lees than the actual dataset to perform a calculation of the gradient",
     "answer": "Mini-batch Gradient Descent.",
+    "updated": "2026-09-06",
     "slug": "type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees"
   },
   {
     "id": "dl-147",
     "category": "dl",
     "question": "Name three different deep learning frameworks.",
-    "answer": "TensorFlow, PyTorch, Keras, Caffe, etc.",
+    "answer": "PyTorch, TensorFlow and JAX. Keras is a popular high-level API that runs on top of them; older frameworks include Caffe and Theano.",
+    "explanation": [
+      "Three widely used deep learning frameworks are PyTorch, TensorFlow and JAX. Keras is often named too, though it is a high-level API that runs on top of a backend engine. A framework provides GPU and TPU tensors, automatic differentiation, and building blocks such as layers, losses and optimizers.",
+      "PyTorch, created at Facebook (now Meta) and run by the PyTorch Foundation since 2022, is the most common choice in research. Google released TensorFlow in 2015, and it is known for production tools such as TensorFlow Lite. JAX, also from Google, offers NumPy-style code with transformations such as grad, jit and vmap. Keras 3 runs on any of the three. Caffe and Theano mattered early on but are rarely used now.",
+      "A common follow-up is static versus dynamic graphs. TensorFlow 1.x had you define a graph and then run it in a session; PyTorch builds the graph as the code runs, which makes debugging easy. TensorFlow 2.0 made eager execution the default and PyTorch 2.0 added torch.compile, so the gap has narrowed."
+    ],
+    "updated": "2026-10-12",
     "slug": "name-three-different-deep-learning-frameworks"
   },
   {
@@ -1148,6 +1455,7 @@
     "category": "dl",
     "question": "What is AdaGrad?",
     "answer": "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
+    "updated": "2026-09-06",
     "slug": "what-is-adagrad"
   },
   {
@@ -1155,13 +1463,20 @@
     "category": "dl",
     "question": "Which ones are two actors in a convolutional operation?",
     "answer": "Convolutional filter and a slice of an input matrix.",
+    "updated": "2026-09-06",
     "slug": "which-ones-are-two-actors-in-a-convolutional-operation"
   },
   {
     "id": "dl-150",
     "category": "dl",
-    "question": "How does dropout regularization works in deep learning?",
-    "answer": "Dropout regularization works by removing a random selection of a fixed number of the units in a network layer for a single gradient step.",
+    "question": "How does dropout regularization work in deep learning?",
+    "answer": "During training, each unit in a layer is set to zero independently with probability p on every forward pass, so each gradient step trains a different random sub-network. At inference no units are dropped.",
+    "explanation": [
+      "Dropout randomly switches off units during training. On every forward pass, each unit in a layer has its output set to zero independently with probability p, the dropout rate, so each gradient step trains a different random sub-network. Nothing is dropped at inference. Hinton and colleagues introduced it in 2012.",
+      "So the number dropped is random, not fixed: in a layer of 100 units with p = 0.5, about 50 are zeroed per step, perhaps 46 on one step and 55 on the next. Survivors are multiplied by 1/(1 − p), here 2, so the next layer's expected input matches what it sees at test time. This is inverted dropout, used by PyTorch and Keras.",
+      "It works because units cannot rely on particular other units, and the weight-sharing sub-networks act like a cheap ensemble. A classic bug is forgetting model.eval() in PyTorch, which leaves dropout on at inference. Watch the convention: the 2014 JMLR paper by Srivastava et al. uses p for the probability of keeping a unit."
+    ],
+    "updated": "2026-10-12",
     "slug": "how-does-dropout-regularization-works-in-deep-learning"
   },
   {
@@ -1174,6 +1489,7 @@
       "Epochs are split into batches. With 10,000 examples and a batch size of 100, one epoch is 100 iterations, meaning 100 gradient updates. Batch size sets how many examples go into each update; the number of epochs sets how many times the model sees the whole dataset.",
       "Training usually runs for many epochs, since one pass is rarely enough to converge. Too few epochs underfit and too many overfit, so the number is normally chosen with early stopping: watch the validation loss after each epoch and stop when it stops improving. Data is typically reshuffled at the start of every epoch."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-an-epoch"
   },
   {
@@ -1181,6 +1497,7 @@
     "category": "dl",
     "question": "What is a batch?",
     "answer": "Number of training samples in 1 Forward/1 Backward pass.",
+    "updated": "2026-09-06",
     "slug": "what-is-a-batch"
   },
   {
@@ -1188,6 +1505,7 @@
     "category": "dl",
     "question": "Which are the two components of a Generative Adversarial Network?",
     "answer": "A generator that turns noise into samples and a discriminator that judges them real or fake, trained against each other in a minimax game. The tension is the point and also the difficulty: unstable training and mode collapse, where the generator serves one convincing output.",
+    "updated": "2026-09-14",
     "slug": "which-are-the-two-components-of-a-generative-adversarial-network"
   },
   {
@@ -1195,6 +1513,7 @@
     "category": "dl",
     "question": "What is the function of the generator in a GAN?",
     "answer": "It creates new examples.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-function-of-the-generator-in-a-gan"
   },
   {
@@ -1202,6 +1521,7 @@
     "category": "dl",
     "question": "What is the function of the discriminator in a GAN?",
     "answer": "Determine whether examples are real or fake.",
+    "updated": "2026-09-06",
     "slug": "what-is-the-function-of-the-discriminator-in-a-gan"
   },
   {
@@ -1209,6 +1529,7 @@
     "category": "dl",
     "question": "What does gradient descent tries to minimize?",
     "answer": "A loss function.",
+    "updated": "2026-09-06",
     "slug": "what-does-gradient-descent-tries-to-minimize"
   },
   {
@@ -1216,13 +1537,20 @@
     "category": "dl",
     "question": "Which activation function follows these rules: If input is negative or zero, output is 0 and if input is positive, output is equal to input.",
     "answer": "ReLU, the rectified linear unit, max(0, x). It is cheap and its gradient is exactly 1 on the positive side, so it does not saturate as sigmoid and tanh do, which is much of why deep stacks became trainable. Its failure mode is dead units stuck at zero.",
+    "updated": "2026-09-14",
     "slug": "which-activation-function-follows-these-rules-if-input-is-negative-or-zero-output-is-0"
   },
   {
     "id": "dl-158",
     "category": "dl",
-    "question": "Explain what a softmax function does?",
+    "question": "Explain what a softmax function does.",
     "answer": "Provides probabilities for each possible class in a multi-class classification model. The probabilities add up to exactly 1.0",
+    "explanation": [
+      "The softmax function turns a vector of raw scores, called logits, into a probability distribution: each output lies between 0 and 1 and the outputs sum to exactly 1. It is the usual output layer of a multi-class classifier: softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ).",
+      "Example: logits [2, 1, 0.1] exponentiate to about 7.39, 2.72 and 1.11, which sum to about 11.21, giving probabilities of about 0.66, 0.24 and 0.10. The exponential keeps every output positive and stretches the gaps, so the largest logit takes most of the probability, a smooth version of argmax. Adding the same constant to every logit changes nothing, so implementations subtract the maximum first to avoid overflow.",
+      "Softmax is usually paired with cross-entropy loss, and the gradient of the pair with respect to the logits is simply p − y, the predicted probabilities minus the one-hot label. Interviewers also ask when not to use it: for multi-label problems, use one sigmoid per class. With two classes, softmax reduces to the sigmoid of the logit difference."
+    ],
+    "updated": "2026-10-12",
     "slug": "explain-what-a-softmax-function-does"
   },
   {
@@ -1235,13 +1563,20 @@
       "Too small, and training crawls and can stall on plateaus or in poor local minima. Too large, and the updates overshoot the minimum, so the loss oscillates or diverges. Typical starting values are 0.1 to 0.01 for SGD and around 0.001 (3e-4 is a popular default) for Adam.",
       "In practice the rate is rarely constant. Schedules such as step decay, cosine annealing or warmup followed by decay change it during training, and adaptive optimizers like Adam and RMSProp scale it per parameter. A learning-rate range test, which raises the rate every batch and watches the loss, is a quick way to find a good value."
     ],
+    "updated": "2026-10-11",
     "slug": "what-is-learning-rate"
   },
   {
     "id": "dl-160",
     "category": "dl",
-    "question": "What does LSTM means?",
+    "question": "What does LSTM mean?",
     "answer": "Long Short-Term Memory.",
+    "explanation": [
+      "LSTM stands for Long Short-Term Memory, a recurrent neural network built to learn long-range dependencies in sequences. Sepp Hochreiter and Jürgen Schmidhuber introduced it in a 1997 Neural Computation paper of the same name. The name refers to making short-term memory, held in the network's activations rather than its weights, last for a long time.",
+      "Plain RNNs struggle with long gaps because gradients shrink or explode over many time steps. An LSTM adds an additively updated cell state, cₜ = fₜ ⊙ cₜ₋₁ + iₜ ⊙ c̃ₜ, with output hₜ = oₜ ⊙ tanh(cₜ). The forget, input and output gates are sigmoid layers that decide what to erase, write and expose. The forget gate came later, added by Gers, Schmidhuber and Cummins in 1999.",
+      "Common follow-ups: how an LSTM differs from a GRU, which has two gates and no separate cell state, and why Transformers, which process a whole sequence in parallel, replaced it in most NLP after 2017. LSTMs remain common for time series and on-device models."
+    ],
+    "updated": "2026-10-12",
     "slug": "what-does-lstm-means"
   },
   {
@@ -1249,6 +1584,7 @@
     "category": "dl",
     "question": "Type of layer that tipically has a cell, input gate, output gate and a forget gate?",
     "answer": "An LSTM. The cell state carries information along a mostly additive path while the gates learn what to write, forget and read, which is how it survives the vanishing gradients that stall plain RNNs on long sequences. Attention has since displaced it for most sequence work.",
+    "updated": "2026-09-14",
     "slug": "type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate"
   },
   {
@@ -1256,13 +1592,20 @@
     "category": "dl",
     "question": "Sigmoid squishes values to be between?",
     "answer": "0 and 1, which is what makes it the right output layer for a binary probability. Inside a deep network it is a poor choice: gradients vanish once inputs saturate at either tail, and its output is not zero-centred, so ReLU-family activations replaced it in hidden layers.",
+    "updated": "2026-09-14",
     "slug": "sigmoid-squishes-values-to-be-between"
   },
   {
     "id": "dl-163",
     "category": "dl",
-    "question": "What does GRU means?",
+    "question": "What does GRU mean?",
     "answer": "Gated Recurrent Unit.",
+    "explanation": [
+      "GRU stands for Gated Recurrent Unit, a recurrent neural network cell that uses gates to decide how much of its past state to keep at each time step. Kyunghyun Cho and colleagues proposed it in a 2014 EMNLP paper on encoder-decoder models for machine translation, as a simpler alternative to the LSTM.",
+      "It has two gates. The reset gate rₜ controls how much of the previous state feeds the candidate state, h̃ₜ = tanh(W xₜ + U (rₜ ⊙ hₜ₋₁)), and the update gate zₜ blends old and new: hₜ = (1 − zₜ) ⊙ hₜ₋₁ + zₜ ⊙ h̃ₜ. There is no separate cell state, and with three weight blocks instead of four, a GRU has about 25% fewer parameters than an LSTM of the same size.",
+      "The usual follow-up is GRU versus LSTM. A 2014 comparison by Chung, Gulcehre, Cho and Bengio found the two comparable, and neither has won outright since, so in practice you try both. Both ease the vanishing gradient problem of plain RNNs."
+    ],
+    "updated": "2026-10-12",
     "slug": "what-does-gru-means"
   },
   {
@@ -1270,6 +1613,7 @@
     "category": "dl",
     "question": "Tanh function squishes values to be between?",
     "answer": "-1 and 1",
+    "updated": "2026-09-06",
     "slug": "tanh-function-squishes-values-to-be-between"
   },
   {
@@ -1277,6 +1621,7 @@
     "category": "dl",
     "question": "Type of layer that tipically has a reset gate and a output gate?",
     "answer": "A GRU — though the two gates are properly the reset and the update gate. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.",
+    "updated": "2026-09-14",
     "slug": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate"
   },
   {
@@ -1284,6 +1629,7 @@
     "category": "dl",
     "question": "What if we set all the weights of a neural network to 0?",
     "answer": "The equations of the learning algorithm would fail to make any changes to the network weights, and the model will be stuck.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-if-we-set-all-the-weights-of-a-neural-network-to-0"
   },
@@ -1297,6 +1643,7 @@
       "The learning rate scales how far the weights move along the negative gradient. Near a minimum the right step is small; a step that is too big jumps to the other side of the valley, sometimes higher up than where it started. Symptoms are a loss curve that oscillates wildly, spikes, or climbs, and in deep networks exploding activations or gradients.",
       "The usual fixes are to lower the rate by a factor of 3 to 10, add a warmup period so early steps are small, use a decay schedule, or use an adaptive optimizer like Adam. A learning-rate range test, which raises the rate each batch and plots the loss, is a quick way to find the largest rate that still trains stably."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@Al_Grigor",
     "slug": "what-happens-when-the-learning-rate-is-too-large"
   },
@@ -1305,6 +1652,7 @@
     "category": "dl",
     "question": "What happens when the learning rate is too small?",
     "answer": "Takes more time to train but it is possible to find a more precise minimum. The downside can be that the solution is stuck in a local minimum.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-happens-when-the-learning-rate-is-too-small"
   },
@@ -1313,6 +1661,7 @@
     "category": "dl",
     "question": "Why do we need activation functions?",
     "answer": "The main idea of using neural networks is to learn complex nonlinear functions. The Nonlinearity comes only with the activation function without them we are just stacking up multiple linear layers.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "why-do-we-need-activation-functions"
   },
@@ -1326,6 +1675,7 @@
       "Saturation is the big one. For large positive or negative inputs the curve is flat, so its derivative is close to zero, and even at its peak the derivative is only 0.25. Backpropagation multiplies these derivatives layer after layer, so in a deep network the gradient reaching the early layers shrinks toward zero and those layers barely learn.",
       "Because sigmoid outputs are always positive, the gradients for a neuron's weights all share the same sign, which pushes updates into an inefficient zig-zag. That is why ReLU and its variants replaced sigmoid in hidden layers, and tanh is preferred when a bounded output is needed. Sigmoid is still the right choice in the output layer for binary classification and inside the gates of LSTMs and GRUs."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@Al_Grigor",
     "slug": "what-are-the-problems-with-sigmoid-as-an-activation-function"
   },
@@ -1334,6 +1684,7 @@
     "category": "dl",
     "question": "What is ReLU? How is it better than sigmoid?",
     "answer": "ReLU is an activation function and it solves the problem of vanishing gradient since it doesn't saturates on higher values.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-relu-how-is-it-better-than-sigmoid"
   },
@@ -1342,6 +1693,7 @@
     "category": "dl",
     "question": "What’s pooling in CNN? Why do we need it?",
     "answer": "Pooling is a technique to downsample the feature map. It allows layers which receive relatively undistorted versions of the input to learn low level features such as lines.",
+    "updated": "2026-09-06",
     "proposedBy": "@Al_Grigor",
     "slug": "whats-pooling-in-cnn-why-do-we-need-it"
   },
@@ -1350,6 +1702,7 @@
     "category": "dl",
     "question": "Why did the output dimension of all the embedding and sublayers of original Transformer (Attention is All You Need 2017) need to be the same?",
     "answer": "Because of the residual connections.",
+    "updated": "2026-09-06",
     "proposedBy": "@GokuMohandas",
     "slug": "why-did-the-output-dimension-of-all-the-embedding-and-sublayers-of-original-transformer"
   },
@@ -1358,6 +1711,7 @@
     "category": "dl",
     "question": "One hot encoding is an excellent solution to transform categorical features with high cardinality.",
     "answer": "false",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "one-hot-encoding-is-an-excellent-solution-to-transform-categorical-features-with-high"
   },
@@ -1371,6 +1725,7 @@
       "The harmonic mean is used because it is dragged down by the smaller of the two numbers. A classifier with precision 1.0 and recall 0.1 has an arithmetic mean of 0.55 but an F1 of about 0.18, which reflects how poorly it actually finds the positive class.",
       "Accuracy is left out on purpose. F1 is mostly used on imbalanced problems such as fraud or disease detection, where accuracy is misleading: predicting the majority class every time can score 99% accuracy while catching nothing. When precision and recall are not equally important, the F-beta score weights recall beta times as much as precision."
     ],
+    "updated": "2026-10-11",
     "proposedBy": "@svpino",
     "slug": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy"
   },
@@ -1379,6 +1734,7 @@
     "category": "dl",
     "question": "As the number of hidden layers increases in a neural network, its capacity also increases.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "as-the-number-of-hidden-layers-increases-in-a-neural-network-its-capacity-also-increases"
   },
@@ -1387,6 +1743,7 @@
     "category": "dl",
     "question": "Initializing a neural network’s weights with zero is our best bet to allow the network to converge.",
     "answer": "False — with zero weights every unit in a layer computes the same thing and receives the same gradient, so the symmetry never breaks and the layer behaves like a single neuron. Use small random values scaled to fan-in: He for ReLU, Xavier for tanh. Biases can start at zero.",
+    "updated": "2026-09-14",
     "proposedBy": "@svpino",
     "slug": "initializing-a-neural-networks-weights-with-zero-is-our-best-bet-to-allow-the-network-to"
   },
@@ -1395,6 +1752,7 @@
     "category": "dl",
     "question": "As the dropout ratio used in a neural network increases, the network’s capacity also increases.",
     "answer": "false",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "as-the-dropout-ratio-used-in-a-neural-network-increases-the-networks-capacity-also"
   },
@@ -1403,6 +1761,7 @@
     "category": "dl",
     "question": "Stochastic Gradient Descent is the proper technique to use when the full dataset doesn’t fit in memory.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "stochastic-gradient-descent-is-the-proper-technique-to-use-when-the-full-dataset-doesnt"
   },
@@ -1411,6 +1770,7 @@
     "category": "dl",
     "question": "Batch Normalization is an efficient backpropagation technique that allows neural networks to learn.",
     "answer": "False — it is a normalization layer, not a backpropagation technique. It standardises each activation across the mini-batch, then rescales with learned parameters, which smooths optimisation and allows higher learning rates. Batch statistics also add noise, so it regularises mildly.",
+    "updated": "2026-09-14",
     "proposedBy": "@svpino",
     "slug": "batch-normalization-is-an-efficient-backpropagation-technique-that-allows-neural-networks"
   },
@@ -1419,6 +1779,7 @@
     "category": "dl",
     "question": "Gradient Descent is an algorithm used to minimize overfitting in neural networks.",
     "answer": "false",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "gradient-descent-is-an-algorithm-used-to-minimize-overfitting-in-neural-networks"
   },
@@ -1427,6 +1788,12 @@
     "category": "dl",
     "question": "Having high bias means the model is too simple and can’t capture many features during the training phase. This is also known as overfitting.",
     "answer": "false",
+    "explanation": [
+      "False. The first part is roughly right: high bias means the model is too simple to capture the real pattern in the data. But that is underfitting, not overfitting. Bias is the error that comes from wrong or overly restrictive assumptions, such as fitting a straight line to a curved relationship.",
+      "The bias-variance decomposition splits expected squared error into bias² + variance + irreducible noise. A high-bias model does poorly everywhere: say 70% training accuracy and 68% validation accuracy. An overfit, high-variance model memorizes the training data, noise included: say 99% training accuracy but 75% on validation. A large gap between the two signals variance; poor scores on both signal bias.",
+      "The usual follow-up is how to fix each one. For high bias, use a more flexible model, add better features, reduce regularization or train longer; more data rarely helps. For high variance, get more data, add regularization such as weight decay or dropout, stop early or simplify the model."
+    ],
+    "updated": "2026-10-12",
     "proposedBy": "@svpino",
     "slug": "having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the"
   },
@@ -1435,6 +1802,7 @@
     "category": "dl",
     "question": "Precision is a performance metric that defines a classification models ability to identify only relevant samples.",
     "answer": "True",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "precision-is-a-performance-metric-that-defines-a-classification-models-ability-to"
   },
@@ -1443,6 +1811,7 @@
     "category": "dl",
     "question": "Recall is a performance metric that defines a classification models ability to identify all relevant samples.",
     "answer": "True",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "recall-is-a-performance-metric-that-defines-a-classification-models-ability-to-identify"
   },
@@ -1451,6 +1820,7 @@
     "category": "dl",
     "question": "Softmax is an activation function that always returns the input value if it’s positive and zeroes otherwise.",
     "answer": "false",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "softmax-is-an-activation-function-that-always-returns-the-input-value-if-its-positive-and"
   },
@@ -1459,6 +1829,7 @@
     "category": "dl",
     "question": "In neural networks, an activation function’s most essential role is to decide whether a unit or neuron should fire.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "in-neural-networks-an-activation-functions-most-essential-role-is-to-decide-whether-a"
   },
@@ -1467,6 +1838,12 @@
     "category": "dl",
     "question": "Using a learning rate that’s too low will cause the training process to be very slow.",
     "answer": "true",
+    "explanation": [
+      "True. A learning rate that is too low makes gradient descent take tiny steps, so the loss falls slowly and training needs far more iterations to converge. The learning rate η scales every update: w ← w − η ∇L(w).",
+      "Example: take L(w) = w², whose gradient is 2w, starting at w = 1. Each step multiplies w by (1 − 2η). With η = 0.1 the factor is 0.8, and w falls below 0.01 after 21 steps. With η = 0.001 the factor is 0.998, and the same progress takes about 2,300 steps, more than 100 times as many.",
+      "On a fixed epoch budget, a tiny rate also stops before converging, which looks like underfitting; the loss curve shows a smooth but nearly flat decline. Interviewers often ask how to choose the rate: a learning-rate range test, warmup plus a decay schedule, or an adaptive optimizer such as Adam. A rate that is too high fails the opposite way, with a loss that oscillates or diverges."
+    ],
+    "updated": "2026-10-12",
     "proposedBy": "@svpino",
     "slug": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow"
   },
@@ -1475,6 +1852,12 @@
     "category": "dl",
     "question": "ReLU is an activation function that, given an input vector, generates an output where the sum of the values in the vector is equal to one.",
     "answer": "false",
+    "explanation": [
+      "False. That describes softmax, not ReLU. ReLU, the rectified linear unit, is applied to each element on its own: ReLU(x) = max(0, x). Negative values become 0 and positive values pass through unchanged, so nothing constrains the sum of the outputs.",
+      "Example: for the input [2, −1, 0.5], ReLU gives [2, 0, 0.5], which sums to 2.5. Softmax, softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ), turns the same vector into about [0.786, 0.039, 0.175], which sums to 1. ReLU adds cheap non-linearity in hidden layers; softmax turns the output layer's scores into class probabilities.",
+      "Typical follow-ups: why ReLU helped deep networks train, and what the dying ReLU problem is. Its gradient is exactly 1 for positive inputs, so it does not shrink gradients the way sigmoid and tanh do. But a unit whose input is always negative outputs 0, gets zero gradient and stops learning. Leaky ReLU, which keeps a small slope such as 0.01 for negative inputs, and GELU are common alternatives."
+    ],
+    "updated": "2026-10-12",
     "proposedBy": "@svpino",
     "slug": "relu-is-an-activation-function-that-given-an-input-vector-generates-an-output-where-the"
   },
@@ -1483,6 +1866,7 @@
     "category": "dl",
     "question": "An autoencoder is a neural network that automatically learns by using its inputs as the expected output.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the"
   },
@@ -1491,6 +1875,7 @@
     "category": "dl",
     "question": "Convolutional neural networks are translation invariant.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "convolutional-neural-networks-are-translation-invariant"
   },
@@ -1499,6 +1884,7 @@
     "category": "dl",
     "question": "Autoencoders are one of the most popular supervised learning methods.",
     "answer": "false",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "autoencoders-are-one-of-the-most-popular-supervised-learning-methods"
   },
@@ -1507,6 +1893,7 @@
     "category": "dl",
     "question": "The type of problem where you need to classify the input into a single class is called multi class classification.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "the-type-of-problem-where-you-need-to-classify-the-input-into-a-single-class-is-called"
   },
@@ -1515,6 +1902,7 @@
     "category": "dl",
     "question": "Dropout is an excellent regularization technique that speeds the training process.",
     "answer": "false",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "dropout-is-an-excellent-regularization-technique-that-speeds-the-training-process"
   },
@@ -1523,6 +1911,7 @@
     "category": "dl",
     "question": "A neural network with a single layer is capable of approximating any function.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "a-neural-network-with-a-single-layer-is-capable-of-approximating-any-function"
   },
@@ -1531,6 +1920,7 @@
     "category": "dl",
     "question": "Leaky ReLU is an activation function that allows the passing of small sized negative values if the network’s input value is less than zero.",
     "answer": "true",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative"
   },
@@ -1538,7 +1928,13 @@
     "id": "dl-197",
     "category": "dl",
     "question": "Bagging is the concept of splitting a dataset and randomly placing it into bags for training a model.",
-    "answer": "true",
+    "answer": "false",
+    "explanation": [
+      "False, as worded. Bagging, short for bootstrap aggregating, does not split the dataset into separate bags. It draws many bootstrap samples, each as large as the original data and drawn with replacement, trains one model per sample, and combines their predictions by averaging or majority vote. Leo Breiman published it in 1996.",
+      "Because sampling is with replacement, the bags overlap and repeat rows. The chance that a given row is never picked in n draws is (1 − 1/n)ⁿ, which approaches 1/e ≈ 0.368, so each bag holds about 63.2% of the distinct rows; the left-out, out-of-bag rows give a free validation estimate. Averaging models trained on slightly different data cancels much of their variance.",
+      "Bagging helps most with unstable, high-variance learners such as deep decision trees; a random forest is bagged trees plus a random subset of features at each split. Interviewers often contrast it with boosting, which trains models one after another on the previous ones' errors and mainly reduces bias. Sampling without replacement instead is called pasting."
+    ],
+    "updated": "2026-10-12",
     "proposedBy": "@svpino",
     "slug": "bagging-is-the-concept-of-splitting-a-dataset-and-randomly-placing-it-into-bags-for"
   },
@@ -1547,6 +1943,7 @@
     "category": "dl",
     "question": "A Categorical feature is a feature that can only take a limited number of possible values.",
     "answer": "True",
+    "updated": "2026-09-06",
     "proposedBy": "@svpino",
     "slug": "a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values"
   },
@@ -1555,6 +1952,7 @@
     "category": "genai",
     "question": "What do temperature, top-p and top-k control?",
     "answer": "How the next token is sampled: temperature flattens or sharpens the distribution, top-k keeps the k likeliest tokens, top-p the smallest set whose mass reaches p. Near zero for extraction and code; raise it only when you want variety.",
+    "updated": "2026-09-13",
     "slug": "what-do-temperature-top-p-and-top-k-control"
   },
   {
@@ -1562,6 +1960,7 @@
     "category": "genai",
     "question": "When do you use RAG instead of fine-tuning?",
     "answer": "RAG when the model lacks knowledge: facts that change, are private, or need a citation. Fine-tuning when it lacks behaviour: a format, a tone, a narrow task. An index is cheaper to update than weights, so reach for RAG first.",
+    "updated": "2026-09-13",
     "slug": "when-do-you-use-rag-instead-of-fine-tuning"
   },
   {
@@ -1569,6 +1968,7 @@
     "category": "genai",
     "question": "What are the tradeoffs in RAG chunk size?",
     "answer": "Small chunks retrieve precisely but strip the context that qualifies a fact; large ones keep context but dilute the embedding and spend tokens. Start near a few hundred tokens with some overlap, split on document structure, then tune against an eval set.",
+    "updated": "2026-09-13",
     "slug": "what-are-the-tradeoffs-in-rag-chunk-size"
   },
   {
@@ -1576,6 +1976,7 @@
     "category": "genai",
     "question": "Why combine embeddings with keyword search?",
     "answer": "Because they fail differently: embeddings match paraphrase but miss rare exact strings like error codes and part numbers, while BM25 matches those tokens and misses paraphrase. Hybrid search fuses both rankings, usually with a reranker on top.",
+    "updated": "2026-09-13",
     "slug": "why-combine-embeddings-with-keyword-search"
   },
   {
@@ -1583,6 +1984,7 @@
     "category": "genai",
     "question": "How do you evaluate a RAG system?",
     "answer": "Retrieval and generation separately. Retrieval: recall@k and nDCG on labelled question-document pairs. Generation: faithfulness (every claim supported by the context), relevance and citations. Most bad answers are retrieval failures.",
+    "updated": "2026-09-13",
     "slug": "how-do-you-evaluate-a-rag-system"
   },
   {
@@ -1590,6 +1992,7 @@
     "category": "genai",
     "question": "What actually reduces hallucinations?",
     "answer": "Grounding, not scolding: retrieval with citations, permission to answer that it does not know, tool calls for facts and arithmetic, and a verification pass. The model optimises for the likeliest next token, not for truth, so instructions alone will not.",
+    "updated": "2026-09-13",
     "slug": "what-actually-reduces-hallucinations"
   },
   {
@@ -1597,6 +2000,7 @@
     "category": "genai",
     "question": "Why is a bigger context window not always the answer?",
     "answer": "Tokens cost money and latency, and accuracy sags for material buried mid-prompt. Retrieving the 2k tokens that matter usually beats pasting 200k. Long windows are for genuinely long documents; prompt caching makes a stable prefix cheaper, not free.",
+    "updated": "2026-09-13",
     "slug": "why-is-a-bigger-context-window-not-always-the-answer"
   },
   {
@@ -1604,6 +2008,7 @@
     "category": "genai",
     "question": "Prompt, system prompt, tools: what does each do?",
     "answer": "The system prompt sets durable role, rules and output format; the user prompt carries the request; tool definitions are schemas the model can call so your code fetches data or acts. The model never runs a tool itself, your application does.",
+    "updated": "2026-09-13",
     "slug": "prompt-system-prompt-tools-what-does-each-do"
   },
   {
@@ -1611,6 +2016,7 @@
     "category": "genai",
     "question": "Why did transformers replace RNNs for most NLP tasks?",
     "answer": "Self-attention lets every token weigh every other token in one parallel step, instead of pushing information down a recurrent chain, so long-range dependencies survive and training parallelises. The cost is attention quadratic in sequence length.",
+    "updated": "2026-09-13",
     "slug": "why-did-transformers-replace-rnns-for-most-nlp-tasks"
   },
   {
@@ -1618,6 +2024,7 @@
     "category": "genai",
     "question": "How does BERT differ from a GPT-style model?",
     "answer": "BERT is an encoder: bidirectional, trained by masking tokens, so every position sees both sides, which suits classification and embeddings but cannot generate. GPT is a causal decoder trained to predict the next token, which is what enables generation.",
+    "updated": "2026-09-13",
     "slug": "how-does-bert-differ-from-a-gpt-style-model"
   },
   {
@@ -1625,6 +2032,7 @@
     "category": "genai",
     "question": "When should you build a workflow instead of an agent?",
     "answer": "Whenever the steps are known ahead of time. A fixed sequence of model calls and code is cheaper, faster and testable, and you can see which step broke. An agent earns its loop only when the next action depends on intermediate results.",
+    "updated": "2026-09-13",
     "slug": "when-should-you-build-a-workflow-instead-of-an-agent"
   },
   {
@@ -1632,6 +2040,7 @@
     "category": "genai",
     "question": "What is an embedding?",
     "answer": "A fixed-length vector for text, an image or audio, placed so similar meanings land near each other, which turns search into a nearest-neighbour lookup. Vectors only compare within one model, and closeness is not relevance, hence rerankers.",
+    "updated": "2026-09-13",
     "slug": "what-is-an-embedding"
   },
   {
@@ -1639,6 +2048,7 @@
     "category": "genai",
     "question": "When do few-shot examples beat zero-shot prompting?",
     "answer": "When the output format or labelling rule is easier to show than to describe: examples let the model infer the pattern in context, with no weight updates. They cost tokens on every call and can bias style, so add them where an eval shows a gain.",
+    "updated": "2026-09-13",
     "slug": "when-do-few-shot-examples-beat-zero-shot-prompting"
   },
   {
@@ -1646,6 +2056,7 @@
     "category": "genai",
     "question": "What does RLHF change about a base model?",
     "answer": "Behaviour, not knowledge. Supervised fine-tuning on demonstrations, then a reward model trained on human comparisons of response pairs, then policy optimisation against it with a KL penalty to stay near the base. DPO skips the reward model.",
+    "updated": "2026-09-13",
     "slug": "what-does-rlhf-change-about-a-base-model"
   },
   {
@@ -1653,6 +2064,7 @@
     "category": "genai",
     "question": "How does byte pair encoding tokenization work?",
     "answer": "Text is cut into subword tokens from a fixed vocabulary; BPE builds that vocabulary from characters up, repeatedly merging the most frequent adjacent pair. So common words are one token, rare and non-English text cost more, and letters are invisible.",
+    "updated": "2026-09-13",
     "slug": "how-does-byte-pair-encoding-tokenization-work"
   },
   {
@@ -1660,6 +2072,7 @@
     "category": "genai",
     "question": "What is the KV cache, and why does it cap concurrency?",
     "answer": "Attention keys and values for the prefix, cached per layer, so each new token attends over saved state instead of recomputing the sequence. The cache grows with batch size, sequence length and layers, so GPU memory rather than compute limits throughput.",
+    "updated": "2026-09-13",
     "slug": "what-is-the-kv-cache-and-why-does-it-cap-concurrency"
   }
 ]

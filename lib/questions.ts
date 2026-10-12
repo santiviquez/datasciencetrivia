@@ -83,6 +83,13 @@ export interface Question {
    * page gets the depth a search result or an assistant needs to quote it.
    */
   explanation?: string[];
+  /**
+   * Date (YYYY-MM-DD) this card's question, answer or explanation last
+   * changed. Feeds the page's <lastmod> and dateModified, so a crawler can
+   * tell which pages are worth refetching. Omit it and the deck-wide
+   * CONTENT_UPDATED is used.
+   */
+  updated?: string;
   /** Optional X/Twitter handle of whoever suggested the question. */
   proposedBy?: string;
   /**
