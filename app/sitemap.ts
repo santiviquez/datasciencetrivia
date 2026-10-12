@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...getAllQuestions().map((q) => ({
       url: `${SITE.url}/questions/${q.slug}`,
-      lastModified,
+      lastModified: new Date(q.updated ?? CONTENT_UPDATED),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),

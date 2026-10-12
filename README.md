@@ -128,6 +128,7 @@ Every card lives in `content/questions.json`:
   "question": "Is logistic regression a linear model? Why?",
   "answer": "The short answer that fits on the card.",
   "explanation": ["Optional longer answer, one string per paragraph."],
+  "updated": "2026-10-12",
   "slug": "is-logistic-regression-a-linear-model-why",
   "proposedBy": "@optional_handle"
 }
@@ -138,8 +139,11 @@ Every card lives in `content/questions.json`:
   breaking its link; omit it and one is derived from the question.
 - `explanation` renders under the card on the question's page, and goes into
   its structured data, meta description and `llms.txt`.
+- `updated` is the date the card's question, answer or explanation last
+  changed. It becomes the page's `<lastmod>` in the sitemap, so set it whenever
+  you edit a card.
 
-`npm run check:content` validates required fields, categories, explanations,
+`npm run check:content` validates required fields, categories, explanations, dates,
 unique slugs and the category hubs' starter cards. It runs before every build.
 
 To import a deck (JSON or CSV, including Anki exports converted to CSV):

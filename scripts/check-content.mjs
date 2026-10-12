@@ -52,6 +52,16 @@ raw.forEach((q, i) => {
     errors.push(`${at}: "explanation" must be a non-empty list of non-empty paragraphs`);
   }
 
+  if (
+    q.updated !== undefined &&
+    (typeof q.updated !== "string" ||
+      !/^\d{4}-\d{2}-\d{2}$/.test(q.updated) ||
+      Number.isNaN(Date.parse(q.updated)) ||
+      q.updated > new Date().toISOString().slice(0, 10))
+  ) {
+    errors.push(`${at}: "updated" must be a YYYY-MM-DD date that isn't in the future`);
+  }
+
   if (q.category && !VALID_CATEGORIES.has(q.category)) {
     errors.push(`${at}: unknown category "${q.category}"`);
   }
