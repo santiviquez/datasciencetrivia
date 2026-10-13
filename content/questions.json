@@ -855,22 +855,6 @@
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
   },
   {
-    "id": "stats-89",
-    "category": "stats",
-    "question": "What does MSE mean?",
-    "answer": "Mean Square Error.",
-    "updated": "2026-09-06",
-    "slug": "what-does-mse-mean"
-  },
-  {
-    "id": "stats-90",
-    "category": "stats",
-    "question": "What does RMSE mean?",
-    "answer": "Root Mean Square Error.",
-    "updated": "2026-09-06",
-    "slug": "what-does-rmse-mean"
-  },
-  {
     "id": "stats-91",
     "category": "stats",
     "question": "Name three techniques of dimensionality reduction.",
