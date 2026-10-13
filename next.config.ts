@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import cardRedirects from "./content/redirects.json";
 
 /**
  * Content Security Policy.
@@ -46,6 +47,18 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  /**
+   * Cards merged into a fuller duplicate keep their old URL alive with a
+   * permanent redirect (308), so links and whatever ranking the old page
+   * earned pass to the survivor.
+   */
+  async redirects() {
+    return cardRedirects.map(({ from, to }) => ({
+      source: `/questions/${from}`,
+      destination: `/questions/${to}`,
+      permanent: true,
+    }));
   },
 };
 

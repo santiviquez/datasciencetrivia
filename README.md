@@ -143,8 +143,13 @@ Every card lives in `content/questions.json`:
   changed. It becomes the page's `<lastmod>` in the sitemap, so set it whenever
   you edit a card.
 
-`npm run check:content` validates required fields, categories, explanations, dates,
-unique slugs and the category hubs' starter cards. It runs before every build.
+When two cards ask the same thing, keep the fuller one, delete the other and
+add `{ "from": "<old-slug>", "to": "<kept-slug>" }` to `content/redirects.json`,
+so the old URL redirects permanently to the card that stays.
+
+`npm run check:content` validates required fields, categories, explanations,
+dates, redirects, unique slugs and the category hubs' starter cards. It runs
+before every build.
 
 To import a deck (JSON or CSV, including Anki exports converted to CSV):
 

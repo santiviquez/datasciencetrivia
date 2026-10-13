@@ -3,8 +3,13 @@
     "id": "ml-1",
     "category": "ml",
     "question": "Name three supervised learning algorithms.",
-    "answer": "Support Vector Machines, Regression, Naive Bayes, Decision Trees, Neural Networks, etc.",
-    "updated": "2026-09-06",
+    "answer": "Any three of: linear regression, logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors, naive Bayes and neural networks.",
+    "explanation": [
+      "Logistic regression, decision trees and support vector machines are three; linear regression, k-nearest neighbors, naive Bayes, random forests, gradient boosting and neural networks also count. All learn from labeled examples, inputs paired with the correct output. Regression on its own names a task, predicting a number, not an algorithm.",
+      "Take spam filtering, with emails labeled spam or not spam. Logistic regression learns a weight for each word and turns the weighted sum into a probability. A decision tree learns yes or no questions, such as whether the email contains \"free\". A support vector machine finds the boundary with the widest margin between the classes. Naive Bayes multiplies per-word probabilities, assuming words are independent given the class.",
+      "A strong answer spans families and tasks: logistic regression classifies despite its name, linear regression predicts numbers, and trees, KNN, SVMs and neural networks do both. Interviewers then ask how to choose: data size, interpretability, training cost and data type. A classic trap: k-means and PCA use no labels, so they are unsupervised."
+    ],
+    "updated": "2026-10-13",
     "slug": "name-three-supervised-learning-algorithms"
   },
   {
@@ -139,9 +144,14 @@
   {
     "id": "ml-15",
     "category": "ml",
-    "question": "Imagine you are applying a decision tree based model to a numerical dataset and you run a experiment where you scale the features. What model would give the best results the original or the scaleted one?",
+    "question": "Imagine you are applying a decision-tree-based model to a numerical dataset and you run an experiment where you scale the features. Which model would give better results, the original or the scaled one?",
     "answer": "They should give the same result because tree-based models are scale invariant.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Neither: they should give the same results. A decision tree splits on rules like feature ≤ threshold, and the best split depends only on how the rows are ordered by that feature, not on its units. Standardization and min-max scaling preserve that order for each feature, so they produce the same tree.",
+      "Example: incomes of 20,000, 35,000, 50,000 and 90,000, with a split at income ≤ 42,500 separating the first two rows. Measured in thousands, the split becomes income ≤ 42.5, with the same rows on each side and the same impurity reduction. Every candidate split maps one to one, so random forests and gradient boosting are unaffected too.",
+      "The precise property is invariance to monotonic transformations of each feature, with one edge case. A log transform keeps the order too, but a threshold halfway between log(35,000) and log(50,000) corresponds to about 41,833, so a new income of 42,000 is routed differently. Otherwise scaling matters only for other models in the pipeline, such as KNN or neural networks."
+    ],
+    "updated": "2026-10-13",
     "slug": "imagine-you-are-applying-a-decision-tree-based-model-to-a-numerical-dataset-and-you-run-a"
   },
   {
@@ -256,8 +266,13 @@
     "id": "ml-27",
     "category": "ml",
     "question": "Explain the basic concept of random forest.",
-    "answer": "An ensemble approach to finding the decision tree that best fits the training data by creating many decision trees and then determining the \"average\" one.",
-    "updated": "2026-09-06",
+    "answer": "An ensemble of many decision trees, each trained on a bootstrap sample of the rows and choosing each split from a random subset of features. It predicts by majority vote or by averaging the trees' outputs; it doesn't pick one best tree.",
+    "explanation": [
+      "A random forest is an ensemble of many decision trees whose predictions are combined: a majority vote for classification, an average for regression. It does not pick one best-fitting tree or build an \"average\" tree, a common misreading; every tree is kept. One deep tree overfits; many different ones averaged generalize far better.",
+      "The trees differ because each is grown on a bootstrap sample of the rows, and each split may only consider a random subset of the features, often √p of p, so 8 of 64. Example: 500 trees predict whether a customer will churn: 340 vote yes and 160 no, so the forest predicts churn with a score of 0.68.",
+      "Common follow-ups: why it needs little tuning (more trees cost time but do not overfit), and why impurity-based feature importance favors features with many distinct values, making permutation importance safer. A surprising limit: a regression forest outputs averages of training targets, so it can never predict outside the range of targets it was trained on."
+    ],
+    "updated": "2026-10-13",
     "slug": "explain-the-basic-concept-of-random-forest"
   },
   {
@@ -370,7 +385,12 @@
     "category": "ml",
     "question": "L2 regularization is also called?",
     "answer": "Ridge.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "L2 regularization is also called ridge, after ridge regression: least squares with an L2 penalty, minimizing ‖y − Xw‖² + λ Σ wᵢ². Neural networks call it weight decay; numerical analysis calls it Tikhonov regularization. It shrinks every weight toward zero but, unlike lasso, almost never sets one exactly to zero.",
+      "Arthur Hoerl and Robert Kennard introduced ridge regression in Technometrics in 1970. Its closed form, ŵ = (XᵀX + λI)⁻¹ Xᵀy, adds λ to the diagonal so the matrix stays invertible even with collinear features. Example: if a feature appears twice, least squares cannot choose between weights of 2 and 0 or 102 and −100, which fit equally well. Ridge picks the equal split, a little under 1 each, because that has the smallest penalty.",
+      "A common follow-up: are weight decay and L2 the same? With plain SGD they are equivalent; with Adam they are not, which is why AdamW applies the decay separately. Scale features first, leave the intercept unpenalized and choose λ by cross-validation."
+    ],
+    "updated": "2026-10-13",
     "slug": "l2-regularization-is-also-called"
   },
   {
@@ -378,7 +398,12 @@
     "category": "ml",
     "question": "Can we have both L1 and L2 regularization components in a linear model?",
     "answer": "Yes, it is called Elastic net regularization.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Yes. A linear model with both penalties is called elastic net: the loss is the usual error plus λ₁ Σ |wᵢ| + λ₂ Σ wᵢ². The L1 part sets some weights exactly to zero; the L2 part shrinks weights smoothly and stabilizes the solution. Hui Zou and Trevor Hastie introduced it in 2005.",
+      "The L2 part fixes a lasso weakness. Suppose x₁ and x₂ are identical copies and the fit needs w₁ + w₂ = 2. Every non-negative split has L1 norm 2, so lasso may keep (2, 0), one copy only. The L2 penalty is 4 for (2, 0) but 2 for (1, 1), so elastic net shares the weight equally: the grouping effect.",
+      "In scikit-learn, ElasticNet takes alpha, the overall strength, and l1_ratio, the L1 share: 1 is lasso, 0 is ridge. Tune both by cross-validation, for example with ElasticNetCV, after scaling the features. It also helps when features outnumber rows: lasso selects at most n features from n samples, while elastic net can keep more."
+    ],
+    "updated": "2026-10-13",
     "slug": "can-we-have-both-l1-and-l2-regularization-components-in-a-linear-model"
   },
   {
@@ -400,9 +425,14 @@
   {
     "id": "ml-42",
     "category": "ml",
-    "question": "Does feature selection tends to increase overfitting?",
+    "question": "Does feature selection tend to increase overfitting?",
     "answer": "No. It actually could help to reduce overfitting.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "No. Feature selection usually reduces overfitting. It keeps the features that carry useful signal and drops irrelevant or redundant ones, so the model has fewer parameters with which to fit noise. It also makes models faster and easier to explain.",
+      "Each extra feature lets a model fit a little more noise. Fit a linear regression on 100 rows with 50 pure-noise features: the expected training R² is 50/99, about 0.5, though the true R² is 0. Dropping such features removes that false fit and lowers variance. Common methods are filters such as mutual information, wrappers such as recursive feature elimination, and embedded methods such as L1 regularization.",
+      "The catch interviewers look for: selection overfits when it uses the data you evaluate on. The Elements of Statistical Learning describes 50 samples, 5,000 noise predictors and random labels. Picking the 100 predictors most correlated with the labels on all the data, then cross-validating a 1-nearest-neighbor classifier, gave about 3% error against a true 50%. Select features inside each fold."
+    ],
+    "updated": "2026-10-13",
     "slug": "does-feature-selection-tends-to-increase-overfitting"
   },
   {
@@ -410,7 +440,12 @@
     "category": "ml",
     "question": "Mean Squared Error, Root Mean Squared Error, Mean Absolute Error, R-squared are metrics for evaluation which type of models?",
     "answer": "Regression models.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Regression models, which predict a continuous number such as a price or a delivery time. MAE, MSE and RMSE measure the typical size of the prediction errors, so lower is better. R-squared compares the model with a baseline that always predicts the mean, so higher is better.",
+      "Example: actual values 10, 12, 14 and 20 with predictions 11, 11, 15 and 18 give errors of −1, 1, −1 and 2. MAE = 5/4 = 1.25. MSE = 7/4 = 1.75, and RMSE = √1.75 ≈ 1.32, in the target's units. The actuals average 14, so the total sum of squares is 16 + 4 + 0 + 36 = 56 and R² = 1 − 7/56 = 0.875.",
+      "Interviewers ask which to report. MAE weighs every unit of error equally, RMSE punishes larger misses more, and R² is unitless, so it reads the same at any scale. Classifiers use accuracy, precision, recall or AUC instead. One overlap: the Brier score is MSE on predicted probabilities, used to evaluate classifiers."
+    ],
+    "updated": "2026-10-13",
     "slug": "mean-squared-error-root-mean-squared-error-mean-absolute-error-r-squared-are-metrics-for"
   },
   {
@@ -505,9 +540,14 @@
   {
     "id": "ml-52",
     "category": "ml",
-    "question": "Standardization of features is required before training a Logistic Regression?",
+    "question": "Is standardization of features required before training a logistic regression?",
     "answer": "No — rescaling a feature just rescales its coefficient, so the predictions are unchanged. It still matters in practice: gradient descent converges far faster when features share a scale, and any L1 or L2 penalty is scale-dependent, so unscaled features get penalised unevenly.",
-    "updated": "2026-09-14",
+    "explanation": [
+      "No, not for plain, unregularized logistic regression. Standardization rescales a feature to mean 0 and standard deviation 1, z = (x − μ) / σ. The model sees features only through the score w·x + b, so rescaling a feature rescales its coefficient by the opposite factor and the predicted probabilities do not change.",
+      "Example: an income coefficient of 0.00002 per dollar becomes 0.02 per thousand dollars, and w·x is identical. Standardizing makes the coefficient w·σ; the intercept absorbs w·μ. A penalty changes this: an L2 penalty λ Σ wᵢ² barely touches the tiny coefficient of a feature in dollars but shrinks one on a 0 to 1 scale hard, so units, not signal, decide what gets shrunk. scikit-learn's LogisticRegression applies an L2 penalty by default (C = 1.0), so there scaling does change the model.",
+      "Unscaled features also slow gradient-based solvers. A typical follow-up asks which models need scaling: KNN, SVMs, PCA, k-means and penalized models do; trees do not. Fit the scaler on training data only."
+    ],
+    "updated": "2026-10-13",
     "slug": "standardization-of-features-is-required-before-training-a-logistic-regression"
   },
   {
@@ -544,15 +584,25 @@
     "category": "ml",
     "question": "High bias can cause an algorithm to underfit? True or False?",
     "answer": "True.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. High bias is the main cause of underfitting. Bias is error from a model's assumptions being too restrictive for the real pattern, so the model misses that pattern even on its training data, and its error is high on training and new data alike.",
+      "Example: a linear classifier on the four XOR points, (0, 0) and (1, 1) in one class, (0, 1) and (1, 0) in the other. No straight line separates them, so it gets at most 3 of 4 right, however long it trains. Adding the feature x₁x₂ makes them separable and removes the bias. Heavy regularization adds bias too: ridge with a huge λ pushes weights toward zero and predicts roughly the mean.",
+      "Mind the word: bias here means error from wrong assumptions, not the bias term b in w·x + b, nor unfair treatment of groups. Common causes are weak features, too simple a model, too much regularization or stopping training early. Fixes run the opposite way, and more data rarely helps."
+    ],
+    "updated": "2026-10-13",
     "slug": "high-bias-can-cause-an-algorithm-to-underfit-true-or-false"
   },
   {
     "id": "ml-57",
     "category": "ml",
-    "question": "High variance can cause an algorithm to overfit? True of False?",
+    "question": "High variance can cause an algorithm to overfit. True or False?",
     "answer": "True.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. In the bias-variance sense, variance is how much a model's predictions change when it is trained on a different sample from the same population. A high-variance model bends to the noise in its particular training set, and fitting noise is what overfitting is. Strictly, high variance is less a cause of overfitting than its defining symptom.",
+      "Example: train an unpruned decision tree on five random samples of 1,000 homes and ask each to price the same house. The answers might range from $240,000 to $390,000, because each tree memorized different noise; a linear regression trained on the same samples might stay between $295,000 and $310,000.",
+      "Remedies that target variance include more data, bagging, regularization, fewer features and early stopping. On a learning curve, variance shows up as a train-validation gap that narrows as the training set grows. Do not confuse model variance with the variance of a feature or target: one describes how the fitted model shifts across samples, the other the data itself."
+    ],
+    "updated": "2026-10-13",
     "slug": "high-variance-can-cause-an-algorithm-to-overfit-true-of-false"
   },
   {
@@ -659,7 +709,12 @@
     "category": "ml",
     "question": "What is clustering?",
     "answer": "Clustering algorithms group objects such that similar feature points are put into the same groups (clusters).",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Clustering is the unsupervised task of grouping data points so that points in the same cluster are more similar to each other than to points in other clusters. There are no labels: the algorithm finds the groups from the features alone, usually with a distance such as Euclidean distance defining similarity.",
+      "Example: six customers spend 1, 2, 3, 10, 11 and 12 thousand dollars a year, and k-means with k = 2 finds {1, 2, 3} and {10, 11, 12}. Add a customer who spends 40: k-means, forced to make two clusters, does best by isolating 40 and merging the real groups. DBSCAN, a density-based method, with a neighborhood radius of 1.5 and a minimum of 2 points keeps both groups and labels 40 as noise, without being told how many clusters exist.",
+      "Other families include hierarchical clustering and Gaussian mixtures, which give soft memberships. Interviewers often ask how to judge clusters without labels: the silhouette score, plus whether the groups mean something for the business. Scale features first, or the widest-ranging one dominates the distances."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-clustering"
   },
@@ -714,9 +769,14 @@
   {
     "id": "stats-73",
     "category": "stats",
-    "question": "Technique used to sample based on a probability where each sample unit is a collection of a cluster element.",
+    "question": "Probability sampling technique in which each sampling unit is a cluster, a group of population elements, rather than a single element.",
     "answer": "Cluster sampling.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Cluster sampling. This probability sampling method divides the population into naturally occurring groups, called clusters, like schools or villages, and randomly selects whole clusters. One-stage designs measure every element in a chosen cluster; two-stage designs take a random subsample within each one.",
+      "It is cheap: you only need a list of clusters, and fieldwork is concentrated. To test a state's fifth graders, pick 50 schools at random and test all their fifth graders, about 30 per school. The price is precision, because pupils in one school resemble each other. With intraclass correlation ρ = 0.1 and m = 30, the design effect is 1 + (m − 1)ρ = 3.9, so the 1,500 pupils carry about as much information as 385 sampled at random.",
+      "The classic follow-up is stratified sampling, which samples within every group and improves precision; cluster sampling selects only some groups and usually lowers it. Analyses must account for the clustering, for example with cluster-robust standard errors, or they overstate precision."
+    ],
+    "updated": "2026-10-13",
     "slug": "technique-used-to-sample-based-on-a-probability-where-each-sample-unit-is-a-collection-of"
   },
   {
@@ -740,15 +800,25 @@
     "category": "stats",
     "question": "In a normal distribution which parameter indicates where the bell is centered?",
     "answer": "The mean.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "The mean, μ. A normal distribution N(μ, σ²) has two parameters: μ sets where the bell is centered and the standard deviation σ sets its width. Because the curve is symmetric, μ is also the median and the mode, the point where the density peaks.",
+      "The density is f(x) = (1 / (σ√(2π))) · exp(−(x − μ)² / (2σ²)). Its exponent is 0 only at x = μ, so the peak sits exactly at the mean. Changing μ slides the curve without changing its shape: many IQ tests are scaled to mean 100 and standard deviation 15, and raising the mean to 110 would shift every percentile up 10 points.",
+      "Interviewers may contrast μ, the population parameter, with the sample mean x̄, its maximum likelihood estimate. In a right-skewed distribution such as income, the mean is pulled above the median, so \"center\" stops being one number. And not every bell-shaped curve has a mean: the Cauchy distribution is centered on its median, but its mean is undefined."
+    ],
+    "updated": "2026-10-13",
     "slug": "in-a-normal-distribution-which-parameter-indicates-where-the-bell-is-centered"
   },
   {
     "id": "stats-77",
     "category": "stats",
-    "question": "In a normal distribution which parameter indicates how wide is the bell?",
+    "question": "In a normal distribution, which parameter indicates how wide the bell is?",
     "answer": "The standard deviation.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "The standard deviation, σ. In a normal distribution N(μ, σ²), μ fixes the center and σ the width: the larger σ, the wider and flatter the bell. The variance σ² carries the same information on a squared scale.",
+      "σ has a geometric meaning: the curve's inflection points, where its curvature flips, sit at μ − σ and μ + σ. About 68% of values lie within one σ of the mean, 95% within two and 99.7% within three. Since the total area is 1, the peak height is 1 / (σ√(2π)), so doubling σ halves the peak. A machine filling boxes to 500 g with σ = 5 g puts about 95% of them between 490 and 510 g.",
+      "A classic notation bug: N(μ, σ²) is written with the variance, but NumPy's random.normal and SciPy's stats.norm take the standard deviation as scale, so passing 4 when you mean σ² = 4 doubles the width. A z-score, (x − μ) / σ, measures distance from the mean in units of σ."
+    ],
+    "updated": "2026-10-13",
     "slug": "in-a-normal-distribution-which-parameter-indicates-how-wide-is-the-bell"
   },
   {
@@ -850,25 +920,14 @@
     "id": "stats-88",
     "category": "stats",
     "question": "The normal distribution derives its importance from which famous theorem?",
-    "answer": "The Central Limit Theorem: the sampling distribution of a mean of independent draws approaches a normal as n grows, whatever the population's shape, provided variance is finite. That is what licenses normal-based confidence intervals and t-tests on decidedly non-normal data.",
-    "updated": "2026-09-14",
+    "answer": "The Central Limit Theorem: the mean of n independent draws from a distribution with finite variance is approximately normal for large n, whatever the population's shape. That is what justifies normal-based confidence intervals and t-tests on non-normal data, provided the sample is large enough for the data's skew.",
+    "explanation": [
+      "The central limit theorem. The mean of n independent draws from any distribution with finite variance σ² is approximately normal for large n, centered on the true mean μ with standard deviation σ/√n, whatever the shape of the data. That is why the normal curve appears throughout statistics, even for non-normal data.",
+      "Example: a fair die is flat on 1 to 6, with mean 3.5 and standard deviation about 1.71. Average 30 rolls, repeat many times, and the averages form a bell centered on 3.5 with standard deviation 1.71/√30 ≈ 0.31. Abraham de Moivre found the coin-tossing case in 1733, Laplace generalized it, and George Pólya named it in 1920.",
+      "Follow-ups test the conditions. It describes the sampling distribution of the mean, so it never makes a skewed dataset normal. The n needed depends on skew: 30 is a rule of thumb, and heavily skewed data may need hundreds. Without finite variance it fails: the mean of n Cauchy draws is distributed like a single draw."
+    ],
+    "updated": "2026-10-13",
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
-  },
-  {
-    "id": "stats-89",
-    "category": "stats",
-    "question": "What does MSE mean?",
-    "answer": "Mean Square Error.",
-    "updated": "2026-09-06",
-    "slug": "what-does-mse-mean"
-  },
-  {
-    "id": "stats-90",
-    "category": "stats",
-    "question": "What does RMSE mean?",
-    "answer": "Root Mean Square Error.",
-    "updated": "2026-09-06",
-    "slug": "what-does-rmse-mean"
   },
   {
     "id": "stats-91",
@@ -886,9 +945,14 @@
   {
     "id": "stats-92",
     "category": "stats",
-    "question": "Measures how far a set of (random) numbers are spread out from their average value.",
-    "answer": "Variance.",
-    "updated": "2026-09-06",
+    "question": "Measures how far a set of (random) numbers is spread out from their average value.",
+    "answer": "Variance: the average squared deviation from the mean. Its square root, the standard deviation, measures the same spread in the original units.",
+    "explanation": [
+      "Variance. It is the average squared distance of the values from their mean: σ² = (1/N) Σ (xᵢ − μ)² for a population. Its square root, the standard deviation, gives the same spread in the original units.",
+      "Example: for 1, 3, 5, 7 and 9 the mean is 5 and the squared deviations 16, 4, 0, 4 and 16 sum to 40, so the population variance is 40 / 5 = 8. As a sample, the variance is 40 / 4 = 10: dividing by n − 1, Bessel's correction, makes it an unbiased estimate of the population variance. Deviations are squared because raw deviations always sum to zero.",
+      "Interviewers ask why n − 1: the sample mean sits closer to the data than the true mean does, so dividing by n underestimates spread. Also worth knowing: Var(aX + b) = a² Var(X), variances of independent variables add, and squaring makes outliers weigh heavily. A practical trap: NumPy's var divides by n by default, pandas by n − 1."
+    ],
+    "updated": "2026-10-13",
     "slug": "measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value"
   },
   {
@@ -994,9 +1058,14 @@
   {
     "id": "stats-103",
     "category": "stats",
-    "question": "How Interquartile Range is calculated?",
+    "question": "How is the interquartile range calculated?",
     "answer": "Q3 - Q1",
-    "updated": "2026-09-06",
+    "explanation": [
+      "The interquartile range is the third quartile minus the first: IQR = Q3 − Q1. Q1 is the 25th percentile and Q3 the 75th, so the IQR measures the spread of the middle 50% of the data as a single number.",
+      "Sort the data and find the quartiles. For 1, 3, 4, 7, 8, 10, 12, 15, 20 the median is 8. Taking the median of each half, leaving out the middle value, gives Q1 = 3.5 and Q3 = 13.5, so IQR = 10. The default in NumPy and R interpolates instead: Q1 = 4, Q3 = 12, IQR = 8. Both conventions are valid, so check your tool's.",
+      "Interviewers ask why not use the standard deviation. The IQR ignores the top and bottom quarters, so it is robust: change 20 to 2,000 and the IQR stays put, while the standard deviation jumps from about 6 to 664. For normal data, IQR ≈ 1.35σ. Box plots, the 1.5 × IQR outlier rule and scikit-learn's RobustScaler use it."
+    ],
+    "updated": "2026-10-13",
     "slug": "how-interquartile-range-is-calculated"
   },
   {
@@ -1134,7 +1203,12 @@
     "category": "history",
     "question": "Who invented the perceptron?",
     "answer": "Frank Rosenblatt. Bonus. The invention of the perceptron generated a great deal of excitement and was widely covered in the media.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Frank Rosenblatt, a research psychologist at the Cornell Aeronautical Laboratory in Buffalo, New York, described it in a January 1957 report and a 1958 Psychological Review paper. A perceptron is a single artificial neuron that outputs 1 when a weighted sum of its inputs exceeds a threshold. It learns the weights from labeled examples, changing them only after a mistake: w ← w + η(y − ŷ)x.",
+      "The Office of Naval Research funded the work, and in July 1958 the Navy showed an IBM 704 simulation that learned to tell cards marked on the left from those marked on the right after 50 trials. The New York Times reported the Navy expected it to \"walk, talk, see, write, reproduce itself and be conscious of its existence\". The Mark I Perceptron, with 400 photocells and weights stored in motor-driven potentiometers, was demonstrated publicly in 1960.",
+      "A single perceptron draws one straight boundary, so it can learn AND but not XOR, a limit Minsky and Papert stressed in their 1969 book Perceptrons."
+    ],
+    "updated": "2026-10-13",
     "slug": "who-invented-the-perceptron"
   },
   {
@@ -1189,7 +1263,12 @@
     "category": "history",
     "question": "Who invented the LSTM architecture in deep learning?",
     "answer": "Sepp Hochreiter and Jürgen Schmidhuber in 1997.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Sepp Hochreiter and Jürgen Schmidhuber. The standard reference is their 1997 paper \"Long Short-Term Memory\" in Neural Computation (volume 9, pages 1735 to 1780), which followed a 1995 technical report at TU Munich. An LSTM is a recurrent network unit with a memory cell whose contents can survive across long stretches of a sequence.",
+      "The idea grew out of Hochreiter's 1991 diploma thesis at TU Munich, written in German and supervised by Schmidhuber, which analyzed why error gradients in recurrent networks vanish or explode over many time steps. The fix was the constant error carousel: a cell connected to itself with weight 1, so error flows back unchanged, guarded by multiplicative input and output gates. The 1997 paper bridged time lags of more than 1,000 steps.",
+      "The 1997 version had no forget gate; Felix Gers, Schmidhuber and Fred Cummins added it in 1999. LSTMs later powered Google's 2016 neural machine translation system before Transformers took over most language tasks, and in 2024 Hochreiter's group revisited the design as xLSTM."
+    ],
+    "updated": "2026-10-13",
     "slug": "who-invented-the-lstm-architecture-in-deep-learning"
   },
   {
@@ -1237,7 +1316,12 @@
     "category": "history",
     "question": "When was the Turing Test created?",
     "answer": "1950, in Turing's paper \"Computing Machinery and Intelligence\", which swapped the question of whether machines think for an imitation game judged over text. Its weakness is that it rewards convincing conversation rather than understanding — a critique now aimed straight at LLMs.",
-    "updated": "2026-09-14",
+    "explanation": [
+      "1950. Alan Turing proposed the test in \"Computing Machinery and Intelligence\", published in the journal Mind in October 1950. He opened with \"Can machines think?\" and, rather than define its terms, replaced it with what he called the imitation game. The name \"Turing test\" came later.",
+      "In the original setup an interrogator exchanges typed messages with two hidden players, a man and a woman, and must tell which is which. Turing then asked what happens if a machine takes the man's part. He predicted that in about fifty years an average interrogator would have no more than a 70% chance of a correct identification after five minutes of questioning. An earlier chess version appears in his unpublished 1948 report Intelligent Machinery.",
+      "John Searle's 1980 Chinese Room argument holds that passing the test would not show understanding. In a 2025 three-party study by Cameron Jones and Benjamin Bergen, GPT-4.5 given a humanlike persona was picked as the human 73% of the time, more often than the real people."
+    ],
+    "updated": "2026-10-13",
     "slug": "when-was-the-turing-test-created"
   },
   {
@@ -1362,9 +1446,14 @@
   {
     "id": "history-138",
     "category": "history",
-    "question": "What defunct deep learning library was published in 2007 by Montreal Institute for Learning Algorithms?",
+    "question": "What defunct deep learning library was started in 2007 by the Montreal lab now known as Mila?",
     "answer": "Theano",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Theano. It was developed from 2007 in Yoshua Bengio's lab at the Université de Montréal, then called LISA (Laboratoire d'informatique des systèmes adaptatifs) and only later renamed the Montreal Institute for Learning Algorithms (MILA), now Mila. Strictly, Theano was a Python compiler for math on multi-dimensional arrays, on which deep learning libraries were built.",
+      "You defined an expression symbolically; Theano derived its gradients automatically, optimized the graph and generated C++ or CUDA code for a CPU or GPU. James Bergstra, Olivier Breuleux, Frédéric Bastien and colleagues presented it at the SciPy 2010 conference. Keras first ran on it, as did Lasagne, Blocks and PyMC3.",
+      "On 28 September 2017 Bengio announced that MILA would stop developing Theano after version 1.0, noting that strong industry-backed frameworks now existed. Theano 1.0.0 came out on 15 November 2017. The PyMC developers took over maintenance, and the code lives on in their forks, Aesara and then PyTensor. Theano is an early example of the static, build-then-run graph style that TensorFlow 1.x also used."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@GokuMohandas",
     "slug": "what-defunct-deep-learning-library-was-published-in-2007-by-montreal-institute-for"
   },
@@ -1409,32 +1498,47 @@
     "category": "history",
     "question": "In 2016 Google’s AlphaGo won four out of five games of Go against Lee Sedol, a professional Go player from South Korea (9 dan rank). What hardware powered the AlphaGo software to victory?",
     "answer": "Tensor Processing Unit (TPU).",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Tensor Processing Units (TPUs), custom chips Google designed to run neural networks. AlphaGo, built by Google DeepMind, beat Lee Sedol 4 games to 1 in Seoul from 9 to 15 March 2016, with TPUs evaluating its policy and value networks. Google revealed the chip only at Google I/O in May 2016, when engineer Norm Jouppi wrote that TPUs powered AlphaGo in those matches.",
+      "The first-generation TPU is an application-specific integrated circuit (ASIC) built for inference: it runs networks that are already trained, using a matrix unit of 65,536 8-bit multiply-accumulate cells. Google said TPUs had been in its data centers for more than a year. The AlphaGo that beat Fan Hui in October 2015 had run on 1,202 CPUs and 176 GPUs; DeepMind's 2017 AlphaGo Zero paper says the Lee Sedol version used 48 TPUs.",
+      "A typical follow-up is how a TPU differs from a GPU: it trades general-purpose flexibility for fast, power-efficient matrix multiplication. The first TPU could not train networks; TPU v2, announced in 2017, could."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@kierisi",
     "slug": "in-2016-googles-alphago-won-four-out-of-five-games-of-go-against-lee-sedol-a-professional"
   },
   {
     "id": "dl-144",
     "category": "dl",
-    "question": "Type of backpropagation where we use only a single training example for calculation of the gradient and update parameters.",
+    "question": "Type of gradient descent where we use only a single training example to calculate the gradient and update the parameters.",
     "answer": "Stochastic Gradient Descent.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Stochastic gradient descent (SGD). In its original form it computes the gradient of the loss on one randomly chosen training example and updates the parameters immediately: w ← w − η ∇Lᵢ(w), with η the learning rate. Strictly it is a variant of gradient descent, not of backpropagation, which only computes the gradient.",
+      "Example: fit y = w·x with squared loss (w·x − y)², starting at w = 0. The example x = 2, y = 4 gives the gradient 2(w·x − y)·x = −16, so with η = 0.05 the weight moves to 0.8 before the next example is drawn. With a million examples, one epoch makes a million updates, where batch gradient descent makes one.",
+      "Each single-example gradient is a noisy but unbiased estimate of the full gradient, so progress zig-zags and the learning rate must shrink over time for SGD to settle. Watch the vocabulary: in PyTorch and most papers, \"SGD\" means mini-batch SGD, with batches of 32 to 512 examples, which use a GPU far better."
+    ],
+    "updated": "2026-10-13",
     "slug": "type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of"
   },
   {
     "id": "dl-145",
     "category": "dl",
-    "question": "Type of backpropagation where we use the whole dataset to perform a single step.",
+    "question": "Type of gradient descent where we use the whole dataset to perform a single update step.",
     "answer": "Batch Gradient Descent.",
-    "updated": "2026-09-06",
+    "updated": "2026-10-13",
     "slug": "type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step"
   },
   {
     "id": "dl-146",
     "category": "dl",
-    "question": "Type of backpropagation where we use a fixed number of training examples which is lees than the actual dataset to perform a calculation of the gradient",
+    "question": "Type of gradient descent where we use a fixed number of training examples, fewer than the whole dataset, to calculate the gradient.",
     "answer": "Mini-batch Gradient Descent.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Mini-batch gradient descent. Each update computes the gradient on a fixed-size batch of examples, typically 32 to 512, rather than the whole dataset (batch gradient descent) or one example (stochastic gradient descent). Strictly, these are variants of gradient descent; backpropagation only computes the gradient for each batch.",
+      "Example: with 50,000 images and a batch size of 256, an epoch takes 196 updates, 195 full batches plus one of 80, versus 1 for batch gradient descent and 50,000 for pure SGD. The batch gradient, (1/B) Σ ∇ℓᵢ, is an unbiased, noisy estimate of the full gradient; its noise shrinks like 1/√B, so quadrupling the batch halves the noise but quadruples the work.",
+      "Mini-batches win because they keep a GPU busy, never need the full dataset in memory, and add noise that can help training escape saddle points. A common follow-up: as the batch grows, scale the learning rate with it, and very large batches can generalize slightly worse. In PyTorch and Keras, \"SGD\" almost always means mini-batch SGD."
+    ],
+    "updated": "2026-10-13",
     "slug": "type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees"
   },
   {
@@ -1527,9 +1631,14 @@
   {
     "id": "dl-156",
     "category": "dl",
-    "question": "What does gradient descent tries to minimize?",
+    "question": "What does gradient descent try to minimize?",
     "answer": "A loss function.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Gradient descent minimizes a loss function, also called a cost or objective function: one number measuring how badly the model fits the training data, as a function of its parameters. Examples are mean squared error for regression and cross-entropy for classification.",
+      "Each step moves the parameters against the gradient, downhill. Example: fit y = w·x to the point x = 2, y = 6 with L(w) = (2w − 6)², whose derivative is 4(2w − 6). At w = 0 the gradient is −24, so a learning rate of 0.05 moves w to 1.2 and the loss falls from 36 to about 13. Further steps approach the minimum at w = 3.",
+      "A common follow-up: why not minimize accuracy? It is not differentiable, so classifiers minimize cross-entropy as a smooth stand-in. The loss often adds a regularization term, and mini-batch variants estimate the gradient from a few examples. For convex losses such as linear regression's, every local minimum is global; neural network losses are non-convex, with no such guarantee."
+    ],
+    "updated": "2026-10-13",
     "slug": "what-does-gradient-descent-tries-to-minimize"
   },
   {
@@ -1592,7 +1701,12 @@
     "category": "dl",
     "question": "Sigmoid squishes values to be between?",
     "answer": "0 and 1, which is what makes it the right output layer for a binary probability. Inside a deep network it is a poor choice: gradients vanish once inputs saturate at either tail, and its output is not zero-centred, so ReLU-family activations replaced it in hidden layers.",
-    "updated": "2026-09-14",
+    "explanation": [
+      "Between 0 and 1. The sigmoid, or logistic, function σ(x) = 1 / (1 + e^(−x)) maps any real number into the open interval (0, 1), approaching 1 for large positive inputs and 0 for large negative ones without ever reaching either. That is why its output can be read as a probability in a binary classifier's output layer.",
+      "Some values: σ(0) = 0.5, σ(2) ≈ 0.88, σ(−2) ≈ 0.12 and σ(5) ≈ 0.993. The curve is symmetric, σ(−x) = 1 − σ(x), and its inverse is the logit, log(p / (1 − p)). Its relative tanh(x) = 2σ(2x) − 1 has the same S-shape but maps to (−1, 1).",
+      "In practice the limits do arrive, through rounding: in 32-bit floats σ(x) evaluates to exactly 1.0 once x passes about 17, and a confident wrong prediction then puts log 0 into the binary cross-entropy. That is why frameworks offer losses that take the raw score, such as PyTorch's BCEWithLogitsLoss. In hidden layers, saturation shrinks gradients, so ReLU replaced sigmoid there."
+    ],
+    "updated": "2026-10-13",
     "slug": "sigmoid-squishes-values-to-be-between"
   },
   {
@@ -1619,9 +1733,14 @@
   {
     "id": "dl-165",
     "category": "dl",
-    "question": "Type of layer that tipically has a reset gate and a output gate?",
-    "answer": "A GRU — though the two gates are properly the reset and the update gate. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.",
-    "updated": "2026-09-14",
+    "question": "Type of layer that typically has a reset gate and an update gate?",
+    "answer": "A GRU. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.",
+    "explanation": [
+      "A GRU, or gated recurrent unit. Its two gates are the reset gate and the update gate; the output gate belongs to the LSTM. Each gate is a sigmoid layer whose 0-to-1 outputs scale how much of a signal passes.",
+      "The update gate sets how much of the old hidden state to keep versus replace with a new candidate, merging the LSTM's forget and input gates. The reset gate sets how much of the old state feeds that candidate; near 0, the candidate depends almost only on the current input. If the update gate keeps 99% of a state per step, 0.99¹⁰⁰ ≈ 0.37 survives 100 steps.",
+      "Why no output gate? An LSTM's output gate chooses how much of its separate cell state to expose. A GRU has only the hidden state and exposes all of it. Watch the convention: Cho and colleagues' original paper multiplies the old state by z, many later sources by 1 − z."
+    ],
+    "updated": "2026-10-13",
     "slug": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate"
   },
   {
@@ -1711,7 +1830,12 @@
     "category": "dl",
     "question": "One hot encoding is an excellent solution to transform categorical features with high cardinality.",
     "answer": "false",
-    "updated": "2026-09-06",
+    "explanation": [
+      "False. One-hot encoding turns each value of a categorical feature into its own binary column. It suits low-cardinality features, but a high-cardinality feature, such as product or user IDs, has thousands of distinct values, so it becomes thousands of mostly-zero columns.",
+      "Take a product_id column with 50,000 values, many seen only a few times. Feeding 50,000 one-hot columns into a 128-unit dense layer means 6.4 million weights, and those for a rare product are learned from a handful of rows, so they mostly fit noise. A product first seen at prediction time becomes an all-zero row. Trees suffer too, since each split isolates one product.",
+      "Better options: an embedding layer, a short learned dense vector per category (16 numbers per product is 800,000 weights), out-of-fold target encoding, hashing, or one catch-all category for rare values. An embedding is mathematically a one-hot vector times a weight matrix, computed as a lookup. Very wide one-hot features do work in sparse linear models trained on huge data, as in ad click prediction."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "one-hot-encoding-is-an-excellent-solution-to-transform-categorical-features-with-high"
   },
@@ -1734,7 +1858,12 @@
     "category": "dl",
     "question": "As the number of hidden layers increases in a neural network, its capacity also increases.",
     "answer": "true",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. A network's capacity is the range of functions it can represent, and adding hidden layers enlarges it: each layer adds parameters and another non-linear stage, so complex functions can be built by composing simpler ones. A new ReLU layer at least as wide as the previous one can copy that layer's non-negative outputs unchanged, so the deeper network loses nothing.",
+      "Depth adds capacity faster than width. With one input feature, one hidden layer of n ReLU units gives a piecewise-linear function with at most n + 1 pieces. Ten layers of two units, each folding the interval [0, 1] in half, give 2¹⁰ = 1,024 pieces from 20 units; one hidden layer would need 1,023.",
+      "Capacity is what a network can represent, not what it will learn. More of it raises the risk of overfitting, and very deep plain networks are hard to optimize: in the ResNet paper, a 56-layer plain network had higher training error on CIFAR-10 than a 20-layer one. Residual connections were the fix."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "as-the-number-of-hidden-layers-increases-in-a-neural-network-its-capacity-also-increases"
   },
@@ -1752,7 +1881,12 @@
     "category": "dl",
     "question": "As the dropout ratio used in a neural network increases, the network’s capacity also increases.",
     "answer": "false",
-    "updated": "2026-09-06",
+    "explanation": [
+      "False. A higher dropout rate lowers a network's effective capacity, its ability to fit complex functions, noise included. The rate is the probability that each unit is zeroed on a training step, so a higher rate means each step trains a smaller random sub-network. No parameters are added or removed; dropout only limits how existing weights are used, which is why it regularizes.",
+      "Example: in a layer of 1,024 units, a rate of 0.2 leaves about 819 active per step and a rate of 0.8 about 205. Units cannot rely on particular partners and must learn simple, redundant features. Too high a rate underfits: even the training loss stays high.",
+      "If strong dropout hurts the fit, widen the layer: Srivastava et al. (2014) suggest that a layer needing n units without dropout get at least n/p with it, where p is the keep probability. That convention is the trap here: Keras and PyTorch take the drop probability, but if a source quotes a keep probability, raising it raises capacity."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "as-the-dropout-ratio-used-in-a-neural-network-increases-the-networks-capacity-also"
   },
@@ -1761,7 +1895,12 @@
     "category": "dl",
     "question": "Stochastic Gradient Descent is the proper technique to use when the full dataset doesn’t fit in memory.",
     "answer": "true",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. Stochastic gradient descent, and in practice its mini-batch form, is the standard way to train when the data does not fit in memory. Each update needs only one example or one small batch, so the rest of the dataset can stay on disk and be streamed in, an approach called out-of-core learning.",
+      "The numbers make the point. ImageNet's 1.28 million training images, decoded to 224 × 224 × 3 arrays of 32-bit floats, would take about 770 GB, while a batch of 256 takes about 154 MB. Data loaders read one batch at a time and prepare the next while the GPU works.",
+      "The nuance: full-batch gradient descent does not strictly need the data in memory either, since you can stream chunks and sum their gradients, but then every update costs a full pass over the data. In scikit-learn, SGDClassifier and SGDRegressor train out of core through partial_fit, one chunk at a time, whereas a standard kernel SVM solver needs the whole training set in memory."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "stochastic-gradient-descent-is-the-proper-technique-to-use-when-the-full-dataset-doesnt"
   },
@@ -1770,7 +1909,12 @@
     "category": "dl",
     "question": "Batch Normalization is an efficient backpropagation technique that allows neural networks to learn.",
     "answer": "False — it is a normalization layer, not a backpropagation technique. It standardises each activation across the mini-batch, then rescales with learned parameters, which smooths optimisation and allows higher learning rates. Batch statistics also add noise, so it regularises mildly.",
-    "updated": "2026-09-14",
+    "explanation": [
+      "False. Batch normalization is a layer, not a backpropagation technique: backpropagation computes gradients through it like any other layer. It standardizes each feature with the mini-batch mean and variance, then applies a learned scale γ and shift β. Sergey Ioffe and Christian Szegedy introduced it in 2015.",
+      "Example: a unit outputs 2, 4, 6 and 8 across a batch of four. Mean and variance are both 5, so x̂ = (x − μ)/√(σ² + ε) gives about −1.34, −0.45, 0.45 and 1.34; with γ = 2 and β = 1, y = γx̂ + β gives −1.68, 0.11, 1.89 and 3.68. Learned γ and β can undo this if useful, and batch noise adds mild regularization.",
+      "At inference the layer instead uses running averages of mean and variance collected during training. Small batches make the statistics noisy, one reason transformers use layer normalization. The paper credited reduced internal covariate shift; Santurkar et al. (2018) argued the benefit is a smoother loss landscape, which allows higher learning rates."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "batch-normalization-is-an-efficient-backpropagation-technique-that-allows-neural-networks"
   },
@@ -1779,7 +1923,12 @@
     "category": "dl",
     "question": "Gradient Descent is an algorithm used to minimize overfitting in neural networks.",
     "answer": "false",
-    "updated": "2026-09-06",
+    "explanation": [
+      "False. Gradient descent is an optimization algorithm: it minimizes the training loss by repeatedly moving the weights against the gradient, w ← w − η ∇L(w). It has no notion of overfitting, which is fitting the training data, noise included, so closely that performance on new data suffers. Reducing overfitting is the job of regularization.",
+      "Run long enough, gradient descent can even cause overfitting. Fit a degree-9 polynomial to 10 noisy points: with 10 coefficients, the training error can be driven to zero by a curve threading every point and swinging wildly between them. Neural networks show it in their loss curves: training loss keeps falling while validation loss bottoms out and then rises.",
+      "Tools that fight overfitting include weight decay, dropout, data augmentation, more data and early stopping. Early stopping is the link to the optimizer: halting at the epoch with the best validation loss limits how far the weights travel, acting as a regularizer. Interviewers may also raise the implicit regularization of small-batch SGD, an open research question."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "gradient-descent-is-an-algorithm-used-to-minimize-overfitting-in-neural-networks"
   },
@@ -1800,9 +1949,14 @@
   {
     "id": "dl-175",
     "category": "dl",
-    "question": "Precision is a performance metric that defines a classification models ability to identify only relevant samples.",
+    "question": "Precision is a performance metric that defines a classification model's ability to identify only relevant samples.",
     "answer": "True",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. Precision is the fraction of samples a classifier labels positive that are actually positive: precision = TP / (TP + FP). A high-precision model rarely raises false alarms, which is what \"identify only relevant samples\" means. Recall instead asks whether it finds all of them.",
+      "Example: a spam filter moves 200 emails to the spam folder; 190 are spam and 10 are legitimate, so precision is 190 / 200 = 0.95. If 250 spam emails arrived in total, recall is 190 / 250 = 0.76. The 60 spam emails that reached the inbox do not touch precision at all.",
+      "Favor precision when false positives are costly: a real email lost to spam, an innocent account suspended. It is easy to inflate by flagging only the most confident cases, so report it with recall. Interviewers also ask about base rates: with fixed true and false positive rates, precision drops as positives get rarer, while recall stays put. In medicine it is called positive predictive value."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "precision-is-a-performance-metric-that-defines-a-classification-models-ability-to"
   },
@@ -1820,7 +1974,12 @@
     "category": "dl",
     "question": "Softmax is an activation function that always returns the input value if it’s positive and zeroes otherwise.",
     "answer": "false",
-    "updated": "2026-09-06",
+    "explanation": [
+      "False. That describes ReLU, max(0, x). Softmax turns a whole vector of scores into a probability distribution: softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ). Every output depends on every input and lies strictly between 0 and 1, and the outputs sum to 1, so softmax neither passes positive values through nor zeroes out negative ones.",
+      "Example: for the scores [3, 0, −3], ReLU returns [3, 0, 0]. Softmax exponentiates them to about 20.09, 1 and 0.05, which sum to 21.14, and returns about [0.950, 0.047, 0.002]. The 3 becomes a probability, and the negative score still gets a small positive share.",
+      "The two also live in different places: ReLU acts element by element in hidden layers, softmax across the output layer of a multi-class classifier. Their gradients show it: ReLU's derivative is 1 or 0 per unit, while softmax's, ∂pᵢ/∂zⱼ = pᵢ(δᵢⱼ − pⱼ), couples all outputs. The name misleads too: softmax smooths argmax, not max, which is why Goodfellow, Bengio and Courville suggest calling it softargmax."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "softmax-is-an-activation-function-that-always-returns-the-input-value-if-its-positive-and"
   },
@@ -1866,7 +2025,12 @@
     "category": "dl",
     "question": "An autoencoder is a neural network that automatically learns by using its inputs as the expected output.",
     "answer": "true",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. An autoencoder is a neural network trained to reproduce its input at its output, so each input is its own target and no labels are needed. An encoder compresses x into a smaller code z, a decoder rebuilds an approximation x̂, and training minimizes a reconstruction loss such as the mean squared error between x and x̂.",
+      "Example: a 28 × 28 MNIST digit has 784 pixel values. An encoder might map them through layers of 256 and 64 units to a 32-number code, and a mirror-image decoder maps it back. The code is 24.5 times smaller than the image, so the network has to learn which features summarize a digit instead of copying pixels.",
+      "Without a bottleneck or another constraint, it can just learn the identity function. Denoising autoencoders corrupt the input and keep the clean original as the target. Uses include dimensionality reduction and anomaly detection, where high reconstruction error flags unusual inputs. Because the targets come from the data itself, autoencoders count as unsupervised or self-supervised."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the"
   },
@@ -1874,8 +2038,13 @@
     "id": "dl-191",
     "category": "dl",
     "question": "Convolutional neural networks are translation invariant.",
-    "answer": "true",
-    "updated": "2026-09-06",
+    "answer": "False as stated: convolution layers are translation equivariant, and pooling makes a CNN only approximately invariant to small shifts.",
+    "explanation": [
+      "False. Convolutional layers are translation equivariant, not invariant: shift the input and the feature map shifts by the same amount, whereas invariance would mean the output does not change at all. A whole CNN is only approximately invariant to small shifts, mostly thanks to pooling.",
+      "Example in one dimension: the input [0, 0, 5, 0, 0, 0] with kernel [1, 2, 1] gives the feature map [5, 10, 5, 0]. Shift the input one step right and the map becomes [0, 5, 10, 5], the same values shifted. A global max gives 10 for both, which is invariant, but max pooling with width 2 and stride 2 gives [10, 5] and [5, 10], which differ.",
+      "This matters in practice. Azulay and Weiss showed in 2019 that shifting an image by a few pixels can change the predictions of standard ImageNet CNNs, and Richard Zhang's 2019 anti-aliased CNNs blur before downsampling to reduce the effect. Random crops and shifts in data augmentation teach the invariance that the architecture only approximates."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "convolutional-neural-networks-are-translation-invariant"
   },
@@ -1892,8 +2061,13 @@
     "id": "dl-193",
     "category": "dl",
     "question": "The type of problem where you need to classify the input into a single class is called multi class classification.",
-    "answer": "true",
-    "updated": "2026-09-06",
+    "answer": "True, when there are three or more classes: each input gets exactly one label. With two classes it's binary classification; when an input can carry several labels at once, it's multi-label classification.",
+    "explanation": [
+      "True, provided there are more than two classes. Multi-class classification assigns each input exactly one label from three or more mutually exclusive classes, such as which of the 10 digits a handwritten image shows. With two classes it is binary classification; when one input can belong to several classes at once, it is multi-label classification.",
+      "The difference changes the output layer. A multi-class network ends in K softmax units trained with categorical cross-entropy and predicts the argmax: scores for cat, dog and bird might be 0.7, 0.2 and 0.1, summing to 1. A multi-label model tagging a photo of a cat and a dog uses K independent sigmoids with binary cross-entropy and thresholds each, so outputs like 0.9, 0.8 and 0.1 need not sum to 1.",
+      "A common follow-up is how to apply binary classifiers to multi-class data. One-vs-rest trains K classifiers, one per class; one-vs-one trains one per pair, K(K − 1)/2, so 45 for 10 classes. Per-class metrics are then combined by macro or micro averaging."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "the-type-of-problem-where-you-need-to-classify-the-input-into-a-single-class-is-called"
   },
@@ -1918,9 +2092,14 @@
   {
     "id": "dl-196",
     "category": "dl",
-    "question": "Leaky ReLU is an activation function that allows the passing of small sized negative values if the network’s input value is less than zero.",
+    "question": "Leaky ReLU is an activation function that lets small negative values pass through when a neuron's input is less than zero.",
     "answer": "true",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. Leaky ReLU passes positive inputs through unchanged and multiplies negative inputs by a small slope α instead of setting them to zero: f(x) = x if x > 0, otherwise αx. Strictly, the condition is on each neuron's own input, its weighted sum, not the network's input.",
+      "With α = 0.01, the inputs −5, −0.5 and 3 become −0.05, −0.005 and 3, where plain ReLU gives 0, 0 and 3. The gradient is the point: it is α, not 0, for negative inputs, so a neuron stuck in the negative region still gets small updates and can recover. Andrew Maas, Awni Hannun and Andrew Ng proposed it in 2013 for speech recognition networks.",
+      "Interviewers ask how to pick α. Defaults differ: PyTorch uses 0.01, the Keras layer 0.3, and DCGAN discriminators use 0.2. PReLU, from Kaiming He and colleagues in 2015, learns α during training. Leaky ReLU is as cheap as ReLU and avoids dead units, but gains are often small; transformers mostly use GELU or SiLU."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative"
   },
@@ -1941,9 +2120,14 @@
   {
     "id": "dl-174",
     "category": "dl",
-    "question": "A Categorical feature is a feature that can only take a limited number of possible values.",
+    "question": "A categorical feature is a feature that can only take a limited number of possible values.",
     "answer": "True",
-    "updated": "2026-09-06",
+    "explanation": [
+      "True. A categorical feature takes its values from a limited, usually fixed set of categories, or levels, such as blood type (A, B, AB, O), country or payment method. The values name groups instead of measuring amounts: a count such as number of children also has few possible values, but it is numeric.",
+      "Nominal categories, like blood type, have no order. Ordinal ones, like T-shirt sizes S, M, L and XL, have an order but no fixed spacing. Codes can look numeric and still be categorical: the average of two ZIP codes means nothing. Ordinal features are often mapped to 0, 1, 2, 3, while nominal ones are usually one-hot encoded.",
+      "A frequent interview trap is label-encoding a nominal feature: coding A, B, AB and O as 0, 1, 2 and 3 tells a linear model that O is three times as far from A as B is. Trees cope better; LightGBM and CatBoost handle categories natively. Summarize one with counts and the mode, not the mean."
+    ],
+    "updated": "2026-10-13",
     "proposedBy": "@svpino",
     "slug": "a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values"
   },

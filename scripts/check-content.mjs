@@ -109,6 +109,27 @@ for (const [, list] of starterLists) {
   }
 }
 
+/**
+ * A redirect from a merged card must land on a live card, and must not shadow
+ * one: Next applies redirects before routing, so a "from" that is still a live
+ * slug would make that card unreachable.
+ */
+const redirects = JSON.parse(
+  readFileSync(join(here, "..", "content", "redirects.json"), "utf8"),
+);
+const seenFrom = new Set();
+redirects.forEach(({ from, to }, i) => {
+  const at = `redirects[${i}]`;
+  if (typeof from !== "string" || typeof to !== "string" || !from || !to) {
+    errors.push(`${at}: needs non-empty "from" and "to" slugs`);
+    return;
+  }
+  if (seenSlugs.has(from)) errors.push(`${at}: "${from}" is still a live card's slug`);
+  if (!seenSlugs.has(to)) errors.push(`${at}: target "${to}" is not a card slug`);
+  if (seenFrom.has(from)) errors.push(`${at}: "${from}" is redirected twice`);
+  seenFrom.add(from);
+});
+
 if (errors.length > 0) {
   console.error(`content check failed (${errors.length} problem${errors.length === 1 ? "" : "s"}):`);
   for (const e of errors) console.error(`  - ${e}`);
@@ -116,5 +137,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists`,
+  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${redirects.length} redirects`,
 );
