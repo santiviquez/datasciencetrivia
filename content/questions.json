@@ -80,15 +80,25 @@
     "category": "ml",
     "question": "What is ensemble learning?",
     "answer": "Combining individual models together with the purpose of improving the predictive power of the model.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Ensemble learning combines the predictions of several models, called base learners, into one prediction that is usually more accurate and stable than any single member. The members can be one algorithm trained on different data samples or different algorithms, merged by voting, averaging or learned weights.",
+      "It works because errors that are not perfectly correlated partly cancel. Take three binary classifiers, each 70% accurate, that err independently. A majority vote is right when at least two are: 0.7³ + 3 · 0.7² · 0.3 = 0.784. If all three made the same mistakes, the vote would stay at 70%: diversity is what an ensemble buys.",
+      "Interviewers expect the main families. Bagging trains models in parallel on bootstrap samples and mainly cuts variance; boosting trains them in sequence on earlier errors and mainly cuts bias; stacking feeds out-of-fold predictions to a meta-model. The costs: slower inference and harder explanations. Netflix never deployed the full blend that won its 2009 prize, judging the gain not worth the engineering effort."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-ensemble-learning"
   },
   {
     "id": "ml-9",
     "category": "ml",
     "question": "Would you use k-fold cross validation on time series data? Explain.",
-    "answer": "No, you should be aware to the fact that a time series is not randomly distributed data.",
-    "updated": "2026-09-06",
+    "answer": "Not standard shuffled k-fold: time series rows are ordered and autocorrelated, so random folds train on the future to predict the past. Use time-ordered splits instead, such as walk-forward validation (scikit-learn's TimeSeriesSplit).",
+    "explanation": [
+      "Not in its standard form. Ordinary k-fold cross-validation shuffles rows into k folds and assumes they are independent and interchangeable. Time series rows are ordered and autocorrelated, so shuffled folds train on the future to predict the past, with each test point's neighbors in the training set, and scores come out optimistic.",
+      "Use forward-chaining, or walk-forward, validation instead: every training window ends before its test window begins. With 60 months of data, scikit-learn's TimeSeriesSplit with five splits trains on months 1 to 10, tests on 11 to 20, then trains on 1 to 20, tests on 21 to 30, and so on up to training on 1 to 50 and testing on 51 to 60.",
+      "Follow-ups: leave a gap between train and test when features use lags or labels look ahead, match the test window to the forecast horizon, and use a fixed-length rolling window if old data goes stale. A nuance: Bergmeir, Hyndman and Koo (2018) showed standard k-fold is valid for purely autoregressive models with uncorrelated errors."
+    ],
+    "updated": "2026-10-14",
     "slug": "would-you-use-k-fold-cross-validation-on-time-series-data-explain"
   },
   {
@@ -116,8 +126,13 @@
     "id": "ml-12",
     "category": "ml",
     "question": "What is one hot encoding?",
-    "answer": "A sparse vector in which: One element is set to 1 and all other elements are set to 0.",
-    "updated": "2026-09-06",
+    "answer": "Encoding a categorical feature as one binary column per category: each row gets a 1 in the column for its own category and 0 in all the others, so every encoded vector is sparse with exactly one 1.",
+    "explanation": [
+      "One-hot encoding represents a categorical feature with k possible values as k binary columns, one per category. Each row has a 1 in the column of its own category and 0 in all the others, so every encoded vector is sparse and contains exactly one 1.",
+      "Example: a payment_method feature with values card, cash and wallet becomes three columns, is_card, is_cash and is_wallet. A cash payment is [0, 1, 0] and a wallet payment is [0, 0, 1]. Every pair of categories ends up equally far apart, so the encoding implies no order, which is what a nominal feature needs.",
+      "Interviewers often ask about the dummy variable trap. In a linear model with an intercept, the k columns always sum to 1 and are perfectly collinear with it, so you keep k − 1 columns and the dropped category becomes the baseline. In production, plan for categories never seen in training: scikit-learn's OneHotEncoder with handle_unknown='ignore' encodes them as all zeros. High-cardinality features usually need other encodings."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-one-hot-encoding"
   },
   {
@@ -125,7 +140,12 @@
     "category": "ml",
     "question": "What is target encoding?",
     "answer": "Target encoding replaces a categorical value with the average value of the target for that value of the feature.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Target encoding, also called mean encoding, replaces each category with the average target of the training rows in that category: the mean for a regression target, the share of positives for a binary one. A high-cardinality column becomes one numeric column.",
+      "Rare categories give noisy means, so they are shrunk toward the global mean: encoding = (n · category_mean + m · global_mean) / (n + m), with n the category's row count and m the strength. With a global rate of 0.10 and m = 20, a city with 3 conversions in 4 rows gets (3 + 2) / 24 ≈ 0.21 instead of 0.75, while one with 2,000 rows at 0.12 stays near 0.12.",
+      "Leakage is the usual follow-up. If a row's own label feeds its encoding, a category seen once is encoded as its own answer. Compute encodings out of fold, as scikit-learn's TargetEncoder does in fit_transform, or use CatBoost's ordered target statistics. Daniele Micci-Barreca described the method, with empirical Bayes shrinkage, in 2001."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-target-encoding"
   },
   {
@@ -159,15 +179,25 @@
     "category": "ml",
     "question": "What is the difference between L1 (Lasso) and L2 (Ridge) regularization?",
     "answer": "L1 penalizes the absolute magnitude of the coefficients while L2 penalizes the square of the coefficients.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "L1 regularization (lasso) adds λ Σ |wᵢ|, the sum of the weights' absolute values, to the loss; L2 (ridge) adds λ Σ wᵢ², the sum of their squares. As a result, L1 sets some weights exactly to zero, selecting features, while L2 shrinks every weight but keeps them all.",
+      "The penalties charge weights differently. For weights (4, 0.2), L1 charges 4.2 and L2 charges 16 + 0.04 = 16.04. Under L2 the small weight costs almost nothing, so nothing pushes it out. Under L1 it costs the same per unit as the large one, so if its feature barely reduces the error, zeroing it is cheaper. In Bayesian terms, L1 is the MAP estimate under a Laplace prior, L2 under a Gaussian.",
+      "Ridge has a closed-form solution and spreads weight across correlated features; lasso generally needs iterative solvers and tends to keep one feature of a correlated group. Don't confuse them with L1 and L2 losses, mean absolute and mean squared error, which measure prediction error, not weight size."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization"
   },
   {
     "id": "ml-17",
     "category": "ml",
     "question": "What is a confusion matrix?",
-    "answer": "A confusion matrix lets you see for a given model how your predictions compare with the actual results. It’s a 2x2 grid that has four parts: the number of true positives, false positives, true negatives, and false negatives.",
-    "updated": "2026-09-06",
+    "answer": "A table that shows how a classifier's predicted classes compare with the actual classes. For binary classification it is a 2x2 grid of true positives, false positives, true negatives and false negatives; with k classes it is a k × k grid with correct predictions on the diagonal.",
+    "explanation": [
+      "A confusion matrix is a table counting how a classifier's predicted classes line up with the actual classes. For two classes it is a 2 × 2 grid of true positives, false positives, false negatives and true negatives. With k classes it is k × k, with correct predictions on the diagonal.",
+      "Example: an email classifier with classes work, personal and spam is tested on 100 emails; rows are actual classes, columns predicted. The diagonal holds 35, 24 and 28, so accuracy is 87%. The personal row covers 30 emails: 24 correct, 4 called work and 2 called spam, so recall for personal is 24/30 = 0.80. The largest off-diagonal cell shows the worst confusion.",
+      "Most classification metrics are ratios of its cells, so interviewers hand you one and ask for precision, recall or specificity. Each decision threshold gives a different matrix, and which error costs more depends on the problem: a missed tumor or a spam false alarm. On imbalanced data, normalize each row to sum to 1."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-a-confusion-matrix"
   },
   {
@@ -187,8 +217,13 @@
     "id": "ml-19",
     "category": "ml",
     "question": "What is boosting when referring to machine learning algorithms?",
-    "answer": "Boosting refers to a whole class of machine learning algorithms that are built on taking a weak model and reusing it enough times so that it becomes a strong one.",
-    "updated": "2026-09-06",
+    "answer": "A family of ensemble methods that trains weak learners in sequence, each one focusing on the examples the previous ones got wrong, and combines them in a weighted vote or sum to form a strong learner. AdaBoost and gradient boosting are the best-known examples.",
+    "explanation": [
+      "Boosting is a family of ensemble methods that trains weak learners in sequence, each focusing on the examples the ensemble so far gets wrong, then combines them in a weighted vote to form a strong learner. A weak learner, such as a one-split stump, only needs to beat random guessing.",
+      "In binary AdaBoost each example carries a weight. A stump with weighted error ε = 0.3 gets a vote of α = ½ ln((1 − ε)/ε) ≈ 0.42; the weights of the examples it got wrong are multiplied by e^α ≈ 1.53, the rest by e^−α ≈ 0.65, then all are renormalized. The mistakes go from 30% of the weight to exactly 50%, so the next stump targets them.",
+      "It came from theory: Kearns and Valiant asked in the late 1980s whether weak learners can always be made strong, Schapire proved it in 1990, and Freund and Schapire introduced AdaBoost in 1995. Boosting mainly cuts bias but can overfit noisy labels; tune the number of rounds, often by early stopping."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-boosting-when-referring-to-machine-learning-algorithms"
   },
   {
@@ -238,7 +273,12 @@
     "category": "ml",
     "question": "What is early stopping?",
     "answer": "A method for regularization that involves ending model training before training loss finishes decreasing. In early stopping, you end model training when the loss on a validation dataset starts to increase.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Early stopping is a regularization method that ends training once performance on a held-out validation set stops improving, not when the training loss stops falling. Training loss keeps dropping as the model memorizes noise, but validation loss turns back up; early stopping keeps the model from near that turn.",
+      "Validation loss is noisy, so you wait a set number of epochs, the patience. Suppose it reads 0.52, 0.41, 0.36, 0.34, 0.35, 0.33, 0.34, 0.36 and 0.37 over nine epochs. Stopping at the first rise, epoch 5, would miss the better epoch 6. With a patience of 3, training ends after epoch 9 and the epoch 6 weights are restored.",
+      "Interviewers ask why it counts as regularization: it limits how far the weights move from their small initial values, and for a quadratic loss trained by gradient descent it acts much like an L2 penalty. The epoch count is now tuned on validation data, so report results on a test set. Keras's EarlyStopping keeps the last weights unless restore_best_weights=True."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-early-stopping"
   },
   {
@@ -313,8 +353,13 @@
     "id": "ml-31",
     "category": "ml",
     "question": "What is precision?",
-    "answer": "Precision is the number of the correct predictions of the positive class divided by the all the predicted positive class. TP/(TP + FP)",
-    "updated": "2026-09-06",
+    "answer": "Precision is the number of correct positive predictions divided by the total number of positive predictions: TP / (TP + FP).",
+    "explanation": [
+      "Precision is the share of a model's positive predictions that are actually positive: precision = TP / (TP + FP). A precision of 0.9 means one flagged case in ten is a false alarm. It ignores the positives the model missed, which recall measures.",
+      "Even for a fixed model, precision depends on how common positives are. Take a test that catches 90% of sick patients and wrongly flags 5% of healthy ones. Among 10,000 people with 1% prevalence, it finds 90 of the 100 sick and flags 495 of the 9,900 healthy, so precision is 90 / 585 ≈ 0.15. At 10% prevalence it finds 900 and flags 450: precision 900 / 1,350 ≈ 0.67.",
+      "Interviewers then ask about thresholds. Raising the decision threshold usually raises precision and lowers recall, but precision can dip at some steps, while recall never rises. If a model predicts no positives, precision is 0/0 and undefined; scikit-learn reports 0 and warns. Favor precision when false positives are costly, such as blocking legitimate payments."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-precision"
   },
   {
@@ -410,8 +455,13 @@
     "id": "ml-40",
     "category": "ml",
     "question": "What is Elastic net regularization?",
-    "answer": "It is regularization technique that linearly combines L1 and L2 penalties.",
-    "updated": "2026-09-06",
+    "answer": "A regularization technique that linearly combines the L1 (lasso) and L2 (ridge) penalties.",
+    "explanation": [
+      "Elastic net regularization adds a weighted mix of the L1 and L2 penalties to a model's loss: loss + λ₁ Σ |wᵢ| + λ₂ Σ wᵢ². It keeps lasso's ability to set weights exactly to zero and adds ridge's smooth shrinkage, which keeps selection stable when predictors are correlated. Lasso and ridge are its two extreme cases.",
+      "The mechanism is clearest with squared loss ½ ‖y − Xw‖² and orthonormal features (XᵀX = I). Each weight then has a closed form: ŵ = sign(β̂) · max(|β̂| − λ₁, 0) / (1 + 2λ₂), where β̂ is the least-squares estimate. With λ₁ = λ₂ = 0.5, estimates of 4.0, 0.3 and −2.0 become 1.75, 0 and −0.75: lasso's thresholding, then ridge's proportional shrinkage.",
+      "Watch the naming: in scikit-learn, alpha is the overall strength and l1_ratio the L1 share, while in R's glmnet, alpha is the L1 share and lambda the strength. It suits wide data such as gene expression, where features outnumber samples and come in correlated groups."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-elastic-net-regularization"
   },
   {
@@ -419,7 +469,12 @@
     "category": "ml",
     "question": "What is unsupervised learning?",
     "answer": "Unsupervised learning aims to detect patterns in data where no labels are given.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Unsupervised learning is machine learning on data without labels: the algorithm sees only the inputs, with no target to predict, and must find structure in them itself. Rather than mapping inputs to a known output, it describes the inputs: which points are alike, which directions carry most of the variation, which points are unusual.",
+      "Its main tasks are clustering, dimensionality reduction, density estimation, anomaly detection and association rules. Example: a bank has a million card transactions and no fraud labels. An isolation forest scores each transaction by how few random splits it takes to separate it from the rest, and the 1,000 most isolated go to an analyst.",
+      "The usual follow-up is evaluation. With no ground truth there is no accuracy, so you judge results by internal scores such as the silhouette, by whether they help a downstream model, or by expert review. Be careful: k-means returns k clusters even from random noise, and your choice of features, scaling and distance shapes what gets found."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-unsupervised-learning"
   },
   {
@@ -491,8 +546,13 @@
     "id": "ml-47",
     "category": "ml",
     "question": "Why is naive Bayes 'naive'?",
-    "answer": "Because it assumes that all of the features in a data set are equally important and independent.",
-    "updated": "2026-09-06",
+    "answer": "Because it assumes the features are independent of each other given the class, so an example's likelihood is simply the product of each feature's likelihood.",
+    "explanation": [
+      "Naive Bayes is called naive because it assumes the features are conditionally independent given the class: once the class is known, one feature says nothing more about another. The likelihood then factors into one-feature terms: P(y | x) ∝ P(y) × P(x₁ | y) × … × P(xₙ | y).",
+      "Example: 30% of mail is spam; 'free' appears in 40% of spam and 5% of normal mail, 'winner' in 20% and 1%. With just these two features, an email containing both scores 0.3 × 0.4 × 0.2 = 0.024 for spam and 0.7 × 0.05 × 0.01 = 0.00035 for normal, so P(spam) ≈ 0.986. Words that usually appear together get counted twice.",
+      "Why does it work at all? Classification only needs the right class to score highest, and Domingos and Pazzani showed in 1997 that naive Bayes can be optimal under zero-one loss despite strong dependence, though its probabilities are often too extreme. Textbooks that call the features equally important mean no feature gets a learned weight."
+    ],
+    "updated": "2026-10-14",
     "slug": "why-is-naive-bayes-naive"
   },
   {
@@ -553,9 +613,14 @@
   {
     "id": "ml-53",
     "category": "ml",
-    "question": "What is the difference between online and batch Learning?",
-    "answer": "Online: you would use the \"most recent\" sample at each iteration. Batch: Learning over groups of patterns.",
-    "updated": "2026-09-06",
+    "question": "What is the difference between online and batch learning?",
+    "answer": "Batch (offline) learning trains on the whole dataset at once and must be retrained to absorb new data. Online learning updates the model incrementally as each new example, or small group of examples, arrives.",
+    "explanation": [
+      "Batch, or offline, learning trains on all the available data at once and deploys a fixed model; to learn from new data you retrain, usually from scratch. Online learning updates the model incrementally as each new example, or small group of examples, arrives, so it learns from a stream and can discard data once used.",
+      "The simplest online learner is a running mean: if four values average 10 and a fifth value of 20 arrives, the new mean is 10 + (20 − 10)/5 = 12, without storing the first four. Online gradient methods likewise take one step, w ← w − η ∇L(w), per new example.",
+      "Don't confuse batch learning with batch or mini-batch gradient descent: a batch learner may train with mini-batches. Online learning suits streams and drifting patterns such as fraud, and its learning rate sets how fast it forgets the past. Its risk: bad input, from a bug or an attacker, flows straight into the model, so monitor it and keep a rollback."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-the-difference-between-online-and-batch-learning"
   },
   {
@@ -575,8 +640,13 @@
     "id": "ml-55",
     "category": "ml",
     "question": "What is the difference between boosting and bagging?",
-    "answer": "In bagging we take boostrap samples of the data (with replacement) and each sample trains a weak learner. And boosting uses all data to train each learner and then average the result using a weighted average approach.",
-    "updated": "2026-09-06",
+    "answer": "Bagging trains models independently on bootstrap samples and averages or votes their predictions, which mainly reduces variance. Boosting trains weak learners one after another, each focusing on the errors of the ensemble so far, and combines them in a weighted sum, which mainly reduces bias.",
+    "explanation": [
+      "Bagging trains many models independently, each on its own bootstrap sample, and combines them with an equal-weight average or vote. Boosting trains models one after another, each focusing on the examples the ensemble still gets wrong, and combines them in a weighted sum. Bagging mainly reduces variance; boosting mainly reduces bias.",
+      "AdaBoost shows the sequential part. Give 10 training points weight 0.1 each. The first stump misclassifies 3, a weighted error ε = 0.3, so its vote is α = ½ ln((1 − ε)/ε) ≈ 0.42. Misclassified weights are multiplied by exp(0.42) ≈ 1.53, the rest by exp(−0.42) ≈ 0.65; after renormalizing, the 3 hard points hold 50% of the weight, up from 30%.",
+      "This decides the base learner. Bagging needs strong, unstable models such as deep trees, since averaging cannot remove errors every model shares; weak learners such as stumps belong to boosting. Bagging runs in parallel and adding models does not overfit; boosting is sequential, needs a learning rate and early stopping, and can chase mislabeled points."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-the-difference-between-boosting-and-bagging"
   },
   {
@@ -608,9 +678,14 @@
   {
     "id": "ml-58",
     "category": "ml",
-    "question": "What is variance in the context of Machine Learning?",
-    "answer": "Is a type of error that occurs due to a model's sensitivity to small fluctuations in the training set. High variance can cause an algorithm to model the random noise in the training data.",
-    "updated": "2026-09-06",
+    "question": "What is variance in the context of machine learning?",
+    "answer": "Variance is the error that comes from a model's sensitivity to small fluctuations in the training set: trained on a different sample, a high-variance model makes noticeably different predictions. High variance can cause an algorithm to model the random noise in the training data, which is overfitting.",
+    "explanation": [
+      "Variance is the part of a model's error that comes from its sensitivity to the particular training set: trained on a different sample from the same population, a high-variance model gives noticeably different predictions. Formally, at an input x, Var[f̂(x)] = E[(f̂(x) − E[f̂(x)])²], with the expectation over possible training sets.",
+      "Example: train the same algorithm on four different samples of 500 orders and ask each copy for the delivery time of the same order: 29, 31, 30 and 34 minutes. The mean is 31 and the variance ((−2)² + 0² + (−1)² + 3²)/4 = 3.5. If the true time is 25 minutes, the 6-minute gap between average prediction and truth is bias, not variance.",
+      "Unlike bias, variance can be estimated without knowing the true answer: retrain on bootstrap resamples and see how far predictions spread. Bagging turns that into a fix by averaging the copies. Keep variance apart from irreducible noise, the scatter of y around the true function: more data usually shrinks variance but never removes noise."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-variance-in-the-context-of-machine-learning"
   },
   {
@@ -629,9 +704,14 @@
   {
     "id": "ml-60",
     "category": "ml",
-    "question": "What happens to our linear regression if we have columns x, y, z. And z is a sum of x and y?",
-    "answer": "We would not be able to perform the resgression. Beacuse z is linear dependent of x and y.",
-    "updated": "2026-09-06",
+    "question": "What happens to our linear regression if we have columns x, y and z, and z is the sum of x and y?",
+    "answer": "The coefficients are no longer unique: z is a linear combination of x and y (perfect multicollinearity), so XᵀX is singular and infinitely many coefficient sets give the same fit. Predictions still work; drop z or use ridge regression.",
+    "explanation": [
+      "The coefficients stop being unique. Because z = x + y, the columns are linearly dependent, a case called perfect multicollinearity, so XᵀX in the least squares solution ŵ = (XᵀX)⁻¹Xᵀt, with t the target, is singular. Predictions are still well defined; only the coefficients cannot be pinned down.",
+      "Example: if t = x + 2y, the coefficients (1, 2, 0), (0, 1, 1) and (3, 4, −2) on (x, y, z) give identical predictions. Since x + y − z = 0, any multiple of (1, 1, −1) can be added without changing the fit, so 'the effect of z' has no answer.",
+      "R's lm reports NA for one coefficient, while NumPy's lstsq and scikit-learn return the minimum-norm solution, here (0, 1, 1); a literal matrix inverse may fail or return huge, meaningless numbers. Drop z or use ridge regression. Common follow-ups: the dummy variable trap, one-hot columns for every category plus an intercept, and z = x + y + small noise, which fits but gives unstable coefficients."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-happens-to-our-linear-regression-if-we-have-columns-x-y-z-and-z-is-a-sum-of-x-and-y"
   },
@@ -653,8 +733,13 @@
     "id": "ml-62",
     "category": "ml",
     "question": "What is TF-IDF?",
-    "answer": "Term Frequency (TF) is a scoring of the frequency of the word in the current document. Inverse Document Frequency(IDF) is a scoring of how rare the word is across documents.",
-    "updated": "2026-09-06",
+    "answer": "TF-IDF weights a word in a document by its term frequency (how often it appears there) times its inverse document frequency, log(N / df), which is high for words few documents contain. Words frequent in one document but rare across the corpus score highest.",
+    "explanation": [
+      "TF-IDF, term frequency times inverse document frequency, weights each word in a document by how characteristic it is: tfidf(t, d) = tf(t, d) × idf(t). Term frequency is how often t appears in document d; idf(t) = log(N / df(t)), where t occurs in df(t) of the N documents, rewards rare words. Words frequent in one document but rare overall score highest.",
+      "Example: a 100-word article among 1,000 documents. 'Learning' appears 5 times and occurs in 100 documents: tf = 0.05, idf = log₁₀(1000/100) = 1, weight 0.05. 'The' appears 6 times but occurs in all 1,000: idf = log₁₀(1000/1000) = 0, weight 0. Karen Spärck Jones introduced IDF in 1972.",
+      "Why the log? Without it, a word in 1 document would outweigh one in 10 by a factor of 10; here log₁₀ makes it 3 against 2. Libraries vary: scikit-learn uses raw counts, a smoothed idf plus 1, and unit-length rows, so its numbers differ. Fit IDF on training documents only. TF-IDF ignores word order and meaning."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-tf-idf"
   },
@@ -662,8 +747,13 @@
     "id": "ml-63",
     "category": "ml",
     "question": "What is overfitting?",
-    "answer": "When your model perform very well on your training set but can’t generalize the test set, because it adjusted a lot to the training set.",
-    "updated": "2026-09-06",
+    "answer": "When a model performs very well on its training set but poorly on new data, such as a test set, because it has fit the noise and quirks of the training data instead of only the underlying pattern.",
+    "explanation": [
+      "Overfitting is when a model fits its training data so closely, noise and quirks included, that it performs well on that data and noticeably worse on new data from the same source. The difference between training and test performance is the generalization gap, and a large gap is the main symptom.",
+      "Example: a sentiment classifier with thousands of word features, trained on 200 reviews, scores 99% on its training data but 71% on held-out reviews. It learned that 'Tuesday' signals a negative review, because three angry reviews happened to mention one. That pattern holds in those 200 reviews and nowhere else; the more parameters per example, the more such accidents a model can fit.",
+      "Interviewers then ask how to detect and prevent it: score the model on unseen data, and use more data, fewer features, regularization or early stopping. A subtler form is overfitting the validation set: try enough models against one holdout and the best score is optimistic, which is why Kaggle ranks can fall on the private leaderboard."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-overfitting"
   },
@@ -700,7 +790,12 @@
     "category": "ml",
     "question": "What is bag of words?",
     "answer": "Bag of Words is a representation of text that describes the occurrence of words within a document.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Bag of words represents a document by which words it contains and how often, ignoring grammar and word order. You build a vocabulary from the training texts, then turn each document into a vector with one entry per word, holding its count or a 1 or 0 for presence.",
+      "Example: 'the dog bit the man' and 'the man bit the dog' both become the: 2, dog: 1, bit: 1, man: 1, one vector for opposite meanings. Adding bigrams, pairs of adjacent words, separates them, since 'dog bit' appears only in the first. The cost is a bigger vocabulary; with 20,000 words a tweet fills perhaps 15 entries, so vectors are stored as sparse matrices.",
+      "With naive Bayes or logistic regression it is a strong baseline for spam and topic classification. Interviewers probe its limits: unseen words are dropped, synonyms such as 'good' and 'great' share nothing, and preprocessing matters. scikit-learn's CountVectorizer, for instance, lowercases text and by default drops one-character tokens such as 'a' and 'I'. TF-IDF reweights the counts."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-bag-of-words"
   },
@@ -723,7 +818,12 @@
     "category": "ml",
     "question": "What is a time series?",
     "answer": "A time series is a set of observations ordered in time usually collected at regular intervals.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "A time series is a sequence of observations recorded in time order, usually at equal intervals such as hourly, daily or monthly. Order carries information: each value tends to depend on earlier ones, so unlike rows in most machine learning datasets, observations are not independent and cannot be shuffled.",
+      "Analysts split a series into components. Monthly electricity demand might show a trend (rising with population), seasonality (summer and winter peaks repeating every 12 months), economic cycles and random noise. A standard baseline is the seasonal naive forecast: each month's value from a year earlier. To use an ordinary regressor, build lag features, such as the values 1 and 12 months back.",
+      "Follow-ups concern validation and stationarity. Avoid shuffled k-fold cross-validation; train on the past and test on the future. ARMA models assume a stationary series, whose mean and variance do not change over time; ARIMA differences it first to remove trend. And 'usually' matters: trades and sensor events arrive at irregular times and are often resampled to a regular grid."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-a-time-series"
   },
@@ -783,8 +883,13 @@
     "id": "stats-74",
     "category": "stats",
     "question": "What is a Type I and a Type II error?",
-    "answer": "Basically Type I errors are the False Positive and Type II error are the False Negative.",
-    "updated": "2026-09-06",
+    "answer": "Type I errors are false positives (rejecting a true null hypothesis) and Type II errors are false negatives (missing a real effect).",
+    "explanation": [
+      "A Type I error is rejecting a true null hypothesis, a false positive. A Type II error is failing to reject a false null hypothesis, a false negative. Their probabilities are α, the significance level, and β; 1 − β is the test's power.",
+      "Example: an A/B test of a new checkout page uses α = 0.05 and 80% power to detect a 1-point lift. If the page changes nothing, there is still a 5% chance of declaring a winner, a Type I error. If it adds 1 point, there is a 20% chance of missing it, a Type II error. Across 100 tests of useless changes, about 5 will look significant by luck.",
+      "With a fixed sample size, lowering α raises β; reducing both takes more data or a larger effect. Which error is worse depends on the costs: if the null is \"the defendant is innocent\", convicting an innocent person is a Type I error. Jerzy Neyman and Egon Pearson formalized both errors in papers from 1928 on."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-a-type-i-and-a-type-ii-error"
   },
   {
@@ -824,9 +929,14 @@
   {
     "id": "stats-78",
     "category": "stats",
-    "question": "What is the difference of and nominal and ordinal feature?",
-    "answer": "Nominal data assigns names to each data point without placing it in some sort of order, ex: pass, fail. And ordinal data groups data according to some sort of ranking system: it orders the data, ex: grades A, B, C, D, E and F.",
-    "updated": "2026-09-06",
+    "question": "What is the difference between a nominal and an ordinal feature?",
+    "answer": "Nominal data names categories with no natural order, ex: eye color, city or payment method. Ordinal data has categories with a meaningful order but no fixed spacing between them, ex: grades A, B, C, D, E and F.",
+    "explanation": [
+      "A nominal feature has categories with no natural order, such as eye color, city or payment method. An ordinal feature has categories with a meaningful order but no fixed distance between them, such as education level (high school, bachelor's, master's, PhD) or grades A to F. Both are categorical.",
+      "The terms come from Stanley Smith Stevens's 1946 levels of measurement: nominal, ordinal, interval and ratio. Nominal data supports counts and the mode. Ordinal data adds the median, percentiles and rank methods such as Spearman's correlation. A mean of ordinal codes assumes the step from A to B equals the step from D to E, which nothing guarantees.",
+      "In machine learning, ordinal features are usually encoded as integers in their natural order, 0 to 3 for education, though a linear model then assumes equal steps. Nominal features get one-hot, target or count encoding, since any order would be invented. Binary features like pass/fail are a gray area: one outcome is better, but either way the column is 0/1."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-the-difference-of-and-nominal-and-ordinal-feature"
   },
   {
@@ -859,8 +969,13 @@
     "id": "stats-81",
     "category": "stats",
     "question": "What is a residual?",
-    "answer": "Is the difference between the observed value and the estimated value of the quantity of interest.",
-    "updated": "2026-09-06",
+    "answer": "It is the difference between the observed value and the value estimated by the model: eᵢ = yᵢ − ŷᵢ.",
+    "explanation": [
+      "A residual is the difference between an observed value and the value a fitted model predicts for it: eᵢ = yᵢ − ŷᵢ. A positive residual means the model under-predicted, a negative one that it over-predicted. It differs from the error term: the error is the gap to the true, unknown relationship and the residual the gap to the estimated one, so only residuals can be computed.",
+      "Example: a model predicts a house will sell for $295,000 and it sells for $310,000, a residual of +$15,000. Ordinary least squares minimizes the sum of squared residuals, and with an intercept the residuals sum to zero. MSE and R² are summaries built from them.",
+      "The usual follow-up is residual plots. Against fitted values, residuals should form a shapeless band around zero: a curve suggests a missing non-linear term, and a widening funnel suggests heteroscedasticity, non-constant variance. A Q-Q plot checks the normality behind t-tests and intervals. Studentized residuals make outliers easier to spot; values beyond about ±3 deserve a look."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-a-residual"
   },
   {
@@ -868,7 +983,12 @@
     "category": "stats",
     "question": "What is dimensionality reduction?",
     "answer": "It is the process of reducing the number of variables under consideration by obtaining a set of principal variables.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Dimensionality reduction means representing data with fewer variables while keeping as much of its useful structure as possible. It works either by selecting a subset of the original columns or by building a smaller set of new variables from combinations of them, as principal component analysis does.",
+      "The motivation is the curse of dimensionality. High-dimensional space is mostly empty: 10 features at 10 levels each make 10¹⁰ cells, and as dimensions grow, distances between random points become nearly equal, hurting nearest-neighbor methods and clustering. Real data usually sits near a lower-dimensional surface: MNIST digit images have 784 pixels, yet PCA on the raw pixels keeps 95% of their variance with about 150 components.",
+      "It removes noise and collinearity before modeling, compresses data and lets you plot it in two or three dimensions. Interviewers ask about the costs: extracted features lose their meaning, and an unsupervised method like PCA can drop a low-variance direction that predicts the target. In t-SNE and UMAP plots, cluster sizes and gaps are not reliable."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-dimensionality-reduction"
   },
   {
@@ -911,9 +1031,14 @@
   {
     "id": "stats-87",
     "category": "stats",
-    "question": "What does stationarity in a dataset means?",
+    "question": "What does stationarity in a dataset mean?",
     "answer": "A property of data in a dataset, in which the data distribution stays constant across one or more dimensions. Most commonly, that dimension is time.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Stationarity means the statistical properties of the data do not change along a dimension, almost always time. Strict stationarity requires the whole joint distribution to stay the same. Most methods need only weak stationarity: a constant mean, a constant variance, and a covariance between two points that depends only on the gap between them.",
+      "A random walk is the standard counterexample. If yₜ = yₜ₋₁ + εₜ with independent shocks of variance σ², the variance after t steps is tσ², which keeps growing. Its first difference, εₜ, is white noise, which is stationary. Stock prices behave roughly like the first and daily returns like the second; trends and seasonality also break stationarity.",
+      "It matters because ARMA models assume it, which is why ARIMA differences the series first, and regressing one random walk on another often gives a high R² for unrelated series, the spurious regression problem. The augmented Dickey-Fuller test has a unit root as its null and KPSS has stationarity as its null, so they are often paired."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-does-stationarity-in-a-dataset-means"
   },
   {
@@ -967,8 +1092,13 @@
     "id": "stats-94",
     "category": "stats",
     "question": "Is rotation necessary in PCA?",
-    "answer": "Yes, rotation is necessary because it maximizes the difference between variance captured by the component.",
-    "updated": "2026-09-06",
+    "answer": "Not as an extra step: PCA is itself an orthogonal rotation of the axes onto the directions of maximum variance. A further rotation such as varimax is optional and only aids interpretation; it keeps the total explained variance but loses the variance-maximizing order.",
+    "explanation": [
+      "Not as an extra step. PCA is itself an orthogonal rotation: after centering, it rotates the axes so the first points along the direction of greatest variance, the second along the greatest remaining variance, and so on. That is why R's prcomp() returns the eigenvector matrix under the name rotation.",
+      "A further rotation such as varimax is optional, borrowed from factor analysis. It turns the k retained components within the space they span so each variable loads strongly on as few components as possible, making them easier to name. The total explained variance is unchanged but spread out: components explaining 60% and 25% might become 45% and 40%, still 85%.",
+      "After varimax the components are no longer ordered by variance and the first no longer captures the maximum, so the property that defines PCA is lost. Rotation never reduces how many components you need, and the rotated scores span the same space, so a linear model fit on them gives identical predictions. Its only purpose is interpretation."
+    ],
+    "updated": "2026-10-14",
     "slug": "is-rotation-necessary-in-pca"
   },
   {
@@ -1022,16 +1152,26 @@
     "id": "stats-99",
     "category": "stats",
     "question": "Give 3 techniques for handling missing values.",
-    "answer": "Delete rows with missing data, Imputation, Predicting the missing values.",
-    "updated": "2026-09-06",
+    "answer": "Delete rows (or columns) with missing data; impute with a simple statistic such as the mean, median or mode; or predict the missing values from the other features with a model such as k-NN or regression imputation.",
+    "explanation": [
+      "Three standard techniques are deleting rows or columns with missing data, filling gaps with a statistic such as the mean, median or most frequent value, and predicting the missing values from the other features. Also common: a binary \"was missing\" indicator, and models such as XGBoost or LightGBM that handle missing values natively.",
+      "Deletion costs more than it looks. If 20 columns each have 5% of values missing independently, only 0.95²⁰ ≈ 36% of rows are complete. Mean imputation keeps every row but shrinks the variance and ignores relationships between features. k-NN imputation and MICE, which imputes each column from the others in rounds, preserve those relationships better.",
+      "Interviewers ask why the data is missing, in Donald Rubin's terms. If it is missing completely at random (MCAR), deleting rows loses data but adds no bias. Missing at random (MAR) depends on observed variables and suits model-based imputation. Missing not at random (MNAR), like high earners skipping an income question, biases all the standard methods. Fit imputers on training data only."
+    ],
+    "updated": "2026-10-14",
     "slug": "give-3-techniques-for-handling-missing-values"
   },
   {
     "id": "stats-100",
     "category": "stats",
     "question": "What is the Law of Large Numbers?",
-    "answer": "Is a theory that states that as the number of trials increases, the average of the result will become closer to the expected value.",
-    "updated": "2026-09-06",
+    "answer": "A theorem stating that as the number of independent trials increases, the average of the results gets closer to the expected value.",
+    "explanation": [
+      "The law of large numbers says that the average of many independent draws of the same random variable gets closer to its expected value as the number of draws grows. It needs only a finite expected value: the weak law gives convergence in probability, the strong law convergence almost surely.",
+      "For a fair coin, 7 heads in 10 flips is unremarkable. After 10,000 flips the standard deviation of the proportion of heads is 0.5/√10,000 = 0.005, so about 95% of the time it lands between 0.49 and 0.51. Jacob Bernoulli proved this case in Ars Conjectandi, published in 1713 after his death; Siméon Denis Poisson named the law in 1837.",
+      "The classic follow-up is the gambler's fallacy. The law does not say a run of tails will be balanced by extra heads: the gap between the count of heads and n/2 typically grows, like √n, and only the proportion settles. The central limit theorem then describes the shape of the fluctuations around the expected value."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-the-law-of-large-numbers"
   },
   {
@@ -1051,8 +1191,13 @@
     "id": "stats-102",
     "category": "stats",
     "question": "What is a confounding variable?",
-    "answer": "Is a variable that influences both the dependent variable and the independent variable, causing a spurious association.",
-    "updated": "2026-09-06",
+    "answer": "A variable that influences both the independent and the dependent variable, distorting the association between them: it can create a spurious link, hide a real effect or even reverse it.",
+    "explanation": [
+      "A confounding variable affects both the independent and the dependent variable, so their observed association is not purely the effect of one on the other. It can create a link where none exists, hide a real effect or reverse it. Ice cream sales and drownings rise together because hot weather drives both.",
+      "A 1986 kidney stone study shows how strong this can be. Open surgery succeeded in 78% of 350 patients and percutaneous nephrolithotomy in 83% of 350, yet surgery did better for both small stones (93% vs 87%) and large stones (73% vs 69%). Surgery went mostly to large, harder stones, so stone size drove both treatment and outcome. The reversal is Simpson's paradox.",
+      "Randomization breaks the link between confounder and treatment, which is why A/B tests are the gold standard. With observational data you can stratify, match or adjust for measured confounders, but unmeasured ones remain. Adjusting for the wrong variable also backfires: a mediator, on the causal path, or a collider, a common effect of both."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-a-confounding-variable"
   },
   {
@@ -1072,8 +1217,13 @@
     "id": "stats-104",
     "category": "stats",
     "question": "What is autocorrelation?",
-    "answer": "Is the correlation of a signal with a delayed copy of itself as a function of delay.",
-    "updated": "2026-09-06",
+    "answer": "It is the correlation of a signal with a delayed copy of itself, as a function of the delay (lag).",
+    "explanation": [
+      "Autocorrelation is the correlation between a series and a lagged copy of itself, as a function of the lag. The lag-k autocorrelation compares each yₜ with yₜ₋ₖ: rₖ = Σ (yₜ − ȳ)(yₜ₋ₖ − ȳ) / Σ (yₜ − ȳ)². It is also called serial correlation, and plotting rₖ against k gives the autocorrelation function, or ACF.",
+      "Monthly temperatures in a city show strong positive autocorrelation at lag 12, since January resembles last January, and strong negative autocorrelation at lag 6, January against July. The ACF of daily retail sales often spikes at lag 7, a weekly cycle. For white noise, about 95% of sample autocorrelations fall within ±2/√n, the dashed bands on an ACF plot.",
+      "In practice, ACF and partial ACF plots guide the choice of ARIMA orders. Autocorrelated regression residuals break the independence assumption, so standard errors usually come out too small and p-values too optimistic; the Durbin-Watson and Ljung-Box tests check for this. It is also why a random train-test split leaks information in time series."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-autocorrelation"
   },
   {
@@ -1180,9 +1330,14 @@
   {
     "id": "history-113",
     "category": "history",
-    "question": "Andrey Markov first describes techniques he used to analyse a poem. Later this techniques become known as Markov chains. True or False.",
-    "answer": "True.",
-    "updated": "2026-09-06",
+    "question": "Andrey Markov first described the techniques he used to analyse a poem, and these techniques later became known as Markov chains. True or false?",
+    "answer": "False as stated. Markov introduced the chains in a 1906 paper on the law of large numbers for dependent variables. His 1913 study of vowel and consonant sequences in the first 20,000 letters of Pushkin's Eugene Onegin was their first application to real data, not their origin.",
+    "explanation": [
+      "False as stated, though it is a popular telling. Markov introduced his chains in a purely mathematical paper in 1906. In 1913 he applied them to Alexander Pushkin's verse novel Eugene Onegin, the first use of a Markov chain on real data. A Markov chain is a sequence of random states in which the next depends only on the current one.",
+      "He presented the study to the Imperial Academy of Sciences in St. Petersburg on 23 January 1913 (Julian calendar). He labeled the first 20,000 letters as vowels or consonants and counted which followed which. Vowels were 43.2% of the letters, yet after a vowel the chance of another vowel was only about 0.128, while after a consonant the chance of a vowel was about 0.663. The letters were not independent, and a two-state chain captured the alternation.",
+      "The 1906 paper answered Pavel Nekrasov, who claimed the law of large numbers requires independence. The idea later fed Claude Shannon's 1948 models of English, n-gram language models and hidden Markov models."
+    ],
+    "updated": "2026-10-14",
     "slug": "andrey-markov-first-describes-techniques-he-used-to-analyse-a-poem-later-this-techniques"
   },
   {
@@ -1298,9 +1453,14 @@
   {
     "id": "history-124",
     "category": "history",
-    "question": "Which computer scientists received the Turing Award for their contributions in deep learning?",
+    "question": "Which computer scientists received the Turing Award for their contributions to deep learning?",
     "answer": "Yoshua Bengio, Geoffrey Hinton, and Yann LeCun.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "Yoshua Bengio, Geoffrey Hinton and Yann LeCun shared the 2018 ACM A.M. Turing Award, often called the Nobel Prize of computing, for conceptual and engineering breakthroughs that made deep neural networks a critical component of computing. It is the 2018 award, but ACM announced it on 27 March 2019, so it is often misdated.",
+      "Each is known for different pieces. Hinton coauthored the 1986 Nature paper that popularized backpropagation, co-invented Boltzmann machines and coauthored AlexNet in 2012. LeCun developed convolutional networks at AT&T Bell Labs, where they went into a system for reading bank checks. Bengio pioneered neural language models with learned word embeddings and coauthored the 2014 papers that introduced attention for translation and generative adversarial networks.",
+      "The $1 million prize, funded by Google, was presented in San Francisco on 15 June 2019. Two later honors are easy to confuse with it: Hinton shared the 2024 Nobel Prize in Physics with John Hopfield, and the 2024 Turing Award went to Andrew Barto and Richard Sutton for reinforcement learning."
+    ],
+    "updated": "2026-10-14",
     "slug": "which-computer-scientists-received-the-turing-award-for-their-contributions-in-deep"
   },
   {
@@ -1478,9 +1638,14 @@
   {
     "id": "history-141",
     "category": "history",
-    "question": "This person’s notable students include Ruslan Salakhutdinov, Ilya Sutskever, and Yann LeCun?",
-    "answer": "Geoffrey Hinton.",
-    "updated": "2026-09-06",
+    "question": "Whose notable students include Ruslan Salakhutdinov, Ilya Sutskever and Yann LeCun?",
+    "answer": "Geoffrey Hinton. Salakhutdinov and Sutskever did their PhDs with him at the University of Toronto; LeCun was his postdoc there from 1987 to 1988.",
+    "explanation": [
+      "Geoffrey Hinton. Ruslan Salakhutdinov and Ilya Sutskever did their PhDs with him at the University of Toronto. Yann LeCun is the partial exception: after his 1987 PhD at Université Pierre et Marie Curie in Paris, he spent about a year as a postdoc in Hinton's new Toronto group before joining AT&T Bell Labs in 1988.",
+      "Salakhutdinov coauthored the 2006 Science paper with Hinton showing that deep autoencoders, pretrained layer by layer, reduce dimensionality much better than PCA, and became a professor at Carnegie Mellon. Sutskever coauthored AlexNet with Alex Krizhevsky and Hinton in 2012, coauthored the 2014 sequence-to-sequence paper and cofounded OpenAI in 2015. LeCun went on to pioneer convolutional networks.",
+      "Hinton moved to Toronto in 1987 after five years at Carnegie Mellon, and his lab trained a long list of researchers, including Radford Neal, Brendan Frey and George Dahl. A common quiz trap is to add Bengio: he did his PhD at McGill and postdocs at MIT and Bell Labs, and was never Hinton's student."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@GokuMohandas",
     "slug": "this-persons-notable-students-include-ruslan-salakhutdinov-ilya-sutskever-and-yann-lecun"
   },
@@ -1559,7 +1724,12 @@
     "category": "dl",
     "question": "What is AdaGrad?",
     "answer": "A sophisticated gradient descent algorithm that rescales the gradients of each parameter, effectively giving each parameter an independent learning rate.",
-    "updated": "2026-09-06",
+    "explanation": [
+      "AdaGrad, short for adaptive gradient, is a gradient descent variant that gives each parameter its own learning rate. It divides each parameter's step by the square root of the sum of its past squared gradients, so frequently updated parameters slow down while rare ones keep taking large steps. John Duchi, Elad Hazan and Yoram Singer published it in 2011.",
+      "The update is Gᵢ ← Gᵢ + gᵢ², then θᵢ ← θᵢ − η gᵢ / (√Gᵢ + ε). Say every nonzero gradient is 1. A common word's weight, updated every step, has Gᵢ = 100 after 100 steps, so its step is η/10. A rare word's weight, updated for the first time, has Gᵢ = 1 and moves a full η. That suits sparse features; the GloVe word vectors were trained with AdaGrad.",
+      "Its weakness: Gᵢ only grows, so the effective learning rate decays toward zero and deep networks can stall. RMSProp swaps the sum for an exponential moving average, so old gradients fade, and Adam adds momentum on top."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-adagrad"
   },
   {
@@ -1600,8 +1770,13 @@
     "id": "dl-152",
     "category": "dl",
     "question": "What is a batch?",
-    "answer": "Number of training samples in 1 Forward/1 Backward pass.",
-    "updated": "2026-09-06",
+    "answer": "The set of training examples processed together in one forward and one backward pass, producing one weight update. The number of examples in it is the batch size.",
+    "explanation": [
+      "A batch is the group of training examples a network processes together in one forward and one backward pass, producing a single weight update. The number of examples in it is the batch size, a hyperparameter often confused with the batch itself.",
+      "Example: 32 RGB images of 224 × 224 pixels form a tensor of shape [32, 3, 224, 224]. The network makes 32 predictions at once, the loss is averaged over them, and backpropagation returns one gradient for that average. With 1,200 training images and a batch size of 32, an epoch has 37 full batches and a final batch of 16, so 38 updates, unless the partial batch is dropped (drop_last=True in PyTorch).",
+      "Terminology trap: in batch gradient descent the batch is the whole dataset, while everyday usage means a mini-batch. Defaults differ: Keras's fit uses 32, PyTorch's DataLoader 1. Activation memory grows roughly linearly with batch size, which usually caps it on a GPU. At inference, batching requests raises throughput but adds latency."
+    ],
+    "updated": "2026-10-14",
     "slug": "what-is-a-batch"
   },
   {
@@ -1747,8 +1922,13 @@
     "id": "dl-166",
     "category": "dl",
     "question": "What if we set all the weights of a neural network to 0?",
-    "answer": "The equations of the learning algorithm would fail to make any changes to the network weights, and the model will be stuck.",
-    "updated": "2026-09-06",
+    "answer": "The network can't learn useful features: every unit in a layer computes the same output and gets the same gradient, so the symmetry never breaks. With tanh or ReLU the weights don't move at all; with sigmoid they move in lockstep. Use small random weights instead.",
+    "explanation": [
+      "The network cannot learn useful features. With all weights at zero, every unit in a layer computes the same output and gets the same gradient, so the units never diverge. Depending on the activation, weights either never move or move in lockstep, so each layer acts like one neuron.",
+      "Take h = tanh(W₁x + b₁) and ŷ = W₂h + b₂, all at 0. Every hidden unit outputs tanh(0) = 0, so W₂'s gradient, the output error times h, is 0. The error sent back to the hidden layer is scaled by W₂ = 0, so W₁ gets none. Only b₂ learns, and the model predicts a constant. ReLU fails the same way. With sigmoid, h = 0.5, so W₂ changes, but all hidden units get identical updates.",
+      "The fix is small random weights, such as He or Xavier initialization; biases can start at zero. Zero can be deliberate: LoRA zeroes its B matrix so the adapter starts as a no-op, which works because its partner A is random."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-if-we-set-all-the-weights-of-a-neural-network-to-0"
   },
@@ -1779,8 +1959,13 @@
     "id": "dl-169",
     "category": "dl",
     "question": "Why do we need activation functions?",
-    "answer": "The main idea of using neural networks is to learn complex nonlinear functions. The Nonlinearity comes only with the activation function without them we are just stacking up multiple linear layers.",
-    "updated": "2026-09-06",
+    "answer": "Without a nonlinear activation, stacked layers collapse into one linear map: W₂(W₁x + b₁) + b₂ is just another linear function of x. Activation functions add the nonlinearity that lets a neural network learn complex functions, such as XOR, that no linear model can represent.",
+    "explanation": [
+      "Without activation functions, a neural network of any depth can only represent a linear function of its input. An activation function applies a nonlinear function such as ReLU, tanh or sigmoid to each unit's weighted sum, and that nonlinearity lets stacked layers model curved decision boundaries and complex relationships.",
+      "The collapse is one line of algebra: W₂(W₁x + b₁) + b₂ = (W₂W₁)x + (W₂b₁ + b₂), a single linear layer. Ten linear layers are still one. XOR shows what nonlinearity buys: no linear model outputs 0, 1, 1, 0 for the inputs (0,0), (0,1), (1,0), (1,1), but h₁ = ReLU(x₁ + x₂), h₂ = ReLU(x₁ + x₂ − 1) and y = h₁ − 2h₂ do exactly that.",
+      "Follow-ups: the universal approximation theorem says one hidden layer with any non-polynomial activation can approximate any continuous function on a bounded region, though it may need very many units. Regression output layers often use no activation. And a ReLU network is piecewise linear, not linear: each unit adds a bend."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "why-do-we-need-activation-functions"
   },
@@ -1802,8 +1987,13 @@
     "id": "dl-171",
     "category": "dl",
     "question": "What is ReLU? How is it better than sigmoid?",
-    "answer": "ReLU is an activation function and it solves the problem of vanishing gradient since it doesn't saturates on higher values.",
-    "updated": "2026-09-06",
+    "answer": "ReLU, max(0, x), zeroes negative inputs and passes positive ones through. Unlike sigmoid it doesn't saturate for positive inputs, where its gradient is 1, so it greatly reduces vanishing gradients in deep networks, and it is cheaper to compute.",
+    "explanation": [
+      "ReLU, the rectified linear unit, is f(x) = max(0, x): negative inputs become 0 and positive ones pass through. It beats sigmoid in hidden layers mainly because it does not saturate for positive inputs, where its gradient is exactly 1, so gradients survive many layers. It is also cheaper, with no exponential.",
+      "Sigmoid's derivative, σ(x)(1 − σ(x)), is at most 0.25 and about 0.0066 at x = 5. Backpropagation multiplies one such factor per layer; over ten sigmoid layers they alone multiply to at most 0.25¹⁰ ≈ 9.5 × 10⁻⁷, while an active ReLU's factor is 1. In the 2012 AlexNet paper, a four-layer CNN with ReLUs reached 25% training error on CIFAR-10 six times faster than with tanh.",
+      "ReLU reduces vanishing gradients rather than solving them. A unit whose input stays negative gets zero gradient and can die, ReLU outputs are not zero-centered, and deep networks also need He initialization, normalization and residual connections. Follow-up: why did zero-centered tanh also lose? It saturates at both ends, like sigmoid."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-relu-how-is-it-better-than-sigmoid"
   },
@@ -1811,8 +2001,13 @@
     "id": "dl-172",
     "category": "dl",
     "question": "What’s pooling in CNN? Why do we need it?",
-    "answer": "Pooling is a technique to downsample the feature map. It allows layers which receive relatively undistorted versions of the input to learn low level features such as lines.",
-    "updated": "2026-09-06",
+    "answer": "Pooling downsamples each feature map by summarizing small windows, usually with the max or the average. It reduces spatial size and computation, lets deeper layers cover a larger part of the input, and makes features somewhat robust to small shifts. It has no learned weights.",
+    "explanation": [
+      "Pooling is a CNN layer that downsamples each feature map by summarizing small windows, usually with their max or mean. We need it to cut spatial size and computation, let later layers see more of the image, and make features somewhat robust to small shifts. It has no learned weights.",
+      "Example: 2 × 2 max pooling with stride 2 on the 4 × 4 map with rows [1 3 2 0], [4 2 1 5], [0 1 3 2], [2 6 1 1] keeps each block's largest value: [4 5] and [6 3]. Average pooling gives [2.5 2] and [2.25 1.75]. VGG uses five such layers to shrink a 224 × 224 input to 7 × 7 maps.",
+      "The convolutions, not pooling, learn the feature hierarchy of edges early and shapes deeper; pooling helps by enlarging receptive fields. Follow-ups: max pooling sends the gradient only to the winning position, global average pooling (Network in Network, 2013) replaces fully connected heads, and many modern networks downsample with strided convolutions."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "whats-pooling-in-cnn-why-do-we-need-it"
   },
@@ -1987,8 +2182,13 @@
     "id": "dl-187",
     "category": "dl",
     "question": "In neural networks, an activation function’s most essential role is to decide whether a unit or neuron should fire.",
-    "answer": "true",
-    "updated": "2026-09-06",
+    "answer": "False. The fire-or-not idea comes from early step-function neurons. An activation function's essential role is to add nonlinearity, without which stacked layers collapse into one linear map.",
+    "explanation": [
+      "False. Firing is a loose biological metaphor. The essential role of an activation function is to add nonlinearity: without it, any stack of layers collapses into a single linear function. Most modern activations make no yes-or-no decision; they output graded values whose size carries information.",
+      "The metaphor comes from early models. The 1943 neuron of Warren McCulloch and Walter Pitts and Frank Rosenblatt's 1958 perceptron used a step function: 1 if the weighted sum passes a threshold, otherwise 0. That is a true fire-or-not decision, but the step's derivative is 0 everywhere except at the threshold, so gradient descent gets no signal. Backpropagation, popularized in 1986, needed smooth activations such as the sigmoid.",
+      "Counterexamples: tanh outputs negative values, GELU dips below zero, and an identity output layer for regression decides nothing. ReLU does switch negative inputs off, but positive ones pass as 0.1 or 50, not just \"on\". Switch language fits best in LSTM gates, where sigmoids act as soft valves. In interviews, name nonlinearity first, differentiability second."
+    ],
+    "updated": "2026-10-14",
     "proposedBy": "@svpino",
     "slug": "in-neural-networks-an-activation-functions-most-essential-role-is-to-decide-whether-a"
   },
