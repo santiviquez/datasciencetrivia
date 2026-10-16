@@ -34,6 +34,7 @@ function slugify(text) {
 const errors = [];
 const seenIds = new Map();
 const seenSlugs = new Map();
+const seenTitles = new Map();
 
 raw.forEach((q, i) => {
   const at = `questions[${i}]`;
@@ -60,6 +61,24 @@ raw.forEach((q, i) => {
       q.updated > new Date().toISOString().slice(0, 10))
   ) {
     errors.push(`${at}: "updated" must be a YYYY-MM-DD date that isn't in the future`);
+  }
+
+  // A search title is a question people would type, and two pages sharing a
+  // <title> compete with each other for the same searches.
+  if (q.title !== undefined) {
+    if (typeof q.title !== "string" || !q.title.trim().endsWith("?")) {
+      errors.push(`${at}: "title" must be a question ending in "?"`);
+    } else if (q.title.length > 75) {
+      errors.push(`${at}: "title" is ${q.title.length} characters; keep it to 75 so it fits a search result`);
+    }
+  }
+  const shown = typeof q.title === "string" ? q.title : q.question;
+  const title = typeof shown === "string" ? shown.trim().toLowerCase() : "";
+  if (title) {
+    if (seenTitles.has(title)) {
+      errors.push(`${at}: page title "${title}" is also used at index ${seenTitles.get(title)}`);
+    }
+    seenTitles.set(title, i);
   }
 
   if (q.category && !VALID_CATEGORIES.has(q.category)) {

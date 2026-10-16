@@ -76,6 +76,14 @@ export interface Question {
   id: string;
   category: CategoryKey;
   question: string;
+  /**
+   * Optional search-facing title for a card whose text is a statement or a
+   * fill-in prompt rather than something people type into a search box, e.g.
+   * "Is the F1 score the harmonic mean of precision, recall and accuracy?".
+   * Used for the page's <title>, its structured data and links to it; the card
+   * itself keeps showing `question`.
+   */
+  title?: string;
   answer: string;
   /**
    * Optional longer answer, one string per paragraph, shown under the card on
@@ -127,6 +135,11 @@ const questions: QuestionWithSlug[] = (raw as Question[]).map((q) => ({
   ...q,
   slug: q.slug ?? slugify(q.question),
 }));
+
+/** The card's page title: its search-facing `title`, or the card text. */
+export function pageTitle(q: Question): string {
+  return q.title ?? q.question;
+}
 
 export function getAllQuestions(): QuestionWithSlug[] {
   return questions;

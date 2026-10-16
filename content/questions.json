@@ -3,26 +3,28 @@
     "id": "ml-1",
     "category": "ml",
     "question": "Name three supervised learning algorithms.",
+    "title": "What are some examples of supervised learning algorithms?",
     "answer": "Any three of: linear regression, logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors, naive Bayes and neural networks.",
     "explanation": [
       "Logistic regression, decision trees and support vector machines are three; linear regression, k-nearest neighbors, naive Bayes, random forests, gradient boosting and neural networks also count. All learn from labeled examples, inputs paired with the correct output. Regression on its own names a task, predicting a number, not an algorithm.",
       "Take spam filtering, with emails labeled spam or not spam. Logistic regression learns a weight for each word and turns the weighted sum into a probability. A decision tree learns yes or no questions, such as whether the email contains \"free\". A support vector machine finds the boundary with the widest margin between the classes. Naive Bayes multiplies per-word probabilities, assuming words are independent given the class.",
       "A strong answer spans families and tasks: logistic regression classifies despite its name, linear regression predicts numbers, and trees, KNN, SVMs and neural networks do both. Interviewers then ask how to choose: data size, interpretability, training cost and data type. A classic trap: k-means and PCA use no labels, so they are unsupervised."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "slug": "name-three-supervised-learning-algorithms"
   },
   {
     "id": "ml-2",
     "category": "ml",
     "question": "Name three unsupervised learning algorithms.",
+    "title": "What are some examples of unsupervised learning algorithms?",
     "answer": "k-means clustering, principal component analysis (PCA) and DBSCAN; others include hierarchical clustering, Gaussian mixture models, isolation forest and autoencoders. Clustering and anomaly detection are tasks rather than algorithms.",
     "explanation": [
       "Three standard answers are k-means clustering, principal component analysis (PCA) and DBSCAN; hierarchical clustering, Gaussian mixture models, isolation forest and autoencoders also count. All learn from features alone, with no target. Name concrete algorithms: clustering and anomaly detection are tasks, not algorithms.",
       "Show that you know what each does. k-means assigns each point to the nearest of k centroids, moves each centroid to the mean of its points, and repeats until nothing changes. PCA projects data onto the orthogonal directions of greatest variance. A Gaussian mixture gives soft memberships: with two equally weighted components, means 0 and 4, standard deviation 1, a point at 2.5 belongs 88% to the second and 12% to the first.",
       "Expect a follow-up on choosing between them. k-means needs k in advance and favors round clusters of similar size. DBSCAN finds clusters of any shape and labels outliers as noise, but struggles when density varies. Hierarchical clustering gives a dendrogram you can cut at any level, but needs all pairwise distances, so it scales poorly."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "slug": "name-three-unsupervised-learning-algorithms"
   },
   {
@@ -68,13 +70,14 @@
     "id": "ml-6",
     "category": "ml",
     "question": "Name three types of kernels in SVM.",
+    "title": "What are the types of kernels in SVM?",
     "answer": "Linear, polynomial and RBF (radial basis function), with sigmoid a fourth. A kernel computes inner products in a higher-dimensional space without ever building that space, so linear is the default for wide sparse text and RBF for low-dimensional, curved boundaries.",
     "explanation": [
       "Three common SVM kernels are linear, polynomial and the radial basis function (RBF); sigmoid is a fourth. A kernel returns the inner product of two points after a feature mapping φ, K(x, z) = φ(x)·φ(z), so the SVM finds a linear boundary in the mapped space without computing φ. Polynomial is (γ x·z + r)ᵈ and RBF is exp(−γ ‖x − z‖²).",
       "Take the kernel (x·z)² with x = (1, 2) and z = (3, 1): x·z = 5, so K = 25. The map φ(x) = (x₁², √2 x₁x₂, x₂²) gives (1, 2√2, 4) and (9, 3√2, 1), whose dot product is 9 + 12 + 4 = 25: the same number, without building the vectors. The RBF kernel's φ is infinite-dimensional, so only the kernel can use it.",
       "To choose, use linear when features far outnumber samples, as with TF-IDF text; otherwise start with RBF, scikit-learn's default. Tune C and γ on a log grid; a large γ makes the boundary wiggly. Scale features first. The sigmoid kernel, tanh(γ x·z + r), is not positive semi-definite for all parameters and is rarely used."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "slug": "name-three-types-of-kernels-in-svm"
   },
   {
@@ -107,13 +110,14 @@
     "id": "ml-9",
     "category": "ml",
     "question": "Would you use k-fold cross validation on time series data? Explain.",
+    "title": "Can you use k-fold cross-validation on time series data?",
     "answer": "Not standard shuffled k-fold: time series rows are ordered and autocorrelated, so random folds train on the future to predict the past. Use time-ordered splits instead, such as walk-forward validation (scikit-learn's TimeSeriesSplit).",
     "explanation": [
       "Not in its standard form. Ordinary k-fold cross-validation shuffles rows into k folds and assumes they are independent and interchangeable. Time series rows are ordered and autocorrelated, so shuffled folds train on the future to predict the past, with each test point's neighbors in the training set, and scores come out optimistic.",
       "Use forward-chaining, or walk-forward, validation instead: every training window ends before its test window begins. With 60 months of data, scikit-learn's TimeSeriesSplit with five splits trains on months 1 to 10, tests on 11 to 20, then trains on 1 to 20, tests on 21 to 30, and so on up to training on 1 to 50 and testing on 51 to 60.",
       "Follow-ups: leave a gap between train and test when features use lags or labels look ahead, match the test window to the forecast horizon, and use a fixed-length rolling window if old data goes stale. A nuance: Bergmeir, Hyndman and Koo (2018) showed standard k-fold is valid for purely autoregressive models with uncorrelated errors."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-10-16",
     "slug": "would-you-use-k-fold-cross-validation-on-time-series-data-explain"
   },
   {
@@ -250,13 +254,14 @@
     "id": "ml-20",
     "category": "ml",
     "question": "Explain what bucketing is.",
+    "title": "What is bucketing in machine learning?",
     "answer": "Converting a (usually continuous) feature into multiple binary features called buckets or bins, typically based on value range.",
     "explanation": [
       "Bucketing, also called binning or discretization, turns a continuous feature into a categorical one by splitting its range into intervals called buckets or bins. Each value is then represented by its bucket, usually as one binary feature per bucket.",
       "Example: with age buckets of under 18, 18 to 34, 35 to 54, and 55 and over, a 40-year-old is encoded as 0, 0, 1, 0. Boundaries can be equal-width, or quantile-based so that each bucket holds the same number of rows, which suits skewed data like income. A linear model then gets one weight per bucket and can learn a non-linear effect, such as risk that is high for the young and the old.",
       "The cost is lost information: 35 and 54 look identical, while 34 and 35 look entirely different. Interviewers may ask how to choose boundaries (on training data only) and whether trees need bucketing (they don't; they pick split points themselves). Don't confuse it with Hive or Spark bucketing, which hash-partitions rows to speed up joins."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "explain-what-is-bucketing"
   },
   {
@@ -328,26 +333,28 @@
     "id": "ml-26",
     "category": "ml",
     "question": "Creating a model that matches the training data so closely that the model fails to make correct predictions on new data.",
+    "title": "What is it called when a model fits the training data too closely?",
     "answer": "Overfitting: the model has memorised noise particular to the training set, so training error keeps falling while validation error turns back up. The fixes matter as much as the name: more data, regularization, early stopping, a simpler model, and cross-validation to detect it.",
     "explanation": [
       "Overfitting. A model overfits when it learns the noise in its training set along with the real signal, so it scores well on the training data and badly on new data. The telltale sign is a gap: training error keeps falling while validation error stalls and then rises.",
       "Example: fit a degree-9 polynomial to 10 noisy points from a straight line. The curve passes through every point, so training error is zero, but it swings wildly between points and predicts new values poorly; a straight line has some training error but generalizes far better. The overfit model has low bias and high variance: small changes in the training data change it a lot.",
       "Detecting and fixing it is the usual follow-up. Detect it with a held-out validation set, cross-validation or learning curves. Fix it with more data, regularization such as L1, L2 or dropout, early stopping or a simpler model. Don't confuse it with data leakage: a leaky model also looks good on validation, so the gap never appears."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "creating-a-model-that-matches-the-training-data-so-closely-that-the-model-fails-to-make"
   },
   {
     "id": "ml-27",
     "category": "ml",
     "question": "Explain the basic concept of random forest.",
+    "title": "How does a random forest work?",
     "answer": "An ensemble of many decision trees, each trained on a bootstrap sample of the rows and choosing each split from a random subset of features. It predicts by majority vote or by averaging the trees' outputs; it doesn't pick one best tree.",
     "explanation": [
       "A random forest is an ensemble of many decision trees whose predictions are combined: a majority vote for classification, an average for regression. It does not pick one best-fitting tree or build an \"average\" tree, a common misreading; every tree is kept. One deep tree overfits; many different ones averaged generalize far better.",
       "The trees differ because each is grown on a bootstrap sample of the rows, and each split may only consider a random subset of the features, often √p of p, so 8 of 64. Example: 500 trees predict whether a customer will churn: 340 vote yes and 160 no, so the forest predicts churn with a score of 0.68.",
       "Common follow-ups: why it needs little tuning (more trees cost time but do not overfit), and why impurity-based feature importance favors features with many distinct values, making permutation importance safer. A surprising limit: a regression forest outputs averages of training targets, so it can never predict outside the range of targets it was trained on."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "slug": "explain-the-basic-concept-of-random-forest"
   },
   {
@@ -380,13 +387,14 @@
     "id": "ml-30",
     "category": "ml",
     "question": "Producing a model with poor predictive ability because the model hasn't captured the complexity of the training data.",
+    "title": "What is underfitting in machine learning?",
     "answer": "Underfitting: high bias, a model too simple for the signal, so training and validation error are both high and close to each other. Add capacity or better features, weaken the regularization, or train longer. More data will not rescue a model that cannot fit what it already has.",
     "explanation": [
       "Underfitting. A model underfits when it is too simple or too constrained to capture the real pattern in the data, so it performs poorly on the training set itself and on new data too. In bias-variance terms it has high bias, and more training data will not fix it.",
       "Example: fit a straight line to y = x² with x spread evenly from −3 to 3. Because the curve is symmetric, the best line is flat at about y = 3, its training R² is close to 0, and validation error is about as high. Learning curves show the signature: training and validation error converge quickly and plateau at a high level with little gap.",
       "Fixes run the opposite way from overfitting: add features or interactions, use a more flexible model, weaken regularization or train longer. Interviewers often ask how you tell underfitting from noisy data. Compare training error with a baseline or human-level error: if it is far above what is achievable, the model is underfitting."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "producing-a-model-with-poor-predictive-ability-because-the-model-hasnt-captured-the"
   },
   {
@@ -757,13 +765,14 @@
     "id": "ml-59",
     "category": "ml",
     "question": "Explain the bias-variance tradeoff.",
+    "title": "What is the bias-variance tradeoff?",
     "answer": "Expected squared error splits into squared bias (a model too simple for the truth), variance (sensitivity to which training sample you drew) and irreducible noise. Pushing one down usually lifts the other, so you tune capacity and regularization to minimise the sum, not either term alone.",
     "explanation": [
       "The bias-variance tradeoff is the tension between underfitting and overfitting. Bias is error from wrong assumptions, such as fitting a straight line to a curve. Variance is how much the fitted model changes when trained on a different sample. Simple models have high bias and low variance; flexible models the reverse.",
       "For squared error the expected test error at a point decomposes exactly: E[(y − f̂(x))²] = Bias[f̂(x)]² + Var[f̂(x)] + σ², where σ² is irreducible noise. Fit polynomials to 20 noisy points: degree 1 underfits with high bias, degree 15 chases nearly every point and swings wildly between them, showing high variance. A middle degree minimizes the total.",
       "To diagnose: high training and validation error points to bias, so add features or capacity. Low training error with much higher validation error points to variance, so add data, regularize or simplify. Bagging mainly cuts variance, boosting mainly cuts bias. Very large neural networks can show double descent, where test error falls again past the point of perfect training fit."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "explain-what-is-bias-variance-tradeoff"
   },
   {
@@ -950,13 +959,14 @@
     "id": "stats-73",
     "category": "stats",
     "question": "Probability sampling technique in which each sampling unit is a cluster, a group of population elements, rather than a single element.",
+    "title": "What is cluster sampling?",
     "answer": "Cluster sampling.",
     "explanation": [
       "Cluster sampling. This probability sampling method divides the population into naturally occurring groups, called clusters, like schools or villages, and randomly selects whole clusters. One-stage designs measure every element in a chosen cluster; two-stage designs take a random subsample within each one.",
       "It is cheap: you only need a list of clusters, and fieldwork is concentrated. To test a state's fifth graders, pick 50 schools at random and test all their fifth graders, about 30 per school. The price is precision, because pupils in one school resemble each other. With intraclass correlation ρ = 0.1 and m = 30, the design effect is 1 + (m − 1)ρ = 3.9, so the 1,500 pupils carry about as much information as 385 sampled at random.",
       "The classic follow-up is stratified sampling, which samples within every group and improves precision; cluster sampling selects only some groups and usually lowers it. Analyses must account for the clustering, for example with cluster-robust standard errors, or they overstate precision."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "slug": "technique-used-to-sample-based-on-a-probability-where-each-sample-unit-is-a-collection-of"
   },
   {
@@ -1158,26 +1168,28 @@
     "id": "stats-91",
     "category": "stats",
     "question": "Name three techniques of dimensionality reduction.",
+    "title": "What are the common dimensionality reduction techniques?",
     "answer": "Singular Value Decomposition (SVD), Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Autoencoders, Fourier and Wavelet Transforms.",
     "explanation": [
       "Three standard answers are principal component analysis (PCA), singular value decomposition (SVD) and linear discriminant analysis (LDA); autoencoders, t-SNE and UMAP are also common. Dimensionality reduction maps many features to fewer while keeping the useful structure, which cuts noise, speeds up training and makes data plottable.",
       "PCA projects data onto the orthogonal directions of maximum variance. It is usually computed from the SVD of the centered data, X = UΣVᵀ, keeping the first k columns of V. LDA is supervised: it finds directions that best separate known classes, at most C − 1 of them for C classes. Autoencoders learn a non-linear compression through a narrow hidden layer. Fourier and wavelet transforms re-express a signal so a few coefficients carry most of it.",
       "Interviewers often ask how to choose k for PCA: keep enough components to explain, say, 95% of the variance, after standardizing features so the largest-scale one does not dominate. Also distinguish feature extraction, which builds new features, from feature selection, which keeps a subset of the originals."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "name-three-techniques-of-dimensionality-reduction"
   },
   {
     "id": "stats-92",
     "category": "stats",
     "question": "Measures how far a set of (random) numbers is spread out from their average value.",
+    "title": "What measures how far a set of numbers is spread out from their average?",
     "answer": "Variance: the average squared deviation from the mean. Its square root, the standard deviation, measures the same spread in the original units.",
     "explanation": [
       "Variance. It is the average squared distance of the values from their mean: σ² = (1/N) Σ (xᵢ − μ)² for a population. Its square root, the standard deviation, gives the same spread in the original units.",
       "Example: for 1, 3, 5, 7 and 9 the mean is 5 and the squared deviations 16, 4, 0, 4 and 16 sum to 40, so the population variance is 40 / 5 = 8. As a sample, the variance is 40 / 4 = 10: dividing by n − 1, Bessel's correction, makes it an unbiased estimate of the population variance. Deviations are squared because raw deviations always sum to zero.",
       "Interviewers ask why n − 1: the sample mean sits closer to the data than the true mean does, so dividing by n underestimates spread. Also worth knowing: Var(aX + b) = a² Var(X), variances of independent variables add, and squaring makes outliers weigh heavily. A practical trap: NumPy's var divides by n by default, pandas by n − 1."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "slug": "measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value"
   },
   {
@@ -1262,13 +1274,14 @@
     "id": "stats-99",
     "category": "stats",
     "question": "Give 3 techniques for handling missing values.",
+    "title": "How do you handle missing values in a dataset?",
     "answer": "Delete rows (or columns) with missing data; impute with a simple statistic such as the mean, median or mode; or predict the missing values from the other features with a model such as k-NN or regression imputation.",
     "explanation": [
       "Three standard techniques are deleting rows or columns with missing data, filling gaps with a statistic such as the mean, median or most frequent value, and predicting the missing values from the other features. Also common: a binary \"was missing\" indicator, and models such as XGBoost or LightGBM that handle missing values natively.",
       "Deletion costs more than it looks. If 20 columns each have 5% of values missing independently, only 0.95²⁰ ≈ 36% of rows are complete. Mean imputation keeps every row but shrinks the variance and ignores relationships between features. k-NN imputation and MICE, which imputes each column from the others in rounds, preserve those relationships better.",
       "Interviewers ask why the data is missing, in Donald Rubin's terms. If it is missing completely at random (MCAR), deleting rows loses data but adds no bias. Missing at random (MAR) depends on observed variables and suits model-based imputation. Missing not at random (MNAR), like high earners skipping an income question, biases all the standard methods. Fit imputers on training data only."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-10-16",
     "slug": "give-3-techniques-for-handling-missing-values"
   },
   {
@@ -1485,13 +1498,14 @@
     "id": "history-116",
     "category": "history",
     "question": "In 1970 Seppo Linnainmaa described reverse-mode automatic differentiation in his master's thesis. This corresponds to the modern version of:",
+    "title": "What did Seppo Linnainmaa's 1970 master's thesis introduce?",
     "answer": "Backpropagation — reverse-mode automatic differentiation, which gets the gradient of a scalar loss with respect to every parameter in roughly one backward pass. Rumelhart, Hinton and Williams rediscovered and popularised it for neural networks in 1986.",
     "explanation": [
       "Backpropagation. Linnainmaa's 1970 master's thesis at the University of Helsinki described reverse-mode automatic differentiation: computing the derivatives of a function built from elementary operations by applying the chain rule from the output back to the inputs. Backpropagation is this method applied to a neural network's loss.",
       "He wrote the thesis in Finnish to study how rounding errors accumulate in numerical algorithms, with no mention of neural networks, and published the method in English in the journal BIT in 1976. Paul Werbos proposed using it to train neural networks in the 1970s and early 1980s, and Rumelhart, Hinton and Williams popularized it with their 1986 Nature paper \"Learning representations by back-propagating errors\".",
       "Interviewers probe the cost. Reverse mode gives the gradient for every parameter in one backward pass costing a small constant multiple of the forward pass; forward mode needs one pass per input, so a million parameters would mean a million passes. The price is memory, since intermediate activations must be stored."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "in-1970-seppo-linnainmaa-published-the-general-method-for-automatic-differentiation-this"
   },
   {
@@ -1511,13 +1525,14 @@
     "id": "history-118",
     "category": "history",
     "question": "In 1995 Corinna Cortes and Vladimir Vapnik published their work on a supervised learning algorithm called:",
+    "title": "What did Corinna Cortes and Vladimir Vapnik publish in 1995?",
     "answer": "Support Vector Machines",
     "explanation": [
       "Support vector machines. Cortes and Vapnik's paper \"Support-Vector Networks\" appeared in Machine Learning in 1995. An SVM is a classifier that finds the hyperplane separating two classes with the widest margin, the distance to the nearest training points, which are called the support vectors.",
       "The idea was not entirely new. Vapnik and colleagues had described maximum-margin linear classifiers in the 1960s, and Boser, Guyon and Vapnik added the kernel trick in 1992. Cortes and Vapnik's main addition was the soft margin, for data that cannot be separated perfectly: minimize ½‖w‖² + C Σ ξᵢ subject to yᵢ(w·xᵢ + b) ≥ 1 − ξᵢ and ξᵢ ≥ 0. The margin width is 2/‖w‖.",
       "Interviewers ask what C does: a large C punishes violations and gives a narrow margin that can overfit; a small C allows violations for a wider margin. Expect questions on kernels such as the RBF, K(x, z) = exp(−γ‖x − z‖²), on feature scaling, and on why kernel SVMs struggle beyond tens of thousands of rows."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "in-1995-corinna-cortes-and-vladimir-vapnik-publish-their-work-explaining-a-new-supervised"
   },
   {
@@ -1706,13 +1721,14 @@
     "id": "history-133",
     "category": "history",
     "question": "In 1989 Christopher Watkins published his PhD thesis “Learning from Delayed Rewards” where he introduced the concept of:",
+    "title": "What did Christopher Watkins introduce in his 1989 PhD thesis?",
     "answer": "Q-learning.",
     "explanation": [
       "Q-learning. Christopher Watkins introduced it in his 1989 University of Cambridge PhD thesis \"Learning from Delayed Rewards\". Q-learning is a model-free reinforcement learning algorithm that learns Q(s, a), the expected discounted future reward of taking action a in state s and acting optimally afterwards.",
       "Each step updates Q(s, a) ← Q(s, a) + α [r + γ maxₐ′ Q(s′, a′) − Q(s, a)]. With Q(s, a) = 2, r = 1, γ = 0.9, maxₐ′ Q(s′, a′) = 5 and α = 0.1, the target is 1 + 0.9 × 5 = 5.5, so Q(s, a) moves to 2 + 0.1 × 3.5 = 2.35. Watkins and Peter Dayan published a full convergence proof in 1992.",
       "Interviewers ask why Q-learning is off-policy: the max learns the greedy policy's values while the agent explores, unlike SARSA, which learns the values of the policy it follows. Lookup tables fail for large state spaces, which led to DeepMind's Deep Q-Network (Nature, 2015), and the max overestimates values, which Double Q-learning reduces."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "in-1989-christopher-watkins-published-his-phd-thesis-learning-from-delayed-rewards-where"
   },
   {
@@ -1856,52 +1872,56 @@
     "id": "dl-144",
     "category": "dl",
     "question": "Type of gradient descent where we use only a single training example to calculate the gradient and update the parameters.",
+    "title": "What is stochastic gradient descent?",
     "answer": "Stochastic Gradient Descent.",
     "explanation": [
       "Stochastic gradient descent (SGD). In its original form it computes the gradient of the loss on one randomly chosen training example and updates the parameters immediately: w ← w − η ∇Lᵢ(w), with η the learning rate. Strictly it is a variant of gradient descent, not of backpropagation, which only computes the gradient.",
       "Example: fit y = w·x with squared loss (w·x − y)², starting at w = 0. The example x = 2, y = 4 gives the gradient 2(w·x − y)·x = −16, so with η = 0.05 the weight moves to 0.8 before the next example is drawn. With a million examples, one epoch makes a million updates, where batch gradient descent makes one.",
       "Each single-example gradient is a noisy but unbiased estimate of the full gradient, so progress zig-zags and the learning rate must shrink over time for SGD to settle. Watch the vocabulary: in PyTorch and most papers, \"SGD\" means mini-batch SGD, with batches of 32 to 512 examples, which use a GPU far better."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "slug": "type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of"
   },
   {
     "id": "dl-145",
     "category": "dl",
     "question": "Type of gradient descent where we use the whole dataset to perform a single update step.",
+    "title": "What is batch gradient descent?",
     "answer": "Batch Gradient Descent.",
     "explanation": [
       "Batch gradient descent, also called full-batch or vanilla gradient descent. Each update averages the gradient over all n training examples, w ← w − η (1/n) Σ ∇ℓᵢ(w), so one epoch buys exactly one step. Strictly, it is a variant of gradient descent; backpropagation only computes the gradients.",
       "Because the gradient is exact, the run is deterministic, and on a smooth loss a small enough fixed rate lowers the loss on every step, reaching the global minimum if the loss is convex. Exact gradients also make quasi-Newton methods such as L-BFGS practical; scikit-learn's LogisticRegression uses it by default. The cost is per step: on ImageNet's 1,281,167 training images, one step costs as much compute as about 5,000 mini-batch updates of 256.",
       "It suits small datasets and convex models; deep learning prefers mini-batches because one exact step is rarely worth thousands of noisy ones. Memory is not the real limit: you can accumulate the gradient over chunks and still take one exact step."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "slug": "type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step"
   },
   {
     "id": "dl-146",
     "category": "dl",
     "question": "Type of gradient descent where we use a fixed number of training examples, fewer than the whole dataset, to calculate the gradient.",
+    "title": "What is mini-batch gradient descent?",
     "answer": "Mini-batch Gradient Descent.",
     "explanation": [
       "Mini-batch gradient descent. Each update computes the gradient on a fixed-size batch of examples, typically 32 to 512, rather than the whole dataset (batch gradient descent) or one example (stochastic gradient descent). Strictly, these are variants of gradient descent; backpropagation only computes the gradient for each batch.",
       "Example: with 50,000 images and a batch size of 256, an epoch takes 196 updates, 195 full batches plus one of 80, versus 1 for batch gradient descent and 50,000 for pure SGD. The batch gradient, (1/B) Σ ∇ℓᵢ, is an unbiased, noisy estimate of the full gradient; its noise shrinks like 1/√B, so quadrupling the batch halves the noise but quadruples the work.",
       "Mini-batches win because they keep a GPU busy, never need the full dataset in memory, and add noise that can help training escape saddle points. A common follow-up: as the batch grows, scale the learning rate with it, and very large batches can generalize slightly worse. In PyTorch and Keras, \"SGD\" almost always means mini-batch SGD."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "slug": "type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees"
   },
   {
     "id": "dl-147",
     "category": "dl",
     "question": "Name three different deep learning frameworks.",
+    "title": "What are some popular deep learning frameworks?",
     "answer": "PyTorch, TensorFlow and JAX. Keras is a popular high-level API that runs on top of them; older frameworks include Caffe and Theano.",
     "explanation": [
       "Three widely used deep learning frameworks are PyTorch, TensorFlow and JAX. Keras is often named too, though it is a high-level API that runs on top of a backend engine. A framework provides GPU and TPU tensors, automatic differentiation, and building blocks such as layers, losses and optimizers.",
       "PyTorch, created at Facebook (now Meta) and run by the PyTorch Foundation since 2022, is the most common choice in research. Google released TensorFlow in 2015, and it is known for production tools such as TensorFlow Lite. JAX, also from Google, offers NumPy-style code with transformations such as grad, jit and vmap. Keras 3 runs on any of the three. Caffe and Theano mattered early on but are rarely used now.",
       "A common follow-up is static versus dynamic graphs. TensorFlow 1.x had you define a graph and then run it in a session; PyTorch builds the graph as the code runs, which makes debugging easy. TensorFlow 2.0 made eager execution the default and PyTorch 2.0 added torch.compile, so the gap has narrowed."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "name-three-different-deep-learning-frameworks"
   },
   {
@@ -2025,26 +2045,28 @@
     "id": "dl-157",
     "category": "dl",
     "question": "Which activation function follows these rules: If input is negative or zero, output is 0 and if input is positive, output is equal to input.",
+    "title": "Which activation function outputs max(0, x)?",
     "answer": "ReLU, the rectified linear unit, max(0, x). It is cheap and its gradient is exactly 1 on the positive side, so it does not saturate as sigmoid and tanh do, which is much of why deep stacks became trainable. Its failure mode is dead units stuck at zero.",
     "explanation": [
       "ReLU, the rectified linear unit: f(x) = max(0, x). The question's rule is its definition: inputs at or below zero give 0, positive inputs pass through unchanged. It is cheap, needing only a comparison, and piecewise linear with a single kink at 0.",
       "For the pre-activations [−2, 0, 0.5, 3], ReLU outputs [0, 0, 0.5, 3], and in backpropagation the local gradients are [0, 0, 1, 1]: active units pass the error back unchanged, inactive ones block it. The derivative at exactly 0 is undefined; PyTorch and TensorFlow use 0 there. Kunihiko Fukushima used rectifiers in 1969, but deep learning adopted them after Nair and Hinton (2010) and Glorot, Bordes and Bengio (2011).",
       "A common follow-up is initialization. With zero-centered inputs a ReLU zeroes about half of them, so He initialization sets the weight variance to 2/nᵢₙ, double LeCun initialization's 1/nᵢₙ, which keeps the signal from shrinking with depth. Variants target weaknesses: Leaky ReLU for dead units, ReLU6 for low-precision mobile models, GELU in Transformers."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "slug": "which-activation-function-follows-these-rules-if-input-is-negative-or-zero-output-is-0"
   },
   {
     "id": "dl-158",
     "category": "dl",
     "question": "Explain what a softmax function does.",
+    "title": "What does the softmax function do?",
     "answer": "Provides probabilities for each possible class in a multi-class classification model. The probabilities add up to exactly 1.0",
     "explanation": [
       "The softmax function turns a vector of raw scores, called logits, into a probability distribution: each output lies between 0 and 1 and the outputs sum to exactly 1. It is the usual output layer of a multi-class classifier: softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ).",
       "Example: logits [2, 1, 0.1] exponentiate to about 7.39, 2.72 and 1.11, which sum to about 11.21, giving probabilities of about 0.66, 0.24 and 0.10. The exponential keeps every output positive and stretches the gaps, so the largest logit takes most of the probability, a smooth version of argmax. Adding the same constant to every logit changes nothing, so implementations subtract the maximum first to avoid overflow.",
       "Softmax is usually paired with cross-entropy loss, and the gradient of the pair with respect to the logits is simply p − y, the predicted probabilities minus the one-hot label. Interviewers also ask when not to use it: for multi-label problems, use one sigmoid per class. With two classes, softmax reduces to the sigmoid of the logit difference."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "slug": "explain-what-a-softmax-function-does"
   },
   {
@@ -2254,13 +2276,14 @@
     "id": "dl-177",
     "category": "dl",
     "question": "One hot encoding is an excellent solution to transform categorical features with high cardinality.",
-    "answer": "false",
+    "title": "Is one-hot encoding good for high-cardinality categorical features?",
+    "answer": "False",
     "explanation": [
       "False. One-hot encoding turns each value of a categorical feature into its own binary column. It suits low-cardinality features, but a high-cardinality feature, such as product or user IDs, has thousands of distinct values, so it becomes thousands of mostly-zero columns.",
       "Take a product_id column with 50,000 values, many seen only a few times. Feeding 50,000 one-hot columns into a 128-unit dense layer means 6.4 million weights, and those for a rare product are learned from a handful of rows, so they mostly fit noise. A product first seen at prediction time becomes an all-zero row. Trees suffer too, since each split isolates one product.",
       "Better options: an embedding layer, a short learned dense vector per category (16 numbers per product is 800,000 weights), out-of-fold target encoding, hashing, or one catch-all category for rare values. An embedding is mathematically a one-hot vector times a weight matrix, computed as a lookup. Very wide one-hot features do work in sparse linear models trained on huge data, as in ad click prediction."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "one-hot-encoding-is-an-excellent-solution-to-transform-categorical-features-with-high"
   },
@@ -2268,13 +2291,14 @@
     "id": "dl-178",
     "category": "dl",
     "question": "The F1 Score is a metric defined as the harmonic mean of precision, recall, and accuracy.",
-    "answer": "false",
+    "title": "Is the F1 score the harmonic mean of precision, recall and accuracy?",
+    "answer": "False",
     "explanation": [
       "False. The F1 score is the harmonic mean of precision and recall only: F1 = 2 · precision · recall / (precision + recall). Accuracy is not part of the formula.",
       "The harmonic mean is used because it is dragged down by the smaller of the two numbers. A classifier with precision 1.0 and recall 0.1 has an arithmetic mean of 0.55 but an F1 of about 0.18, which reflects how poorly it actually finds the positive class.",
       "Accuracy is left out on purpose. F1 is mostly used on imbalanced problems such as fraud or disease detection, where accuracy is misleading: predicting the majority class every time can score 99% accuracy while catching nothing. When precision and recall are not equally important, the F-beta score weights recall beta times as much as precision."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy"
   },
@@ -2282,13 +2306,14 @@
     "id": "dl-179",
     "category": "dl",
     "question": "As the number of hidden layers increases in a neural network, its capacity also increases.",
-    "answer": "true",
+    "title": "Does adding hidden layers increase a neural network's capacity?",
+    "answer": "True",
     "explanation": [
       "True. A network's capacity is the range of functions it can represent, and adding hidden layers enlarges it: each layer adds parameters and another non-linear stage, so complex functions can be built by composing simpler ones. A new ReLU layer at least as wide as the previous one can copy that layer's non-negative outputs unchanged, so the deeper network loses nothing.",
       "Depth adds capacity faster than width. With one input feature, one hidden layer of n ReLU units gives a piecewise-linear function with at most n + 1 pieces. Ten layers of two units, each folding the interval [0, 1] in half, give 2¹⁰ = 1,024 pieces from 20 units; one hidden layer would need 1,023.",
       "Capacity is what a network can represent, not what it will learn. More of it raises the risk of overfitting, and very deep plain networks are hard to optimize: in the ResNet paper, a 56-layer plain network had higher training error on CIFAR-10 than a 20-layer one. Residual connections were the fix."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "as-the-number-of-hidden-layers-increases-in-a-neural-network-its-capacity-also-increases"
   },
@@ -2296,13 +2321,14 @@
     "id": "dl-180",
     "category": "dl",
     "question": "Initializing a neural network’s weights with zero is our best bet to allow the network to converge.",
+    "title": "Should you initialize neural network weights to zero?",
     "answer": "False: with zero weights every unit in a layer computes the same thing and receives the same gradient, so the symmetry never breaks and the layer behaves like a single neuron. Use small random values scaled to the layer's size: He (variance 2/fan_in) for ReLU, Xavier (variance 2/(fan_in + fan_out)) for tanh. Biases can start at zero.",
     "explanation": [
       "False. With zero weights every unit in a hidden layer computes the same output and receives the same update, so the units stay identical and the layer acts like one neuron. Weights must differ, at a scale that keeps signals stable across layers.",
       "A unit with fan-in n sums n weighted inputs, so its variance grows with n · Var(w). He initialization uses variance 2/n for ReLU, the 2 offsetting the half of inputs that ReLU zeroes; for n = 512 the standard deviation is 0.0625. With a tiny 0.01 instead, each ReLU layer scales the signal by √(512 × 0.0001 / 2) = 0.16, leaving about 10⁻⁸ of it after 10 layers.",
       "Xavier, or Glorot, initialization uses variance 2/(fan_in + fan_out), for tanh and sigmoid. Zero is fine where there is no symmetry to break: biases, and models without hidden layers, such as logistic regression. Some networks zero one piece on purpose, like the last batch-norm scale in each residual block, so the block starts as an identity map."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "initializing-a-neural-networks-weights-with-zero-is-our-best-bet-to-allow-the-network-to"
   },
@@ -2310,13 +2336,14 @@
     "id": "dl-181",
     "category": "dl",
     "question": "As the dropout ratio used in a neural network increases, the network’s capacity also increases.",
-    "answer": "false",
+    "title": "Does a higher dropout rate increase a neural network's capacity?",
+    "answer": "False",
     "explanation": [
       "False. A higher dropout rate lowers a network's effective capacity, its ability to fit complex functions, noise included. The rate is the probability that each unit is zeroed on a training step, so a higher rate means each step trains a smaller random sub-network. No parameters are added or removed; dropout only limits how existing weights are used, which is why it regularizes.",
       "Example: in a layer of 1,024 units, a rate of 0.2 leaves about 819 active per step and a rate of 0.8 about 205. Units cannot rely on particular partners and must learn simple, redundant features. Too high a rate underfits: even the training loss stays high.",
       "If strong dropout hurts the fit, widen the layer: Srivastava et al. (2014) suggest that a layer needing n units without dropout get at least n/p with it, where p is the keep probability. That convention is the trap here: Keras and PyTorch take the drop probability, but if a source quotes a keep probability, raising it raises capacity."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "as-the-dropout-ratio-used-in-a-neural-network-increases-the-networks-capacity-also"
   },
@@ -2324,13 +2351,14 @@
     "id": "dl-182",
     "category": "dl",
     "question": "Stochastic Gradient Descent is the proper technique to use when the full dataset doesn’t fit in memory.",
-    "answer": "true",
+    "title": "Should you use SGD when the dataset doesn't fit in memory?",
+    "answer": "True",
     "explanation": [
       "True. Stochastic gradient descent, and in practice its mini-batch form, is the standard way to train when the data does not fit in memory. Each update needs only one example or one small batch, so the rest of the dataset can stay on disk and be streamed in, an approach called out-of-core learning.",
       "The numbers make the point. ImageNet's 1.28 million training images, decoded to 224 × 224 × 3 arrays of 32-bit floats, would take about 770 GB, while a batch of 256 takes about 154 MB. Data loaders read one batch at a time and prepare the next while the GPU works.",
       "The nuance: full-batch gradient descent does not strictly need the data in memory either, since you can stream chunks and sum their gradients, but then every update costs a full pass over the data. In scikit-learn, SGDClassifier and SGDRegressor train out of core through partial_fit, one chunk at a time, whereas a standard kernel SVM solver needs the whole training set in memory."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "stochastic-gradient-descent-is-the-proper-technique-to-use-when-the-full-dataset-doesnt"
   },
@@ -2338,13 +2366,14 @@
     "id": "dl-183",
     "category": "dl",
     "question": "Batch Normalization is an efficient backpropagation technique that allows neural networks to learn.",
+    "title": "Is batch normalization a backpropagation technique?",
     "answer": "False — it is a normalization layer, not a backpropagation technique. It standardises each activation across the mini-batch, then rescales with learned parameters, which smooths optimisation and allows higher learning rates. Batch statistics also add noise, so it regularises mildly.",
     "explanation": [
       "False. Batch normalization is a layer, not a backpropagation technique: backpropagation computes gradients through it like any other layer. It standardizes each feature with the mini-batch mean and variance, then applies a learned scale γ and shift β. Sergey Ioffe and Christian Szegedy introduced it in 2015.",
       "Example: a unit outputs 2, 4, 6 and 8 across a batch of four. Mean and variance are both 5, so x̂ = (x − μ)/√(σ² + ε) gives about −1.34, −0.45, 0.45 and 1.34; with γ = 2 and β = 1, y = γx̂ + β gives −1.68, 0.11, 1.89 and 3.68. Learned γ and β can undo this if useful, and batch noise adds mild regularization.",
       "At inference the layer instead uses running averages of mean and variance collected during training. Small batches make the statistics noisy, one reason transformers use layer normalization. The paper credited reduced internal covariate shift; Santurkar et al. (2018) argued the benefit is a smoother loss landscape, which allows higher learning rates."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "batch-normalization-is-an-efficient-backpropagation-technique-that-allows-neural-networks"
   },
@@ -2352,13 +2381,14 @@
     "id": "dl-184",
     "category": "dl",
     "question": "Gradient Descent is an algorithm used to minimize overfitting in neural networks.",
-    "answer": "false",
+    "title": "Is gradient descent used to reduce overfitting?",
+    "answer": "False",
     "explanation": [
       "False. Gradient descent is an optimization algorithm: it minimizes the training loss by repeatedly moving the weights against the gradient, w ← w − η ∇L(w). It has no notion of overfitting, which is fitting the training data, noise included, so closely that performance on new data suffers. Reducing overfitting is the job of regularization.",
       "Run long enough, gradient descent can even cause overfitting. Fit a degree-9 polynomial to 10 noisy points: with 10 coefficients, the training error can be driven to zero by a curve threading every point and swinging wildly between them. Neural networks show it in their loss curves: training loss keeps falling while validation loss bottoms out and then rises.",
       "Tools that fight overfitting include weight decay, dropout, data augmentation, more data and early stopping. Early stopping is the link to the optimizer: halting at the epoch with the best validation loss limits how far the weights travel, acting as a regularizer. Interviewers may also raise the implicit regularization of small-batch SGD, an open research question."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "gradient-descent-is-an-algorithm-used-to-minimize-overfitting-in-neural-networks"
   },
@@ -2366,13 +2396,14 @@
     "id": "dl-185",
     "category": "dl",
     "question": "Having high bias means the model is too simple and can’t capture many features during the training phase. This is also known as overfitting.",
-    "answer": "false",
+    "title": "Is high bias the same as overfitting?",
+    "answer": "False",
     "explanation": [
       "False. The first part is roughly right: high bias means the model is too simple to capture the real pattern in the data. But that is underfitting, not overfitting. Bias is the error that comes from wrong or overly restrictive assumptions, such as fitting a straight line to a curved relationship.",
       "The bias-variance decomposition splits expected squared error into bias² + variance + irreducible noise. A high-bias model does poorly everywhere: say 70% training accuracy and 68% validation accuracy. An overfit, high-variance model memorizes the training data, noise included: say 99% training accuracy but 75% on validation. A large gap between the two signals variance; poor scores on both signal bias.",
       "The usual follow-up is how to fix each one. For high bias, use a more flexible model, add better features, reduce regularization or train longer; more data rarely helps. For high variance, get more data, add regularization such as weight decay or dropout, stop early or simplify the model."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the"
   },
@@ -2380,13 +2411,14 @@
     "id": "dl-175",
     "category": "dl",
     "question": "Precision is a performance metric that defines a classification model's ability to identify only relevant samples.",
+    "title": "Does precision measure a model's ability to find only relevant samples?",
     "answer": "True",
     "explanation": [
       "True. Precision is the fraction of samples a classifier labels positive that are actually positive: precision = TP / (TP + FP). A high-precision model rarely raises false alarms, which is what \"identify only relevant samples\" means. Recall instead asks whether it finds all of them.",
       "Example: a spam filter moves 200 emails to the spam folder; 190 are spam and 10 are legitimate, so precision is 190 / 200 = 0.95. If 250 spam emails arrived in total, recall is 190 / 250 = 0.76. The 60 spam emails that reached the inbox do not touch precision at all.",
       "Favor precision when false positives are costly: a real email lost to spam, an innocent account suspended. It is easy to inflate by flagging only the most confident cases, so report it with recall. Interviewers also ask about base rates: with fixed true and false positive rates, precision drops as positives get rarer, while recall stays put. In medicine it is called positive predictive value."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "precision-is-a-performance-metric-that-defines-a-classification-models-ability-to"
   },
@@ -2394,13 +2426,14 @@
     "id": "dl-176",
     "category": "dl",
     "question": "Recall is a performance metric that measures a classification model's ability to identify all relevant samples.",
+    "title": "Does recall measure a model's ability to find all relevant samples?",
     "answer": "True",
     "explanation": [
       "True. Recall is the share of all relevant, or truly positive, samples that a model identifies: recall = TP / (TP + FN), where FN counts the relevant samples it missed. It is also called sensitivity or the true positive rate.",
       "The word relevant comes from information retrieval, where precision and recall were first used to evaluate search systems. Say 40 documents in a collection are relevant to a query and the engine returns 25 results, 20 of them relevant. Recall is 20/40 = 0.5: half of what the user needed never appeared. Precision, the share of returned results that are relevant, is 20/25 = 0.8.",
       "In classification, recall is computed per class. The negative class's recall is called specificity, and the mean of the per-class recalls is balanced accuracy. With 100 positives and 900 negatives, a model that catches 60 positives and clears 855 negatives has recall 0.6 and specificity 0.95: accuracy is a flattering 0.915, balanced accuracy only 0.775."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "recall-is-a-performance-metric-that-defines-a-classification-models-ability-to-identify"
   },
@@ -2408,13 +2441,14 @@
     "id": "dl-186",
     "category": "dl",
     "question": "Softmax is an activation function that always returns the input value if it’s positive and zeroes otherwise.",
-    "answer": "false",
+    "title": "Does softmax return the input if it's positive and zero otherwise?",
+    "answer": "False",
     "explanation": [
       "False. That describes ReLU, max(0, x). Softmax turns a whole vector of scores into a probability distribution: softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ). Every output depends on every input and lies strictly between 0 and 1, and the outputs sum to 1, so softmax neither passes positive values through nor zeroes out negative ones.",
       "Example: for the scores [3, 0, −3], ReLU returns [3, 0, 0]. Softmax exponentiates them to about 20.09, 1 and 0.05, which sum to 21.14, and returns about [0.950, 0.047, 0.002]. The 3 becomes a probability, and the negative score still gets a small positive share.",
       "The two also live in different places: ReLU acts element by element in hidden layers, softmax across the output layer of a multi-class classifier. Their gradients show it: ReLU's derivative is 1 or 0 per unit, while softmax's, ∂pᵢ/∂zⱼ = pᵢ(δᵢⱼ − pⱼ), couples all outputs. The name misleads too: softmax smooths argmax, not max, which is why Goodfellow, Bengio and Courville suggest calling it softargmax."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "softmax-is-an-activation-function-that-always-returns-the-input-value-if-its-positive-and"
   },
@@ -2422,13 +2456,14 @@
     "id": "dl-187",
     "category": "dl",
     "question": "In neural networks, an activation function’s most essential role is to decide whether a unit or neuron should fire.",
+    "title": "Is an activation function's main role to decide whether a neuron fires?",
     "answer": "False. The fire-or-not idea comes from early step-function neurons. An activation function's essential role is to add nonlinearity, without which stacked layers collapse into one linear map.",
     "explanation": [
       "False. Firing is a loose biological metaphor. The essential role of an activation function is to add nonlinearity: without it, any stack of layers collapses into a single linear function. Most modern activations make no yes-or-no decision; they output graded values whose size carries information.",
       "The metaphor comes from early models. The 1943 neuron of Warren McCulloch and Walter Pitts and Frank Rosenblatt's 1958 perceptron used a step function: 1 if the weighted sum passes a threshold, otherwise 0. That is a true fire-or-not decision, but the step's derivative is 0 everywhere except at the threshold, so gradient descent gets no signal. Backpropagation, popularized in 1986, needed smooth activations such as the sigmoid.",
       "Counterexamples: tanh outputs negative values, GELU dips below zero, and an identity output layer for regression decides nothing. ReLU does switch negative inputs off, but positive ones pass as 0.1 or 50, not just \"on\". Switch language fits best in LSTM gates, where sigmoids act as soft valves. In interviews, name nonlinearity first, differentiability second."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "in-neural-networks-an-activation-functions-most-essential-role-is-to-decide-whether-a"
   },
@@ -2436,13 +2471,14 @@
     "id": "dl-188",
     "category": "dl",
     "question": "Using a learning rate that’s too low will cause the training process to be very slow.",
-    "answer": "true",
+    "title": "Does a learning rate that is too low slow down training?",
+    "answer": "True",
     "explanation": [
       "True. A learning rate that is too low makes gradient descent take tiny steps, so the loss falls slowly and training needs far more iterations to converge. The learning rate η scales every update: w ← w − η ∇L(w).",
       "Example: take L(w) = w², whose gradient is 2w, starting at w = 1. Each step multiplies w by (1 − 2η). With η = 0.1 the factor is 0.8, and w falls below 0.01 after 21 steps. With η = 0.001 the factor is 0.998, and the same progress takes about 2,300 steps, more than 100 times as many.",
       "On a fixed epoch budget, a tiny rate also stops before converging, which looks like underfitting; the loss curve shows a smooth but nearly flat decline. Interviewers often ask how to choose the rate: a learning-rate range test, warmup plus a decay schedule, or an adaptive optimizer such as Adam. A rate that is too high fails the opposite way, with a loss that oscillates or diverges."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow"
   },
@@ -2450,13 +2486,14 @@
     "id": "dl-189",
     "category": "dl",
     "question": "ReLU is an activation function that, given an input vector, generates an output where the sum of the values in the vector is equal to one.",
-    "answer": "false",
+    "title": "Does ReLU output values that sum to one?",
+    "answer": "False",
     "explanation": [
       "False. That describes softmax, not ReLU. ReLU, the rectified linear unit, is applied to each element on its own: ReLU(x) = max(0, x). Negative values become 0 and positive values pass through unchanged, so nothing constrains the sum of the outputs.",
       "Example: for the input [2, −1, 0.5], ReLU gives [2, 0, 0.5], which sums to 2.5. Softmax, softmax(z)ᵢ = e^(zᵢ) / Σⱼ e^(zⱼ), turns the same vector into about [0.786, 0.039, 0.175], which sums to 1. ReLU adds cheap non-linearity in hidden layers; softmax turns the output layer's scores into class probabilities.",
       "Typical follow-ups: why ReLU helped deep networks train, and what the dying ReLU problem is. Its gradient is exactly 1 for positive inputs, so it does not shrink gradients the way sigmoid and tanh do. But a unit whose input is always negative outputs 0, gets zero gradient and stops learning. Leaky ReLU, which keeps a small slope such as 0.01 for negative inputs, and GELU are common alternatives."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "relu-is-an-activation-function-that-given-an-input-vector-generates-an-output-where-the"
   },
@@ -2464,13 +2501,14 @@
     "id": "dl-190",
     "category": "dl",
     "question": "An autoencoder is a neural network that automatically learns by using its inputs as the expected output.",
-    "answer": "true",
+    "title": "Does an autoencoder learn by using its inputs as the target?",
+    "answer": "True",
     "explanation": [
       "True. An autoencoder is a neural network trained to reproduce its input at its output, so each input is its own target and no labels are needed. An encoder compresses x into a smaller code z, a decoder rebuilds an approximation x̂, and training minimizes a reconstruction loss such as the mean squared error between x and x̂.",
       "Example: a 28 × 28 MNIST digit has 784 pixel values. An encoder might map them through layers of 256 and 64 units to a 32-number code, and a mirror-image decoder maps it back. The code is 24.5 times smaller than the image, so the network has to learn which features summarize a digit instead of copying pixels.",
       "Without a bottleneck or another constraint, it can just learn the identity function. Denoising autoencoders corrupt the input and keep the clean original as the target. Uses include dimensionality reduction and anomaly detection, where high reconstruction error flags unusual inputs. Because the targets come from the data itself, autoencoders count as unsupervised or self-supervised."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the"
   },
@@ -2478,13 +2516,14 @@
     "id": "dl-191",
     "category": "dl",
     "question": "Convolutional neural networks are translation invariant.",
+    "title": "Are convolutional neural networks translation invariant?",
     "answer": "False as stated: convolution layers are translation equivariant, and pooling makes a CNN only approximately invariant to small shifts.",
     "explanation": [
       "False. Convolutional layers are translation equivariant, not invariant: shift the input and the feature map shifts by the same amount, whereas invariance would mean the output does not change at all. A whole CNN is only approximately invariant to small shifts, mostly thanks to pooling.",
       "Example in one dimension: the input [0, 0, 5, 0, 0, 0] with kernel [1, 2, 1] gives the feature map [5, 10, 5, 0]. Shift the input one step right and the map becomes [0, 5, 10, 5], the same values shifted. A global max gives 10 for both, which is invariant, but max pooling with width 2 and stride 2 gives [10, 5] and [5, 10], which differ.",
       "This matters in practice. Azulay and Weiss showed in 2019 that shifting an image by a few pixels can change the predictions of standard ImageNet CNNs, and Richard Zhang's 2019 anti-aliased CNNs blur before downsampling to reduce the effect. Random crops and shifts in data augmentation teach the invariance that the architecture only approximates."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "convolutional-neural-networks-are-translation-invariant"
   },
@@ -2492,13 +2531,14 @@
     "id": "dl-192",
     "category": "dl",
     "question": "Autoencoders are one of the most popular supervised learning methods.",
-    "answer": "false",
+    "title": "Are autoencoders a supervised learning method?",
+    "answer": "False",
     "explanation": [
       "False. Autoencoders are unsupervised, or more precisely self-supervised: they learn to reconstruct their own input, so the target is the input itself and no human labels are needed. Supervised learning needs input-label pairs (x, y), such as photos tagged with what they show.",
       "The loss shows the difference. A supervised classifier minimizes L(f(x), y); an autoencoder minimizes L(g(f(x)), x), with f the encoder and g the decoder. That made autoencoders a pretraining tool: Hinton and Salakhutdinov's 2006 Science paper trained deep autoencoders on unlabeled data, and their codes beat linear methods such as PCA at compressing images and documents. A classifier can then be trained on the codes with few labels, which is semi-supervised learning.",
       "A common follow-up: a linear autoencoder trained with squared error learns the same subspace as the top principal components, as Baldi and Hornik showed in 1989, so non-linear activations are what let it do more. Masked autoencoders, which hide 75% of an image's patches and rebuild them, are a modern self-supervised pretraining method."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "autoencoders-are-one-of-the-most-popular-supervised-learning-methods"
   },
@@ -2506,13 +2546,14 @@
     "id": "dl-193",
     "category": "dl",
     "question": "The type of problem where you need to classify the input into a single class is called multi class classification.",
+    "title": "Is giving each input exactly one class called multi-class classification?",
     "answer": "True, when there are three or more classes: each input gets exactly one label. With two classes it's binary classification; when an input can carry several labels at once, it's multi-label classification.",
     "explanation": [
       "True, provided there are more than two classes. Multi-class classification assigns each input exactly one label from three or more mutually exclusive classes, such as which of the 10 digits a handwritten image shows. With two classes it is binary classification; when one input can belong to several classes at once, it is multi-label classification.",
       "The difference changes the output layer. A multi-class network ends in K softmax units trained with categorical cross-entropy and predicts the argmax: scores for cat, dog and bird might be 0.7, 0.2 and 0.1, summing to 1. A multi-label model tagging a photo of a cat and a dog uses K independent sigmoids with binary cross-entropy and thresholds each, so outputs like 0.9, 0.8 and 0.1 need not sum to 1.",
       "A common follow-up is how to apply binary classifiers to multi-class data. One-vs-rest trains K classifiers, one per class; one-vs-one trains one per pair, K(K − 1)/2, so 45 for 10 classes. Per-class metrics are then combined by macro or micro averaging."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "the-type-of-problem-where-you-need-to-classify-the-input-into-a-single-class-is-called"
   },
@@ -2520,13 +2561,14 @@
     "id": "dl-194",
     "category": "dl",
     "question": "Dropout is an excellent regularization technique that speeds the training process.",
-    "answer": "false",
+    "title": "Does dropout speed up neural network training?",
+    "answer": "False",
     "explanation": [
       "False. Dropout is a widely used regularizer, but it slows training down. Each step trains a different random sub-network, so gradients are noisier and the network needs more updates to converge, while each update costs about the same.",
       "Srivastava et al., in their 2014 JMLR paper, wrote that a dropout network typically takes 2 to 3 times longer to train than a standard network of the same architecture, naming noisy parameter updates as a major cause. So a model that peaks after 20 epochs might need 40 to 60 with dropout. Implementations save no compute per step either: dropped units are still computed, then multiplied by zero.",
       "The trade pays off when a model overfits, since the slower run usually ends at a lower test error. The technique that does speed training is batch normalization: Ioffe and Szegedy matched an ImageNet model's accuracy in 14 times fewer training steps. A related trap: training loss can sit above validation loss, because dropout is active only during training."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "dropout-is-an-excellent-regularization-technique-that-speeds-the-training-process"
   },
@@ -2534,13 +2576,14 @@
     "id": "dl-195",
     "category": "dl",
     "question": "A neural network with a single layer is capable of approximating any function.",
+    "title": "Can a neural network with a single layer approximate any function?",
     "answer": "True with conditions: by the universal approximation theorem, one hidden layer with enough units and a non-polynomial activation can approximate any continuous function on a closed, bounded domain. With no hidden layer, a network only draws linear boundaries and can't even fit XOR.",
     "explanation": [
       "True, with conditions. The universal approximation theorem says a network with one hidden layer, enough units and a non-polynomial activation such as sigmoid or ReLU can approximate any continuous function on a closed, bounded region to any accuracy. With no hidden layer, it draws only linear boundaries and fails even on XOR.",
       "Example: f(x) = x² on [0, 1]. Ten ReLU units, 0.1·ReLU(x) plus 0.2·ReLU(x − k/10) for k = 1 to 9, join the curve's points at 0, 0.1, …, 1 with straight lines, with maximum error 0.0025; a hundred units give 0.000025. Cybenko, and separately Hornik, Stinchcombe and White, proved versions in 1989; Leshno and colleagues showed in 1993 that essentially any non-polynomial activation works.",
       "Past x = 1 the network continues as a straight line, predicting 2.9 at x = 2 instead of 4. The theorem says good weights exist, not that gradient descent finds them or that they generalize, and the units needed can grow exponentially with the input dimension, one reason practitioners add depth."
     ],
-    "updated": "2026-10-15",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "a-neural-network-with-a-single-layer-is-capable-of-approximating-any-function"
   },
@@ -2548,13 +2591,14 @@
     "id": "dl-196",
     "category": "dl",
     "question": "Leaky ReLU is an activation function that lets small negative values pass through when a neuron's input is less than zero.",
-    "answer": "true",
+    "title": "Does leaky ReLU let small negative values pass through?",
+    "answer": "True",
     "explanation": [
       "True. Leaky ReLU passes positive inputs through unchanged and multiplies negative inputs by a small slope α instead of setting them to zero: f(x) = x if x > 0, otherwise αx. Strictly, the condition is on each neuron's own input, its weighted sum, not the network's input.",
       "With α = 0.01, the inputs −5, −0.5 and 3 become −0.05, −0.005 and 3, where plain ReLU gives 0, 0 and 3. The gradient is the point: it is α, not 0, for negative inputs, so a neuron stuck in the negative region still gets small updates and can recover. Andrew Maas, Awni Hannun and Andrew Ng proposed it in 2013 for speech recognition networks.",
       "Interviewers ask how to pick α. Defaults differ: PyTorch uses 0.01, the Keras layer 0.3, and DCGAN discriminators use 0.2. PReLU, from Kaiming He and colleagues in 2015, learns α during training. Leaky ReLU is as cheap as ReLU and avoids dead units, but gains are often small; transformers mostly use GELU or SiLU."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative"
   },
@@ -2562,13 +2606,14 @@
     "id": "dl-197",
     "category": "dl",
     "question": "Bagging is the concept of splitting a dataset and randomly placing it into bags for training a model.",
-    "answer": "false",
+    "title": "Does bagging mean splitting a dataset into random bags?",
+    "answer": "False",
     "explanation": [
       "False, as worded. Bagging, short for bootstrap aggregating, does not split the dataset into separate bags. It draws many bootstrap samples, each as large as the original data and drawn with replacement, trains one model per sample, and combines their predictions by averaging or majority vote. Leo Breiman published it in 1996.",
       "Because sampling is with replacement, the bags overlap and repeat rows. The chance that a given row is never picked in n draws is (1 − 1/n)ⁿ, which approaches 1/e ≈ 0.368, so each bag holds about 63.2% of the distinct rows; the left-out, out-of-bag rows give a free validation estimate. Averaging models trained on slightly different data cancels much of their variance.",
       "Bagging helps most with unstable, high-variance learners such as deep decision trees; a random forest is bagged trees plus a random subset of features at each split. Interviewers often contrast it with boosting, which trains models one after another on the previous ones' errors and mainly reduces bias. Sampling without replacement instead is called pasting."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "bagging-is-the-concept-of-splitting-a-dataset-and-randomly-placing-it-into-bags-for"
   },
@@ -2576,13 +2621,14 @@
     "id": "dl-174",
     "category": "dl",
     "question": "A categorical feature is a feature that can only take a limited number of possible values.",
+    "title": "Is a categorical feature one that takes a limited set of values?",
     "answer": "True",
     "explanation": [
       "True. A categorical feature takes its values from a limited, usually fixed set of categories, or levels, such as blood type (A, B, AB, O), country or payment method. The values name groups instead of measuring amounts: a count such as number of children also has few possible values, but it is numeric.",
       "Nominal categories, like blood type, have no order. Ordinal ones, like T-shirt sizes S, M, L and XL, have an order but no fixed spacing. Codes can look numeric and still be categorical: the average of two ZIP codes means nothing. Ordinal features are often mapped to 0, 1, 2, 3, while nominal ones are usually one-hot encoded.",
       "A frequent interview trap is label-encoding a nominal feature: coding A, B, AB and O as 0, 1, 2 and 3 tells a linear model that O is three times as far from A as B is. Trees cope better; LightGBM and CatBoost handle categories natively. Summarize one with counts and the mode, not the mean."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values"
   },

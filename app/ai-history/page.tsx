@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Author from "@/components/Author";
 import { CONTENT_UPDATED, SITE, absoluteUrl } from "@/lib/site";
 import { SCHEMA_ID } from "@/lib/schema";
-import { CATEGORIES } from "@/lib/questions";
+import { CATEGORIES, pageTitle } from "@/lib/questions";
 import { TIMELINE_SPAN, getTimeline } from "@/lib/timeline";
 
 const PATH = "/ai-history";
@@ -114,7 +114,7 @@ export default function AiHistoryPage() {
                           href={`/questions/${q.slug}`}
                           className="underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current"
                         >
-                          {q.question}
+                          {pageTitle(q)}
                         </Link>
                       </li>
                     ))}
