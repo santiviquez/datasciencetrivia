@@ -9,6 +9,7 @@ import {
   getAllQuestions,
   getQuestionBySlug,
   getRelatedQuestions,
+  pageTitle,
 } from "@/lib/questions";
 
 type Params = { slug: string };
@@ -28,18 +29,19 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   // snippet than a card answer that can be a single word.
   const summary = q.explanation?.[0] ?? q.answer;
   const description = summary.length > 155 ? `${summary.slice(0, 152).trimEnd()}…` : summary;
+  const title = pageTitle(q);
 
   return {
-    title: q.question,
+    title,
     description,
     alternates: { canonical: `/questions/${q.slug}` },
     openGraph: {
       type: "article",
-      title: `${q.question} — ${SITE.name}`,
+      title: `${title} — ${SITE.name}`,
       description,
       url: absoluteUrl(`/questions/${q.slug}`),
     },
-    twitter: { card: "summary_large_image", title: `${q.question} — ${SITE.name}`, description },
+    twitter: { card: "summary_large_image", title: `${title} — ${SITE.name}`, description },
   };
 }
 
@@ -57,7 +59,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
     "@id": absoluteUrl(`/questions/${q.slug}#qapage`),
     mainEntity: {
       "@type": "Question",
-      name: q.question,
+      name: pageTitle(q),
       text: q.question,
       answerCount: 1,
       acceptedAnswer: {
@@ -85,7 +87,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
       { "@type": "ListItem", position: 2, name: category.name, item: absoluteUrl(`/categories/${category.slug}`) },
-      { "@type": "ListItem", position: 3, name: q.question, item: absoluteUrl(`/questions/${q.slug}`) },
+      { "@type": "ListItem", position: 3, name: pageTitle(q), item: absoluteUrl(`/questions/${q.slug}`) },
     ],
   };
 
@@ -139,7 +141,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
                 {related.map((r) => (
                   <li key={r.id} className="text-sm leading-snug">
                     <Link href={`/questions/${r.slug}`} className="underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current">
-                      {r.question}
+                      {pageTitle(r)}
                     </Link>
                   </li>
                 ))}

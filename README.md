@@ -137,6 +137,10 @@ Every card lives in `content/questions.json`:
 - `category` is one of `ml`, `dl`, `genai`, `stats`, `history`.
 - `slug` is the page URL. It is stored so a question can be reworded without
   breaking its link; omit it and one is derived from the question.
+- `title` is optional: a search-style question for cards whose text is a
+  statement or a fill-in prompt ("Is the F1 score the harmonic mean of
+  precision, recall and accuracy?"). It becomes the page's `<title>` and the
+  text of links to the card; the card itself still shows `question`.
 - `explanation` renders under the card on the question's page, and goes into
   its structured data, meta description and `llms.txt`.
 - `updated` is the date the card's question, answer or explanation last
@@ -148,7 +152,8 @@ add `{ "from": "<old-slug>", "to": "<kept-slug>" }` to `content/redirects.json`,
 so the old URL redirects permanently to the card that stays.
 
 `npm run check:content` validates required fields, categories, explanations,
-dates, redirects, unique slugs and the category hubs' starter cards. It runs
+titles, dates, redirects, unique slugs and page titles, and the category hubs'
+starter cards. It runs
 before every build.
 
 To import a deck (JSON or CSV, including Anki exports converted to CSV):

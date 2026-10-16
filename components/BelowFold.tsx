@@ -5,6 +5,7 @@ import {
   QUESTION_COUNT,
   getAllQuestions,
   getQuestionsByCategory,
+  pageTitle,
 } from "@/lib/questions";
 import { QUIZZES, QUIZ_SLUGS } from "@/lib/quiz";
 
@@ -85,7 +86,7 @@ export default function BelowFold() {
                 href={`/questions/${q.slug}`}
                 className="text-[var(--fg)] underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current"
               >
-                {q.question}
+                {pageTitle(q)}
               </Link>
             </li>
           ))}
