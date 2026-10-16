@@ -2637,7 +2637,12 @@
     "category": "genai",
     "question": "What do temperature, top-p and top-k control?",
     "answer": "How the next token is sampled: temperature flattens or sharpens the distribution, top-k keeps the k likeliest tokens, top-p the smallest set whose mass reaches p. Near zero for extraction and code; raise it only when you want variety.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Temperature, top-k and top-p control how a language model picks each next token from its predicted probability distribution, trading predictability for variety. Temperature T rescales the logits, pᵢ = exp(zᵢ/T) / Σⱼ exp(zⱼ/T). Top-k keeps the k likeliest tokens; top-p, or nucleus sampling, keeps the smallest set whose probabilities reach p.",
+      "Example: after \"The sky is\", say the model gives blue 0.6, grey 0.3 and green 0.1. Dividing logits by T equals raising each probability to the power 1/T and renormalizing: T = 0.5 gives 0.78, 0.20 and 0.02, and T = 2 gives 0.47, 0.33 and 0.19. Top-p = 0.8 keeps blue and grey, as blue alone falls short, and renormalizes them to 0.67 and 0.33. Top-k = 1 is greedy decoding.",
+      "Interviewers ask why top-p usually beats top-k: a fixed k keeps junk when the distribution is peaked and cuts good tokens when it is flat; the nucleus adapts. Nucleus sampling comes from Holtzman et al., \"The Curious Case of Neural Text Degeneration\" (ICLR 2020). T = 0 means greedy, though GPU nondeterminism can still vary outputs slightly."
+    ],
+    "updated": "2026-10-16",
     "slug": "what-do-temperature-top-p-and-top-k-control"
   },
   {
@@ -2645,7 +2650,12 @@
     "category": "genai",
     "question": "When do you use RAG instead of fine-tuning?",
     "answer": "RAG when the model lacks knowledge: facts that change, are private, or need a citation. Fine-tuning when it lacks behaviour: a format, a tone, a narrow task. An index is cheaper to update than weights, so reach for RAG first.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Use RAG when the model lacks knowledge, such as changing facts, private documents or answers that need a citation, and fine-tune when it lacks a behaviour, such as a format, tone or narrow task. Retrieval-augmented generation fetches relevant passages at query time and puts them in the prompt; fine-tuning trains on your examples and changes the weights.",
+      "Take an HR assistant over 2,000 policies, 50 of which change each month. With RAG, an update is re-embedding 50 documents, answers cite the section used, and documents a user may not see are filtered out at retrieval. With fine-tuning, each update means new training data and a retrain, the model may blend old and new rules, and a withdrawn policy cannot be reliably erased from the weights.",
+      "Interviewers then ask whether fine-tuning can teach facts. Poorly: in \"Fine-Tuning or Retrieval?\" (Ovadia et al., EMNLP 2024), RAG consistently beat unsupervised fine-tuning for both familiar and new facts. The two combine well: fine-tune for format, retrieve for facts. RAG's costs are latency, longer prompts and dependence on retrieval quality."
+    ],
+    "updated": "2026-10-16",
     "slug": "when-do-you-use-rag-instead-of-fine-tuning"
   },
   {
@@ -2653,7 +2663,12 @@
     "category": "genai",
     "question": "What are the tradeoffs in RAG chunk size?",
     "answer": "Small chunks retrieve precisely but strip the context that qualifies a fact; large ones keep context but dilute the embedding and spend tokens. Start near a few hundred tokens with some overlap, split on document structure, then tune against an eval set.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "In RAG, chunk size trades retrieval precision against context: small chunks match a query sharply but lose the text that qualifies a fact, while large chunks keep context but blur the embedding and cost more tokens. A chunk is the unit a RAG pipeline embeds, indexes and returns whole.",
+      "Take a 10,000-token contract. At 200 tokens with 50 overlapping, the stride is 150, giving about 67 chunks; the top 5 add 1,000 tokens. One chunk may say \"the fee is waived\" while \"For annual plans only\" sits in the chunk before, so the model gets the rule without its condition. At 1,000 tokens there are 10 chunks, the top 5 are half the contract, and each vector averages several clauses.",
+      "The follow-up is how to get both: embed small chunks but return the parent section, prepend the title and heading to each chunk, and split on document structure. Many BERT-based embedders stop at 512 tokens, and libraries often truncate longer chunks silently. Compare sizes at a fixed token budget: top 10 small chunks against top 2 large ones."
+    ],
+    "updated": "2026-10-16",
     "slug": "what-are-the-tradeoffs-in-rag-chunk-size"
   },
   {
@@ -2661,15 +2676,25 @@
     "category": "genai",
     "question": "Why combine embeddings with keyword search?",
     "answer": "Because they fail differently: embeddings match paraphrase but miss rare exact strings like error codes and part numbers, while BM25 matches those tokens and misses paraphrase. Hybrid search fuses both rankings, usually with a reranker on top.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Combine embeddings with keyword search because they fail on different queries: embeddings match meaning and paraphrase but blur rare exact strings, while BM25 matches exact tokens but misses synonyms. Hybrid search runs both retrievers and fuses their ranked lists into one.",
+      "An embedding model splits \"E-4012\" into subword pieces and compresses the passage into one vector, so one rare token barely moves it; BM25 weights it heavily because few documents contain it. Reciprocal rank fusion scores each document Σ 1/(k + rank), with k = 60 by convention. If BM25 ranks D1, D2, D3 and embeddings rank D3, D1, D4, D1 scores 1/61 + 1/62 ≈ 0.0325, D3 0.0323, D2 and D4 about 0.016.",
+      "Why fuse ranks, not scores? BM25 scores have no fixed scale and vary by query, while cosine similarities sit between −1 and 1, so adding them needs normalization and tuning; RRF (Cormack, Clarke and Büttcher, SIGIR 2009) needs neither. A cross-encoder reranker then rescores the top candidates. Hybrid helps most with IDs, code and jargon, and out of domain, where the BEIR benchmark (2021) found BM25 a robust zero-shot baseline."
+    ],
+    "updated": "2026-10-16",
     "slug": "why-combine-embeddings-with-keyword-search"
   },
   {
     "id": "genai-5",
     "category": "genai",
     "question": "How do you evaluate a RAG system?",
-    "answer": "Retrieval and generation separately. Retrieval: recall@k and nDCG on labelled question-document pairs. Generation: faithfulness (every claim supported by the context), relevance and citations. Most bad answers are retrieval failures.",
-    "updated": "2026-09-13",
+    "answer": "Retrieval and generation separately. Retrieval: recall@k and nDCG on labelled question-document pairs. Generation: faithfulness (every claim supported by the context), relevance and citations. Many bad answers are retrieval failures.",
+    "explanation": [
+      "Evaluate a RAG system in two stages: whether retrieval finds the passages that contain the answer, then whether the generated answer is faithful to them and on topic. Faithfulness means every claim in the answer is supported by the retrieved context, which differs from correctness against the truth.",
+      "Toy eval: Q1 has 2 relevant chunks, both in the top 5; Q2 has 1, ranked 7th; Q3 has 3, two in the top 5; Q4 has 1, ranked 1st. Recall@5 is 1, 0, 0.67 and 1, a mean of 0.67; the hit rate is 3/4. For generation, split an answer into claims and check each against the context: 3 of 4 supported is faithfulness 0.75, the RAGAS ratio (Es et al., 2023).",
+      "Interviewers ask where labels come from: real user questions with expert-marked passages beat LLM-written ones, which are easier. Label document spans, not chunk IDs, or re-chunking breaks the eval set, and spot-check LLM judges against humans. Watch crossed cases: an answer can be correct but unfaithful, from model memory, or faithful but wrong because the source is outdated."
+    ],
+    "updated": "2026-10-16",
     "slug": "how-do-you-evaluate-a-rag-system"
   },
   {
@@ -2677,7 +2702,12 @@
     "category": "genai",
     "question": "What actually reduces hallucinations?",
     "answer": "Grounding, not scolding: retrieval with citations, permission to answer that it does not know, tool calls for facts and arithmetic, and a verification pass. The model optimises for the likeliest next token, not for truth, so instructions alone will not.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Hallucinations drop when the model is grounded and checked: retrieval with citations, tools for facts and arithmetic, permission to say \"I don't know\", and a verification pass. A hallucination is fluent output that the source or the world does not support. Next-token prediction rewards plausible text, not true text, so instructions alone barely help.",
+      "Kalai et al., \"Why Language Models Hallucinate\" (2025), argue that training and benchmarks reward guessing. Score 1 for right and 0 for wrong or \"I don't know\": a model 30% sure expects 0.3 from guessing, 0 from abstaining, so it guesses. With a 1-point penalty for errors, the expected score is p − (1 − p), so guessing pays only above 50% confidence; a penalty of t/(1 − t) sets the threshold at t.",
+      "Interviewers ask why each fix works: citations make claims checkable against text, and a calculator replaces memory with computation. Lower temperature cuts randomness, not confident errors. RAG still hallucinates when retrieval misses, so give a no-answer path. SelfCheckGPT (Manakul et al., 2023) flags facts that vary across sampled answers."
+    ],
+    "updated": "2026-10-16",
     "slug": "what-actually-reduces-hallucinations"
   },
   {
@@ -2685,15 +2715,25 @@
     "category": "genai",
     "question": "Why is a bigger context window not always the answer?",
     "answer": "Tokens cost money and latency, and accuracy sags for material buried mid-prompt. Retrieving the 2k tokens that matter usually beats pasting 200k. Long windows are for genuinely long documents; prompt caching makes a stable prefix cheaper, not free.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "A bigger context window is not always the answer: every extra token adds cost and latency, and models use facts buried mid-prompt less reliably than facts near the start or end. The context window is the maximum number of tokens, prompt plus output, a model handles per call.",
+      "Pasting a 200,000-token manual into every question sends 100 times the input of retrieving the 2,000 tokens that matter: at 10,000 questions a day, 2 billion input tokens versus 20 million. Time to first token grows with prompt length too. In \"Lost in the Middle\" (Liu et al., TACL 2024), GPT-3.5-Turbo given 20 documents did worse with the answer mid-context than with no documents at all.",
+      "Long context fits tasks that need the whole document, such as summarizing a contract or reasoning across a codebase. On prompt caching: a cached prefix skips recomputation and is billed at a discount, but new tokens still attend over it and it still fills the window. Passing a needle-in-a-haystack test, one literal lookup, does not prove a model reasons over all it holds."
+    ],
+    "updated": "2026-10-16",
     "slug": "why-is-a-bigger-context-window-not-always-the-answer"
   },
   {
     "id": "genai-8",
     "category": "genai",
     "question": "Prompt, system prompt, tools: what does each do?",
-    "answer": "The system prompt sets durable role, rules and output format; the user prompt carries the request; tool definitions are schemas the model can call so your code fetches data or acts. The model never runs a tool itself, your application does.",
-    "updated": "2026-09-13",
+    "answer": "The system prompt sets durable role, rules and output format; the user prompt carries the request; tool definitions are schemas the model can call so your code fetches data or acts. The model never runs a tool itself: your application does, or the provider for hosted tools like web search.",
+    "explanation": [
+      "The system prompt sets standing instructions for a conversation, the user prompt carries each request, and tool definitions describe functions the model may ask your code to run. All reach the model as tokens in one sequence, wrapped in role markers, and models are trained, imperfectly, to rank system instructions above user text.",
+      "Example: you define get_weather with a JSON schema for city and date, and a user asks about an umbrella for Oslo tomorrow. The model fetches nothing: it returns a structured call, get_weather with city \"Oslo\", and stops. Your code calls a weather API, appends the result, 6 mm of rain, as a tool-result message and calls the model again to answer. Tool definitions are input tokens on both calls.",
+      "Interviewers then probe trust. A system prompt is not a security boundary: users can often extract it, so keep secrets out and enforce permissions in the code that runs tools. Tool results can carry injected instructions, which is why \"The Instruction Hierarchy\" (Wallace et al., 2024) trains models to rank system over user over tool output."
+    ],
+    "updated": "2026-10-16",
     "slug": "prompt-system-prompt-tools-what-does-each-do"
   },
   {
@@ -2701,7 +2741,12 @@
     "category": "genai",
     "question": "Why did transformers replace RNNs for most NLP tasks?",
     "answer": "Self-attention lets every token weigh every other token in one parallel step, instead of pushing information down a recurrent chain, so long-range dependencies survive and training parallelises. The cost is attention quadratic in sequence length.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Transformers replaced RNNs because self-attention links any two tokens in one step and processes a whole sequence in parallel, so training scales on GPUs. Each token's query is scored against every key, and the softmax of the scores weights the values: softmax(QKᵀ/√dₖ)V.",
+      "An RNN computes hidden states one after another, so a signal from token 1 reaches token 100 through 99 updates. If each scales the gradient by 0.9, only 0.9⁹⁹ ≈ 3 × 10⁻⁵ survives; LSTM gates soften this but stay sequential. Per layer, attention costs about n²·d operations and recurrence n·d², so attention is even cheaper whenever sequence length n is below width d.",
+      "Attention predates the Transformer: Bahdanau, Cho and Bengio added it to an RNN translator in 2014; Vaswani and colleagues dropped the recurrence in 2017. Attention ignores order, so positions must be encoded. At 32,000 tokens each head computes about a billion scores per layer. Generation still runs token by token with a growing KV cache, while an RNN keeps a fixed-size state, so state-space models such as Mamba revisit recurrence."
+    ],
+    "updated": "2026-10-16",
     "slug": "why-did-transformers-replace-rnns-for-most-nlp-tasks"
   },
   {
@@ -2709,7 +2754,12 @@
     "category": "genai",
     "question": "How does BERT differ from a GPT-style model?",
     "answer": "BERT is an encoder: bidirectional, trained by masking tokens, so every position sees both sides, which suits classification and embeddings but cannot generate. GPT is a causal decoder trained to predict the next token, which is what enables generation.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "BERT is a bidirectional Transformer encoder trained to fill in masked tokens, while a GPT-style model is a decoder trained to predict each next token from left context. The blocks are nearly identical; the mask and objective differ. Devlin and colleagues introduced BERT in 2018, months after OpenAI's first GPT.",
+      "In \"the cat sat on the mat\", GPT's representation of \"sat\" sees only \"the cat sat\"; BERT's sees all six words. A causal mask over n tokens allows n(n + 1)/2 attention pairs, 21 of 36 here. BERT's loss is also sparser: it predicts only the 15% of tokens it selects, about 77 of 512. Of those, 80% become [MASK], 10% a random token and 10% stay unchanged, since [MASK] never appears in fine-tuning. GPT gets a loss at every position.",
+      "Why can't BERT generate? It can fill a blank, but has no left-to-right factorization, so writing text needs awkward repeated masking. Why still use encoders? A 110-million-parameter BERT-base fine-tuned for classification or embeddings is fast and cheap. RoBERTa (2019) dropped BERT's second objective, next-sentence prediction, at no loss."
+    ],
+    "updated": "2026-10-16",
     "slug": "how-does-bert-differ-from-a-gpt-style-model"
   },
   {
@@ -2717,7 +2767,12 @@
     "category": "genai",
     "question": "When should you build a workflow instead of an agent?",
     "answer": "Whenever the steps are known ahead of time. A fixed sequence of model calls and code is cheaper, faster and testable, and you can see which step broke. An agent earns its loop only when the next action depends on intermediate results.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Build a workflow when you can write the steps down in advance: code fixes the order of model calls and tools, and the model fills in each step. An agent is a model in a loop that picks its next action, a tool call or stopping, from earlier results. Anthropic's 2024 essay \"Building effective agents\" popularized the split.",
+      "Errors compound: at 95% accuracy per step, three steps succeed 86% of the time (0.95³) and ten about 60% (0.95¹⁰), and an agent picks its own step count. It also re-sends its growing transcript each turn: at 2,000 tokens a turn, ten turns send 2k + 4k + … + 20k = 110,000 input tokens. A workflow can test and retry each step alone.",
+      "An agent earns its cost when the path is unknowable in advance, such as debugging an unfamiliar codebase. Interviewers then ask about guardrails: step and budget limits, sandboxed tools, human approval for irreversible actions, and logged tool calls. A common confusion: tool calls alone do not make an agent; a workflow can call tools at fixed points."
+    ],
+    "updated": "2026-10-16",
     "slug": "when-should-you-build-a-workflow-instead-of-an-agent"
   },
   {
@@ -2725,7 +2780,12 @@
     "category": "genai",
     "question": "What is an embedding?",
     "answer": "A fixed-length vector for text, an image or audio, placed so similar meanings land near each other, which turns search into a nearest-neighbour lookup. Vectors only compare within one model, and closeness is not relevance, hence rerankers.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "An embedding is a fixed-length vector that a trained model assigns to text, an image or audio, so that similar meanings land close together. Closeness is usually cosine similarity, cos θ = a·b / (‖a‖ ‖b‖): 1 for vectors pointing the same way, 0 for perpendicular ones.",
+      "With unit-length toy vectors, cosine is just the dot product: the query \"how do I get my money back\" is (0.8, 0.6, 0), \"refund policy\" (0.6, 0.8, 0) and \"GPU memory limits\" (0, 0.6, 0.8). The refund page scores 0.96, the GPU page 0.36. At real sizes, a million 768-dimensional float32 vectors take 3.1 GB, so large collections use approximate nearest-neighbor indexes such as HNSW.",
+      "The idea took off with word2vec (Mikolov and colleagues, 2013), where king − man + woman lands near queen. Two models' vectors are not comparable, since each learns its own coordinates; switching models means re-embedding everything. For unit vectors ‖a − b‖² = 2 − 2a·b, so cosine and Euclidean distance rank alike. Closeness is not relevance: \"cancel my plan\" and \"upgrade my plan\" sit close together."
+    ],
+    "updated": "2026-10-16",
     "slug": "what-is-an-embedding"
   },
   {
@@ -2733,15 +2793,25 @@
     "category": "genai",
     "question": "When do few-shot examples beat zero-shot prompting?",
     "answer": "When the output format or labelling rule is easier to show than to describe: examples let the model infer the pattern in context, with no weight updates. They cost tokens on every call and can bias style, so add them where an eval shows a gain.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Few-shot examples beat zero-shot prompting when the output format or labeling rule is easier to show than to describe, such as a house style or where borderline cases belong. Few-shot prompting puts solved input-output pairs in the prompt; the model infers the pattern in context. The GPT-3 paper (Brown and colleagues, 2020) defined the zero-, one- and few-shot settings.",
+      "Examples also carry biases. Zhao and colleagues (\"Calibrate Before Use\", 2021) found GPT-3 favors labels frequent in the examples and labels near the end of the prompt: with four sentiment examples ordered positive, positive, positive, negative, nearly 90% of its predictions were negative. Cost repeats per call: five 150-token examples add 750 input tokens to every request.",
+      "Interviewers next ask how to choose examples: cover every label and edge case, balance and shuffle them, or retrieve the nearest ones per input. Min and colleagues (2022) found random labels in demonstrations often barely hurt, so examples teach format and label space more than the mapping, though not for every task. With hundreds of labeled examples, fine-tuning is cheaper per call."
+    ],
+    "updated": "2026-10-16",
     "slug": "when-do-few-shot-examples-beat-zero-shot-prompting"
   },
   {
     "id": "genai-14",
     "category": "genai",
     "question": "What does RLHF change about a base model?",
-    "answer": "Behaviour, not knowledge. Supervised fine-tuning on demonstrations, then a reward model trained on human comparisons of response pairs, then policy optimisation against it with a KL penalty to stay near the base. DPO skips the reward model.",
-    "updated": "2026-09-13",
+    "answer": "Behaviour, not knowledge. Supervised fine-tuning on demonstrations, then a reward model trained on human preference pairs, then policy optimisation against it with a KL penalty to stay near the SFT model. DPO skips the reward model.",
+    "explanation": [
+      "RLHF changes how a base model behaves, not what it knows: a model that continues any text becomes an assistant that follows instructions and writes answers people prefer. RLHF, reinforcement learning from human feedback, tunes the model toward a learned score of human preference.",
+      "A reward model, scoring the preferred answer r₁ and the rejected one r₂, treats σ(r₁ − r₂) as the probability people prefer the first, so scores of 2.0 and 0.5 give σ(1.5) ≈ 0.82 and a loss of −ln 0.82 ≈ 0.20. PPO then maximizes r(x, y) − β·log(π(y|x) / π_SFT(y|x)), reward minus a KL penalty against the supervised fine-tuned model. In InstructGPT (Ouyang and colleagues, 2022), labelers preferred a 1.3B RLHF model to 175B GPT-3.",
+      "Without the KL term the policy games the reward model with long, flattering or repetitive answers: reward hacking. The GPT-4 technical report showed post-training made the pretrained model's well-calibrated probabilities less so. DPO (Rafailov and colleagues, 2023) optimizes the same objective directly on preference pairs, with no reward model or sampling loop. None of these efficiently adds facts."
+    ],
+    "updated": "2026-10-16",
     "slug": "what-does-rlhf-change-about-a-base-model"
   },
   {
@@ -2749,7 +2819,12 @@
     "category": "genai",
     "question": "How does byte pair encoding tokenization work?",
     "answer": "Text is cut into subword tokens from a fixed vocabulary; BPE builds that vocabulary from characters up, repeatedly merging the most frequent adjacent pair. So common words are one token, rare and non-English text cost more, and letters are invisible.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "Byte pair encoding builds a subword vocabulary by starting from characters or bytes and repeatedly merging the most frequent adjacent pair, until it reaches a target size. Philip Gage published BPE for compression in 1994; Sennrich, Haddow and Birch adapted it to machine translation in 2016.",
+      "Toy corpus: low ×5, now ×4, lot ×2. The commonest pair, o w, appears 9 times and becomes ow; then l ow (5) merges into low and n ow (4) into now. Lot stays l, o, t. Encoding replays the merges in order, so unseen town becomes t + ow + n. GPT-2 starts from all 256 bytes, so no input is unknown, and adds 50,000 merges and an end-of-text token: 50,257 tokens.",
+      "A bigger vocabulary shortens sequences but enlarges the embedding table: GPT-2 small's 50,257 × 768 matrix holds 38.6 million weights. The same text can need up to 15 times more tokens in one language than another (Petrov and colleagues, 2023). The model sees token IDs, not letters, so counting letters trips it up. BERT's WordPiece merges by likelihood instead."
+    ],
+    "updated": "2026-10-16",
     "slug": "how-does-byte-pair-encoding-tokenization-work"
   },
   {
@@ -2757,7 +2832,12 @@
     "category": "genai",
     "question": "What is the KV cache, and why does it cap concurrency?",
     "answer": "Attention keys and values for the prefix, cached per layer, so each new token attends over saved state instead of recomputing the sequence. The cache grows with batch size, sequence length and layers, so GPU memory rather than compute limits throughput.",
-    "updated": "2026-09-13",
+    "explanation": [
+      "The KV cache stores the attention keys and values of every processed token, so each new token attends over stored state instead of re-running the prefix. It caps concurrency because each request holds its own cache in GPU memory, which runs out before compute.",
+      "Per token: 2 (keys and values) × layers × KV heads × head dimension × bytes. Llama 2 7B has 32 layers and 32 KV heads of dimension 128, so at 16 bits: 2 × 32 × 32 × 128 × 2 = 524,288 bytes, 2 GiB per 4,096-token sequence. An 80 GB GPU, after 13.5 GB of weights, fits at most about 30 of them.",
+      "Why not cache queries? A past token's query is never reused. Decoding is memory-bound: each step reads the weights and every cache to emit one token per sequence, so throughput grows with batch size until caches fill memory. Fixes: grouped-query attention, which gives Llama 3 8B a quarter of the cache with 8 KV heads; 8-bit cache quantization; and PagedAttention, which allocates the cache in blocks to curb fragmentation."
+    ],
+    "updated": "2026-10-16",
     "slug": "what-is-the-kv-cache-and-why-does-it-cap-concurrency"
   }
 ]
