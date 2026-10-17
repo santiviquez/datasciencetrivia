@@ -6,9 +6,10 @@
  * Plain JavaScript on purpose — it must run on whatever Node the build host
  * provides, without type-stripping flags.
  */
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { OUT_DIR, renderQuestionFiles } from "./questions-markdown.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const raw = JSON.parse(
@@ -149,6 +150,23 @@ redirects.forEach(({ from, to }, i) => {
   seenFrom.add(from);
 });
 
+/**
+ * interview-questions/ is generated from the deck. A stale copy would show
+ * GitHub readers answers the site has since corrected.
+ */
+const markdown = renderQuestionFiles();
+const onDisk = existsSync(join(here, "..", OUT_DIR)) ? readdirSync(join(here, "..", OUT_DIR)) : [];
+const stale = [...markdown].filter(([path, content]) => {
+  const file = join(here, "..", path);
+  return !existsSync(file) || readFileSync(file, "utf8") !== content;
+});
+const extra = onDisk.filter((name) => !markdown.has(`${OUT_DIR}/${name}`));
+if (stale.length > 0 || extra.length > 0) {
+  errors.push(
+    `${OUT_DIR}/ is out of date (${[...stale.map(([p]) => p), ...extra].join(", ")}): run npm run export:questions`,
+  );
+}
+
 if (errors.length > 0) {
   console.error(`content check failed (${errors.length} problem${errors.length === 1 ? "" : "s"}):`);
   for (const e of errors) console.error(`  - ${e}`);
@@ -156,5 +174,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${redirects.length} redirects`,
+  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${redirects.length} redirects, ${markdown.size} Markdown files`,
 );
