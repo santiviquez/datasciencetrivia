@@ -59,8 +59,10 @@ answer they can learn from in a minute.
 
 And around the deck:
 
-- **Every card has its own page**, many with a longer answer: the reasoning, a
+- **Every card has its own page** with a longer answer: the reasoning, a
   worked example and the follow-up question an interviewer would ask.
+- **[All questions and answers in Markdown](interview-questions/)**, one file
+  per category, if you would rather read or search than flip cards.
 - **[Quizzes](https://www.datasciencetrivia.com/quiz)**: ten cards on one
   topic, scored, with a result you can share.
 - **[The history of AI](https://www.datasciencetrivia.com/ai-history)** as a
@@ -155,6 +157,11 @@ so the old URL redirects permanently to the card that stays.
 titles, dates, redirects, unique slugs and page titles, and the category hubs'
 starter cards. It runs
 before every build.
+
+`interview-questions/` is a Markdown copy of the deck (questions, card answers
+and links to each page) for reading on GitHub. Regenerate it with
+`npm run export:questions` after editing the JSON; `check:content` fails while
+it is stale.
 
 To import a deck (JSON or CSV, including Anki exports converted to CSV):
 
