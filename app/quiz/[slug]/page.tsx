@@ -133,6 +133,46 @@ export default async function QuizPage({ params }: { params: Promise<Params> }) 
             </p>
           </section>
 
+          {/*
+            The run the quiz opens with, answers folded away. It puts the
+            questions the Quiz markup lists on the page itself, and gives
+            someone who searched for a quiz the questions without playing.
+          */}
+          <section aria-labelledby="answers" className="mt-14 max-w-2xl">
+            <h2 id="answers" className="font-[family-name:var(--font-display)] text-lg">
+              Questions and answers
+            </h2>
+            <p className="mt-2 text-sm text-[var(--muted)]">
+              The {QUESTIONS_PER_QUIZ} questions this quiz opens with. Play first, then open one to check your answer.
+            </p>
+            <ol className="mt-6 space-y-5">
+              {initial.map((q, i) => (
+                <li key={q.id} className="border-l-[3px] pl-4" style={{ borderColor: CATEGORIES[q.category].color }}>
+                  <details className="group">
+                    <summary className="cursor-pointer list-none leading-snug [&::-webkit-details-marker]:hidden">
+                      <span className="mr-2 font-[family-name:var(--font-card)] text-xs text-[var(--muted)]" aria-hidden="true">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="font-medium">{q.question}</span>{" "}
+                      <span className="whitespace-nowrap text-xs text-[var(--muted)] underline underline-offset-2 group-open:hidden">
+                        Show answer
+                      </span>
+                    </summary>
+                    <p className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">
+                      {q.answer}{" "}
+                      <Link
+                        href={`/questions/${q.slug}`}
+                        className="whitespace-nowrap underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current"
+                      >
+                        Longer answer
+                      </Link>
+                    </p>
+                  </details>
+                </li>
+              ))}
+            </ol>
+          </section>
+
           <section aria-labelledby="more" className="mt-14">
             <h2 id="more" className="font-[family-name:var(--font-display)] text-lg">More quizzes</h2>
             <div className="mt-4 flex flex-wrap gap-3">
