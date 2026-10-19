@@ -11,7 +11,7 @@ import {
 
 export const metadata: Metadata = {
   title: { absolute: `${QUESTION_COUNT} Data Science Interview Questions & Answers` },
-  description: `Every question in the Data Science Trivia deck with its answer — ${QUESTION_COUNT} flashcards across machine learning, statistics, deep learning, LLMs and the history of AI.`,
+  description: `Every question in the Data Science Trivia deck with its answer — ${QUESTION_COUNT} flashcards across machine learning, statistics, deep learning, LLMs, MLOps and the history of AI.`,
   alternates: { canonical: "/questions" },
   openGraph: {
     type: "website",

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} — ${SITE.tagline}`,
     template: `%s — ${SITE.name}`,
   },
-  description: `Free data science flashcards. ${QUESTION_COUNT} questions and answers on machine learning, statistics, deep learning, LLMs and the history of AI — practise for interviews or just test yourself.`,
+  description: `Free data science flashcards. ${QUESTION_COUNT} questions and answers on machine learning, statistics, deep learning, LLMs, MLOps and the history of AI — practise for interviews or just test yourself.`,
   applicationName: SITE.name,
   authors: [{ name: SITE.author.name, url: SITE.author.x }],
   creator: SITE.author.name,

@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-36 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
+39 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/statistics).
 
@@ -231,6 +231,24 @@ Domain knowledge first, then the elbow of inertia against k, average silhouette,
 Precision at k and recall at k are evaluation metrics for ranking algorithms.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-precision-and-recall-at-k)
+
+## What is KL divergence?
+
+The Kullback-Leibler divergence, KL(P ‖ Q) = Σ P(x) log(P(x) / Q(x)), measures how much information is lost when Q is used to approximate P. It is never negative, is zero only when P = Q, and is not symmetric, so it is not a distance.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-kl-divergence)
+
+## What is the Jensen-Shannon divergence?
+
+A symmetric, bounded measure of the difference between two distributions: the average KL divergence of each from their mixture M = (P + Q) / 2. It is 0 for identical distributions, at most ln 2 (1 bit), and stays finite even when the distributions don't overlap.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-jensen-shannon-divergence)
+
+## What is the Kolmogorov-Smirnov test?
+
+A nonparametric test of whether a sample follows a given distribution, or whether two samples come from the same one. Its statistic D is the largest vertical gap between the two cumulative distribution functions.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-kolmogorov-smirnov-test)
 
 ---
 

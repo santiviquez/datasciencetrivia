@@ -35,6 +35,7 @@ const CATEGORY_ALIASES = {
   dl: "dl", "deep learning": "dl", "deep-learning": "dl",
   genai: "genai", "generative ai": "genai", "generative-ai": "genai",
   llm: "genai", llms: "genai", "large language models": "genai",
+  mlops: "mlops", "ml ops": "mlops", "machine learning operations": "mlops",
   stats: "stats", statistics: "stats", stat: "stats",
   history: "history", hist: "history",
 };
