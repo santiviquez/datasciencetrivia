@@ -94,8 +94,8 @@ export default function AboutPage() {
             About Data Science Trivia
           </h1>
           <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">
-            {QUESTION_COUNT} flashcards about machine learning, statistics, deep learning, LLMs and
-            the history of AI. You get a card, you guess, you flip it over and see how you did.
+            {QUESTION_COUNT} flashcards about machine learning, statistics, deep learning, LLMs, MLOps
+            and the history of AI. You get a card, you guess, you flip it over and see how you did.
             It&apos;s free, and there&apos;s nothing to sign up for.{" "}
             <Link href="/" className="underline underline-offset-2">
               Play the deck

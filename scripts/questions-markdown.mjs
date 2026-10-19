@@ -42,6 +42,13 @@ function md(text) {
   return text.replace(/([\\`*_[\]|<>])/g, "\\$1");
 }
 
+/** A category name mid-sentence: lowercase words, keep acronyms (AI, MLOps). Mirrors inSentence in lib/questions.ts. */
+const inSentence = (name) =>
+  name
+    .split(" ")
+    .map((word) => (/[A-Z].*[A-Z]/.test(word) ? word : word.toLowerCase()))
+    .join(" ");
+
 const pageUrl = (q) => `${SITE}/questions/${q.slug}`;
 
 const NOTICE =
@@ -53,7 +60,7 @@ function renderCategory(category, cards) {
     "",
     NOTICE,
     "",
-    `${cards.length} ${category.name.toLowerCase()} questions with short answers, from [Data Science Trivia](${SITE}), free flashcards for data science and machine learning interviews. ${category.blurb}`,
+    `${cards.length} ${inSentence(category.name)} questions with short answers, from [Data Science Trivia](${SITE}), free flashcards for data science and machine learning interviews. ${category.blurb}`,
     "",
     `Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](${SITE}/categories/${category.slug}).`,
     "",
@@ -84,7 +91,7 @@ function renderIndex(categories, cards) {
     "",
     NOTICE,
     "",
-    `${cards.length} questions with short answers on machine learning, deep learning, generative AI, statistics and the history of AI. They are the cards of [Data Science Trivia](${SITE}), a free flashcard deck for data science and machine learning interviews, written out so you can read or search them in one place.`,
+    `${cards.length} questions with short answers on machine learning, deep learning, generative AI, MLOps, statistics and the history of AI. They are the cards of [Data Science Trivia](${SITE}), a free flashcard deck for data science and machine learning interviews, written out so you can read or search them in one place.`,
     "",
     "| Category | Questions | Covers |",
     "|---|---|---|",

@@ -5,7 +5,7 @@ import GameScreen from "@/components/GameScreen";
 import Quiz, { type QuizCard } from "@/components/Quiz";
 import { SITE, absoluteUrl } from "@/lib/site";
 import { SCHEMA_ID } from "@/lib/schema";
-import { CATEGORIES, type QuestionWithSlug } from "@/lib/questions";
+import { CATEGORIES, inSentence, type QuestionWithSlug } from "@/lib/questions";
 import {
   QUESTIONS_PER_QUIZ,
   QUIZ_KEYS,
@@ -37,7 +37,7 @@ export async function generateMetadata({
   if (!isQuizSlug(slug)) return {};
   const quiz = QUIZZES[slug];
   const title = `${quiz.name}: ${QUESTIONS_PER_QUIZ} Questions with Answers`;
-  const description = `A free ${quiz.name.toLowerCase()} with answers. ${quiz.blurb} Reveal each answer, mark yourself and share your score.`;
+  const description = `A free ${inSentence(quiz.name)} with answers. ${quiz.blurb} Reveal each answer, mark yourself and share your score.`;
 
   return {
     title: { absolute: title },
@@ -108,7 +108,7 @@ export default async function QuizPage({ params }: { params: Promise<Params> }) 
 
           <section aria-labelledby="about-quiz" className="max-w-2xl">
             <h2 id="about-quiz" className="font-[family-name:var(--font-display)] text-lg">
-              About the {quiz.name.toLowerCase()}
+              About the {inSentence(quiz.name)}
             </h2>
             <p className="mt-4 leading-relaxed">{quiz.intro}</p>
             <p className="mt-3 text-sm text-[var(--muted)]">
@@ -118,7 +118,7 @@ export default async function QuizPage({ params }: { params: Promise<Params> }) 
                 <span key={c}>
                   {i > 0 ? (i === quiz.categories.length - 1 ? " and " : ", ") : null}
                   <Link href={`/categories/${CATEGORIES[c].slug}`} className="underline underline-offset-2">
-                    {CATEGORIES[c].name.toLowerCase()} interview questions
+                    {inSentence(CATEGORIES[c].name)} interview questions
                   </Link>
                 </span>
               ))}

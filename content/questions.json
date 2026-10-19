@@ -1404,6 +1404,45 @@
     "slug": "what-is-precision-and-recall-at-k"
   },
   {
+    "id": "stats-198",
+    "category": "stats",
+    "question": "What is KL divergence?",
+    "answer": "The Kullback-Leibler divergence, KL(P ‖ Q) = Σ P(x) log(P(x) / Q(x)), measures how much information is lost when Q is used to approximate P. It is never negative, is zero only when P = Q, and is not symmetric, so it is not a distance.",
+    "explanation": [
+      "KL divergence is the expected extra cost, in bits with log base 2 or nats with the natural log, of encoding samples from P with a code built for Q. It equals the cross-entropy of P and Q minus the entropy of P, which is why minimizing cross-entropy loss against fixed labels also minimizes KL(labels ‖ model): the labels' entropy is a constant.",
+      "Example: P is a fair coin, (0.5, 0.5), and Q is a biased one, (0.9, 0.1). KL(P ‖ Q) = 0.5 ln(0.5/0.9) + 0.5 ln(0.5/0.1) = 0.51 nats, but KL(Q ‖ P) = 0.9 ln(0.9/0.5) + 0.1 ln(0.1/0.5) = 0.37 nats. The order matters. If Q gives zero probability to something P can produce, KL(P ‖ Q) is infinite.",
+      "It shows up across machine learning: the regularizer in a variational autoencoder's loss, the penalty that keeps an RLHF-tuned model close to its reference, the objective t-SNE minimizes, and, summed in both directions, the population stability index used to monitor drift. Fitting Q by minimizing KL(P ‖ Q) spreads it to cover all of P's modes; minimizing KL(Q ‖ P) locks onto one. Solomon Kullback and Richard Leibler introduced it in 1951."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-kl-divergence"
+  },
+  {
+    "id": "stats-199",
+    "category": "stats",
+    "question": "What is the Jensen-Shannon divergence?",
+    "answer": "A symmetric, bounded measure of the difference between two distributions: the average KL divergence of each from their mixture M = (P + Q) / 2. It is 0 for identical distributions, at most ln 2 (1 bit), and stays finite even when the distributions don't overlap.",
+    "explanation": [
+      "The Jensen-Shannon divergence is JSD(P ‖ Q) = ½ KL(P ‖ M) + ½ KL(Q ‖ M), with M the average of P and Q. Comparing each distribution with the mixture fixes KL divergence's two practical problems: the result is the same in both directions, and it never blows up, because M is positive wherever P or Q is. Its square root, the Jensen-Shannon distance, is a true metric.",
+      "Example: P = (0.5, 0.5, 0) and Q = (0, 0.5, 0.5) over three categories. KL(P ‖ Q) is infinite, since P puts mass on the first category where Q has none. The mixture is M = (0.25, 0.5, 0.25), and KL(P ‖ M) = KL(Q ‖ M) = 0.5 ln 2, so JSD = 0.35 nats, or exactly 0.5 bits: halfway between identical (0) and fully disjoint (1 bit).",
+      "Because it is bounded, the same threshold means the same thing for every feature, which makes it a common drift metric in model monitoring. It is also what the original GAN objective minimizes when the discriminator is optimal (Goodfellow et al., 2014). When the distributions don't overlap at all it stays stuck at its maximum and gives no gradient, one motivation for the Wasserstein GAN."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-the-jensen-shannon-divergence"
+  },
+  {
+    "id": "stats-200",
+    "category": "stats",
+    "question": "What is the Kolmogorov-Smirnov test?",
+    "answer": "A nonparametric test of whether a sample follows a given distribution, or whether two samples come from the same one. Its statistic D is the largest vertical gap between the two cumulative distribution functions.",
+    "explanation": [
+      "The one-sample Kolmogorov-Smirnov test compares a sample's empirical CDF with a reference distribution; the two-sample test compares two empirical CDFs. The statistic is D = max |F₁(x) − F₂(x)|, and for continuous data its distribution under the null hypothesis doesn't depend on what the underlying distribution is. It reacts to any difference: location, spread or shape.",
+      "Example: a drift check compares 10,000 transaction amounts from training with 10,000 from last week and gets D = 0.03. With samples that large, the 5% critical value is about 0.019, and the p-value is about 0.0002, so the shift is significant. Yet the two CDFs never differ by more than 3 percentage points, which may not matter at all to the model.",
+      "That is the point interviewers press: with big samples almost any difference is significant, so in monitoring, threshold on D itself or use a distance such as Wasserstein rather than the p-value. The test assumes continuous data (ties make it conservative), so use chi-squared for categorical features, and it is least sensitive in the tails, where Anderson-Darling does better. Andrey Kolmogorov published the one-sample test in 1933, Nikolai Smirnov the two-sample version in 1939."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-the-kolmogorov-smirnov-test"
+  },
+  {
     "id": "history-109",
     "category": "history",
     "question": "Who is known as the creator of the GAN architecture?",
@@ -2839,5 +2878,187 @@
     ],
     "updated": "2026-10-16",
     "slug": "what-is-the-kv-cache-and-why-does-it-cap-concurrency"
+  },
+  {
+    "id": "mlops-1",
+    "category": "mlops",
+    "question": "What is data drift?",
+    "answer": "A change in the distribution of a model's inputs between training and production, so the live features stop looking like the data it learned from. When P(X) moves but P(y | X) stays the same, it is called covariate shift.",
+    "explanation": [
+      "Data drift is a change in the distribution of the input features, P(X), between the data a model was trained on and the data it scores in production. The learned mapping from inputs to target may still be right, but the model is now asked about regions of feature space it saw rarely or never, where its errors are larger. When P(y | X) stays fixed while P(X) moves, statisticians call it covariate shift.",
+      "Example: a credit model is trained on applicants with a median age of 45. A campaign in a student app then brings in a wave of 22-year-olds with short credit histories. How age and history relate to default hasn't changed, but most predictions now fall in a thin corner of the training data, where the model had little to learn from, so overall accuracy drops even though no rule changed.",
+      "Detecting it is a two-sample comparison per feature: the Kolmogorov-Smirnov test or Jensen-Shannon distance for continuous features, chi-squared or the population stability index for categorical ones, or a classifier trained to tell old rows from new, where an AUC near 0.5 means no drift. The usual follow-up: drift doesn't always hurt. A shift in a feature the model barely uses can be harmless, so alert on measured or estimated performance, not on drift alone."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-data-drift"
+  },
+  {
+    "id": "mlops-2",
+    "category": "mlops",
+    "question": "What is concept drift?",
+    "answer": "A change in the relationship between the inputs and the target, P(y | X), so the same inputs now call for a different prediction. The model's learned rules go stale even when the input data looks unchanged.",
+    "explanation": [
+      "Concept drift is a change in P(y | X), the mapping the model learned. Unlike data drift, the inputs can look exactly as they did in training; what has changed is what they mean for the target. It can be sudden (a new regulation), gradual (tastes shifting over months) or recurring (seasonal patterns).",
+      "Example: a fraud model learned that one large gift card purchase is risky and small ones are safe. Fraudsters notice and switch to many $50 purchases. The input distribution barely moves, so a data drift monitor stays quiet, but a $50 gift card purchase that used to be almost always legitimate is now often fraud. The model keeps calling it safe, and recall falls.",
+      "Because the inputs may not move, concept drift shows up in the labels: monitor realized performance once ground truth arrives, or compare the live model with one retrained on recent data. The usual fix is retraining on recent data, with a sliding window or weights that favour new examples. Interviewers often want the contrast in one line: data drift changes P(X), concept drift changes P(y | X), and label shift changes P(y)."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-concept-drift"
+  },
+  {
+    "id": "mlops-3",
+    "category": "mlops",
+    "question": "What is model drift?",
+    "answer": "The decay of a deployed model's performance over time, also called model decay, because the world it scores moves away from the data it learned from. Data drift and concept drift are its usual causes; a broken data pipeline can look the same.",
+    "explanation": [
+      "Model drift is the symptom: accuracy, AUC or error gets worse after deployment. The causes sit underneath it. Data drift means the inputs changed, concept drift means the relationship between inputs and target changed, and data quality problems mean the model is being fed something different from what the pipeline promises.",
+      "Example: a churn model launches with an AUC of 0.82 and a year later scores 0.71. Digging in finds three things. A price increase changed who leaves at a given usage level, which is concept drift. A new student plan brought in users unlike any in training, which is data drift. And a renamed plan code now arrives as missing for 8% of rows, which is a bug that no retraining will fix.",
+      "So the first step after a drop is separating the causes: check data quality and schema, then input drift, then performance by segment. Interviewers then ask how to catch it early (monitor performance, or estimate it while labels are delayed) and how to respond (fix the pipeline, retrain on recent data, or rethink features). Not all drift hurts the model, and not every drop in performance is drift."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-model-drift"
+  },
+  {
+    "id": "mlops-4",
+    "category": "mlops",
+    "question": "What is training-serving skew?",
+    "answer": "A mismatch between how features are computed for training and how they are computed when the model serves predictions, so the live model sees inputs that differ from what it learned from. It is a pipeline bug, not a change in the world.",
+    "explanation": [
+      "Training-serving skew is a difference between a model's performance or inputs at training time and at serving time caused by the system itself. Common sources: feature logic written twice (a SQL batch job for training, service code for serving), different data sources or time windows, preprocessing applied in one path but not the other, and training data that includes information the live system doesn't have yet.",
+      "Example: a model uses \"orders in the last 30 days\". The training job counts orders in the warehouse, where refunded orders have already been removed. The online service counts orders from the event stream, where refunds arrive days later. Live values run higher than anything comparable in training, and the model systematically overrates active customers. Offline validation looks fine, because it was computed with the training logic.",
+      "Prevention: define each feature once and use it in both paths (a shared transformation library or a feature store), log the features actually served and train on those logs, and compare training and serving values for the same entities. Rule #29 of Martin Zinkevich's Rules of Machine Learning at Google says it directly: save the features used at serving time and use them for training."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-training-serving-skew"
+  },
+  {
+    "id": "mlops-5",
+    "category": "mlops",
+    "question": "What is the Population Stability Index (PSI)?",
+    "answer": "A score for how far a variable's distribution has shifted between two samples, usually training and production: bin the variable, then sum (actual% − expected%) × ln(actual% / expected%) over the bins. Below 0.1 is usually read as stable and above 0.25 as a major shift.",
+    "explanation": [
+      "The population stability index comes from credit scoring, where it compares the score distribution of current applicants with the sample the scorecard was built on. Split the variable into bins, often deciles of the expected sample, and sum (a − e) × ln(a / e), where a and e are each bin's share in the actual and expected samples. It is the KL divergence measured in both directions and added, so it is symmetric.",
+      "Example with three bins: training shares are 50%, 30% and 20%; this month's are 30%, 40% and 30%. The terms are (0.3 − 0.5) × ln(0.3/0.5) = 0.102, (0.4 − 0.3) × ln(0.4/0.3) = 0.029 and (0.3 − 0.2) × ln(0.3/0.2) = 0.041, so PSI = 0.17: a moderate shift by the usual rule of thumb, worth a look but not an alarm.",
+      "Caveats interviewers probe: the 0.1 and 0.25 cut-offs are industry conventions, not a statistical test; the value depends on the binning; an empty bin makes the log undefined, so a small floor is added; and PSI measures how much one variable moved, not whether the model's performance suffered. It is one of several drift measures, next to the Kolmogorov-Smirnov test and the Jensen-Shannon distance."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-the-population-stability-index-psi"
+  },
+  {
+    "id": "mlops-6",
+    "category": "mlops",
+    "question": "How do you monitor a model before its labels arrive?",
+    "answer": "Watch proxies until the ground truth lands: data quality, drift in the inputs and in the predictions, and, for a well-calibrated classifier, an estimate of performance from its own confidence scores. Confirm with realized performance once the labels arrive.",
+    "explanation": [
+      "Many models get their labels late: a loan defaults months after approval, churn is known 30 to 90 days on, fraud chargebacks take weeks. In that gap you can monitor data quality (missing values, schema, ranges), drift in the input features, drift in the prediction distribution, and an estimate of the model's performance.",
+      "Performance estimation uses the model's own probabilities. If a binary classifier is well calibrated, a prediction with score p is right with probability p when it predicts positive and 1 − p when it predicts negative. For four predictions scored 0.9, 0.8, 0.3 and 0.6, the expected accuracy is (0.9 + 0.8 + 0.7 + 0.6) / 4 = 0.75. If past batches estimated 0.85, something has changed before a single label is in. The open-source NannyML library implements this as confidence-based performance estimation (CBPE).",
+      "The catch: the estimate assumes the model's probabilities still mean what they meant in training. That holds under covariate shift but not under concept drift, where the model is confidently wrong in a way its scores can't reveal. So check calibration on recent labelled data, treat the estimate as an early warning, and compare it with realized performance as labels arrive."
+    ],
+    "updated": "2026-10-19",
+    "slug": "how-do-you-monitor-a-model-before-its-labels-arrive"
+  },
+  {
+    "id": "mlops-7",
+    "category": "mlops",
+    "question": "What is the difference between batch and online inference?",
+    "answer": "Batch inference scores many rows on a schedule and stores the predictions for later lookup; online inference scores each request on demand, within a latency budget. Batch is cheaper and simpler, while online can use features from the moment of the request.",
+    "explanation": [
+      "In batch inference a job runs, say, nightly, scores every user or item, and writes the predictions to a table; the product reads them with a lookup. In online (real-time) inference the model sits behind an API and scores each request as it comes in, typically within tens of milliseconds. It is a separate question from online versus batch learning, which is about how the model is trained.",
+      "Example: a shop precomputes the top 20 products for each of its 5 million users every night. Serving is a fast key-value read. But a user who signed up an hour ago has no row, and nobody's recommendations reflect what they clicked five minutes ago. Scoring the session online fixes both, at the cost of a service that must return in time and features that must be available in milliseconds.",
+      "Choose by how fast the inputs change and how long the product can wait. Batch wastes compute on users who never return and serves stale predictions; online needs low-latency feature serving and makes training-serving skew easier to introduce. Many systems mix the two: batch jobs generate candidates or embeddings, and an online model re-ranks them with fresh context."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-the-difference-between-batch-and-online-inference"
+  },
+  {
+    "id": "mlops-8",
+    "category": "mlops",
+    "question": "What is a feature store?",
+    "answer": "A system that computes, stores and serves machine learning features from one definition: an offline store with the full history for training and a low-latency online store with the latest values for serving. It stops training and serving from drifting apart and lets teams reuse features.",
+    "explanation": [
+      "A feature store has a registry of feature definitions, an offline store (a warehouse or data lake holding every historical value), an online store (a key-value database holding the current value per entity) and jobs that keep the two in sync. Training reads from the offline store and serving reads from the online one, but both come from the same code.",
+      "Its key job is point-in-time correctness. To train a churn model on labels dated March 1, the feature \"support tickets in the last 30 days\" must be the value as of March 1. A plain join with today's table leaks tickets filed after the label date, the model learns from the future, and offline metrics come out too good. The feature store's point-in-time join fetches, for each label, the feature value that was valid at that timestamp.",
+      "Uber's 2017 post on its Michelangelo platform popularized the idea; Feast, open-sourced by Gojek and Google Cloud in 2019, is the common open-source option, and the major cloud ML platforms offer managed ones. Interviewers may also ask when you don't need one: a single batch model owned by one team is usually fine with well-kept tables."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-a-feature-store"
+  },
+  {
+    "id": "mlops-9",
+    "category": "mlops",
+    "question": "What is shadow deployment?",
+    "answer": "Running a new model next to the live one on real production traffic, logging its predictions without acting on them. It tests the model on real inputs, latency and load with no effect on users.",
+    "explanation": [
+      "In a shadow deployment (or shadow mode) a copy of every request, or of a sample of them, goes to the candidate as well as the live model. Only the live model's output is used; the candidate's predictions are logged and compared, first with the live model's and later with the true outcomes when they arrive.",
+      "Example: a bank replacing its fraud model runs the new one in shadow for two weeks on 3 million transactions. It learns that the two models disagree on 4% of transactions, mostly small online purchases; that the candidate's 99th-percentile latency is 180 ms against a 100 ms budget; and that one of its features is always null for in-store payments. All three surface before any customer is affected.",
+      "Its limits: shadowing can't measure effects that depend on acting on the predictions, such as clicks on recommendations, so that needs a canary release or an A/B test. It doubles inference cost while it runs. And the outcomes it is judged on were shaped by the live model; in fraud, only transactions the live model approved ever get a label. A common order is offline evaluation, shadow, canary, A/B test, full rollout."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-shadow-deployment"
+  },
+  {
+    "id": "mlops-10",
+    "category": "mlops",
+    "question": "What is a canary deployment?",
+    "answer": "Releasing a new model to a small slice of live traffic, say 1 to 5%, watching errors, latency and business metrics, and widening the rollout in steps while they hold. If they don't, traffic goes back to the old model.",
+    "explanation": [
+      "A canary deployment exposes a new version to a small share of real users first, so a bad release hurts few of them and is rolled back quickly. The name comes from the canaries miners carried to detect gas. The new model serves real predictions, unlike in a shadow deployment, so it can catch problems that only appear when the outputs are used.",
+      "Example: a rollout goes 1%, 10%, 50%, 100% over a few days, with automatic rollback if the error rate or 99th-percentile latency crosses a threshold. At 1% of 2 million daily requests the canary gets 20,000 requests a day: plenty to catch crashes, timeouts and broken features, but far too few to detect a small change in conversion rate.",
+      "That is the difference interviewers look for. A canary is a safety check that catches breakage early; an A/B test is an experiment, with randomized groups and a sample size planned to measure an effect. Related terms: blue-green deployment switches all traffic between two full environments at once, with instant rollback, and sticky routing keeps a user on one model so their experience doesn't flip between versions."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-a-canary-deployment"
+  },
+  {
+    "id": "mlops-11",
+    "category": "mlops",
+    "question": "What is the cold start problem?",
+    "answer": "A recommender or personalization model has nothing to go on for new users or new items that have no interaction history yet. The usual fixes use content features, popularity and onboarding questions until enough interactions arrive.",
+    "explanation": [
+      "Collaborative filtering learns from interactions: who clicked, watched or bought what. A new item has no interactions, so it has no useful embedding; a new user has no history to match. A brand-new platform has both problems at once, sometimes called system cold start.",
+      "Example: a streaming service uses matrix factorization. A film added today has no ratings, so its latent vector is meaningless and it never ranks high enough to be shown. Because it is never shown, it never collects ratings, and the problem feeds itself. The fix is to start its embedding from metadata (genre, cast, a text embedding of the synopsis) and reserve some traffic for exploring new items, for example with a bandit.",
+      "For new users: ask for a few preferences at sign-up, use context such as device, country and referral source, and fall back to what is popular in their segment. Two-tower models help because the item tower can embed a new item from its features alone. Interviewers also ask how you would measure it: report metrics separately for new users and new items, since averages hide them."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-the-cold-start-problem"
+  },
+  {
+    "id": "mlops-12",
+    "category": "mlops",
+    "question": "What is a two-tower model?",
+    "answer": "A retrieval model with two neural networks, one that embeds the user or query and one that embeds the item, trained so that the dot product of the two embeddings scores relevance. Item embeddings are computed in advance, so millions of candidates can be searched quickly with nearest-neighbour search.",
+    "explanation": [
+      "The user tower takes user features and recent history; the item tower takes item features such as ID, category and text. Both output vectors of the same size, and training on logged interactions pushes the dot product up for pairs that interacted and down for negatives, often the other items in the same batch.",
+      "Example: a video platform with 10 million videos runs the item tower offline and stores the vectors in an approximate nearest-neighbour index (FAISS or ScaNN, for example). At request time it runs the user tower once, retrieves the 500 videos with the highest dot product in a few milliseconds, and hands them to a heavier ranking model that scores each user-video pair with richer features. This retrieve-then-rank design is the standard answer in recommender system design interviews.",
+      "The trade-off: the two towers only meet at the dot product, so the model can't learn interactions between user and item features. That is why it retrieves candidates rather than producing the final ranking. In-batch negatives over-penalize popular items, which Yi et al. corrected for at YouTube (RecSys 2019). A plus: the item tower can embed a new item from its features, which eases cold start."
+    ],
+    "updated": "2026-10-19",
+    "slug": "what-is-a-two-tower-model"
+  },
+  {
+    "id": "mlops-13",
+    "category": "mlops",
+    "question": "How do you decide when to retrain a model?",
+    "answer": "Retrain on a schedule when the data changes steadily and retraining is cheap, or on a trigger when measured or estimated performance falls below a threshold. Drift alone is a weak trigger, because not all drift hurts the model.",
+    "explanation": [
+      "The options are a fixed schedule (daily, weekly, monthly), a trigger from monitoring, or continual updates as new data arrives. To pick a schedule, measure how fast the model decays: train on data up to a cut-off, then score each later month separately. The shape of that curve says how often retraining pays.",
+      "Example: backtesting a demand forecast shows a mean absolute percentage error of 12% in the first month after training, 14% in the second and 19% by the fourth. A monthly retrain keeps error near 12 to 14% for the cost of one job a month; weekly retraining would buy little more. A model whose error is flat for a year can be retrained on a trigger instead.",
+      "Follow-ups: which window to train on (a sliding window forgets old patterns, an expanding one keeps them); how label delay limits how fresh the training data can be; and how to swap safely, by validating the new model against the current one on recent data before promotion, the champion-challenger setup. Retraining also can't fix a broken pipeline, so rule that out first."
+    ],
+    "updated": "2026-10-19",
+    "slug": "how-do-you-decide-when-to-retrain-a-model"
+  },
+  {
+    "id": "mlops-14",
+    "category": "mlops",
+    "question": "Why can a model that wins offline lose in an A/B test?",
+    "answer": "Offline metrics are computed on logged data that the old system shaped, against a proxy target, while the A/B test measures the real outcome on live users. Selection bias in the logs, a weak proxy, feedback loops and added latency all open a gap.",
+    "explanation": [
+      "An offline evaluation scores a model on historical data with a metric such as AUC or NDCG. An online A/B test randomizes users between the old and new model and measures what the business cares about, such as revenue, retention or watch time. The two disagree more often than people expect.",
+      "Example: a new ranking model lifts NDCG by 3% on last month's click logs but lowers revenue per session in the A/B test. The logs only contain items the old model chose to show, so the new model is graded on a biased sample. Clicks reward eye-catching items while revenue needs purchases, so the proxy was wrong. And the larger model added 60 ms to every page, which costs engagement on its own.",
+      "What helps: track how well offline gains have predicted online gains across past launches, and trust a metric only as far as that record goes; use counterfactual estimators such as inverse propensity scoring on logs that record how likely each item was to be shown; use interleaving to compare rankers with less traffic; and keep the A/B test as the final word."
+    ],
+    "updated": "2026-10-19",
+    "slug": "why-can-a-model-that-wins-offline-lose-in-an-a-b-test"
   }
 ]

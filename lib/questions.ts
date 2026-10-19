@@ -43,6 +43,17 @@ export const CATEGORIES = {
       "Four clusters run through these cards: the decoding knobs of temperature, top-p and top-k; retrieval from chunk size through hybrid search to evaluating the pipeline; when prompting beats fine-tuning or RLHF; and the serving details that set latency and cost, like tokenization, the KV cache and how much context is actually worth paying for.",
     starters: ["genai-2", "genai-1", "genai-12", "genai-5", "genai-16"],
   },
+  mlops: {
+    slug: "mlops",
+    name: "MLOps",
+    color: "#B4D879",
+    pattern: "/mlops_pattern.svg",
+    blurb:
+      "What happens after a model ships: drift, monitoring, deployment and the system design questions around them.",
+    intro:
+      "These cards follow a model into production, where ML engineer and system design interviews spend their time: the ways inputs and targets drift and how to measure it, monitoring while the labels are still on their way, training-serving skew, releasing safely with shadow and canary deployments, batch versus online inference and feature stores, recommender staples like cold start and two-tower retrieval, and deciding when to retrain.",
+    starters: ["mlops-1", "mlops-2", "mlops-4", "mlops-6", "mlops-14"],
+  },
   stats: {
     slug: "statistics",
     name: "Statistics",
@@ -135,6 +146,17 @@ const questions: QuestionWithSlug[] = (raw as Question[]).map((q) => ({
   ...q,
   slug: q.slug ?? slugify(q.question),
 }));
+
+/**
+ * A category or quiz name for the middle of a sentence: ordinary words go
+ * lowercase, acronyms such as AI, LLM and MLOps keep their capitals.
+ */
+export function inSentence(name: string): string {
+  return name
+    .split(" ")
+    .map((word) => (/[A-Z].*[A-Z]/.test(word) ? word : word.toLowerCase()))
+    .join(" ");
+}
 
 /** The card's page title: its search-facing `title`, or the card text. */
 export function pageTitle(q: Question): string {

@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://www.datasciencetrivia.com">
-    <img src="https://www.datasciencetrivia.com/opengraph-image" alt="Data Science Trivia: flashcards on machine learning, deep learning, generative AI, statistics and the history of AI" width="720">
+    <img src="https://www.datasciencetrivia.com/opengraph-image" alt="Data Science Trivia: flashcards on machine learning, deep learning, generative AI, MLOps, statistics and the history of AI" width="720">
   </a>
 </p>
 
@@ -54,6 +54,7 @@ answer they can learn from in a minute.
 | 🟦 | [Machine Learning](https://www.datasciencetrivia.com/categories/machine-learning) | Bias and variance, regularization, metrics, cross-validation, ensembles, encodings |
 | 🟥 | [Deep Learning](https://www.datasciencetrivia.com/categories/deep-learning) | Activations, gradient descent, dropout, batch norm, CNNs, LSTMs, Transformers |
 | 🟨 | [Generative AI](https://www.datasciencetrivia.com/categories/generative-ai) | Decoding, RAG, prompting vs fine-tuning, tokenization, the KV cache |
+| 🟢 | [MLOps](https://www.datasciencetrivia.com/categories/mlops) | Data and concept drift, monitoring, training-serving skew, shadow and canary releases, feature stores |
 | 🟩 | [Statistics](https://www.datasciencetrivia.com/categories/statistics) | Hypothesis tests, distributions, correlation, regression diagnostics |
 | 🟪 | [History](https://www.datasciencetrivia.com/categories/history) | The people, papers and datasets behind the field, from Bayes to the Transformer |
 
@@ -136,7 +137,7 @@ Every card lives in `content/questions.json`:
 }
 ```
 
-- `category` is one of `ml`, `dl`, `genai`, `stats`, `history`.
+- `category` is one of `ml`, `dl`, `genai`, `mlops`, `stats`, `history`.
 - `slug` is the page URL. It is stored so a question can be reworded without
   breaking its link; omit it and one is derived from the question.
 - `title` is optional: a search-style question for cards whose text is a

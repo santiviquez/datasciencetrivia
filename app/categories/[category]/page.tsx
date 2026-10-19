@@ -9,6 +9,7 @@ import {
   getCategoryBySlug,
   getCategoryStarters,
   getQuestionsByCategory,
+  inSentence,
 } from "@/lib/questions";
 
 type Params = { category: string };
@@ -32,7 +33,7 @@ export async function generateMetadata({
 
   return {
     title: { absolute: `${count} ${c.name} Interview Questions & Answers` },
-    description: `${count} ${c.name.toLowerCase()} flashcards with answers. ${c.blurb}`,
+    description: `${count} ${inSentence(c.name)} flashcards with answers. ${c.blurb}`,
     alternates: { canonical: `/categories/${c.slug}` },
     openGraph: {
       type: "website",
