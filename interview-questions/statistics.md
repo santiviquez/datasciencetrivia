@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-39 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
+55 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/statistics).
 
@@ -112,7 +112,9 @@ A property of data in a dataset, in which the data distribution stays constant a
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-stationarity-in-a-dataset-means)
 
-## The normal distribution derives its importance from which famous theorem?
+## What is the central limit theorem?
+
+> **Flashcard:** The normal distribution derives its importance from which famous theorem?
 
 The Central Limit Theorem: the mean of n independent draws from a distribution with finite variance is approximately normal for large n, whatever the population's shape. That is what justifies normal-based confidence intervals and t-tests on non-normal data, provided the sample is large enough for the data's skew.
 
@@ -249,6 +251,104 @@ A symmetric, bounded measure of the difference between two distributions: the av
 A nonparametric test of whether a sample follows a given distribution, or whether two samples come from the same one. Its statistic D is the largest vertical gap between the two cumulative distribution functions.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-kolmogorov-smirnov-test)
+
+## What is a p-value?
+
+The probability, if the null hypothesis were true, of getting a result at least as extreme as the one observed. A small p-value means the data would be surprising if there were no effect; it is not the probability that the null hypothesis is true.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-p-value)
+
+## What is a confidence interval?
+
+A range computed from a sample by a method that, over repeated samples, captures the true parameter a stated share of the time, such as 95%. The 95% describes the method, not the chance that this particular interval contains the true value.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-confidence-interval)
+
+## What is heteroscedasticity?
+
+When the spread of a regression's errors changes across the range of the inputs instead of staying constant, which is called homoscedasticity. The coefficient estimates stay unbiased, but the usual standard errors, and so the p-values and confidence intervals, become unreliable.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-heteroscedasticity)
+
+## What is the Poisson distribution?
+
+The distribution of the number of events in a fixed interval when events happen independently at a constant average rate λ: P(k) = λᵏ e^(−λ) / k!. Its mean and its variance are both λ.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-poisson-distribution)
+
+## What is the binomial distribution?
+
+The distribution of the number of successes in n independent trials that each succeed with the same probability p: P(k) = C(n, k) pᵏ (1 − p)ⁿ⁻ᵏ. Its mean is np and its variance np(1 − p).
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-binomial-distribution)
+
+## Why doesn't correlation imply causation?
+
+Because an association can come from a confounder that drives both variables, from causation running the other way, from how the data were selected, or from chance. Only an experiment, or careful causal analysis of observational data, shows that changing one changes the other.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/why-doesnt-correlation-imply-causation)
+
+## What is Simpson's paradox?
+
+A trend that shows up in every subgroup of the data reverses, or disappears, when the groups are combined. It happens when a third variable is unevenly spread across the groups, so the right answer depends on the causal story, not the arithmetic.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-simpsons-paradox)
+
+## What do skewness and kurtosis measure?
+
+Skewness measures a distribution's asymmetry: positive when the right tail is longer, negative when the left one is. Kurtosis measures how heavy the tails are compared with a normal distribution, which has kurtosis 3, or excess kurtosis 0.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-do-skewness-and-kurtosis-measure)
+
+## What is selection bias?
+
+Distortion that occurs when the data you analyze are not representative of the population you want to draw conclusions about, because of how units ended up in the sample. Survivorship bias, non-response bias and self-selection are common forms.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-selection-bias)
+
+## What is a probability density function?
+
+A function that describes a continuous random variable: the probability of landing in an interval is the area under the curve over that interval. Its value at a point is a density, not a probability, so it can exceed 1. The cumulative distribution function (CDF) gives P(X ≤ x).
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-probability-density-function)
+
+## What is maximum likelihood estimation?
+
+A way to fit a model's parameters by choosing the values that make the observed data most probable: maximize the likelihood L(θ) = Π p(xᵢ \| θ), in practice its logarithm. Least squares and logistic regression's log loss are both maximum likelihood under particular assumptions.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-maximum-likelihood-estimation)
+
+## What is statistical power?
+
+The probability that a test rejects the null hypothesis when a real effect of a given size exists, 1 − β. It grows with sample size, effect size and the significance level; 80% is the usual target when planning an experiment.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-statistical-power)
+
+## What is a t-test?
+
+A test of whether a mean differs from a given value, or whether two means differ, when the population standard deviation is unknown and estimated from the sample. The statistic is the difference divided by its standard error, which follows a t distribution under the null hypothesis.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-t-test)
+
+## What is the Bonferroni correction?
+
+A fix for multiple comparisons: when you run m tests, compare each p-value with α/m instead of α. It keeps the probability of any false positive, the family-wise error rate, at or below α, at the cost of power.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-bonferroni-correction)
+
+## What is multicollinearity?
+
+When two or more predictors in a regression are strongly correlated, so the model can't separate their individual effects. Their coefficients get large standard errors and can swing or flip sign between samples, though the predictions are often fine.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-multicollinearity)
+
+## Bayesian vs frequentist statistics: what is the difference?
+
+> **Flashcard:** What is the difference between Bayesian and frequentist statistics?
+
+Frequentists treat parameters as fixed and probability as a long-run frequency, so they reason about how the data would vary over repeated samples. Bayesians treat parameters as uncertain, start from a prior distribution and update it with the data into a posterior.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-bayesian-and-frequentist-statistics)
 
 ---
 
