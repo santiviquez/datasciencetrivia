@@ -62,8 +62,8 @@ export const CATEGORIES = {
     blurb:
       "Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.",
     intro:
-      "These cards cluster around inference and error: the two ways a test can be wrong, the distributions and limit theorems behind them, correlation and the confounders that fake it, regression diagnostics from residuals to R-squared, and the missing-data and dimensionality-reduction decisions that come before any of it.",
-    starters: ["stats-74", "stats-88", "stats-95", "stats-80", "stats-82"],
+      "These cards cluster around inference and error: p-values, confidence intervals, power and the two ways a test can be wrong; the distributions and limit theorems behind them; correlation and what fakes it, from confounders to selection bias and Simpson's paradox; regression diagnostics from residuals to heteroscedasticity and multicollinearity; and the measures that compare two distributions, from KL divergence to the Kolmogorov-Smirnov test.",
+    starters: ["stats-201", "stats-202", "stats-74", "stats-88", "stats-206"],
   },
   history: {
     slug: "history",

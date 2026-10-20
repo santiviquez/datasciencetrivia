@@ -1155,13 +1155,14 @@
     "id": "stats-88",
     "category": "stats",
     "question": "The normal distribution derives its importance from which famous theorem?",
+    "title": "What is the central limit theorem?",
     "answer": "The Central Limit Theorem: the mean of n independent draws from a distribution with finite variance is approximately normal for large n, whatever the population's shape. That is what justifies normal-based confidence intervals and t-tests on non-normal data, provided the sample is large enough for the data's skew.",
     "explanation": [
       "The central limit theorem. The mean of n independent draws from any distribution with finite variance σ² is approximately normal for large n, centered on the true mean μ with standard deviation σ/√n, whatever the shape of the data. That is why the normal curve appears throughout statistics, even for non-normal data.",
       "Example: a fair die is flat on 1 to 6, with mean 3.5 and standard deviation about 1.71. Average 30 rolls, repeat many times, and the averages form a bell centered on 3.5 with standard deviation 1.71/√30 ≈ 0.31. Abraham de Moivre found the coin-tossing case in 1733, Laplace generalized it, and George Pólya named it in 1920.",
       "Follow-ups test the conditions. It describes the sampling distribution of the mean, so it never makes a skewed dataset normal. The n needed depends on skew: 30 is a rule of thumb, and heavily skewed data may need hundreds. Without finite variance it fails: the mean of n Cauchy draws is distributed like a single draw."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-10-20",
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
   },
   {
@@ -1441,6 +1442,215 @@
     ],
     "updated": "2026-10-19",
     "slug": "what-is-the-kolmogorov-smirnov-test"
+  },
+  {
+    "id": "stats-201",
+    "category": "stats",
+    "question": "What is a p-value?",
+    "answer": "The probability, if the null hypothesis were true, of getting a result at least as extreme as the one observed. A small p-value means the data would be surprising if there were no effect; it is not the probability that the null hypothesis is true.",
+    "explanation": [
+      "A p-value measures how compatible the data are with the null hypothesis. You pick a test statistic, work out how it would be distributed if the null were true, and ask how often a value at least as extreme as yours would turn up. If that probability is below the significance level α, often 0.05, the result is called statistically significant and the null is rejected.",
+      "Example: a coin lands heads 60 times in 100 flips. If it is fair, the chance of 60 or more heads is about 2.8%, and of a result at least that far from 50 in either direction about 5.7%. The two-sided p-value is 0.057, so the result is not significant at 0.05, even though the coin may well be biased. Absence of significance is not evidence of fairness.",
+      "Interviewers probe the misreadings. A p-value is not the probability that the null is true or that the result is a fluke, and it says nothing about the size of the effect: with a million users, a 0.1% lift can have p < 0.001. The American Statistical Association's 2016 statement on p-values warns against basing conclusions on whether p crosses 0.05 alone, so report the effect size and a confidence interval with it."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-a-p-value"
+  },
+  {
+    "id": "stats-202",
+    "category": "stats",
+    "question": "What is a confidence interval?",
+    "answer": "A range computed from a sample by a method that, over repeated samples, captures the true parameter a stated share of the time, such as 95%. The 95% describes the method, not the chance that this particular interval contains the true value.",
+    "explanation": [
+      "A confidence interval gives a plausible range for a parameter such as a mean, together with a confidence level. For a mean it is usually x̄ ± t* × s/√n: the sample mean plus or minus a critical value times the standard error. Higher confidence means a wider interval, and more data means a narrower one, shrinking with √n.",
+      "Example: 100 delivery times have a mean of 32 minutes and a standard deviation of 10. The standard error is 10/√100 = 1, and the t critical value for 99 degrees of freedom is 1.98, so the 95% interval runs from about 30.0 to 34.0 minutes. Halving its width takes four times as many deliveries.",
+      "The classic trap: once computed, the interval either contains the true mean or it doesn't. The 95% is the long-run hit rate of the procedure; a Bayesian credible interval is what gives a probability for the parameter itself. Two more follow-ups: a 95% interval for a difference that excludes zero matches p < 0.05 in a two-sided test, and an interval for the mean is not a range for individual values. That is a prediction interval, which is much wider."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-a-confidence-interval"
+  },
+  {
+    "id": "stats-203",
+    "category": "stats",
+    "question": "What is heteroscedasticity?",
+    "answer": "When the spread of a regression's errors changes across the range of the inputs instead of staying constant, which is called homoscedasticity. The coefficient estimates stay unbiased, but the usual standard errors, and so the p-values and confidence intervals, become unreliable.",
+    "explanation": [
+      "Ordinary least squares assumes every error has the same variance. Heteroscedasticity breaks that assumption: the errors are noisier for some values of the inputs than for others. The coefficients are still unbiased, but OLS is no longer the most efficient estimator, and the textbook formula for standard errors is wrong, often understating the uncertainty.",
+      "Example: regress household spending on income. Low earners spend most of what they earn, so their residuals are small; high earners range from frugal to lavish, so the residuals fan out as income grows. A plot of residuals against fitted values shows a funnel instead of an even band.",
+      "To detect it, look at that residual plot or run the Breusch-Pagan or White test. To handle it, use heteroscedasticity-robust standard errors (often called White or HC standard errors), transform the target, for example by taking logs, or fit weighted least squares with weights inversely proportional to the variance. The follow-up question is usually whether it biases the coefficients: it doesn't."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-heteroscedasticity"
+  },
+  {
+    "id": "stats-204",
+    "category": "stats",
+    "question": "What is the Poisson distribution?",
+    "answer": "The distribution of the number of events in a fixed interval when events happen independently at a constant average rate λ: P(k) = λᵏ e^(−λ) / k!. Its mean and its variance are both λ.",
+    "explanation": [
+      "The Poisson distribution models counts: calls per hour, typos per page, requests per second. It assumes events occur independently, at a constant average rate, and one at a time. Its single parameter λ is both the expected count and the variance, and the waiting time between events follows an exponential distribution.",
+      "Example: a support desk gets 4 calls an hour on average. The chance of no calls in an hour is e⁻⁴ ≈ 1.8%, and of exactly 4 calls is 4⁴e⁻⁴/4! ≈ 19.5%. The chance of 7 or fewer is about 95%, so staffing for 7 calls an hour covers roughly 19 hours in 20.",
+      "It is also the limit of the binomial when n is large and p small, with λ = np, which is why it fits rare events; Ladislaus Bortkiewicz famously fitted it to deaths by horse kick in the Prussian army in 1898. The usual follow-up is overdispersion: real counts often have a variance well above the mean, and then a negative binomial model fits better. Poisson regression, with a log link, is the standard model for count targets."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-the-poisson-distribution"
+  },
+  {
+    "id": "stats-205",
+    "category": "stats",
+    "question": "What is the binomial distribution?",
+    "answer": "The distribution of the number of successes in n independent trials that each succeed with the same probability p: P(k) = C(n, k) pᵏ (1 − p)ⁿ⁻ᵏ. Its mean is np and its variance np(1 − p).",
+    "explanation": [
+      "A binomial count needs a fixed number of trials, two outcomes per trial, independence between trials and the same success probability every time. One trial is a Bernoulli variable; the binomial is the sum of n of them. The variance np(1 − p) is largest at p = 0.5.",
+      "Example: an email converts 10% of recipients. Out of 20 recipients, the chance that exactly 2 convert is C(20, 2) × 0.1² × 0.9¹⁸ ≈ 28.5%, and the chance that none do is 0.9²⁰ ≈ 12.2%. Expect 2 conversions, with a standard deviation of √(20 × 0.1 × 0.9) ≈ 1.34.",
+      "Approximations come up in interviews: when np and n(1 − p) are both at least about 10, a normal distribution with the same mean and variance works, which is the basis of the usual A/B test on conversion rates; when n is large and p small, the Poisson with λ = np does. If you sample without replacement from a small population, the trials aren't independent and the hypergeometric distribution is the right one."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-the-binomial-distribution"
+  },
+  {
+    "id": "stats-206",
+    "category": "stats",
+    "question": "Why doesn't correlation imply causation?",
+    "answer": "Because an association can come from a confounder that drives both variables, from causation running the other way, from how the data were selected, or from chance. Only an experiment, or careful causal analysis of observational data, shows that changing one changes the other.",
+    "explanation": [
+      "A correlation says two variables move together, not why. Four explanations compete with \"X causes Y\": a confounder Z causes both; Y causes X (reverse causation); the sample was selected in a way that links them; or the pattern is chance, which becomes likely when you test many pairs.",
+      "Example: countries that eat more chocolate have won more Nobel prizes per capita, with a correlation of about 0.79 across 23 countries (Messerli, New England Journal of Medicine, 2012). Chocolate doesn't make laureates; national wealth is a plausible confounder that raises both chocolate consumption and research funding.",
+      "Randomized experiments, such as A/B tests, settle causation because assignment can't depend on anything else. With observational data, causal inference methods such as matching, difference-in-differences, instrumental variables and regression discontinuity get closer under stated assumptions. A good follow-up: smoking was shown to cause lung cancer without a randomized trial, from the strength, consistency and dose-response of the evidence that Austin Bradford Hill summarized in 1965."
+    ],
+    "updated": "2026-10-20",
+    "slug": "why-doesnt-correlation-imply-causation"
+  },
+  {
+    "id": "stats-207",
+    "category": "stats",
+    "question": "What is Simpson's paradox?",
+    "answer": "A trend that shows up in every subgroup of the data reverses, or disappears, when the groups are combined. It happens when a third variable is unevenly spread across the groups, so the right answer depends on the causal story, not the arithmetic.",
+    "explanation": [
+      "Simpson's paradox is a reversal between aggregated and stratified data. It arises when a lurking variable is related both to the grouping and to the outcome, so combining groups mixes very different populations in different proportions. Edward Simpson described it in 1951; Udny Yule had noted the effect in 1903.",
+      "Example: in 1973 the University of California, Berkeley admitted about 44% of 8,442 male graduate applicants and 35% of 4,321 female ones. Department by department, women were admitted at similar or higher rates. Women applied more often to competitive departments that admitted few applicants of either sex, which pulled their overall rate down (Bickel, Hammel and O'Connell, Science, 1975).",
+      "Which table to trust depends on the causal structure. If the third variable is a confounder, such as department choice here, compare within groups; if it lies on the causal path, a mediator, the aggregate answers the question. In product analytics it shows up as mix shift: average order value can fall overall while rising in every country, simply because traffic moved toward a lower-value country."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-simpsons-paradox"
+  },
+  {
+    "id": "stats-208",
+    "category": "stats",
+    "question": "What do skewness and kurtosis measure?",
+    "answer": "Skewness measures a distribution's asymmetry: positive when the right tail is longer, negative when the left one is. Kurtosis measures how heavy the tails are compared with a normal distribution, which has kurtosis 3, or excess kurtosis 0.",
+    "explanation": [
+      "Skewness is the third standardized moment, E[(X − μ)³]/σ³, and kurtosis the fourth, E[(X − μ)⁴]/σ⁴. Kurtosis is often described as \"peakedness\", but it is driven almost entirely by the tails: high kurtosis means extreme values are more common than a normal distribution predicts.",
+      "Examples: salaries are right-skewed, so the mean sits above the median because a few very high salaries pull it up. The exponential distribution has skewness 2 and excess kurtosis 6; the uniform distribution has skewness 0 and excess kurtosis −1.2, lighter tails than a normal. Note that pandas' kurt() and SciPy's kurtosis() return excess kurtosis by default, so a normal sample scores near 0, not 3.",
+      "Why interviewers care: a skewed target often fits better after a log transform, and skew makes the mean a poor summary. Heavy tails mean outliers are part of the distribution, not errors, and models that assume normal tails, like many risk models, underestimate extreme events. Both statistics are noisy in small samples, especially kurtosis, which a single outlier can dominate."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-do-skewness-and-kurtosis-measure"
+  },
+  {
+    "id": "stats-209",
+    "category": "stats",
+    "question": "What is selection bias?",
+    "answer": "Distortion that occurs when the data you analyze are not representative of the population you want to draw conclusions about, because of how units ended up in the sample. Survivorship bias, non-response bias and self-selection are common forms.",
+    "explanation": [
+      "Selection bias comes from the process that decides which observations you get to see. If that process is related to the outcome, any estimate from the sample is skewed, and more data of the same kind doesn't fix it. Common forms: self-selection (volunteers differ from everyone else), non-response, attrition from a study, and survivorship (only the winners are left to observe).",
+      "Example: in 1936 the Literary Digest polled its readers plus people from phone directories and car registrations, and got about 2.4 million replies predicting that Alf Landon would beat Franklin Roosevelt. Roosevelt won about 61% of the vote. Phone and car owners were wealthier than average in the Depression, and the people who chose to reply differed again. Size couldn't rescue a biased sample.",
+      "In machine learning it hides in the labels. A credit model trained only on approved loans never sees how rejected applicants would have repaid, and a recommender trained on clicks only learns about items it chose to show. Remedies include random sampling or a small random holdout, reweighting by the inverse probability of selection, and modelling the selection itself, as in James Heckman's 1979 correction."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-selection-bias"
+  },
+  {
+    "id": "stats-210",
+    "category": "stats",
+    "question": "What is a probability density function?",
+    "answer": "A function that describes a continuous random variable: the probability of landing in an interval is the area under the curve over that interval. Its value at a point is a density, not a probability, so it can exceed 1. The cumulative distribution function (CDF) gives P(X ≤ x).",
+    "explanation": [
+      "For a continuous variable, P(a ≤ X ≤ b) is the integral of the density f(x) from a to b, and the total area under f is 1. The probability of any exact value is 0. The CDF, F(x) = P(X ≤ x), is the running area under the density, and the density is the CDF's derivative. Discrete variables use a probability mass function instead, where each value has a real probability.",
+      "Example: a uniform distribution on [0, 0.5] has density 2 across that interval. The curve sits above 1, yet the area is 0.5 × 2 = 1. For a standard normal the density at 0 is about 0.399, and P(−1.96 ≤ Z ≤ 1.96) = F(1.96) − F(−1.96) ≈ 0.95, which is where the 1.96 in 95% confidence intervals comes from.",
+      "In machine learning, the likelihood of continuous data is a product of densities, kernel density estimation estimates a density from samples, and generative models such as normalizing flows learn one. Common follow-ups: why P(X = x) is 0 for a continuous variable, and how to sample from any distribution by feeding uniform random numbers through the inverse of its CDF (inverse transform sampling)."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-a-probability-density-function"
+  },
+  {
+    "id": "stats-211",
+    "category": "stats",
+    "question": "What is maximum likelihood estimation?",
+    "answer": "A way to fit a model's parameters by choosing the values that make the observed data most probable: maximize the likelihood L(θ) = Π p(xᵢ | θ), in practice its logarithm. Least squares and logistic regression's log loss are both maximum likelihood under particular assumptions.",
+    "explanation": [
+      "Maximum likelihood treats the data as fixed and the parameters as the unknowns. Write the probability of the observed data as a function of the parameters, take the log so the product becomes a sum, and find the maximum, analytically by setting the derivative to zero or numerically with gradient methods.",
+      "Example: a coin lands heads 7 times in 10 flips. The likelihood is p⁷(1 − p)³, its log is 7 ln p + 3 ln(1 − p), and the derivative 7/p − 3/(1 − p) is zero at p = 0.7, the sample proportion. After a single flip that lands heads, the estimate is p = 1, which shows how maximum likelihood overfits tiny samples.",
+      "Connections interviewers expect: minimizing squared error is maximum likelihood under Gaussian noise, and minimizing cross-entropy is maximum likelihood for a Bernoulli or categorical outcome. Under regularity conditions the estimator is consistent and asymptotically normal, but it can be biased: the MLE of a normal variance divides by n, not n − 1. Adding a prior gives the MAP estimate, which is where L2 and L1 regularization come from. Ronald Fisher developed the method between 1912 and 1922."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-maximum-likelihood-estimation"
+  },
+  {
+    "id": "stats-212",
+    "category": "stats",
+    "question": "What is statistical power?",
+    "answer": "The probability that a test rejects the null hypothesis when a real effect of a given size exists, 1 − β. It grows with sample size, effect size and the significance level; 80% is the usual target when planning an experiment.",
+    "explanation": [
+      "Power is the chance of detecting an effect that is really there. A power analysis fixes three of four quantities, the significance level α, the power, the smallest effect worth detecting and the sample size, and solves for the fourth, usually the sample size, before the experiment starts.",
+      "Example: an A/B test on a 10% conversion rate wants to detect a lift to 11% with α = 0.05, two-sided, and 80% power. The standard formula for two proportions gives about 14,800 users per arm. To detect a lift to 10.5% instead takes about 58,000 per arm: halving the effect roughly quadruples the sample, because the required size grows with 1 / effect².",
+      "Low power does more damage than missed effects. When an underpowered test does come out significant, the estimated effect is likely exaggerated, the \"winner's curse\" that Gelman and Carlin called a Type M error. Power computed after the fact from the observed effect adds nothing to the p-value. And stopping a test as soon as it looks significant, \"peeking\", inflates false positives unless the design allows for it."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-statistical-power"
+  },
+  {
+    "id": "stats-213",
+    "category": "stats",
+    "question": "What is a t-test?",
+    "answer": "A test of whether a mean differs from a given value, or whether two means differ, when the population standard deviation is unknown and estimated from the sample. The statistic is the difference divided by its standard error, which follows a t distribution under the null hypothesis.",
+    "explanation": [
+      "There are three common versions: the one-sample t-test compares a mean with a fixed value, the two-sample t-test compares two independent groups, and the paired t-test compares two measurements on the same units. For two groups, Welch's version, which doesn't assume equal variances, is the safer default over Student's original. The test assumes independent observations and roughly normal sample means, which large samples provide through the central limit theorem.",
+      "Example: two page designs are each shown to 25 users, with mean session lengths of 5.2 and 4.4 minutes and standard deviations of 1.5 and 1.3. Welch's t = 0.8 / √(1.5²/25 + 1.3²/25) = 0.8 / 0.397 ≈ 2.02, with about 47 degrees of freedom, so p ≈ 0.050. That is right on the line, which is a reason to report the confidence interval for the difference, not just \"significant\".",
+      "William Sealy Gosset developed it while working at the Guinness brewery and published it in 1908 under the name \"Student\". Interview follow-ups: use the paired test for before-and-after data on the same users, consider the Mann-Whitney U test for small samples with heavy skew or outliers, and use ANOVA or a multiple-testing correction instead of many pairwise t-tests."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-a-t-test"
+  },
+  {
+    "id": "stats-214",
+    "category": "stats",
+    "question": "What is the Bonferroni correction?",
+    "answer": "A fix for multiple comparisons: when you run m tests, compare each p-value with α/m instead of α. It keeps the probability of any false positive, the family-wise error rate, at or below α, at the cost of power.",
+    "explanation": [
+      "Every extra test is another chance of a false positive. With 20 independent tests of true null hypotheses at α = 0.05, the chance that at least one comes out significant is 1 − 0.95²⁰ ≈ 64%. Bonferroni divides α by the number of tests, which bounds the family-wise error rate at α whether or not the tests are independent.",
+      "Example: an A/B test reports 10 metrics. Without a correction, the chance that at least one moves \"significantly\" by luck alone is about 40% if the tests are independent. Bonferroni tests each metric at 0.05/10 = 0.005, so a metric with p = 0.01 no longer counts.",
+      "Its weakness is that it is conservative, more so when the tests are correlated, so real effects get missed. Holm's step-down method (1979) controls the same error rate and always rejects at least as many hypotheses. When screening many hypotheses, as in genomics or feature selection, the Benjamini-Hochberg procedure (1995) controls the false discovery rate instead, the expected share of false positives among the discoveries, and keeps far more power."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-the-bonferroni-correction"
+  },
+  {
+    "id": "stats-215",
+    "category": "stats",
+    "question": "What is multicollinearity?",
+    "answer": "When two or more predictors in a regression are strongly correlated, so the model can't separate their individual effects. Their coefficients get large standard errors and can swing or flip sign between samples, though the predictions are often fine.",
+    "explanation": [
+      "With correlated predictors, many combinations of coefficients fit the data almost equally well, so the estimates are unstable. Mathematically, XᵀX is close to singular, which inflates the variance of the coefficients. In the extreme case, perfect multicollinearity, one column is an exact linear combination of others and the coefficients are not unique at all.",
+      "Example: the variance inflation factor measures it. Regress each predictor on all the others and compute VIF = 1/(1 − R²). If a house's floor area and its number of rooms predict each other with R² = 0.9, each gets a VIF of 10: its coefficient's variance is 10 times what it would be with uncorrelated predictors. Values above 5 to 10 are the usual warning sign.",
+      "Whether to act depends on the goal. For prediction, multicollinearity matters little as long as the correlation between predictors holds in new data. For interpreting coefficients or feature importance it matters a lot. Fixes: drop or combine correlated features, use principal components, use ridge regression, which stabilizes the coefficients, or collect more varied data. The dummy variable trap, one-hot encoding every category alongside an intercept, is the classic perfect case."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-multicollinearity"
+  },
+  {
+    "id": "stats-216",
+    "category": "stats",
+    "question": "What is the difference between Bayesian and frequentist statistics?",
+    "title": "Bayesian vs frequentist statistics: what is the difference?",
+    "answer": "Frequentists treat parameters as fixed and probability as a long-run frequency, so they reason about how the data would vary over repeated samples. Bayesians treat parameters as uncertain, start from a prior distribution and update it with the data into a posterior.",
+    "explanation": [
+      "The two schools answer different questions. Frequentist methods, such as p-values and confidence intervals, describe how a procedure behaves over hypothetical repeated samples. Bayesian methods use Bayes' theorem to combine a prior with the likelihood of the data and give a posterior distribution, so they can state the probability that a parameter lies in a range.",
+      "Example: a new campaign gets 3 conversions in 10 visits. The frequentist estimate is 0.3, with an exact 95% confidence interval of about 0.07 to 0.65. A Bayesian who encodes past campaigns as a Beta(2, 18) prior, centred on 10%, gets a Beta(5, 25) posterior: mean 5/30 ≈ 0.17, and a 95% probability that the rate is between about 0.06 and 0.32. The prior pulls a small sample towards what was known before.",
+      "In practice the two usually agree when data are plentiful, because the likelihood swamps the prior. Bayesian methods shine with small samples, hierarchical models and decisions that need a probability; their costs are choosing and defending a prior, and computation, often by MCMC sampling. The classic follow-up asks you to contrast a 95% confidence interval with a 95% credible interval."
+    ],
+    "updated": "2026-10-20",
+    "slug": "what-is-the-difference-between-bayesian-and-frequentist-statistics"
   },
   {
     "id": "history-109",
