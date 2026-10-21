@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-54 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+56 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -391,6 +391,18 @@ False
 True
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values)
+
+## What is intersection over union (IoU)?
+
+A measure of overlap between a predicted region and the ground truth: the area of their intersection divided by the area of their union. It runs from 0 for no overlap to 1 for a perfect match and is the standard score for detection boxes and segmentation masks.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-intersection-over-union-iou)
+
+## What is focal loss?
+
+A version of cross-entropy that down-weights easy examples: FL = −(1 − p\_t)^γ log(p\_t), where p\_t is the probability given to the true class. With γ \> 0, well-classified examples contribute little, so training concentrates on the hard ones; γ = 0 gives back cross-entropy.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-focal-loss)
 
 ---
 

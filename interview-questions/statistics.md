@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-55 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
+56 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/statistics).
 
@@ -349,6 +349,12 @@ When two or more predictors in a regression are strongly correlated, so the mode
 Frequentists treat parameters as fixed and probability as a long-run frequency, so they reason about how the data would vary over repeated samples. Bayesians treat parameters as uncertain, start from a prior distribution and update it with the data into a posterior.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-bayesian-and-frequentist-statistics)
+
+## What is adjusted R-squared?
+
+R-squared corrected for the number of predictors: 1 − (1 − R²)(n − 1)/(n − p − 1), with n rows and p predictors. Unlike R², it only rises when a new predictor improves the fit by more than chance would, so it can fall when you add a useless one.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-adjusted-r-squared)
 
 ---
 

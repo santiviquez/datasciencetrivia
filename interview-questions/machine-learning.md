@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-70 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
+82 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/machine-learning).
 
@@ -36,7 +36,9 @@ Unsupervised Learning.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without)
 
-## Which graph plots the true positive rate against the false positive rate at various classification thresholds?
+## What is a ROC curve?
+
+> **Flashcard:** Which graph plots the true positive rate against the false positive rate at various classification thresholds?
 
 ROC curve.
 
@@ -445,6 +447,84 @@ False. Build the vocabulary from the training split only (or from an external co
 Graphs! More specifically, directed acyclic graphs.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-main-data-structure-used-in-causal-modelling)
+
+## What is the difference between sensitivity and specificity?
+
+Sensitivity is the share of actual positives a test catches, TP / (TP + FN), the same as recall. Specificity is the share of actual negatives it correctly clears, TN / (TN + FP). Moving the decision threshold trades one for the other.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-sensitivity-and-specificity)
+
+## What is a calibration curve in machine learning?
+
+> **Flashcard:** What does it mean for a classifier to be well calibrated?
+
+Its predicted probabilities match observed frequencies: of all the cases it scores 0.8, about 80% turn out positive. A calibration curve, or reliability diagram, plots the observed positive rate against the predicted probability; a calibrated model follows the diagonal.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-it-mean-for-a-classifier-to-be-well-calibrated)
+
+## What is the Brier score?
+
+The mean squared difference between predicted probabilities and actual outcomes coded as 0 or 1: (1/N) Σ (pᵢ − yᵢ)². Lower is better: 0 is perfect, and always predicting 0.5 scores 0.25.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-brier-score)
+
+## What is log loss (cross-entropy loss)?
+
+> **Flashcard:** What is log loss?
+
+The average negative log of the probability the model gave to the true class: −(1/N) Σ \[yᵢ log pᵢ + (1 − yᵢ) log(1 − pᵢ)\] for binary labels. It rewards confident correct predictions and punishes confident wrong ones heavily.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-log-loss)
+
+## What is hinge loss?
+
+The loss behind support vector machines: max(0, 1 − y·f(x)) with labels y = ±1 and raw score f(x). It is zero for points on the correct side of the margin and grows linearly as a point moves into the margin or past the boundary.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-hinge-loss)
+
+## What is Huber loss?
+
+A regression loss that is squared for small errors and linear for large ones, with a threshold δ between the two. It behaves like squared error near zero and like absolute error for outliers, so a few extreme points can't dominate the fit.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-huber-loss)
+
+## What is pinball loss (quantile loss)?
+
+> **Flashcard:** What is pinball loss?
+
+The loss used to predict a quantile instead of a mean: for quantile τ, an under-prediction costs τ × error and an over-prediction costs (1 − τ) × error. Minimizing it with τ = 0.9 gives a forecast that actual values fall below 90% of the time.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-pinball-loss)
+
+## What is MAPE?
+
+Mean absolute percentage error: the average of \|actual − forecast\| / \|actual\|, as a percentage. It is easy to explain, but it is undefined when an actual value is 0, explodes near 0, and penalizes over-forecasts more than under-forecasts.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-mape)
+
+## What is WAPE?
+
+Weighted absolute percentage error: total absolute error divided by total actual volume, Σ\|actual − forecast\| / Σ\|actual\|. Unlike MAPE it doesn't blow up on small or zero actuals, because each error counts in proportion to volume.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-wape)
+
+## What is NDCG?
+
+Normalized discounted cumulative gain, a ranking metric: add up each result's relevance, discounted by the log of its position, then divide by the same sum for the ideal ordering. It runs from 0 to 1 and rewards putting the most relevant items at the top.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-ndcg)
+
+## What is Cohen's kappa?
+
+A measure of agreement between two raters, or between a classifier and the truth, that corrects for agreement expected by chance: κ = (p\_o − p\_e) / (1 − p\_e). A value of 1 is perfect agreement and 0 is what chance alone would give.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-cohens-kappa)
+
+## What is the Matthews correlation coefficient?
+
+A single score for a binary classifier that uses all four cells of the confusion matrix: MCC = (TP·TN − FP·FN) / √((TP+FP)(TP+FN)(TN+FP)(TN+FN)). It runs from −1 to 1, with 0 for random guessing, and stays honest on imbalanced data.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-matthews-correlation-coefficient)
 
 ---
 

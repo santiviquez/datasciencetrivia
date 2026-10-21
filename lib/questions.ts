@@ -18,7 +18,7 @@ export const CATEGORIES = {
     blurb:
       "Models, metrics and the tradeoffs that decide whether a model survives contact with real data.",
     intro:
-      "The cards below cluster into the themes machine learning interviews keep circling back to: the bias-variance tradeoff and the regularization that moves it, picking metrics when the classes are imbalanced, cross-validation and the leakage that quietly inflates it, ensembles from bagging to boosting, and the encoding choices that decide what a model ever gets to see.",
+      "The cards below cluster into the themes machine learning interviews keep circling back to: the bias-variance tradeoff and the regularization that moves it, picking metrics when the classes are imbalanced and reading them right, from sensitivity and specificity to calibration, log loss and ranking scores like NDCG, cross-validation and the leakage that quietly inflates it, ensembles from bagging to boosting, and the encoding choices that decide what a model ever gets to see.",
     starters: ["ml-59", "ml-63", "ml-16", "ml-55", "ml-17"],
   },
   dl: {
