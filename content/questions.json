@@ -57,13 +57,14 @@
     "id": "ml-5",
     "category": "ml",
     "question": "Which graph plots the true positive rate against the false positive rate at various classification thresholds?",
+    "title": "What is a ROC curve?",
     "answer": "ROC curve.",
     "explanation": [
       "The ROC curve, short for receiver operating characteristic. It plots the true positive rate, TPR = TP / (TP + FN), against the false positive rate, FPR = FP / (FP + TN), as the decision threshold varies. The name comes from signal detection theory, developed for radar receivers around World War II.",
       "Each threshold gives one point. At a very high threshold nothing is flagged, so the curve starts at (0, 0); at a very low one everything is, giving (1, 1). A model might reach TPR 0.80 at FPR 0.10 with a 0.5 threshold, and TPR 0.95 at FPR 0.30 with 0.2. Random guessing follows the diagonal; a perfect model hugs the top-left corner.",
       "The usual follow-up is AUC, the area under the curve: 0.5 for random, 1.0 for perfect, and equal to the probability that a random positive is scored above a random negative. On heavily imbalanced data a small FPR can still mean many false positives, so a precision-recall curve is often more informative."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-10-21",
     "slug": "graphical-representation-of-the-contrast-between-true-positives-and-false-positives-rates"
   },
   {
@@ -930,6 +931,165 @@
     "slug": "what-is-the-main-data-structure-used-in-causal-modelling"
   },
   {
+    "id": "ml-217",
+    "category": "ml",
+    "question": "What is the difference between sensitivity and specificity?",
+    "answer": "Sensitivity is the share of actual positives a test catches, TP / (TP + FN), the same as recall. Specificity is the share of actual negatives it correctly clears, TN / (TN + FP). Moving the decision threshold trades one for the other.",
+    "explanation": [
+      "Sensitivity, also called recall or the true positive rate, asks: of the cases that really are positive, how many did we flag? Specificity, the true negative rate, asks: of the cases that really are negative, how many did we leave alone? Specificity is 1 minus the false positive rate. Both are computed within one true class, so neither depends on how common the positive class is.",
+      "Example: a screening test is run on 1,000 people, 10 of whom have the disease. It flags 9 of the 10, a sensitivity of 90%, and wrongly flags 99 of the 990 healthy people, a specificity of 90%. Yet of its 108 positive results only 9 are real, a precision (positive predictive value) of about 8%. Good sensitivity and specificity don't guarantee that a positive result is likely to be right when the condition is rare.",
+      "Interviewers like the clinical shorthand: a highly sensitive test rules a condition out when negative (SnNout), and a highly specific one rules it in when positive (SpPin). The ROC curve plots sensitivity against 1 − specificity for every threshold. Pick the threshold by comparing the cost of a missed positive with the cost of a false alarm."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-the-difference-between-sensitivity-and-specificity"
+  },
+  {
+    "id": "ml-218",
+    "category": "ml",
+    "question": "What does it mean for a classifier to be well calibrated?",
+    "title": "What is a calibration curve in machine learning?",
+    "answer": "Its predicted probabilities match observed frequencies: of all the cases it scores 0.8, about 80% turn out positive. A calibration curve, or reliability diagram, plots the observed positive rate against the predicted probability; a calibrated model follows the diagonal.",
+    "explanation": [
+      "Calibration is about whether a probability means what it says. It is separate from discrimination, which AUC measures: a model can rank cases perfectly and still output 0.9 for cases that are positive only 60% of the time. Calibration matters whenever the probability itself drives a decision, such as an expected cost, a price or a risk threshold.",
+      "To draw the curve, bin the predictions, for example into tenths, and plot each bin's mean predicted probability against the share of positives in it. If cases scored 0.7 to 0.8 are positive only 55% of the time, the model is overconfident there. The expected calibration error averages these gaps across bins, weighted by how many predictions each bin holds.",
+      "Some models drift from the diagonal in typical ways: naive Bayes pushes probabilities towards 0 and 1, while SVMs and boosted trees push them away from the extremes (Niculescu-Mizil and Caruana, 2005), and Guo et al. (2017) found modern deep networks overconfident. Undersampling the majority class also shifts probabilities. Fix it on held-out data with Platt scaling, isotonic regression or, for neural networks, temperature scaling. The Brier score and log loss both reward calibration."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-does-it-mean-for-a-classifier-to-be-well-calibrated"
+  },
+  {
+    "id": "ml-219",
+    "category": "ml",
+    "question": "What is the Brier score?",
+    "answer": "The mean squared difference between predicted probabilities and actual outcomes coded as 0 or 1: (1/N) Σ (pᵢ − yᵢ)². Lower is better: 0 is perfect, and always predicting 0.5 scores 0.25.",
+    "explanation": [
+      "The Brier score measures the accuracy of probabilistic predictions. Glenn Brier proposed it in 1950 for weather forecasts. It is a proper scoring rule: you get the best expected score by reporting your true belief, so it rewards honest probabilities. It reflects both calibration and how well the model separates the classes.",
+      "Example: three forecasts of rain, 0.9, 0.6 and 0.2, and it rains only on the first day. Brier = ((0.9 − 1)² + (0.6 − 0)² + (0.2 − 0)²) / 3 = (0.01 + 0.36 + 0.04) / 3 ≈ 0.137. The 0.6 forecast on a dry day costs the most.",
+      "Two follow-ups. Compared with log loss, it is bounded at 1 and punishes a confident miss far less, so one bad prediction can't dominate. And on rare events it looks deceptively small: always predicting a 1% base rate scores 0.0099 while knowing nothing about individual cases. So compare against a reference forecast with the Brier skill score, 1 − BS / BS_reference."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-the-brier-score"
+  },
+  {
+    "id": "ml-220",
+    "category": "ml",
+    "question": "What is log loss?",
+    "title": "What is log loss (cross-entropy loss)?",
+    "answer": "The average negative log of the probability the model gave to the true class: −(1/N) Σ [yᵢ log pᵢ + (1 − yᵢ) log(1 − pᵢ)] for binary labels. It rewards confident correct predictions and punishes confident wrong ones heavily.",
+    "explanation": [
+      "Log loss is binary cross-entropy; for more than two classes it is −log of the probability assigned to the correct class, averaged over examples. It is the negative log-likelihood of a Bernoulli or categorical model, so minimizing it is maximum likelihood estimation, which is why logistic regression and neural network classifiers are trained on it. Like the Brier score, it is a proper scoring rule.",
+      "Example: for an example that is truly positive, predicting 0.9 costs −ln 0.9 ≈ 0.105, predicting 0.5 costs 0.693, and predicting 0.01 costs 4.6. One confidently wrong prediction can outweigh dozens of good ones, and a predicted 0 for a real positive costs infinity, so libraries clip probabilities slightly away from 0 and 1.",
+      "For a baseline, predicting the base rate for every example gives a log loss equal to the entropy of the labels: ln 2 ≈ 0.693 for a 50/50 split, much less for rare positives, so always compare with that number. Interviewers ask why we train on log loss but report accuracy: log loss is smooth and uses the probabilities, while accuracy is a step function of a threshold. Focal loss is a variant that down-weights easy examples."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-log-loss"
+  },
+  {
+    "id": "ml-221",
+    "category": "ml",
+    "question": "What is hinge loss?",
+    "answer": "The loss behind support vector machines: max(0, 1 − y·f(x)) with labels y = ±1 and raw score f(x). It is zero for points on the correct side of the margin and grows linearly as a point moves into the margin or past the boundary.",
+    "explanation": [
+      "Hinge loss asks for more than a correct sign: it wants y·f(x) ≥ 1, a margin of safety. Points beyond the margin contribute nothing, so only the points on or inside it, the support vectors, shape the solution. A linear SVM minimizes hinge loss plus an L2 penalty on the weights.",
+      "Example with y = +1: a score of 2.5 costs 0; a score of 0.4 is on the right side but inside the margin and costs 0.6; a score of −1 is misclassified and costs 2. Log loss, by contrast, never reaches zero, so it keeps nudging even confident, correct points.",
+      "Follow-ups: hinge loss isn't differentiable at the margin, so solvers use subgradients or the dual problem; it produces scores, not probabilities, so an SVM needs Platt scaling for those; and variants include the squared hinge and the multi-class hinge of Crammer and Singer. Its flat region is also why SVMs ignore well-classified outliers but are pulled by mislabeled points near the boundary."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-hinge-loss"
+  },
+  {
+    "id": "ml-222",
+    "category": "ml",
+    "question": "What is Huber loss?",
+    "answer": "A regression loss that is squared for small errors and linear for large ones, with a threshold δ between the two. It behaves like squared error near zero and like absolute error for outliers, so a few extreme points can't dominate the fit.",
+    "explanation": [
+      "For an error e, Huber loss is ½e² when |e| ≤ δ and δ(|e| − ½δ) otherwise. The two pieces meet smoothly, so the loss is differentiable everywhere, and its gradient never exceeds δ in size. Peter Huber introduced it in 1964 as a robust way to estimate a location parameter.",
+      "Example with δ = 1: an error of 0.5 costs 0.125, the same as half the squared error. An error of 10 costs 1 × (10 − 0.5) = 9.5, where half the squared error would be 50. The outlier pulls on the fit about five times less, while small errors are still treated smoothly, unlike absolute error, which has a kink at zero.",
+      "δ sets where \"normal noise\" ends, so pick it from the scale of typical residuals or by cross-validation. The same idea appears elsewhere: deep Q-networks clip the error in a way equivalent to Huber loss, and Fast R-CNN's \"smooth L1\" box regression loss is Huber loss with δ = 1. If outliers should be ignored entirely rather than down-weighted, losses such as Tukey's biweight go further."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-huber-loss"
+  },
+  {
+    "id": "ml-223",
+    "category": "ml",
+    "question": "What is pinball loss?",
+    "title": "What is pinball loss (quantile loss)?",
+    "answer": "The loss used to predict a quantile instead of a mean: for quantile τ, an under-prediction costs τ × error and an over-prediction costs (1 − τ) × error. Minimizing it with τ = 0.9 gives a forecast that actual values fall below 90% of the time.",
+    "explanation": [
+      "Pinball loss, also called quantile loss, is max(τ(y − ŷ), (τ − 1)(y − ŷ)). Its asymmetry moves the optimal prediction from the mean to the τ-th quantile; with τ = 0.5 it is half the absolute error, and the optimum is the median. It is the loss behind quantile regression (Koenker and Bassett, 1978), and gradient boosting libraries offer it as an objective.",
+      "Example with τ = 0.9 and actual demand of 100 units: a forecast of 80 is short by 20 and costs 0.9 × 20 = 18, while a forecast of 120 is over by 20 and costs 0.1 × 20 = 2. Running short is nine times as expensive, so the model learns to aim high, which is right for stock where an empty shelf costs more than a spare unit.",
+      "The common use is a prediction interval: train for τ = 0.05 and τ = 0.95 and you get a 90% interval that can widen and narrow with the inputs, unlike a fixed ± 2σ around a mean forecast. Check its coverage on held-out data, since nominal 90% often isn't, and watch for quantile crossing, where separately trained quantiles come out in the wrong order."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-pinball-loss"
+  },
+  {
+    "id": "ml-224",
+    "category": "ml",
+    "question": "What is MAPE?",
+    "answer": "Mean absolute percentage error: the average of |actual − forecast| / |actual|, as a percentage. It is easy to explain, but it is undefined when an actual value is 0, explodes near 0, and penalizes over-forecasts more than under-forecasts.",
+    "explanation": [
+      "MAPE expresses forecast error as a percentage of the actual value, so it is scale-free and reads easily: \"we are off by 8% on average\". That makes it popular in demand and sales forecasting, and also misleading whenever actual values can be small.",
+      "Example: actual sales are 2, 100 and 100 units, and the forecasts are 4, 90 and 110. The percentage errors are 100%, 10% and 10%, so MAPE is 40%, driven almost entirely by the 2-unit day. Weighted by volume, the forecasts are off by 22 of 202 units, about 11%, which is the WAPE.",
+      "The asymmetry is the interview point. For non-negative forecasts, an under-forecast can be at most 100% wrong, while an over-forecast has no limit, so a model tuned to minimize MAPE learns to forecast low. Alternatives: WAPE, which divides total error by total volume; sMAPE, which divides by the average of actual and forecast but has its own quirks; and MASE (Hyndman and Koehler, 2006), which scales error by that of a naive forecast."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-mape"
+  },
+  {
+    "id": "ml-225",
+    "category": "ml",
+    "question": "What is WAPE?",
+    "answer": "Weighted absolute percentage error: total absolute error divided by total actual volume, Σ|actual − forecast| / Σ|actual|. Unlike MAPE it doesn't blow up on small or zero actuals, because each error counts in proportion to volume.",
+    "explanation": [
+      "WAPE is the sum of absolute errors divided by the sum of actual values. It equals the mean absolute error divided by the mean of the actuals, which is why it is also called the MAD/mean ratio. Retail and supply chain teams use it because it answers a business question: what share of total units did we get wrong?",
+      "Example: a store forecasts three products whose actual sales are 1,000, 50 and 0 units, with forecasts of 900, 60 and 5. WAPE = (100 + 10 + 5) / 1,050 ≈ 11%. MAPE can't be computed at all, because one actual is 0.",
+      "Its weakness is the flip side of its strength: high-volume items dominate it, so terrible forecasts for long-tail products barely move the number. Report it by segment as well as overall. And check the definition before comparing numbers across teams, since \"weighted MAPE\" sometimes means weighting by revenue or margin rather than units."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-wape"
+  },
+  {
+    "id": "ml-227",
+    "category": "ml",
+    "question": "What is NDCG?",
+    "answer": "Normalized discounted cumulative gain, a ranking metric: add up each result's relevance, discounted by the log of its position, then divide by the same sum for the ideal ordering. It runs from 0 to 1 and rewards putting the most relevant items at the top.",
+    "explanation": [
+      "DCG@k = Σ relᵢ / log₂(i + 1) over the top k positions, so a relevant item at position 1 counts fully, at position 3 half as much, and further down less and less. Dividing by the ideal DCG, the score of the best possible ordering of the same items, gives NDCG, comparable across queries with different numbers of relevant results. A common variant uses 2^relᵢ − 1 as the gain to stress highly relevant items. Järvelin and Kekäläinen introduced it in 2002.",
+      "Example: four results with graded relevance 3, 2, 1 and 0. In the ideal order the DCG is 3 + 2/log₂3 + 1/2 ≈ 4.76. Showing them as 2, 3, 1, 0 scores about 0.92, and the worst order, 0, 1, 2, 3, about 0.61. NDCG is gentler than you might expect, because the log discount falls slowly.",
+      "Related metrics: precision@k ignores order within the top k, mean reciprocal rank only looks at the first relevant result, and mean average precision needs binary relevance. NDCG's strength is graded relevance. Offline NDCG computed from click logs inherits the logs' position bias, so it doesn't always predict how a ranking does online."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-ndcg"
+  },
+  {
+    "id": "ml-228",
+    "category": "ml",
+    "question": "What is Cohen's kappa?",
+    "answer": "A measure of agreement between two raters, or between a classifier and the truth, that corrects for agreement expected by chance: κ = (p_o − p_e) / (1 − p_e). A value of 1 is perfect agreement and 0 is what chance alone would give.",
+    "explanation": [
+      "Here p_o is the observed share of agreement and p_e the agreement expected if both raters labeled at random with their own label frequencies. Jacob Cohen introduced it in 1960. In data science it is used to check annotation quality before training on the labels, and as a classification metric that, unlike accuracy, isn't flattered by a dominant class.",
+      "Example: two annotators label 100 reviews as positive or negative and agree on 84. Annotator A says positive 70 times and B 60 times, so chance agreement is 0.7 × 0.6 + 0.3 × 0.4 = 0.54, and κ = (0.84 − 0.54) / (1 − 0.54) ≈ 0.65. Raw agreement of 84% sounds better than it is.",
+      "Follow-ups: verbal scales such as Landis and Koch's (0.61 to 0.80 is \"substantial\") are rules of thumb, and kappa depends on prevalence, so two raters with high raw agreement on a rare class can still get a low kappa. For ordinal labels, weighted kappa gives partial credit for near misses (quadratic weighted kappa is a common competition metric), and Fleiss' kappa extends the idea to more than two raters."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-cohens-kappa"
+  },
+  {
+    "id": "ml-229",
+    "category": "ml",
+    "question": "What is the Matthews correlation coefficient?",
+    "answer": "A single score for a binary classifier that uses all four cells of the confusion matrix: MCC = (TP·TN − FP·FN) / √((TP+FP)(TP+FN)(TN+FP)(TN+FN)). It runs from −1 to 1, with 0 for random guessing, and stays honest on imbalanced data.",
+    "explanation": [
+      "MCC is the Pearson correlation between the predicted and actual binary labels. It is high only when the model does well on both classes, and it is symmetric: swapping which class is called positive doesn't change it, unlike precision, recall and F1. Brian Matthews used it in 1975 to evaluate protein structure predictions.",
+      "Example: 1,000 cases, 50 of them positive. Predicting everything negative gives 95% accuracy and an MCC of 0. A real model with TP = 40, FN = 10, FP = 60 and TN = 890 has 93% accuracy, lower than the useless one, but an MCC of (40 × 890 − 60 × 10) / √(100 × 50 × 950 × 900) ≈ 0.54. Its F1 is 0.53 and its balanced accuracy 0.87.",
+      "Chicco and Jurman (2020) argued that MCC is more informative than accuracy and F1 for binary classification, since it can't be high unless all four cells are good. Balanced accuracy, the average of sensitivity and specificity, is another prevalence-robust option. MCC is undefined when a whole row or column of the confusion matrix is zero; libraries return 0 in that case."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-the-matthews-correlation-coefficient"
+  },
+  {
     "id": "stats-71",
     "category": "stats",
     "question": "What is the generalization of the median?",
@@ -1651,6 +1811,19 @@
     ],
     "updated": "2026-10-20",
     "slug": "what-is-the-difference-between-bayesian-and-frequentist-statistics"
+  },
+  {
+    "id": "stats-226",
+    "category": "stats",
+    "question": "What is adjusted R-squared?",
+    "answer": "R-squared corrected for the number of predictors: 1 − (1 − R²)(n − 1)/(n − p − 1), with n rows and p predictors. Unlike R², it only rises when a new predictor improves the fit by more than chance would, so it can fall when you add a useless one.",
+    "explanation": [
+      "In least squares, adding a predictor never lowers the training R², even if the predictor is pure noise, because the model can always set its coefficient to zero. Adjusted R² charges for each predictor through the degrees of freedom, n − p − 1, so it measures fit per parameter spent. It can be negative when the model explains less than the penalty costs.",
+      "Example: a model with 5 predictors on 50 rows has R² = 0.60, so adjusted R² = 1 − 0.40 × 49/44 ≈ 0.555. Add 5 noise columns and R² might creep up to 0.62, but adjusted R² falls to 1 − 0.38 × 49/39 ≈ 0.523, flagging that the new columns didn't earn their place.",
+      "It is still an in-sample number, so for choosing between models, cross-validated error or information criteria such as AIC and BIC are better guides. The gap between R² and adjusted R² is a quick warning sign of too many predictors for the amount of data, and it shrinks as n grows relative to p."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-adjusted-r-squared"
   },
   {
     "id": "history-109",
@@ -2880,6 +3053,32 @@
     "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "a-categorical-feature-is-a-feature-that-can-only-take-a-limited-number-of-possible-values"
+  },
+  {
+    "id": "dl-230",
+    "category": "dl",
+    "question": "What is intersection over union (IoU)?",
+    "answer": "A measure of overlap between a predicted region and the ground truth: the area of their intersection divided by the area of their union. It runs from 0 for no overlap to 1 for a perfect match and is the standard score for detection boxes and segmentation masks.",
+    "explanation": [
+      "IoU, also called the Jaccard index, compares two regions by how much they share relative to how much they cover together. In object detection, a predicted box counts as a true positive only if its IoU with a ground-truth box clears a threshold: 0.5 in PASCAL VOC, while COCO averages precision over thresholds from 0.5 to 0.95.",
+      "Example: the ground-truth box spans (0, 0) to (10, 10) and the prediction (5, 0) to (15, 10). The intersection is 5 × 10 = 50 and the union is 100 + 100 − 50 = 150, so IoU = 0.33. The prediction covers half the object yet fails the usual 0.5 threshold, which shows how strict IoU is about position.",
+      "For segmentation, the Dice coefficient, 2|A ∩ B| / (|A| + |B|), is common; it equals 2·IoU / (1 + IoU), so the two rank predictions the same way. Both are used as losses in soft, differentiable forms. Plain IoU loss has zero gradient when boxes don't overlap, which Generalized IoU (Rezatofighi et al., 2019) fixes by also penalizing the empty space in the smallest box enclosing both."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-intersection-over-union-iou"
+  },
+  {
+    "id": "dl-231",
+    "category": "dl",
+    "question": "What is focal loss?",
+    "answer": "A version of cross-entropy that down-weights easy examples: FL = −(1 − p_t)^γ log(p_t), where p_t is the probability given to the true class. With γ > 0, well-classified examples contribute little, so training concentrates on the hard ones; γ = 0 gives back cross-entropy.",
+    "explanation": [
+      "Lin et al. introduced focal loss in 2017 with the RetinaNet detector. One-stage detectors score huge numbers of candidate boxes per image, almost all easy background, and with plain cross-entropy those easy negatives swamp the gradient. The factor (1 − p_t)^γ shrinks the loss of anything the model already gets right; the paper used γ = 2, together with a class weight α.",
+      "Example with γ = 2: an easy example with p_t = 0.9 has cross-entropy 0.105 but focal loss 0.1² × 0.105 ≈ 0.001, a hundred times smaller. A hard example with p_t = 0.1 has cross-entropy 2.30 and focal loss 0.9² × 2.30 ≈ 1.87, barely reduced. The hard examples now dominate training.",
+      "Use it when imbalance comes with many easy negatives, as in detection, dense segmentation or rare-event classification; the alternatives are class weights, resampling and hard negative mining. It adds a hyperparameter, and on balanced data there is little to gain. Mukhoti et al. (2020) found it also tends to make networks less overconfident than cross-entropy does."
+    ],
+    "updated": "2026-10-21",
+    "slug": "what-is-focal-loss"
   },
   {
     "id": "genai-1",
