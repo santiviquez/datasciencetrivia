@@ -23,7 +23,7 @@ export function GET() {
     `${QUESTION_COUNT} flashcards across ${CATEGORY_KEYS.length} categories, written by ${SITE.author.name} (${SITE.author.x}). Free to read and cite with attribution to ${SITE.url}.`,
     "",
     `Play the deck: ${SITE.url}`,
-    `All questions with answers: ${SITE.url}/questions`,
+    `All questions, grouped by topic: ${SITE.url}/questions`,
     `Who made it and how it works: ${SITE.url}/about`,
     `Timeline of the history of AI: ${SITE.url}/ai-history`,
     `Quizzes (10 questions each, with answers): ${SITE.url}/quiz`,

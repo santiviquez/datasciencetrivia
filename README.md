@@ -181,6 +181,9 @@ slug isn't already there.
   and a generated Open Graph image.
 - Category hubs at `/categories/<slug>` with `FAQPage` data, an intro and a
   "Start with these" list.
+- `/questions` as the index for "data science interview questions": each topic's
+  starters with their answers, then the rest as links, so it doesn't repeat
+  the hubs.
 - Related cards on each page, ranked by TF-IDF similarity within the category
   (`lib/related.ts`).
 - One `Person` and one `WebSite` node in `lib/schema.ts`, referenced by `@id`

@@ -102,7 +102,7 @@ export default function AboutPage() {
             </Link>{" "}
             or{" "}
             <Link href="/questions" className="underline underline-offset-2">
-              read every question with its answer
+              browse every question by topic
             </Link>
             .
           </p>

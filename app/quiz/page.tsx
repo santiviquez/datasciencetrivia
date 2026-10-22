@@ -69,7 +69,7 @@ export default function QuizIndexPage() {
           <p className="mt-10 text-sm">
             <Link href="/ai-history" className="underline underline-offset-2">The history of AI as a timeline</Link>
             {" · "}
-            <Link href="/questions" className="underline underline-offset-2">All questions with answers</Link>
+            <Link href="/questions" className="underline underline-offset-2">All questions by topic</Link>
           </p>
 
           <div className="mt-16 border-t border-[var(--rule)] pt-8"><Author /></div>
