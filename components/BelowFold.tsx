@@ -75,7 +75,7 @@ export default function BelowFold() {
         <p className="mt-2 text-sm text-[var(--muted)]">
           Every card has its own page with the answer.{" "}
           <Link href="/questions" className="underline underline-offset-2">
-            See them with answers
+            See them grouped by topic
           </Link>
           .
         </p>
