@@ -62,7 +62,7 @@ export const CATEGORIES = {
     blurb:
       "Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.",
     intro:
-      "These cards cluster around inference and error: p-values, confidence intervals, power and the two ways a test can be wrong; the distributions and limit theorems behind them; correlation and what fakes it, from confounders to selection bias and Simpson's paradox; regression diagnostics from residuals to heteroscedasticity and multicollinearity; and the measures that compare two distributions, from KL divergence to the Kolmogorov-Smirnov test.",
+      "These cards cluster around inference and error: p-values, confidence intervals, power and the two ways a test can be wrong; the tests themselves, from the t-test and chi-square to ANOVA and rank-based tests, and what running many of them does; probability from conditional probability to Bayes' theorem; correlation and what fakes it, from confounders to Simpson's paradox, and the causal methods for when you can't run an experiment; regression diagnostics from residuals to multicollinearity; and the measures that compare two distributions, from KL divergence to the Kolmogorov-Smirnov test.",
     starters: ["stats-201", "stats-202", "stats-74", "stats-88", "stats-206"],
   },
   history: {

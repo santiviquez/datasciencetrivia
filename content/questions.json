@@ -1826,6 +1826,228 @@
     "slug": "what-is-adjusted-r-squared"
   },
   {
+    "id": "stats-232",
+    "category": "stats",
+    "question": "What is a chi-square test?",
+    "answer": "A test that compares observed counts with the counts expected under a null hypothesis: χ² = Σ (O − E)² / E. The test of independence checks whether two categorical variables are related; the goodness-of-fit test checks whether counts follow an expected distribution.",
+    "explanation": [
+      "Each cell contributes its squared gap between observed and expected counts, scaled by the expected count, and the total is compared with a chi-square distribution. For a test of independence on an r × c table, expected counts come from the row and column totals, and the degrees of freedom are (r − 1)(c − 1). Karl Pearson introduced the test in 1900.",
+      "Example: 200 users see each of two checkout pages; 30 convert on A and 50 on B. Overall 80 of 400 convert, so each page is expected to have 40 conversions and 160 non-conversions. χ² = 10²/40 + 10²/40 + 10²/160 + 10²/160 = 6.25 with 1 degree of freedom, so p ≈ 0.012. Many libraries apply Yates' continuity correction to 2 × 2 tables by default, which here gives 5.64 and p ≈ 0.018.",
+      "Interview follow-ups: the approximation needs expected counts of about 5 or more in each cell, otherwise use Fisher's exact test; a significant result says the variables are related, not how strongly, so report a measure such as Cramér's V; and for a 2 × 2 table without the correction, the statistic equals the square of the two-proportion z statistic."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-a-chi-square-test"
+  },
+  {
+    "id": "stats-233",
+    "category": "stats",
+    "question": "What is ANOVA?",
+    "answer": "Analysis of variance: a test of whether three or more group means are all equal. It compares the variation between the group means with the variation within the groups; a large ratio, the F statistic, says at least one mean differs, but not which.",
+    "explanation": [
+      "One-way ANOVA splits the total variation into a between-groups part and a within-groups part. Each is divided by its degrees of freedom to give a mean square, and F = MS_between / MS_within. If all the means are equal, F should be near 1; it follows an F distribution under that null hypothesis. Ronald Fisher developed the method in the 1920s for agricultural experiments.",
+      "Example: three groups of five scores with means 5, 7 and 6, and the same spread inside each group. Between groups, SS = 5 × (1² + 1² + 0²) = 10 on 2 degrees of freedom, a mean square of 5. Within groups, SS = 6 on 12 degrees of freedom, a mean square of 0.5. F = 5 / 0.5 = 10, p ≈ 0.003.",
+      "Why not three t-tests? At α = 0.05 each, the chance of at least one false positive across three independent tests is 1 − 0.95³ ≈ 14%. After a significant ANOVA, a post-hoc test such as Tukey's HSD finds which groups differ. ANOVA assumes independent observations, roughly normal residuals and equal variances; Welch's ANOVA drops the last assumption, and the Kruskal-Wallis test is the rank-based alternative. With two groups, F is the square of the pooled t statistic."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-anova"
+  },
+  {
+    "id": "stats-234",
+    "category": "stats",
+    "question": "What is the Mann-Whitney U test?",
+    "answer": "A non-parametric test that compares two independent groups using ranks instead of raw values. It asks whether a value drawn from one group tends to be larger than a value drawn from the other, so it holds up with skewed data and outliers where a t-test struggles.",
+    "explanation": [
+      "U counts, over every pair with one value from each group, how often the first group's value is larger, with ties counting half. Divided by n₁ × n₂, it is the probability that a random value from one group beats a random value from the other, the same quantity as the AUC of a classifier. It is also called the Wilcoxon rank-sum test; Henry Mann and Donald Whitney published their version in 1947, two years after Frank Wilcoxon's.",
+      "Example: group A is 3, 5, 8, 12 and group B is 1, 2, 4, 6. Of the 16 pairs, A wins 13, so U = 13 and A beats B 81% of the time, though with four values per group the exact two-sided p is 0.2. Change A's 12 to 120 and U and p stay exactly the same, while Welch's t-test p moves from 0.16 to 0.36.",
+      "A common interview trap: it is often called a test of medians, but that only holds if the two distributions have the same shape. It answers whether one group tends to produce larger values. For paired data, such as the same users before and after, use the Wilcoxon signed-rank test instead."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-the-mann-whitney-u-test"
+  },
+  {
+    "id": "stats-235",
+    "category": "stats",
+    "question": "What is the Wilcoxon signed-rank test?",
+    "answer": "A non-parametric test for paired data, such as before-and-after measurements on the same users. It ranks the absolute differences, then compares the total rank of the positive differences with that of the negative ones. It is the rank-based alternative to the paired t-test.",
+    "explanation": [
+      "For each pair, take the difference, drop the zeros, rank the absolute differences from smallest to largest, and give each rank the sign of its difference. If there is no systematic change, the positive and negative rank sums should be similar. Using ranks makes the test robust to outliers, and it assumes the differences are roughly symmetric around their median. Frank Wilcoxon introduced it in 1945.",
+      "Example: eight users complete a task before and after a redesign, and their time differences in seconds are −3, −5, −1, −8, +2, −6, −4 and −7. The absolute differences rank 1 to 8, and the only positive difference has rank 2, so W⁺ = 2 and W⁻ = 34. Only 3 of the 256 equally likely sign patterns give a positive sum of 2 or less, so the exact two-sided p = 6/256 ≈ 0.023.",
+      "Follow-ups: zero differences are dropped in Wilcoxon's original version, while Pratt's variant keeps them in the ranking; the sign test, which only counts positive and negative differences, needs even fewer assumptions but has less power; and for independent groups the matching test is the Mann-Whitney U test."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-the-wilcoxon-signed-rank-test"
+  },
+  {
+    "id": "stats-236",
+    "category": "stats",
+    "question": "What is Fisher's exact test?",
+    "answer": "A test of association in a 2 × 2 table that computes the p-value exactly, from the hypergeometric distribution, instead of relying on the chi-square approximation. It is the standard choice when counts are small, for example when any expected cell count is below 5.",
+    "explanation": [
+      "Fisher's test takes the row and column totals as fixed and asks: if the two variables were unrelated, how likely is a table at least as extreme as the one observed? With the margins fixed, one cell determines the rest, and its probability follows the hypergeometric distribution, so no large-sample approximation is needed.",
+      "Ronald Fisher's own example, from The Design of Experiments (1935), is the lady tasting tea. A colleague, Muriel Bristol, claimed she could tell whether milk was poured before or after the tea. She is given 8 cups, 4 of each kind, and told to pick the 4 milk-first cups. There are C(8, 4) = 70 ways to choose 4 cups, so picking all 4 correctly by guessing has probability 1/70 ≈ 0.014, which is the one-sided p-value.",
+      "Follow-ups: because the p-value can only take a few discrete values, the test is conservative, rejecting less often than α; Barnard's test is a more powerful alternative for 2 × 2 tables; the Fisher-Freeman-Halton test extends it to larger tables; and with large counts the chi-square test gives nearly the same answer much faster."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-fishers-exact-test"
+  },
+  {
+    "id": "stats-237",
+    "category": "stats",
+    "question": "What is a z-test?",
+    "answer": "A hypothesis test whose statistic follows a standard normal distribution under the null hypothesis: the difference divided by its standard error, compared with ±1.96 for a two-sided test at 5%. It applies when the standard error is known or the sample is large, as with conversion rates.",
+    "explanation": [
+      "The z-test and the t-test share the same statistic, an estimate minus its null value over a standard error. The difference is the reference distribution: the z-test uses the normal, which is right when the population standard deviation is known or the sample is large enough that estimating it adds little error. For proportions the standard error follows from the proportion itself, so the two-proportion z-test is the usual test for A/B conversion rates.",
+      "Example: variant A converts 200 of 2,000 users (10%) and variant B converts 240 of 2,000 (12%). The pooled rate is 440 / 4,000 = 11%, so the standard error of the difference is √(0.11 × 0.89 × (1/2,000 + 1/2,000)) ≈ 0.0099. Then z = 0.02 / 0.0099 ≈ 2.02 and the two-sided p ≈ 0.043.",
+      "Follow-ups: with a small sample and an estimated standard deviation, use the t-test, whose heavier tails account for the extra uncertainty; above a few dozen observations the two give almost the same p-value. For a 2 × 2 table, z² equals the chi-square statistic without continuity correction, here 4.09, so the two tests agree."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-a-z-test"
+  },
+  {
+    "id": "stats-238",
+    "category": "stats",
+    "question": "What does it mean for a result to be statistically significant?",
+    "title": "What is statistical significance?",
+    "answer": "That the result would be unlikely if there were no real effect: its p-value is below a threshold, the significance level α, chosen before the test, usually 0.05. It says the effect is probably not zero, not that it is large or important.",
+    "explanation": [
+      "The significance level α is the false positive rate you accept: if there is no effect, a test at α = 0.05 will still call 5% of results significant. Whether a result clears the bar depends on the effect's size, the noise in the data and the sample size, so significance is not a property of the effect alone. Practical significance asks a different question: is the effect large enough to matter for the decision?",
+      "Example: with a million users in each arm of an A/B test, a conversion rate moving from 10.00% to 10.10% gives z ≈ 2.35 and p ≈ 0.019, significant but perhaps too small to be worth shipping. With 200 users per arm, a move from 10% to 12% gives z ≈ 0.64 and p ≈ 0.52, not significant even though the lift would matter if it were real.",
+      "Fisher suggested 0.05 as a convenient cut-off in 1925, and it stuck. The American Statistical Association's 2016 statement on p-values warned against treating that line as proof, and in 2018 Benjamin and colleagues proposed 0.005 for new discoveries. In interviews, pair significance with an effect size and a confidence interval."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-does-it-mean-for-a-result-to-be-statistically-significant"
+  },
+  {
+    "id": "stats-239",
+    "category": "stats",
+    "question": "What is conditional probability?",
+    "answer": "The probability of an event given that another event has happened: P(A | B) = P(A and B) / P(B). Knowing that B happened shrinks the outcomes to those where B holds, and A's probability is recomputed within them.",
+    "explanation": [
+      "Conditioning restricts the sample space. Two events are independent when conditioning changes nothing, P(A | B) = P(A). Rearranging the definition gives the multiplication rule, P(A and B) = P(A | B) P(B), which extends to the chain rule for many events, the basis of probabilistic models from naive Bayes to language models.",
+      "Example: of 1,000 site visitors, 300 are on mobile and 100 convert, 60 of them on mobile. P(convert | mobile) = 60 / 300 = 20%, while P(mobile | convert) = 60 / 100 = 60%. The two are easy to confuse and usually different; mixing them up is known as the prosecutor's fallacy, and Bayes' theorem is how you get from one to the other.",
+      "A classic interview puzzle: a family has two children and at least one is a boy. The probability that both are boys is 1/3, not 1/2, because the condition leaves three equally likely cases (boy-boy, boy-girl, girl-boy) and only one has two boys. Writing out the reduced sample space is the safest way to answer these."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-conditional-probability"
+  },
+  {
+    "id": "stats-240",
+    "category": "stats",
+    "question": "What is the law of total probability?",
+    "answer": "A way to get an overall probability by splitting into cases: if B₁, …, Bₙ partition the possible outcomes, P(A) = Σ P(A | Bᵢ) P(Bᵢ). The overall probability is a weighted average of the conditional ones, weighted by how common each case is.",
+    "explanation": [
+      "The cases must be mutually exclusive and together cover every outcome, like device type, country or customer segment. Each case contributes its conditional probability of A times its own probability. The same idea for averages is the law of total expectation, E[X] = E[E[X | Y]], and the law supplies the denominator of Bayes' theorem.",
+      "Example: 70% of traffic is mobile, converting at 2%, and 30% is desktop, converting at 5%. The overall conversion rate is 0.7 × 0.02 + 0.3 × 0.05 = 2.9%. If the mix shifts to half and half, the overall rate rises to 0.5 × 0.02 + 0.5 × 0.05 = 3.5% although neither segment converted any better.",
+      "That mix effect is why interviewers bring this law up: a headline metric can move because the population changed, not because anything improved, and when the mix differs between groups it can reverse a comparison, which is Simpson's paradox. It is also the standard first step in probability puzzles: split on whatever you would like to know, then add up the cases."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-the-law-of-total-probability"
+  },
+  {
+    "id": "stats-241",
+    "category": "stats",
+    "question": "What is Bayes' theorem?",
+    "answer": "A rule for reversing a conditional probability: P(A | B) = P(B | A) P(A) / P(B). It updates a prior belief P(A) with evidence B into a posterior P(A | B), and it is why a positive test for a rare condition can still be more likely wrong than right.",
+    "explanation": [
+      "The terms have names: P(A) is the prior, P(B | A) the likelihood, P(A | B) the posterior, and P(B), the evidence, usually comes from the law of total probability. The theorem follows in one line from the definition of conditional probability. Thomas Bayes's essay was published in 1763, after his death, by Richard Price, and Laplace later developed the idea into a general method.",
+      "Example: 20% of email is spam, the word \"free\" appears in 40% of spam and in 5% of other email. P(spam | \"free\") = (0.4 × 0.2) / (0.4 × 0.2 + 0.05 × 0.8) = 0.08 / 0.12 ≈ 67%. A naive Bayes spam filter repeats this for every word, assuming the words are independent given the class.",
+      "The interview point is the base rate. Ignoring a small prior is the base rate fallacy: with a 1% prevalence, even a test that catches 90% of cases and wrongly flags only 10% of healthy people gives a positive result that is right just 8% of the time. Bayesian statistics applies the same update to model parameters instead of events."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-bayes-theorem"
+  },
+  {
+    "id": "stats-242",
+    "category": "stats",
+    "question": "What is bootstrapping in statistics?",
+    "answer": "Estimating the uncertainty of a statistic by resampling the data with replacement many times, recomputing the statistic on each resample, and using the spread of those values as its sampling distribution. It gives standard errors and confidence intervals without needing a formula.",
+    "explanation": [
+      "Each bootstrap sample has the same size as the original data and is drawn from it with replacement, so some points appear several times and others not at all. The idea is that the sample stands in for the population. Bradley Efron introduced the method in 1979, and it made intervals possible for statistics with no simple formula, such as a median, a ratio or a model's AUC.",
+      "Example: ten order values, 12, 15, 9, 22, 30, 11, 14, 18, 95 and 16, have a median of 15.5. Resampling them 10,000 times and taking the 2.5th and 97.5th percentiles of the resampled medians gives a 95% interval of about 12 to 24. Each resample leaves out (1 − 1/10)¹⁰ ≈ 35% of the original points, approaching 1/e ≈ 37% for large samples, which is where a random forest's out-of-bag rows come from.",
+      "Limits: the bootstrap assumes independent observations, so time series need a block bootstrap that resamples runs of consecutive points; it does poorly for extremes such as a maximum; and with very small samples it can only reproduce what little the data show. In machine learning, bagging trains one model on each bootstrap sample."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-bootstrapping-in-statistics"
+  },
+  {
+    "id": "stats-243",
+    "category": "stats",
+    "question": "What is the Benjamini-Hochberg procedure?",
+    "answer": "A multiple-testing correction that controls the false discovery rate, the expected share of false positives among the results called significant. Sort the m p-values, find the largest rank k with p₍ₖ₎ ≤ (k / m) × q, and reject the k smallest.",
+    "explanation": [
+      "Corrections such as Bonferroni control the family-wise error rate, the chance of even one false positive, which becomes very strict when you run many tests. Benjamini-Hochberg instead accepts that a share q of the discoveries, often 5% or 10%, may be false, and in exchange finds far more real effects. Yoav Benjamini and Yosef Hochberg published it in 1995.",
+      "Example: ten tests give p-values of 0.001, 0.008, 0.012, 0.03, 0.041, 0.09, 0.2, 0.4, 0.6 and 0.9. With q = 0.05, the thresholds are 0.005, 0.010, 0.015, 0.020 and so on. The first three p-values sit under their thresholds and the fourth, 0.03, is above 0.020, as is every later one, so the procedure rejects three hypotheses. Bonferroni, which tests each against 0.05 / 10 = 0.005, rejects only one.",
+      "It is guaranteed when the tests are independent or positively correlated; the Benjamini-Yekutieli variant works under any dependence at the cost of power. It is standard in genomics, where thousands of genes are tested at once, and useful in A/B testing when an experiment tracks many metrics or segments."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-the-benjamini-hochberg-procedure"
+  },
+  {
+    "id": "stats-244",
+    "category": "stats",
+    "question": "What is p-hacking?",
+    "answer": "Trying many analyses, such as different metrics, subgroups, outlier rules or stopping points, and reporting only those that reach p < 0.05. Each extra try is another chance for a false positive, so the reported p-value overstates the evidence.",
+    "explanation": [
+      "A p-value is valid for one analysis decided in advance. When the analysis is chosen after seeing the data, the real false positive rate is much higher than the nominal 5%, even if no single step looks dishonest. Gelman and Loken called this the garden of forking paths: many reasonable choices, each of which could have gone another way.",
+      "Example: test 20 independent metrics in an experiment with no real effect, and the chance that at least one comes out significant is 1 − 0.95²⁰ ≈ 64%. Simmons, Nelson and Simonsohn showed in 2011 that combining four common flexible choices, such as adding a covariate or collecting more data after a first look, pushed the false positive rate in their simulations to about 61%.",
+      "Fixes interviewers expect: decide the primary metric, sample size and analysis before the test, or pre-register them; correct for multiple comparisons; don't stop an A/B test the first time it looks significant unless you use a sequential method built for repeated looks; and report every analysis you ran, including the ones that didn't work."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-p-hacking"
+  },
+  {
+    "id": "stats-245",
+    "category": "stats",
+    "question": "What is CUPED in A/B testing?",
+    "answer": "Controlled-experiment Using Pre-Experiment Data: a variance reduction method that adjusts each user's metric with a covariate measured before the test, usually the same metric from the pre-period. Less variance means narrower confidence intervals, so a test reaches the same power with fewer users.",
+    "explanation": [
+      "The adjusted metric is Y − θ(X − mean of X), where X is the pre-experiment covariate and θ = cov(X, Y) / var(X), the slope from regressing Y on X. Because X was measured before assignment, the treatment can't affect it, so the adjustment leaves the estimated effect unbiased and only removes noise that X explains. Alex Deng, Ya Xu, Ron Kohavi and Toby Walker described it in 2013, from Bing's experimentation platform at Microsoft.",
+      "Example: the adjusted metric's variance is the original times 1 − ρ², where ρ is the correlation between X and Y. If last month's spend correlates 0.6 with spend during the test, variance falls by 36%, and since the required sample size scales with variance, the test needs about 64% of the users. With a correlation of 0.8, it needs only 36%.",
+      "Follow-ups: CUPED is equivalent to regression adjustment, as in ANCOVA; new users have no pre-period data, so they are usually given the covariate's mean, which leaves their metric unadjusted; and later variants such as DoorDash's CUPAC use a machine learning prediction of the outcome as the covariate to get a higher correlation."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-cuped-in-a-b-testing"
+  },
+  {
+    "id": "stats-246",
+    "category": "stats",
+    "question": "What is difference-in-differences?",
+    "answer": "A method that estimates a causal effect by comparing the change over time in a treated group with the change in an untreated group over the same period. Subtracting the control group's change removes trends that affect both groups, such as seasonality.",
+    "explanation": [
+      "It needs data from before and after the treatment for both groups, and one key assumption: parallel trends, meaning that without the treatment the treated group would have changed by the same amount as the control. In regression form, the effect is the coefficient on the interaction between a treated-group indicator and a post-period indicator.",
+      "Example: a feature launches in city A but not city B. Weekly orders in A go from 1,000 to 1,300, and in B from 800 to 960. Comparing A before and after credits the feature with 300 orders; subtracting B's change of 160 gives a difference-in-differences estimate of 140. If the trends are proportional rather than additive, compare logs instead: A grew 30% and B 20%, an effect of about 8%.",
+      "The classic study is Card and Krueger's 1994 comparison of fast-food employment in New Jersey, which raised its minimum wage, and neighboring Pennsylvania, which did not. Check parallel trends with several pre-periods, watch for anything else that changed in only one group at the same time, and consider synthetic control when no single group is a good comparison."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-difference-in-differences"
+  },
+  {
+    "id": "stats-247",
+    "category": "stats",
+    "question": "What is an instrumental variable?",
+    "answer": "A variable that changes the treatment but affects the outcome only through the treatment, used to estimate a causal effect when unmeasured confounders make a direct comparison biased. The effect is the instrument's effect on the outcome divided by its effect on the treatment.",
+    "explanation": [
+      "An instrument needs two properties. Relevance: it must move the treatment, which you can check from the data; a first-stage F statistic below about 10 signals a weak instrument. Exclusion: it must have no other path to the outcome, which can't be tested and has to be argued. Estimation usually uses two-stage least squares: predict the treatment from the instrument, then regress the outcome on that prediction.",
+      "Example: you can't force users to adopt a feature, but you can randomly show half of them a prompt to try it. Adoption is 60% with the prompt and 20% without, and revenue per user is 10.80 against 10.00. The random prompt is the instrument: (10.80 − 10.00) / (0.60 − 0.20) = 2.00 per user, the effect on users who adopt because of the prompt, called the local average treatment effect.",
+      "Philip Wright used the idea in 1928 to estimate supply and demand for animal and vegetable oils. Angrist and Krueger's 1991 study used quarter of birth, which shifts years of schooling through school-entry and compulsory attendance rules, to estimate the return to education. Angrist and Imbens shared the 2021 economics Nobel for this line of work, with David Card."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-an-instrumental-variable"
+  },
+  {
+    "id": "stats-248",
+    "category": "stats",
+    "question": "What is regression discontinuity design?",
+    "answer": "A causal method for treatments assigned by a cutoff on a score, such as a scholarship for test scores above a threshold. Units just above and just below the cutoff are nearly identical, so a jump in the outcome right at the cutoff estimates the treatment's effect there.",
+    "explanation": [
+      "Fit the relationship between the score and the outcome separately on each side of the cutoff, usually within a narrow bandwidth, and measure the gap where the two fits meet the threshold. In a sharp design everyone above the cutoff is treated; in a fuzzy design the cutoff only raises the chance of treatment, and the jump in treatment is used as an instrument. Donald Thistlethwaite and Donald Campbell introduced the design in 1960 to study the effect of merit awards on students.",
+      "Example: customers who spend $500 or more in a year get a loyalty tier. Fitting next-year spend against this year's spend, the line from the left predicts $520 at $500, and the line from the right starts at $560. The estimated effect of the tier, for customers near the cutoff, is $40.",
+      "Interview follow-ups: the estimate is local, so it may not hold for customers far from the cutoff; the design breaks if people can manipulate their score to land just above it, which a jump in the number of units at the cutoff reveals (McCrary's density test); and results should be checked across bandwidths."
+    ],
+    "updated": "2026-10-23",
+    "slug": "what-is-regression-discontinuity-design"
+  },
+  {
     "id": "history-109",
     "category": "history",
     "question": "Who is known as the creator of the GAN architecture?",

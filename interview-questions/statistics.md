@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-56 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
+73 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/statistics).
 
@@ -355,6 +355,110 @@ Frequentists treat parameters as fixed and probability as a long-run frequency, 
 R-squared corrected for the number of predictors: 1 − (1 − R²)(n − 1)/(n − p − 1), with n rows and p predictors. Unlike R², it only rises when a new predictor improves the fit by more than chance would, so it can fall when you add a useless one.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-adjusted-r-squared)
+
+## What is a chi-square test?
+
+A test that compares observed counts with the counts expected under a null hypothesis: χ² = Σ (O − E)² / E. The test of independence checks whether two categorical variables are related; the goodness-of-fit test checks whether counts follow an expected distribution.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-chi-square-test)
+
+## What is ANOVA?
+
+Analysis of variance: a test of whether three or more group means are all equal. It compares the variation between the group means with the variation within the groups; a large ratio, the F statistic, says at least one mean differs, but not which.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-anova)
+
+## What is the Mann-Whitney U test?
+
+A non-parametric test that compares two independent groups using ranks instead of raw values. It asks whether a value drawn from one group tends to be larger than a value drawn from the other, so it holds up with skewed data and outliers where a t-test struggles.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-mann-whitney-u-test)
+
+## What is the Wilcoxon signed-rank test?
+
+A non-parametric test for paired data, such as before-and-after measurements on the same users. It ranks the absolute differences, then compares the total rank of the positive differences with that of the negative ones. It is the rank-based alternative to the paired t-test.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-wilcoxon-signed-rank-test)
+
+## What is Fisher's exact test?
+
+A test of association in a 2 × 2 table that computes the p-value exactly, from the hypergeometric distribution, instead of relying on the chi-square approximation. It is the standard choice when counts are small, for example when any expected cell count is below 5.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-fishers-exact-test)
+
+## What is a z-test?
+
+A hypothesis test whose statistic follows a standard normal distribution under the null hypothesis: the difference divided by its standard error, compared with ±1.96 for a two-sided test at 5%. It applies when the standard error is known or the sample is large, as with conversion rates.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-z-test)
+
+## What is statistical significance?
+
+> **Flashcard:** What does it mean for a result to be statistically significant?
+
+That the result would be unlikely if there were no real effect: its p-value is below a threshold, the significance level α, chosen before the test, usually 0.05. It says the effect is probably not zero, not that it is large or important.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-it-mean-for-a-result-to-be-statistically-significant)
+
+## What is conditional probability?
+
+The probability of an event given that another event has happened: P(A \| B) = P(A and B) / P(B). Knowing that B happened shrinks the outcomes to those where B holds, and A's probability is recomputed within them.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-conditional-probability)
+
+## What is the law of total probability?
+
+A way to get an overall probability by splitting into cases: if B₁, …, Bₙ partition the possible outcomes, P(A) = Σ P(A \| Bᵢ) P(Bᵢ). The overall probability is a weighted average of the conditional ones, weighted by how common each case is.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-law-of-total-probability)
+
+## What is Bayes' theorem?
+
+A rule for reversing a conditional probability: P(A \| B) = P(B \| A) P(A) / P(B). It updates a prior belief P(A) with evidence B into a posterior P(A \| B), and it is why a positive test for a rare condition can still be more likely wrong than right.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-bayes-theorem)
+
+## What is bootstrapping in statistics?
+
+Estimating the uncertainty of a statistic by resampling the data with replacement many times, recomputing the statistic on each resample, and using the spread of those values as its sampling distribution. It gives standard errors and confidence intervals without needing a formula.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-bootstrapping-in-statistics)
+
+## What is the Benjamini-Hochberg procedure?
+
+A multiple-testing correction that controls the false discovery rate, the expected share of false positives among the results called significant. Sort the m p-values, find the largest rank k with p₍ₖ₎ ≤ (k / m) × q, and reject the k smallest.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-benjamini-hochberg-procedure)
+
+## What is p-hacking?
+
+Trying many analyses, such as different metrics, subgroups, outlier rules or stopping points, and reporting only those that reach p \< 0.05. Each extra try is another chance for a false positive, so the reported p-value overstates the evidence.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-p-hacking)
+
+## What is CUPED in A/B testing?
+
+Controlled-experiment Using Pre-Experiment Data: a variance reduction method that adjusts each user's metric with a covariate measured before the test, usually the same metric from the pre-period. Less variance means narrower confidence intervals, so a test reaches the same power with fewer users.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-cuped-in-a-b-testing)
+
+## What is difference-in-differences?
+
+A method that estimates a causal effect by comparing the change over time in a treated group with the change in an untreated group over the same period. Subtracting the control group's change removes trends that affect both groups, such as seasonality.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-difference-in-differences)
+
+## What is an instrumental variable?
+
+A variable that changes the treatment but affects the outcome only through the treatment, used to estimate a causal effect when unmeasured confounders make a direct comparison biased. The effect is the instrument's effect on the outcome divided by its effect on the treatment.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-an-instrumental-variable)
+
+## What is regression discontinuity design?
+
+A causal method for treatments assigned by a cutoff on a score, such as a scholarship for test scores above a threshold. Units just above and just below the cutoff are nearly identical, so a jump in the outcome right at the cutoff estimates the treatment's effect there.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-regression-discontinuity-design)
 
 ---
 
