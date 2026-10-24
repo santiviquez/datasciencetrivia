@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-16 generative AI questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them.
+26 generative AI questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/generative-ai).
 
@@ -103,6 +103,70 @@ Text is cut into subword tokens from a fixed vocabulary; BPE builds that vocabul
 Attention keys and values for the prefix, cached per layer, so each new token attends over saved state instead of recomputing the sequence. The cache grows with batch size, sequence length and layers, so GPU memory rather than compute limits throughput.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-kv-cache-and-why-does-it-cap-concurrency)
+
+## What is DPO (direct preference optimization)?
+
+> **Flashcard:** What is DPO?
+
+Direct preference optimization: aligning a language model to human preferences by training directly on pairs of preferred and rejected answers with a simple classification-style loss. It targets the same objective as RLHF without training a separate reward model or running reinforcement learning.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-dpo)
+
+## What is LoRA (low-rank adaptation) fine-tuning?
+
+> **Flashcard:** What is LoRA?
+
+Low-rank adaptation: a fine-tuning method that freezes a model's weights and learns a small low-rank update for chosen weight matrices, W + BA. It trains a fraction of a percent of the parameters, and the update can be merged into W afterwards, so inference costs nothing extra.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-lora)
+
+## What is speculative decoding?
+
+A way to speed up LLM generation: a small draft model proposes several tokens, and the large model checks all of them in one forward pass, keeping the longest accepted run. With the right acceptance rule the output follows exactly the large model's distribution, so it gets faster with no loss in quality.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-speculative-decoding)
+
+## What is LLM-as-a-judge?
+
+Using a strong language model to grade outputs, either scoring one answer against a rubric or picking the better of two. It scales the evaluation of open-ended text, where exact-match metrics fail, but the judge has biases you have to measure against human labels.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-llm-as-a-judge)
+
+## What is chain-of-thought prompting?
+
+Prompting a model to write out intermediate reasoning steps before its final answer, either by showing worked examples or by adding an instruction such as "Let's think step by step". It improves accuracy on multi-step problems such as arithmetic and logic, at the cost of more output tokens.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-chain-of-thought-prompting)
+
+## What are the Chinchilla scaling laws?
+
+For a fixed compute budget, a language model's size and its number of training tokens should grow in equal proportion, which works out to roughly 20 training tokens per parameter. Hoffmann and colleagues at DeepMind showed in 2022 that most large models of the time were too big and undertrained.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-are-the-chinchilla-scaling-laws)
+
+## What is a mixture of experts (MoE) model?
+
+A model whose feed-forward layers are split into many expert networks, with a router that sends each token to only a few of them. Total parameters can grow without a matching rise in compute per token, so an MoE model gets more capacity for a given inference cost.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-mixture-of-experts-moe-model)
+
+## What is FlashAttention?
+
+An exact implementation of attention that is faster because it never writes the full n × n attention matrix to GPU memory. It computes attention in tiles that fit in fast on-chip memory, using an online softmax, so it moves far less data and its memory use grows linearly with sequence length.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-flashattention)
+
+## What is grouped-query attention?
+
+An attention variant in which groups of query heads share one key head and one value head. It shrinks the KV cache, and the memory traffic of generating each token, by the group size while keeping quality close to full multi-head attention.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-grouped-query-attention)
+
+## What are BLEU and ROUGE scores?
+
+Metrics that score generated text by its n-gram overlap with reference texts. BLEU, built for machine translation, is precision-oriented: how many of the output's n-grams appear in the references. ROUGE, built for summarization, is recall-oriented: how many of the reference's n-grams the output recovers.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-are-bleu-and-rouge-scores)
 
 ---
 

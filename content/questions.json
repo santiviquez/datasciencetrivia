@@ -3303,6 +3303,84 @@
     "slug": "what-is-focal-loss"
   },
   {
+    "id": "dl-249",
+    "category": "dl",
+    "question": "What is self-attention?",
+    "answer": "A layer in which each token builds its new representation as a weighted average of every token's value vector, with the weights set by how well its query matches their keys: softmax(QKᵀ / √dₖ)V. Each token can draw on any other token directly, whatever the distance between them.",
+    "explanation": [
+      "Each token's vector is multiplied by three learned matrices to give a query, a key and a value. A token's query is compared with every key by a dot product, the scores are divided by √dₖ and passed through a softmax so they sum to 1, and the output is the weighted sum of the values. It is called self-attention because queries, keys and values all come from the same sequence; in cross-attention the queries come from one sequence and the keys and values from another, as when a decoder attends to an encoder. Decoders add a causal mask so a token can't attend to later ones.",
+      "Example: one query scores 4, 2 and 0 against three keys with dₖ = 4. Dividing by √4 = 2 gives 2, 1 and 0, and the softmax turns those into weights of 0.67, 0.24 and 0.09. The √dₖ scaling matters because dot products grow with dimension, and large scores push the softmax into a region where gradients almost vanish.",
+      "Follow-ups: compute and memory grow with the square of the sequence length; attention by itself ignores word order, so positions must be encoded; and Transformers run several attention heads in parallel, multi-head attention."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-self-attention"
+  },
+  {
+    "id": "dl-250",
+    "category": "dl",
+    "question": "What is multi-head attention?",
+    "answer": "Running several attention operations in parallel, each with its own learned projections of the queries, keys and values into a smaller subspace, then concatenating the results and projecting them back. Different heads can track different relationships, such as nearby words, syntax or what a pronoun refers to, within the same layer.",
+    "explanation": [
+      "With model width d and h heads, each head works in d / h dimensions, so the total cost is about the same as one full-width head. The outputs of the heads are concatenated and multiplied by an output matrix W_O. The original Transformer (Vaswani and colleagues, 2017) used 8 heads with a model width of 512, so 64 dimensions per head.",
+      "Example: in that setting the query, key, value and output matrices are each 512 × 512, so the attention block has 4 × 262,144 = 1,048,576 weights, plus biases. That number is the same with 1 head or 8; the heads change how the dimensions are split, not the parameter count.",
+      "Why not one big head? A single softmax gives each token one weighted average, so it can't attend strongly to two places for two different reasons at once. Studies of BERT found heads that specialize, for instance in direct objects or coreference (Clark and colleagues, 2019), but also that many heads can be pruned with little loss (Michel and colleagues, 2019). Grouped-query and multi-query attention keep many query heads but share keys and values to shrink the KV cache."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-multi-head-attention"
+  },
+  {
+    "id": "dl-251",
+    "category": "dl",
+    "question": "What is positional encoding in transformers?",
+    "answer": "Information about each token's position, added to or mixed into its representation, because self-attention on its own treats the input as an unordered set. The original Transformer added fixed sine and cosine waves of different frequencies; most current LLMs use rotary position embeddings (RoPE) instead.",
+    "explanation": [
+      "Without positions, attention would see \"dog bites man\" and \"man bites dog\" as the same input. The sinusoidal encoding sets dimension 2i of position pos to sin(pos / 10000^(2i/d)) and dimension 2i + 1 to the matching cosine. Fixed encodings work at any position; learned position embeddings, as in BERT and GPT-2, stop at the longest position seen in training, 512 and 1,024 tokens.",
+      "Example: with d = 512, the first pair of dimensions repeats every 2π ≈ 6.3 positions and the last pair only every 60,000 or so, so together the waves give each position a distinct pattern, fine near the start and coarse further out. RoPE (Su and colleagues, 2021) instead rotates each pair of query and key dimensions by an angle proportional to the position, so the attention score between two tokens depends only on how far apart they are.",
+      "Follow-ups: ALiBi drops position embeddings and subtracts a penalty proportional to distance from the attention scores; models struggle with sequences longer than those seen in training, which is why methods such as position interpolation and YaRN rescale RoPE to extend the context window."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-positional-encoding-in-transformers"
+  },
+  {
+    "id": "dl-252",
+    "category": "dl",
+    "question": "What is beam search?",
+    "answer": "A decoding method that keeps the k most probable partial sequences, the beam, at each step instead of only the single best next token. It finds higher-probability outputs than greedy decoding, which can commit early to a token that leads nowhere, at roughly k times the cost.",
+    "explanation": [
+      "At each step every sequence in the beam is extended by every possible next token, the candidates are scored by total log-probability, and the top k are kept. Greedy decoding is beam search with k = 1. Typical beams are 4 to 10 wide; wider beams cost more and often stop improving quality.",
+      "Example: the first token is A with probability 0.5 or B with 0.4. After A, the best next token has probability 0.4; after B, 0.9. Greedy decoding takes A and ends with 0.5 × 0.4 = 0.20. A beam of 2 keeps both A and B and finds B followed by its best token, 0.4 × 0.9 = 0.36.",
+      "Follow-ups: since each extra token multiplies in a probability below 1, beam search favors short outputs, so scores are normalized by length, as in Google's neural machine translation system (Wu and colleagues, 2016). For open-ended text it produces bland, repetitive output (Holtzman and colleagues, 2019, on neural text degeneration), which is why chat models sample with temperature and top-p instead. Beam search remains common in translation, speech recognition and other tasks with one right answer."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-beam-search"
+  },
+  {
+    "id": "dl-253",
+    "category": "dl",
+    "question": "What is contrastive learning?",
+    "answer": "Learning representations by pulling the embeddings of related pairs together and pushing unrelated ones apart, for example two augmented crops of the same photo, or an image and its caption. It needs no class labels, only a way to say which examples belong together.",
+    "explanation": [
+      "The usual loss, InfoNCE, is a softmax cross-entropy in which the correct class is the positive example: −log(exp(sim(a, p) / τ) / Σ exp(sim(a, x) / τ)), summed over the positive and the negatives, with cosine similarity and a temperature τ. SimCLR (Chen and colleagues, 2020) used augmented views of images, with the rest of the batch as negatives; CLIP (Radford and colleagues, 2021) matched 400 million images with their captions; and the sentence embedding models used for retrieval are trained the same way.",
+      "Example: an anchor has cosine similarity 0.8 with its positive and 0.3 and 0.1 with two negatives. With τ = 0.1, the logits are 8, 3 and 1, the positive gets probability 0.99 and the loss is about 0.008. With τ = 1, the logits are 0.8, 0.3 and 0.1, the positive gets only 0.48 and the loss is 0.74, so a low temperature sharpens the contrast.",
+      "Follow-ups: it needs many negatives, hence large batches (SimCLR used 4,096) or a queue of past embeddings as in MoCo; without negatives every embedding could collapse to the same point, which BYOL and SimSiam avoid by other means; and in retrieval, hard negatives that look relevant but aren't matter most."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-contrastive-learning"
+  },
+  {
+    "id": "dl-254",
+    "category": "dl",
+    "question": "What is knowledge distillation?",
+    "answer": "Training a smaller student model to imitate a larger teacher by matching the teacher's full output probabilities, not just the hard labels. The soft probabilities carry extra information, such as which wrong classes are close to the right one, so the student learns more from each example.",
+    "explanation": [
+      "Hinton, Vinyals and Dean described the method in 2015. Both models' logits are divided by a temperature T before the softmax, which spreads the probabilities out, and the student is trained on a mix of the usual loss on true labels and the KL divergence to the teacher's softened distribution, with the KL term multiplied by T² to keep its gradients in scale.",
+      "Example: a teacher's logits for cat, dog and car are 5, 3 and −2. At T = 1 its probabilities are 0.88, 0.12 and 0.001, close to a hard label. At T = 4 they become 0.56, 0.34 and 0.10, which shows the student that this image looks much more like a dog than a car. Hinton called this information dark knowledge.",
+      "Results: DistilBERT (Sanh and colleagues, 2019) is 40% smaller and 60% faster than BERT while keeping 97% of its language understanding. Many small LLMs are distilled, either from a larger model's token probabilities, as with Gemma 2's smaller models, or by training on text a larger model generated. Check the terms of service first, since many API providers forbid using outputs to train competing models."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-knowledge-distillation"
+  },
+  {
     "id": "genai-1",
     "category": "genai",
     "question": "What do temperature, top-p and top-k control?",
@@ -3509,6 +3587,138 @@
     ],
     "updated": "2026-10-16",
     "slug": "what-is-the-kv-cache-and-why-does-it-cap-concurrency"
+  },
+  {
+    "id": "genai-17",
+    "category": "genai",
+    "question": "What is DPO?",
+    "title": "What is DPO (direct preference optimization)?",
+    "answer": "Direct preference optimization: aligning a language model to human preferences by training directly on pairs of preferred and rejected answers with a simple classification-style loss. It targets the same objective as RLHF without training a separate reward model or running reinforcement learning.",
+    "explanation": [
+      "Rafailov and colleagues showed in 2023 that the KL-regularized objective RLHF optimizes has a closed-form best policy, so the reward can be written in terms of the policy itself: β·log(π(y|x) / π_ref(y|x)). Putting that into the usual preference model gives the DPO loss, −log σ(β × [log-ratio of the preferred answer − log-ratio of the rejected one]), where each log-ratio compares the model being trained with a frozen reference, usually the supervised fine-tuned model.",
+      "Example with β = 0.1: at the start the model equals the reference, both log-ratios are 0, and the loss is ln 2 ≈ 0.693. After training raises the preferred answer's log-probability by 2 nats and lowers the rejected one's by 1, the margin is 0.1 × (2 + 1) = 0.3 and the loss falls to −ln σ(0.3) ≈ 0.554.",
+      "Follow-ups: β plays the role of RLHF's KL penalty, and a smaller β lets the model drift further from the reference; DPO trains offline on a fixed set of pairs, with no sampling during training, which makes it cheaper and more stable than PPO; Meta used it in Llama 3's post-training; and variants include IPO, KTO, which works from thumbs-up and thumbs-down labels instead of pairs, and ORPO, which drops the reference model."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-dpo"
+  },
+  {
+    "id": "genai-18",
+    "category": "genai",
+    "question": "What is LoRA?",
+    "title": "What is LoRA (low-rank adaptation) fine-tuning?",
+    "answer": "Low-rank adaptation: a fine-tuning method that freezes a model's weights and learns a small low-rank update for chosen weight matrices, W + BA. It trains a fraction of a percent of the parameters, and the update can be merged into W afterwards, so inference costs nothing extra.",
+    "explanation": [
+      "For a d × k weight matrix W, LoRA learns B (d × r) and A (r × k) with a small rank r such as 8 or 16, scaled by α / r. B starts at zero, so training begins exactly at the base model. Hu and colleagues at Microsoft introduced it in 2021, and it is now the most common parameter-efficient fine-tuning (PEFT) method; on GPT-3 175B they reported 10,000 times fewer trainable parameters and a third of the GPU memory of full fine-tuning.",
+      "Example: one 4,096 × 4,096 attention projection holds 16.8 million weights. A rank-8 LoRA update for it trains 8 × (4,096 + 4,096) = 65,536 parameters, 0.39% of the matrix. Because only those are trained, optimizer state and gradients shrink by the same factor.",
+      "Follow-ups: QLoRA (Dettmers and colleagues, 2023) keeps the frozen base in 4-bit precision and trains LoRA adapters on top, enough to fine-tune a 65B model on one 48 GB GPU; one base model can serve many swappable adapters, one per task; the original paper adapted only the attention query and value matrices, while today all linear layers are common; and for large domain shifts full fine-tuning can still learn more, though LoRA also tends to forget less of the base model's abilities."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-lora"
+  },
+  {
+    "id": "genai-19",
+    "category": "genai",
+    "question": "What is speculative decoding?",
+    "answer": "A way to speed up LLM generation: a small draft model proposes several tokens, and the large model checks all of them in one forward pass, keeping the longest accepted run. With the right acceptance rule the output follows exactly the large model's distribution, so it gets faster with no loss in quality.",
+    "explanation": [
+      "Decoding is limited by memory bandwidth, not arithmetic: each step reads all the weights to produce a single token, so scoring several proposed tokens in one pass costs about the same as generating one. Each draft token x is accepted with probability min(1, p(x) / q(x)), where p is the large model's probability and q the draft's; at the first rejection, a replacement token is sampled from the leftover distribution max(0, p − q), renormalized. Leviathan, Kalman and Matias at Google and Chen and colleagues at DeepMind published the method in 2022 and 2023.",
+      "Example: if the draft proposes 4 tokens and each is accepted with probability 0.8, the large model produces on average (1 − 0.8⁵) / (1 − 0.8) ≈ 3.36 tokens per forward pass instead of 1. The real speedup is lower because the draft model's time counts too; the papers report about 2 to 3 times.",
+      "It works best when text is predictable, as in code or low-temperature answers, because the acceptance rate drives the gain. Variants avoid a separate draft model: Medusa and EAGLE add small prediction heads to the large model, and prompt lookup decoding drafts by copying n-grams that already appear in the prompt."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-speculative-decoding"
+  },
+  {
+    "id": "genai-20",
+    "category": "genai",
+    "question": "What is LLM-as-a-judge?",
+    "answer": "Using a strong language model to grade outputs, either scoring one answer against a rubric or picking the better of two. It scales the evaluation of open-ended text, where exact-match metrics fail, but the judge has biases you have to measure against human labels.",
+    "explanation": [
+      "The common formats are single-answer grading, pairwise comparison and grading against a reference answer. Zheng and colleagues, who built MT-Bench and Chatbot Arena, reported in 2023 that GPT-4's verdicts agreed with human experts over 80% of the time, about as often as the experts agreed with each other. That is why judges are now standard for comparing prompts, models and RAG pipelines during development.",
+      "Example: before trusting a judge, compare it with human labels on a sample. On 200 answer pairs, humans prefer A in 140 and the judge picks A in 150, and they agree on 170, which is 85%. But a judge that always said A would already agree 70% of the time, so compute Cohen's kappa: chance agreement is 0.7 × 0.75 + 0.3 × 0.25 = 0.60, and κ = (0.85 − 0.60) / (1 − 0.60) ≈ 0.63.",
+      "Known biases: position bias, preferring the first answer shown; verbosity bias, preferring longer answers; and self-enhancement, preferring outputs from its own model family. Mitigations: run each pair in both orders, give a specific rubric, ask for the reasoning before the score, and judge with a different model family from the ones being compared."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-llm-as-a-judge"
+  },
+  {
+    "id": "genai-21",
+    "category": "genai",
+    "question": "What is chain-of-thought prompting?",
+    "answer": "Prompting a model to write out intermediate reasoning steps before its final answer, either by showing worked examples or by adding an instruction such as \"Let's think step by step\". It improves accuracy on multi-step problems such as arithmetic and logic, at the cost of more output tokens.",
+    "explanation": [
+      "Wei and colleagues at Google introduced it in 2022 with few-shot prompts whose examples included the reasoning, not just the answers. The gains appeared mainly in large models; in small ones the written reasoning was often wrong. Kojima and colleagues then showed the same year that a single sentence, \"Let's think step by step\", gets much of the effect with no examples, which became known as zero-shot chain of thought.",
+      "The numbers that made it famous: on the GSM8K grade-school math benchmark, PaLM 540B went from 17.9% with standard prompting to 56.9% with chain of thought. Self-consistency (Wang and colleagues, 2022), which samples several reasoning chains and takes a majority vote on the final answer, raised it to about 74%. Zero-shot chain of thought took InstructGPT from 17.7% to 78.7% on the MultiArith benchmark.",
+      "Follow-ups: reasoning models such as OpenAI's o1 and DeepSeek-R1 are trained with reinforcement learning to produce long chains on their own, so explicit prompts help them less; the written chain is not guaranteed to reflect how the model actually reached its answer (Turpin and colleagues, 2023); and the extra tokens add latency and cost."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-chain-of-thought-prompting"
+  },
+  {
+    "id": "genai-22",
+    "category": "genai",
+    "question": "What are the Chinchilla scaling laws?",
+    "answer": "For a fixed compute budget, a language model's size and its number of training tokens should grow in equal proportion, which works out to roughly 20 training tokens per parameter. Hoffmann and colleagues at DeepMind showed in 2022 that most large models of the time were too big and undertrained.",
+    "explanation": [
+      "Scaling laws describe how loss falls as a power law in parameters, data and compute. Kaplan and colleagues at OpenAI (2020) concluded that extra compute should go mostly into bigger models. Hoffmann and colleagues trained over 400 models, from 70 million to more than 16 billion parameters on 5 to 500 billion tokens, and found that parameters and tokens should each grow with the square root of compute.",
+      "Training compute is about 6 × N × D floating-point operations for N parameters and D tokens. Gopher, 280B parameters on 300B tokens, used about 5.0 × 10²³. Chinchilla, 70B parameters on 1.4 trillion tokens (20 per parameter), used a similar 5.9 × 10²³, yet beat Gopher on most benchmarks, including MMLU, 67.5% against 60.0%, at a quarter of Gopher's size, which also makes it cheaper to serve.",
+      "The interview nuance: Chinchilla-optimal minimizes training compute, not total cost. A model served to millions of users pays for its size on every request, so it pays to train a smaller model far longer: Llama 3 8B saw 15 trillion tokens, about 1,900 per parameter. The open question now is data, since high-quality text is finite."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-are-the-chinchilla-scaling-laws"
+  },
+  {
+    "id": "genai-23",
+    "category": "genai",
+    "question": "What is a mixture of experts (MoE) model?",
+    "answer": "A model whose feed-forward layers are split into many expert networks, with a router that sends each token to only a few of them. Total parameters can grow without a matching rise in compute per token, so an MoE model gets more capacity for a given inference cost.",
+    "explanation": [
+      "In each MoE layer a small gating network scores the experts for every token, picks the top k, often 1 or 2, and combines their outputs weighted by the router's scores. Attention and embeddings stay shared. Shazeer and colleagues brought sparsely gated experts to large networks in 2017, and the Switch Transformer (Fedus and colleagues, 2021) routed each token to a single expert. An auxiliary load-balancing loss stops the router from sending most tokens to a few favorite experts.",
+      "Example: Mixtral 8x7B has 8 experts per layer and routes each token to 2. It holds 46.7 billion parameters in total, not 56 billion, because only the feed-forward blocks are duplicated, and it uses about 12.9 billion per token, so it runs at roughly the speed of a 13B dense model. DeepSeek-V3 takes this further with 671 billion parameters, 37 billion active per token.",
+      "The catch: every expert has to sit in memory, so memory follows total parameters while compute follows active ones, and spreading experts over GPUs adds communication. Training can be unstable. And experts tend to specialize in token types and syntax more than in topics; Mixtral's authors found little evidence of experts by subject."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-a-mixture-of-experts-moe-model"
+  },
+  {
+    "id": "genai-24",
+    "category": "genai",
+    "question": "What is FlashAttention?",
+    "answer": "An exact implementation of attention that is faster because it never writes the full n × n attention matrix to GPU memory. It computes attention in tiles that fit in fast on-chip memory, using an online softmax, so it moves far less data and its memory use grows linearly with sequence length.",
+    "explanation": [
+      "Standard attention writes the score matrix QKᵀ and its softmax to the GPU's main memory and reads them back, and those transfers, not the arithmetic, dominate the time. FlashAttention, by Tri Dao and colleagues (2022), fuses the steps into one kernel: it loads blocks of queries, keys and values into on-chip SRAM, keeps a running maximum and sum so the softmax can be rescaled block by block, and in the backward pass recomputes attention instead of storing it.",
+      "Example: at 8,192 tokens, one head's score matrix has 8,192² ≈ 67 million entries, 134 MB at 16-bit precision, and with 32 heads that is 4.3 GB for a single layer. FlashAttention never stores it. The paper reported GPT-2 training about 3 times faster than the standard implementation.",
+      "Interview points: the result is exact, not an approximation like sparse or linear attention; it does slightly more arithmetic, because of recomputation, yet runs faster, which is the lesson of IO-aware algorithms; and compute is still quadratic in sequence length, only memory becomes linear. FlashAttention-2 (2023) improved parallelism, and FlashAttention-3 (2024) targets H100 GPUs, including 8-bit precision."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-flashattention"
+  },
+  {
+    "id": "genai-25",
+    "category": "genai",
+    "question": "What is grouped-query attention?",
+    "answer": "An attention variant in which groups of query heads share one key head and one value head. It shrinks the KV cache, and the memory traffic of generating each token, by the group size while keeping quality close to full multi-head attention.",
+    "explanation": [
+      "Multi-head attention gives every query head its own keys and values; multi-query attention (Shazeer, 2019) shares a single key-value head across all of them, which is fastest but loses some quality. Grouped-query attention, from Ainslie and colleagues at Google (2023), sits in between: with 64 query heads and 8 key-value heads, each group of 8 query heads shares one. They also showed an existing multi-head model can be converted by averaging its heads and training briefly, about 5% of the original pretraining compute.",
+      "Example: Llama 2 70B has 80 layers, 64 query heads, 8 key-value heads and a head dimension of 128. At 16-bit precision its cache needs 2 × 80 × 8 × 128 × 2 = 327,680 bytes per token, 1.25 GiB for a 4,096-token sequence. With 64 key-value heads it would need 10 GiB, eight times as much.",
+      "Why share keys and values but not queries? Only keys and values are cached for later tokens, and reading the cache is what limits decoding speed. Most open LLMs now use it, Llama 3 and Mistral among them. DeepSeek-V2's multi-head latent attention goes further, compressing keys and values into a small latent vector."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-is-grouped-query-attention"
+  },
+  {
+    "id": "genai-26",
+    "category": "genai",
+    "question": "What are BLEU and ROUGE scores?",
+    "answer": "Metrics that score generated text by its n-gram overlap with reference texts. BLEU, built for machine translation, is precision-oriented: how many of the output's n-grams appear in the references. ROUGE, built for summarization, is recall-oriented: how many of the reference's n-grams the output recovers.",
+    "explanation": [
+      "BLEU (Papineni and colleagues at IBM, 2002) takes the geometric mean of the clipped n-gram precisions for n = 1 to 4 and multiplies it by a brevity penalty, so very short outputs can't score well by being precise. ROUGE (Chin-Yew Lin, 2004) comes in several forms: ROUGE-N counts recalled n-grams, and ROUGE-L uses the longest common subsequence.",
+      "Example: the reference is \"the cat sat on the mat\" and the output is \"the cat sat on mat\". Every output word appears in the reference, so unigram precision is 5/5, and 3 of its 4 bigrams match, 0.75. Recall is lower: ROUGE-1 is 5/6 ≈ 0.83 and ROUGE-2 is 3/5 = 0.6. The output is one word short, so BLEU's brevity penalty is e^(1 − 6/5) ≈ 0.82.",
+      "The limits come up in interviews: both reward surface overlap, so a correct paraphrase can score low and a fluent wrong answer with the right words can score high, and they correlate poorly with human judgment on open-ended LLM output. Embedding-based scores such as BERTScore, LLM-as-a-judge and task-specific checks are the usual alternatives. Report BLEU with a standard tool such as SacreBLEU, since tokenization changes the number."
+    ],
+    "updated": "2026-10-24",
+    "slug": "what-are-bleu-and-rouge-scores"
   },
   {
     "id": "mlops-1",

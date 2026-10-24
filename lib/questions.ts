@@ -29,7 +29,7 @@ export const CATEGORIES = {
     blurb:
       "Neural networks from backpropagation to attention, and the tricks that make them trainable.",
     intro:
-      "These cards group around what you get asked to explain at a whiteboard: activation functions and why a network is a linear model without them, gradient descent and the learning rate that makes or breaks it, dropout and batch normalization, and the architectures that stack the pieces into something useful — CNNs, LSTMs and GRUs, GANs, autoencoders, Transformers.",
+      "These cards group around what you get asked to explain at a whiteboard: activation functions and why a network is a linear model without them, gradient descent and the learning rate that makes or breaks it, dropout and batch normalization, and the architectures that stack the pieces into something useful — CNNs, LSTMs and GRUs, GANs, autoencoders, Transformers and the self-attention inside them. Beyond architecture, there are training ideas such as contrastive learning and knowledge distillation.",
     starters: ["dl-169", "dl-171", "dl-159", "dl-150", "dl-172"],
   },
   genai: {
@@ -40,7 +40,7 @@ export const CATEGORIES = {
     blurb:
       "Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them.",
     intro:
-      "Four clusters run through these cards: the decoding knobs of temperature, top-p and top-k; retrieval from chunk size through hybrid search to evaluating the pipeline; when prompting beats fine-tuning or RLHF; and the serving details that set latency and cost, like tokenization, the KV cache and how much context is actually worth paying for.",
+      "Five clusters run through these cards: the decoding knobs of temperature, top-p and top-k; retrieval, from chunk size through hybrid search to evaluating the pipeline; prompting and post-training, from few-shot and chain of thought to LoRA, RLHF and DPO; evaluation with LLM judges and overlap metrics like BLEU; and the efficiency details that set latency and cost, like tokenization, the KV cache, grouped-query attention, FlashAttention, speculative decoding and mixture of experts.",
     starters: ["genai-2", "genai-1", "genai-12", "genai-5", "genai-16"],
   },
   mlops: {
