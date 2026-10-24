@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-56 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+62 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -403,6 +403,42 @@ A measure of overlap between a predicted region and the ground truth: the area o
 A version of cross-entropy that down-weights easy examples: FL = −(1 − p\_t)^γ log(p\_t), where p\_t is the probability given to the true class. With γ \> 0, well-classified examples contribute little, so training concentrates on the hard ones; γ = 0 gives back cross-entropy.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-focal-loss)
+
+## What is self-attention?
+
+A layer in which each token builds its new representation as a weighted average of every token's value vector, with the weights set by how well its query matches their keys: softmax(QKᵀ / √dₖ)V. Each token can draw on any other token directly, whatever the distance between them.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-self-attention)
+
+## What is multi-head attention?
+
+Running several attention operations in parallel, each with its own learned projections of the queries, keys and values into a smaller subspace, then concatenating the results and projecting them back. Different heads can track different relationships, such as nearby words, syntax or what a pronoun refers to, within the same layer.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-multi-head-attention)
+
+## What is positional encoding in transformers?
+
+Information about each token's position, added to or mixed into its representation, because self-attention on its own treats the input as an unordered set. The original Transformer added fixed sine and cosine waves of different frequencies; most current LLMs use rotary position embeddings (RoPE) instead.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-positional-encoding-in-transformers)
+
+## What is beam search?
+
+A decoding method that keeps the k most probable partial sequences, the beam, at each step instead of only the single best next token. It finds higher-probability outputs than greedy decoding, which can commit early to a token that leads nowhere, at roughly k times the cost.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-beam-search)
+
+## What is contrastive learning?
+
+Learning representations by pulling the embeddings of related pairs together and pushing unrelated ones apart, for example two augmented crops of the same photo, or an image and its caption. It needs no class labels, only a way to say which examples belong together.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-contrastive-learning)
+
+## What is knowledge distillation?
+
+Training a smaller student model to imitate a larger teacher by matching the teacher's full output probabilities, not just the hard labels. The soft probabilities carry extra information, such as which wrong classes are close to the right one, so the student learns more from each example.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-knowledge-distillation)
 
 ---
 

@@ -19,7 +19,7 @@ export const SITE = {
  * build, so <lastmod> doesn't claim every page changed on every deploy — which
  * teaches crawlers to ignore the signal.
  */
-export const CONTENT_UPDATED = "2026-10-23";
+export const CONTENT_UPDATED = "2026-10-24";
 
 /**
  * Date /about last changed. Tracked separately from the deck so neither date
