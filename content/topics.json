@@ -1,0 +1,516 @@
+{
+  "ml": [
+    {
+      "name": "Learning paradigms",
+      "lead": "Interviews often open by checking the map of the field: supervised learning learns from labeled examples, unsupervised learning finds structure such as clusters without labels, data can arrive all at once or as a stream, and causal modeling asks what would change under an intervention.",
+      "ids": [
+        "ml-1",
+        "ml-2",
+        "ml-41",
+        "ml-3",
+        "ml-4",
+        "ml-67",
+        "ml-21",
+        "ml-48",
+        "ml-53",
+        "ml-70"
+      ]
+    },
+    {
+      "name": "Linear models, SVMs and naive Bayes",
+      "lead": "Expect to defend the simple models before the fancy ones: why logistic regression counts as a linear model and whether it needs scaled features, what a perfectly collinear column does to a regression, which kernels an SVM uses, and what makes naive Bayes naive.",
+      "ids": [
+        "ml-61",
+        "ml-25",
+        "ml-52",
+        "ml-60",
+        "ml-50",
+        "ml-6",
+        "ml-47"
+      ]
+    },
+    {
+      "name": "Trees and ensembles",
+      "lead": "Tree questions check what a split ignores, such as feature scaling, and how pruning keeps a tree from memorizing the training set. Ensemble questions come down to one contrast: bagging and random forests average independent trees to cut variance, while boosting fits trees in sequence, each correcting the last, mainly to cut bias.",
+      "ids": [
+        "ml-27",
+        "ml-28",
+        "ml-7",
+        "ml-15",
+        "ml-8",
+        "ml-54",
+        "ml-19",
+        "ml-55",
+        "ml-49"
+      ]
+    },
+    {
+      "name": "Overfitting, bias and variance",
+      "lead": "Almost every machine learning interview reaches the bias-variance tradeoff. These cards cover how to spot overfitting and underfitting, what high bias and high variance mean, and which way model complexity and feature selection push each one.",
+      "ids": [
+        "ml-59",
+        "ml-63",
+        "ml-26",
+        "ml-30",
+        "ml-58",
+        "ml-56",
+        "ml-57",
+        "ml-44",
+        "ml-45",
+        "ml-42"
+      ]
+    },
+    {
+      "name": "Regularization",
+      "lead": "Regularization questions are mostly about L1 versus L2: which penalty is lasso and which is ridge, why only L1 drives weights to exactly zero and so selects features, how elastic net combines the two, and why none of it helps a model that underfits. Early stopping, which regularizes without a penalty term, is here too.",
+      "ids": [
+        "ml-10",
+        "ml-16",
+        "ml-35",
+        "ml-36",
+        "ml-37",
+        "ml-38",
+        "ml-65",
+        "ml-39",
+        "ml-40",
+        "ml-51",
+        "ml-24"
+      ]
+    },
+    {
+      "name": "Classification metrics",
+      "lead": "Start from the confusion matrix and the rest follows: precision, recall and F1 trade false positives against false negatives, ROC and precision-recall curves sweep the decision threshold, and log loss, the Brier score and calibration curves judge the predicted probabilities. Cohen's kappa and the Matthews correlation coefficient score 0 for a classifier no better than chance, so a skewed class balance flatters them less than accuracy.",
+      "ids": [
+        "ml-17",
+        "ml-18",
+        "ml-46",
+        "ml-31",
+        "ml-32",
+        "ml-29",
+        "ml-33",
+        "ml-34",
+        "ml-217",
+        "ml-5",
+        "ml-64",
+        "ml-220",
+        "ml-219",
+        "ml-218",
+        "ml-228",
+        "ml-229"
+      ]
+    },
+    {
+      "name": "Losses and regression metrics",
+      "lead": "Regression models are scored with errors like MSE, MAE and R-squared, or with percentage errors such as MAPE and WAPE when series differ in scale. The loss you train on can differ from the metric you report: Huber loss resists outliers, pinball loss predicts a quantile, and hinge loss trains support vector machines. NDCG scores a ranked list.",
+      "ids": [
+        "ml-43",
+        "ml-224",
+        "ml-225",
+        "ml-222",
+        "ml-223",
+        "ml-221",
+        "ml-227"
+      ]
+    },
+    {
+      "name": "Features, data and validation",
+      "lead": "A model only sees what its features give it. These cards cover encoding categorical values (one-hot, count and target encoding), bucketing, dense versus sparse features, turning text into features with bag of words and TF-IDF, rebalancing classes, and the leakage traps in building a vocabulary and cross-validating a time series.",
+      "ids": [
+        "ml-12",
+        "ml-11",
+        "ml-13",
+        "ml-20",
+        "ml-22",
+        "ml-66",
+        "ml-62",
+        "ml-69",
+        "ml-23",
+        "ml-14",
+        "ml-68",
+        "ml-9"
+      ]
+    }
+  ],
+  "dl": [
+    {
+      "name": "Training with gradient descent",
+      "lead": "How a network learns: what gradient descent minimizes, its batch, mini-batch and stochastic versions, adaptive optimizers like AdaGrad, epochs and batches, why the learning rate is the first setting to tune, and why the weights can't all start at zero. The popular frameworks are here too.",
+      "ids": [
+        "dl-156",
+        "dl-144",
+        "dl-145",
+        "dl-146",
+        "dl-151",
+        "dl-152",
+        "dl-182",
+        "dl-184",
+        "dl-148",
+        "dl-159",
+        "dl-167",
+        "dl-168",
+        "dl-188",
+        "dl-166",
+        "dl-180",
+        "dl-147"
+      ]
+    },
+    {
+      "name": "Activation functions",
+      "lead": "Why a network needs nonlinear activations at all, why ReLU replaced sigmoid in hidden layers, and the output ranges of sigmoid, tanh and softmax. Several cards are true-or-false traps that swap what one function returns for another's.",
+      "ids": [
+        "dl-169",
+        "dl-187",
+        "dl-157",
+        "dl-171",
+        "dl-170",
+        "dl-196",
+        "dl-162",
+        "dl-164",
+        "dl-158",
+        "dl-186",
+        "dl-189"
+      ]
+    },
+    {
+      "name": "Dropout, normalization and capacity",
+      "lead": "How capacity grows with layers and shrinks with dropout, what batch normalization is and isn't, how high bias differs from overfitting, and the universal approximation theorem, which says one hidden layer is enough in principle.",
+      "ids": [
+        "dl-150",
+        "dl-181",
+        "dl-194",
+        "dl-183",
+        "dl-179",
+        "dl-195",
+        "dl-185"
+      ]
+    },
+    {
+      "name": "CNNs, RNNs, GANs and autoencoders",
+      "lead": "The architectures that came before Transformers: convolution and pooling for images, and why a CNN is only roughly translation invariant; LSTMs and GRUs and the gates that tell them apart; the generator and discriminator of a GAN; and autoencoders, which learn by reconstructing their own input.",
+      "ids": [
+        "dl-149",
+        "dl-172",
+        "dl-191",
+        "dl-160",
+        "dl-161",
+        "dl-163",
+        "dl-165",
+        "dl-153",
+        "dl-154",
+        "dl-155",
+        "dl-190",
+        "dl-192"
+      ]
+    },
+    {
+      "name": "Transformers, attention and decoding",
+      "lead": "The Transformer one part at a time: self-attention, multi-head attention, positional encoding and the residual connections that force every sub-layer to the same width, plus beam search for decoding. The generative AI cards pick up from here with large language models.",
+      "ids": [
+        "dl-249",
+        "dl-250",
+        "dl-251",
+        "dl-173",
+        "dl-252"
+      ]
+    },
+    {
+      "name": "Vision metrics and training methods",
+      "lead": "Ideas from computer vision and representation learning: intersection over union for scoring predicted boxes, focal loss for detectors swamped by easy background examples, contrastive learning for learning embeddings, often without labels, and knowledge distillation for shrinking a model.",
+      "ids": [
+        "dl-230",
+        "dl-231",
+        "dl-253",
+        "dl-254"
+      ]
+    },
+    {
+      "name": "Rapid-fire basics",
+      "lead": "Quick true-or-false checks on the vocabulary around deep learning: categorical features and one-hot encoding, multi-class labels, precision, recall and F1, and what bagging means.",
+      "ids": [
+        "dl-174",
+        "dl-177",
+        "dl-193",
+        "dl-175",
+        "dl-176",
+        "dl-178",
+        "dl-197"
+      ]
+    }
+  ],
+  "genai": [
+    {
+      "name": "How LLMs work",
+      "lead": "What sits under the hood: why Transformers replaced RNNs, how BERT's encoder differs from a GPT-style decoder, how text becomes tokens and embeddings, how temperature, top-p and top-k pick the next token, and what the Chinchilla scaling laws say about model size versus training data.",
+      "ids": [
+        "genai-9",
+        "genai-10",
+        "genai-15",
+        "genai-12",
+        "genai-1",
+        "genai-22"
+      ]
+    },
+    {
+      "name": "Retrieval-augmented generation",
+      "lead": "Retrieval questions ask you to argue RAG against fine-tuning, pick a chunk size, explain why hybrid search pairs embeddings with keyword matching, evaluate retrieval and generation separately, and say why a longer context window doesn't replace any of it.",
+      "ids": [
+        "genai-2",
+        "genai-3",
+        "genai-4",
+        "genai-5",
+        "genai-7"
+      ]
+    },
+    {
+      "name": "Prompting and agents",
+      "lead": "What system prompts, tools and few-shot examples each do, when chain-of-thought prompting helps, what actually reduces hallucinations, and when a fixed workflow beats an autonomous agent.",
+      "ids": [
+        "genai-8",
+        "genai-13",
+        "genai-21",
+        "genai-6",
+        "genai-11"
+      ]
+    },
+    {
+      "name": "Post-training and evaluation",
+      "lead": "What fine-tuning changes: RLHF and DPO align a base model with human preferences, and LoRA makes fine-tuning cheap by training small low-rank updates instead of every weight. Judging the output is its own problem, handled with LLM judges and overlap metrics like BLEU and ROUGE.",
+      "ids": [
+        "genai-14",
+        "genai-17",
+        "genai-18",
+        "genai-20",
+        "genai-26"
+      ]
+    },
+    {
+      "name": "Inference efficiency",
+      "lead": "The details that set an LLM's latency and serving cost: the KV cache and how grouped-query attention shrinks it, FlashAttention's memory-aware attention, speculative decoding, and mixture-of-experts models that run only part of their weights for each token.",
+      "ids": [
+        "genai-16",
+        "genai-25",
+        "genai-24",
+        "genai-19",
+        "genai-23"
+      ]
+    }
+  ],
+  "mlops": [
+    {
+      "name": "Drift, monitoring and retraining",
+      "lead": "The ways a deployed model goes stale: its inputs drift, the relationship between inputs and target drifts, and its performance decays. These cards cover measuring a shift with the Population Stability Index, monitoring before labels arrive, and deciding when to retrain.",
+      "ids": [
+        "mlops-1",
+        "mlops-2",
+        "mlops-3",
+        "mlops-5",
+        "mlops-6",
+        "mlops-13"
+      ]
+    },
+    {
+      "name": "Deployment and testing",
+      "lead": "Getting a model in front of users safely: batch versus online inference, feature stores and the training-serving skew they guard against, shadow and canary releases, and why a model that wins offline can still lose its A/B test.",
+      "ids": [
+        "mlops-7",
+        "mlops-8",
+        "mlops-4",
+        "mlops-9",
+        "mlops-10",
+        "mlops-14"
+      ]
+    },
+    {
+      "name": "Recommender systems",
+      "lead": "Two staples of recommendation system design questions: the cold start problem for new users and items, and the two-tower model used to retrieve candidates at scale.",
+      "ids": [
+        "mlops-11",
+        "mlops-12"
+      ]
+    }
+  ],
+  "stats": [
+    {
+      "name": "Describing data",
+      "lead": "Before any test, an interviewer wants to see that you can describe a dataset: what type each column is, how the table is laid out, its center, spread and shape (quantiles, the interquartile range, variance, skewness), and what to do about outliers and missing values.",
+      "ids": [
+        "stats-78",
+        "stats-79",
+        "stats-72",
+        "stats-71",
+        "stats-103",
+        "stats-93",
+        "stats-92",
+        "stats-208",
+        "stats-85",
+        "stats-99",
+        "stats-98"
+      ]
+    },
+    {
+      "name": "Probability and distributions",
+      "lead": "Probability questions build from conditional probability to Bayes' theorem, often through a positive test for a rare condition. The distribution questions cover the normal, binomial and Poisson, density functions, maximum likelihood, and the two results that make sample means behave: the law of large numbers and the central limit theorem.",
+      "ids": [
+        "stats-239",
+        "stats-240",
+        "stats-241",
+        "stats-216",
+        "stats-210",
+        "stats-75",
+        "stats-76",
+        "stats-77",
+        "stats-205",
+        "stats-204",
+        "stats-211",
+        "stats-100",
+        "stats-88"
+      ]
+    },
+    {
+      "name": "Hypothesis testing",
+      "lead": "The most tested part of statistics. Know what a p-value and a confidence interval do and don't say, the two ways a test can be wrong and how sample size drives power, which test fits which data (t, z, chi-square, ANOVA, Fisher's exact, and rank-based tests when normality is doubtful), and what running many tests does to the false positive rate.",
+      "ids": [
+        "stats-201",
+        "stats-238",
+        "stats-202",
+        "stats-74",
+        "stats-212",
+        "stats-213",
+        "stats-237",
+        "stats-232",
+        "stats-233",
+        "stats-236",
+        "stats-234",
+        "stats-235",
+        "stats-200",
+        "stats-242",
+        "stats-214",
+        "stats-243",
+        "stats-244"
+      ]
+    },
+    {
+      "name": "Experiments, bias and causal inference",
+      "lead": "Product data science interviews lean on this part: why correlation doesn't prove causation, how confounders, Simpson's paradox and selection or survivorship bias fake an effect, how CUPED makes an A/B test more sensitive, and the methods for when you can't randomize: difference-in-differences, instrumental variables and regression discontinuity.",
+      "ids": [
+        "stats-206",
+        "stats-102",
+        "stats-207",
+        "stats-209",
+        "stats-101",
+        "stats-73",
+        "stats-245",
+        "stats-246",
+        "stats-247",
+        "stats-248"
+      ]
+    },
+    {
+      "name": "Correlation, regression and time series",
+      "lead": "Correlation questions check that you can tell covariance from correlation and know that a Pearson correlation of zero doesn't rule out a relationship. Regression questions are about diagnostics: residuals, R-squared and its adjusted version, heteroscedasticity and multicollinearity. Two cards cover autocorrelation and stationarity in time series.",
+      "ids": [
+        "stats-95",
+        "stats-97",
+        "stats-96",
+        "stats-81",
+        "stats-80",
+        "stats-226",
+        "stats-203",
+        "stats-215",
+        "stats-104",
+        "stats-87"
+      ]
+    },
+    {
+      "name": "Model errors and metrics",
+      "lead": "The statistics side of model evaluation: false positives and false negatives, precision as a ratio, precision and recall at k for ranked results, and the squared-error metrics MSE and RMSE. The machine learning cards cover the other metrics.",
+      "ids": [
+        "stats-84",
+        "stats-83",
+        "stats-86",
+        "stats-108",
+        "stats-105",
+        "stats-106"
+      ]
+    },
+    {
+      "name": "PCA, clustering and divergences",
+      "lead": "PCA and SVD for reducing dimensions, the elbow and silhouette methods for picking k in k-means, and KL and Jensen-Shannon divergence for measuring how far apart two distributions are, which drift monitoring often relies on.",
+      "ids": [
+        "stats-82",
+        "stats-91",
+        "stats-94",
+        "stats-107",
+        "stats-198",
+        "stats-199"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "name": "The mathematical roots, 1763 to 1913",
+      "lead": "Machine learning's oldest ideas come from probability and astronomy: Bayes' theorem, published in 1763 after his death, Legendre's least squares in 1805, Laplace's 1812 treatise on probability, and Markov's chains, first applied to real data in 1913.",
+      "ids": [
+        "history-136",
+        "history-111",
+        "history-112",
+        "history-113"
+      ]
+    },
+    {
+      "name": "Early AI and the first neural networks, 1950 to 1989",
+      "lead": "From Turing's test in 1950 and the first neural network machine a year later, through the perceptron and the reverse-mode differentiation behind backpropagation in 1970, to LeCun's convolutional networks and Watkins's Q-learning, both from 1989.",
+      "ids": [
+        "history-126",
+        "history-125",
+        "history-114",
+        "history-115",
+        "history-116",
+        "history-134",
+        "history-133"
+      ]
+    },
+    {
+      "name": "Machine learning grows up, 1990 to 2009",
+      "lead": "The decades when statistical learning took over: the R language, random forests, support vector machines and the LSTM, Deep Blue's chess win, the MNIST digits, early deep learning libraries like Torch and Theano, and ImageNet, the dataset that set up the deep learning boom.",
+      "ids": [
+        "history-131",
+        "history-132",
+        "history-117",
+        "history-118",
+        "history-120",
+        "history-119",
+        "history-110",
+        "history-121",
+        "history-127",
+        "history-138",
+        "history-122"
+      ]
+    },
+    {
+      "name": "The deep learning era, 2012 to 2017",
+      "lead": "From AlexNet's ImageNet win in 2012 to the Transformer in 2017: GANs, the frameworks people still use (TensorFlow, Keras and PyTorch), and AlphaGo's wins over Fan Hui and Lee Sedol, the second one run on Google's TPUs.",
+      "ids": [
+        "history-139",
+        "history-109",
+        "history-128",
+        "history-129",
+        "history-130",
+        "history-123",
+        "history-140",
+        "history-143",
+        "history-137",
+        "history-142"
+      ]
+    },
+    {
+      "name": "The people",
+      "lead": "Geoffrey Hinton, Yann LeCun and Yoshua Bengio, who shared the 2018 Turing Award for deep learning, and the students who learned from them.",
+      "ids": [
+        "history-124",
+        "history-135",
+        "history-141"
+      ]
+    }
+  ]
+}
