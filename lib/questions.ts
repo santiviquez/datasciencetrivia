@@ -1,4 +1,5 @@
 import raw from "../content/questions.json";
+import topicList from "../content/topics.json";
 import { buildRelatedIndex, type RelatedIndex } from "./related";
 
 /**
@@ -29,7 +30,7 @@ export const CATEGORIES = {
     blurb:
       "Neural networks from backpropagation to attention, and the tricks that make them trainable.",
     intro:
-      "These cards group around what you get asked to explain at a whiteboard: activation functions and why a network is a linear model without them, gradient descent and the learning rate that makes or breaks it, dropout and batch normalization, and the architectures that stack the pieces into something useful — CNNs, LSTMs and GRUs, GANs, autoencoders, Transformers and the self-attention inside them. Beyond architecture, there are training ideas such as contrastive learning and knowledge distillation.",
+      "These cards group around what you get asked to explain at a whiteboard: activation functions and why a network is a linear model without them, gradient descent and the learning rate that makes or breaks it, dropout and batch normalization, and the architectures that stack the pieces into something useful: CNNs, LSTMs and GRUs, GANs, autoencoders, Transformers and the self-attention inside them. Beyond architecture, there are training ideas such as contrastive learning and knowledge distillation.",
     starters: ["dl-169", "dl-171", "dl-159", "dl-150", "dl-172"],
   },
   genai: {
@@ -203,6 +204,34 @@ export function getCategoryStarters(key: CategoryKey): QuestionWithSlug[] {
   return CATEGORIES[key].starters
     .map((id) => byId.get(id))
     .filter((q): q is QuestionWithSlug => q !== undefined);
+}
+
+export interface Topic {
+  name: string;
+  /** Anchor id on the hub, derived from the name. */
+  slug: string;
+  /** One or two sentences on what the topic's cards cover in an interview. */
+  lead: string;
+  questions: QuestionWithSlug[];
+}
+
+/**
+ * A hub's cards grouped into the topics listed for its category in
+ * `content/topics.json`, in the order written there. `check:content` fails the
+ * build unless every card sits in exactly one topic of its own category.
+ */
+export function getCategoryTopics(key: CategoryKey): Topic[] {
+  const byId = new Map(questions.map((q) => [q.id, q]));
+  return (topicList as Record<CategoryKey, { name: string; lead: string; ids: string[] }[]>)[key].map(
+    (t) => ({
+      name: t.name,
+      slug: slugify(t.name),
+      lead: t.lead,
+      questions: t.ids
+        .map((id) => byId.get(id))
+        .filter((q): q is QuestionWithSlug => q !== undefined),
+    }),
+  );
 }
 
 // One index per category, built on first use and reused for the rest of the

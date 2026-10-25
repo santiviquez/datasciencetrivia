@@ -8,6 +8,7 @@ import {
   CATEGORY_KEYS,
   getCategoryBySlug,
   getCategoryStarters,
+  getCategoryTopics,
   getQuestionsByCategory,
   inSentence,
 } from "@/lib/questions";
@@ -56,13 +57,14 @@ export default async function CategoryPage({
   const c = CATEGORIES[key];
   const items = getQuestionsByCategory(key);
   const starters = getCategoryStarters(key);
+  const topics = getCategoryTopics(key);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "@id": absoluteUrl(`/categories/${c.slug}#faq`),
     name: `${c.name} interview questions and answers`,
-    mainEntity: items.map((q) => ({
+    mainEntity: topics.flatMap((t) => t.questions).map((q) => ({
       "@type": "Question",
       name: q.question,
       url: absoluteUrl(`/questions/${q.slug}`),
@@ -127,20 +129,47 @@ export default async function CategoryPage({
             </section>
           ) : null}
 
-          <dl className="mt-10 space-y-6">
-            {items.map((q) => (
-              <div key={q.id} className="border-l-[3px] pl-4" style={{ borderColor: c.color }}>
-                <dt className="font-medium leading-snug">
-                  <Link href={`/questions/${q.slug}`} className="underline decoration-[var(--page-rule)] underline-offset-2 hover:decoration-current">
-                    {q.question}
-                  </Link>
-                </dt>
-                <dd className="mt-1.5 text-sm leading-relaxed text-[var(--page-muted)]">
-                  {q.answer}
-                </dd>
-              </div>
+          <nav aria-label="Topics" className="mt-10 flex flex-wrap gap-3">
+            {topics.map((t) => (
+              <a
+                key={t.slug}
+                href={`#${t.slug}`}
+                className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
+              >
+                {t.name} <span className="font-normal">{t.questions.length}</span>
+              </a>
             ))}
-          </dl>
+          </nav>
+
+          {topics.map((t) => (
+            <section key={t.slug} id={t.slug} aria-labelledby={`topic-${t.slug}`} className="mt-14 scroll-mt-6">
+              <h2
+                id={`topic-${t.slug}`}
+                className="font-[family-name:var(--font-card)] text-lg font-bold uppercase"
+              >
+                {t.name}
+                <span className="ml-2 text-xs font-normal normal-case text-[var(--page-muted)]">
+                  {t.questions.length} question{t.questions.length === 1 ? "" : "s"}
+                </span>
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-[var(--page-muted)]">{t.lead}</p>
+
+              <dl className="mt-5 space-y-6">
+                {t.questions.map((q) => (
+                  <div key={q.id} className="border-l-[3px] pl-4" style={{ borderColor: c.color }}>
+                    <dt className="font-medium leading-snug">
+                      <Link href={`/questions/${q.slug}`} className="underline decoration-[var(--page-rule)] underline-offset-2 hover:decoration-current">
+                        {q.question}
+                      </Link>
+                    </dt>
+                    <dd className="mt-1.5 text-sm leading-relaxed text-[var(--page-muted)]">
+                      {q.answer}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ))}
 
           <div className="mt-12 flex flex-wrap gap-3">
             {CATEGORY_KEYS.filter((k) => k !== key).map((k) => (

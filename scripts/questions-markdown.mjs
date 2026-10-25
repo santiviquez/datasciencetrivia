@@ -54,7 +54,14 @@ const pageUrl = (q) => `${SITE}/questions/${q.slug}`;
 const NOTICE =
   "<!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->";
 
-function renderCategory(category, cards) {
+/** The anchor GitHub gives a heading, for the topic contents list. */
+const anchor = (heading) =>
+  heading
+    .toLowerCase()
+    .replace(/[^a-z0-9 -]/g, "")
+    .replace(/ /g, "-");
+
+function renderCategory(category, cards, topics) {
   const lines = [
     `# ${category.name} interview questions and answers`,
     "",
@@ -67,12 +74,21 @@ function renderCategory(category, cards) {
     `[All categories](README.md)`,
   ];
 
-  for (const q of cards) {
-    lines.push("", `## ${md(q.title ?? q.question)}`, "");
-    // A card with a search title is a statement or a fill-in prompt: show the
-    // card itself, since its answer only makes sense next to it.
-    if (q.title) lines.push(`> **Flashcard:** ${md(q.question)}`, "");
-    lines.push(md(q.answer), "", `[Read the longer answer →](${pageUrl(q)})`);
+  // Ids that aren't cards of this category are skipped here and reported by
+  // check-content, which renders these files before it prints its errors.
+  const byId = new Map(cards.map((q) => [q.id, q]));
+  const groups = topics.map((t) => ({ ...t, cards: (t.ids ?? []).map((id) => byId.get(id)).filter(Boolean) }));
+  lines.push("", "## Topics", "", ...groups.map((t) => `- [${t.name}](#${anchor(t.name)}) (${t.cards.length})`));
+
+  for (const t of groups) {
+    lines.push("", `## ${t.name}`, "", md(t.lead));
+    for (const q of t.cards) {
+      lines.push("", `### ${md(q.title ?? q.question)}`, "");
+      // A card with a search title is a statement or a fill-in prompt: show the
+      // card itself, since its answer only makes sense next to it.
+      if (q.title) lines.push(`> **Flashcard:** ${md(q.question)}`, "");
+      lines.push(md(q.answer), "", `[Read the longer answer →](${pageUrl(q)})`);
+    }
   }
 
   lines.push(
@@ -119,6 +135,7 @@ function renderIndex(categories, cards) {
 /** Every file under interview-questions/, keyed by path relative to the repo root. */
 export function renderQuestionFiles() {
   const cards = JSON.parse(readFileSync(join(root, "content", "questions.json"), "utf8"));
+  const topics = JSON.parse(readFileSync(join(root, "content", "topics.json"), "utf8"));
   const categories = readCategories();
   const keys = new Set(categories.map((c) => c.key));
   const orphan = cards.find((q) => !keys.has(q.category));
@@ -126,7 +143,10 @@ export function renderQuestionFiles() {
   const files = new Map();
   files.set(`${OUT_DIR}/README.md`, renderIndex(categories, cards));
   for (const c of categories) {
-    files.set(`${OUT_DIR}/${c.file}`, renderCategory(c, cards.filter((q) => q.category === c.key)));
+    files.set(
+      `${OUT_DIR}/${c.file}`,
+      renderCategory(c, cards.filter((q) => q.category === c.key), topics[c.key] ?? []),
+    );
   }
   return files;
 }

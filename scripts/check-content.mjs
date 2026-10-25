@@ -130,6 +130,47 @@ for (const [, list] of starterLists) {
 }
 
 /**
+ * Each hub shows its cards grouped by the topics in content/topics.json. A card
+ * left out of every topic would vanish from its hub and the GitHub copy, and a
+ * card listed twice would show up twice.
+ */
+const topics = JSON.parse(readFileSync(join(here, "..", "content", "topics.json"), "utf8"));
+const topicOf = new Map();
+for (const key of VALID_CATEGORIES) {
+  if (!Array.isArray(topics[key]) || topics[key].length === 0) {
+    errors.push(`content/topics.json: no topics for category "${key}"`);
+  }
+}
+for (const [key, list] of Object.entries(topics)) {
+  if (!VALID_CATEGORIES.has(key)) errors.push(`content/topics.json: unknown category "${key}"`);
+  if (!Array.isArray(list)) continue;
+  const names = new Set();
+  list.forEach((t, i) => {
+    const at = `content/topics.json: ${key}[${i}]`;
+    if (typeof t.name !== "string" || !t.name.trim()) errors.push(`${at}: missing "name"`);
+    else if (names.has(slugify(t.name))) errors.push(`${at}: "${t.name}" gives the same anchor as another topic`);
+    else names.add(slugify(t.name));
+    if (typeof t.lead !== "string" || !t.lead.trim()) errors.push(`${at}: missing "lead"`);
+    if (!Array.isArray(t.ids) || t.ids.length === 0) {
+      errors.push(`${at}: needs a non-empty "ids" list`);
+      return;
+    }
+    for (const id of t.ids) {
+      const card = raw[seenIds.get(id)];
+      if (!card) errors.push(`${at}: "${id}" is not a question id`);
+      else if (card.category !== key) errors.push(`${at}: "${id}" is a ${card.category} card`);
+      if (topicOf.has(id)) errors.push(`${at}: "${id}" is also in ${topicOf.get(id)}`);
+      topicOf.set(id, `${key}[${i}]`);
+    }
+  });
+}
+for (const q of raw) {
+  if (q.id && !topicOf.has(q.id)) {
+    errors.push(`content/topics.json: "${q.id}" is in no topic; add it to one under "${q.category}"`);
+  }
+}
+
+/**
  * A redirect from a merged card must land on a live card, and must not shadow
  * one: Next applies redirects before routing, so a "from" that is still a live
  * slug would make that card unreachable.
@@ -174,5 +215,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${redirects.length} redirects, ${markdown.size} Markdown files`,
+  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${topicOf.size} cards in topics, ${redirects.length} redirects, ${markdown.size} Markdown files`,
 );
