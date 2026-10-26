@@ -3,12 +3,21 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import TriviaCard from "./TriviaCard";
 import { Arrow, RateButton, RevealButton } from "./DeckControls";
-import {
-  CATEGORIES,
-  CATEGORY_KEYS,
-  type CategoryKey,
-  type QuestionWithSlug,
-} from "@/lib/questions";
+import { CATEGORIES, CATEGORY_KEYS, type CategoryKey } from "@/lib/questions";
+
+/**
+ * The fields of a card the deck reads. Everything a client component receives
+ * is serialized into the page, so pages hand over these instead of whole
+ * questions, whose longer answers would otherwise ride along on every page.
+ */
+export interface DeckCard {
+  id: string;
+  slug: string;
+  category: CategoryKey;
+  question: string;
+  answer: string;
+  proposedBy?: string;
+}
 
 type Rating = "easy" | "neutral" | "hard";
 type Ratings = Record<string, Rating>;
@@ -42,17 +51,17 @@ function shuffled<T>(input: readonly T[]): T[] {
 }
 
 interface Session {
-  order: QuestionWithSlug[];
+  order: DeckCard[];
   ratings: Ratings;
 }
 
 interface DeckProps {
-  questions: QuestionWithSlug[];
+  questions: DeckCard[];
   /**
    * Set on a permalink page: that card leads the deck and opens revealed, so
    * arriving from search lands you in the same game rather than a second UI.
    */
-  focus?: QuestionWithSlug;
+  focus?: DeckCard;
 }
 
 export default function Deck({ questions, focus }: DeckProps) {

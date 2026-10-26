@@ -1,7 +1,11 @@
-import Deck from "./Deck";
+import Deck, { type DeckCard } from "./Deck";
 import Author from "./Author";
 import Keymaps from "./Keymaps";
 import type { QuestionWithSlug } from "@/lib/questions";
+
+function toDeckCard(q: QuestionWithSlug): DeckCard {
+  return { id: q.id, slug: q.slug, category: q.category, question: q.question, answer: q.answer, proposedBy: q.proposedBy };
+}
 
 /**
  * The game, sized to exactly one screen so the card, its answer and the
@@ -36,7 +40,9 @@ export default function GameScreen({
       <div className="deck-frame flex h-dvh flex-col border-[10px] px-4 py-5 sm:border-[15px] sm:px-6">
         <main id="main" className="flex min-h-0 flex-1 flex-col items-center justify-center">
           {heading ? <h1 className="sr-only">{heading}</h1> : null}
-          {game ?? <Deck questions={questions ?? []} focus={focus} />}
+          {game ?? (
+            <Deck questions={(questions ?? []).map(toDeckCard)} focus={focus && toDeckCard(focus)} />
+          )}
         </main>
 
         <div className="relative flex shrink-0 justify-center pt-4">
