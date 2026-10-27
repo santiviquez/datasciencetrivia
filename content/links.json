@@ -1,0 +1,609 @@
+{
+  "ml-17": [
+    "confusion matrix"
+  ],
+  "ml-33": [
+    "F1 score",
+    "F1-score"
+  ],
+  "ml-5": [
+    "ROC curve",
+    "ROC AUC"
+  ],
+  "ml-64": [
+    "precision-recall curve"
+  ],
+  "ml-217": [
+    "specificity"
+  ],
+  "ml-218": [
+    "calibration curve",
+    "reliability diagram"
+  ],
+  "ml-219": [
+    "Brier score"
+  ],
+  "ml-220": [
+    "log loss",
+    "cross-entropy loss",
+    "cross-entropy"
+  ],
+  "ml-221": [
+    "hinge loss"
+  ],
+  "ml-222": [
+    "Huber loss"
+  ],
+  "ml-223": [
+    "pinball loss",
+    "quantile loss"
+  ],
+  "ml-224": [
+    "MAPE"
+  ],
+  "ml-225": [
+    "WAPE"
+  ],
+  "ml-227": [
+    "NDCG"
+  ],
+  "ml-228": [
+    "Cohen's kappa"
+  ],
+  "ml-229": [
+    "Matthews correlation coefficient"
+  ],
+  "ml-14": [
+    "data leakage",
+    "target leakage"
+  ],
+  "ml-12": [
+    "one-hot encoding",
+    "one hot encoding"
+  ],
+  "ml-13": [
+    "target encoding"
+  ],
+  "ml-11": [
+    "count encoding"
+  ],
+  "ml-62": [
+    "TF-IDF"
+  ],
+  "ml-66": [
+    "bag of words",
+    "bag-of-words"
+  ],
+  "ml-16": [
+    "L1 regularization",
+    "L2 regularization",
+    "lasso",
+    "ridge regression"
+  ],
+  "ml-40": [
+    "elastic net"
+  ],
+  "ml-24": [
+    "early stopping"
+  ],
+  "ml-59": [
+    "bias-variance tradeoff",
+    "bias-variance trade-off"
+  ],
+  "ml-63": [
+    "overfitting"
+  ],
+  "ml-30": [
+    "underfitting"
+  ],
+  "ml-27": [
+    "random forest"
+  ],
+  "ml-19": [
+    "gradient boosting"
+  ],
+  "ml-54": [
+    "bagging",
+    "bootstrap aggregating"
+  ],
+  "ml-8": [
+    "ensemble learning"
+  ],
+  "ml-47": [
+    "naive Bayes"
+  ],
+  "ml-6": [
+    "support vector machine",
+    "SVM"
+  ],
+  "ml-48": [
+    "k-nearest neighbors",
+    "k nearest neighbors",
+    "KNN"
+  ],
+  "ml-67": [
+    "clustering"
+  ],
+  "ml-61": [
+    "logistic regression"
+  ],
+  "ml-3": [
+    "supervised learning"
+  ],
+  "ml-41": [
+    "unsupervised learning"
+  ],
+  "ml-53": [
+    "online learning"
+  ],
+  "ml-20": [
+    "bucketing",
+    "binning"
+  ],
+  "ml-23": [
+    "downsampling"
+  ],
+  "ml-68": [
+    "time series"
+  ],
+  "ml-70": [
+    "directed acyclic graph",
+    "causal graph"
+  ],
+  "stats-201": [
+    "p-value"
+  ],
+  "stats-202": [
+    "confidence interval"
+  ],
+  "stats-74": [
+    "Type I error",
+    "type I error",
+    "Type II error",
+    "type II error"
+  ],
+  "stats-212": [
+    "statistical power"
+  ],
+  "stats-213": [
+    "t-test"
+  ],
+  "stats-237": [
+    "z-test"
+  ],
+  "stats-232": [
+    "chi-square test",
+    "chi-squared test"
+  ],
+  "stats-233": [
+    "ANOVA"
+  ],
+  "stats-234": [
+    "Mann-Whitney"
+  ],
+  "stats-235": [
+    "Wilcoxon"
+  ],
+  "stats-236": [
+    "Fisher's exact test"
+  ],
+  "stats-238": [
+    "statistical significance",
+    "statistically significant"
+  ],
+  "stats-239": [
+    "conditional probability"
+  ],
+  "stats-240": [
+    "law of total probability"
+  ],
+  "stats-241": [
+    "Bayes' theorem",
+    "Bayes's theorem",
+    "Bayes theorem"
+  ],
+  "stats-242": [
+    "bootstrapping"
+  ],
+  "stats-243": [
+    "Benjamini-Hochberg",
+    "false discovery rate"
+  ],
+  "stats-214": [
+    "Bonferroni"
+  ],
+  "stats-244": [
+    "p-hacking"
+  ],
+  "stats-245": [
+    "CUPED"
+  ],
+  "stats-246": [
+    "difference-in-differences"
+  ],
+  "stats-247": [
+    "instrumental variable"
+  ],
+  "stats-248": [
+    "regression discontinuity"
+  ],
+  "stats-102": [
+    "confounding variable",
+    "confounder"
+  ],
+  "stats-207": [
+    "Simpson's paradox"
+  ],
+  "stats-209": [
+    "selection bias"
+  ],
+  "stats-101": [
+    "survivorship bias"
+  ],
+  "stats-88": [
+    "central limit theorem"
+  ],
+  "stats-100": [
+    "law of large numbers"
+  ],
+  "stats-204": [
+    "Poisson distribution"
+  ],
+  "stats-205": [
+    "binomial distribution"
+  ],
+  "stats-210": [
+    "probability density function"
+  ],
+  "stats-211": [
+    "maximum likelihood"
+  ],
+  "stats-75": [
+    "normal distribution"
+  ],
+  "stats-80": [
+    "R-squared"
+  ],
+  "stats-226": [
+    "adjusted R-squared"
+  ],
+  "stats-81": [
+    "residuals"
+  ],
+  "stats-203": [
+    "heteroscedasticity",
+    "heteroskedasticity"
+  ],
+  "stats-215": [
+    "multicollinearity",
+    "collinearity"
+  ],
+  "stats-104": [
+    "autocorrelation"
+  ],
+  "stats-87": [
+    "stationarity"
+  ],
+  "stats-95": [
+    "covariance"
+  ],
+  "stats-97": [
+    "Pearson correlation"
+  ],
+  "stats-105": [
+    "mean squared error",
+    "MSE"
+  ],
+  "stats-106": [
+    "root mean squared error",
+    "RMSE"
+  ],
+  "stats-103": [
+    "interquartile range",
+    "IQR"
+  ],
+  "stats-93": [
+    "boxplot",
+    "box plot"
+  ],
+  "stats-71": [
+    "quantile"
+  ],
+  "stats-85": [
+    "outlier"
+  ],
+  "stats-99": [
+    "missing values"
+  ],
+  "stats-208": [
+    "skewness",
+    "kurtosis"
+  ],
+  "stats-82": [
+    "dimensionality reduction"
+  ],
+  "stats-91": [
+    "principal component analysis",
+    "PCA"
+  ],
+  "stats-198": [
+    "KL divergence",
+    "Kullback-Leibler"
+  ],
+  "stats-199": [
+    "Jensen-Shannon"
+  ],
+  "stats-200": [
+    "Kolmogorov-Smirnov"
+  ],
+  "stats-107": [
+    "k-means"
+  ],
+  "stats-73": [
+    "cluster sampling"
+  ],
+  "stats-79": [
+    "high cardinality",
+    "high-cardinality"
+  ],
+  "dl-144": [
+    "stochastic gradient descent",
+    "SGD"
+  ],
+  "dl-146": [
+    "mini-batch gradient descent"
+  ],
+  "dl-156": [
+    "gradient descent"
+  ],
+  "dl-148": [
+    "AdaGrad"
+  ],
+  "dl-159": [
+    "learning rate"
+  ],
+  "dl-151": [
+    "epoch"
+  ],
+  "dl-150": [
+    "dropout"
+  ],
+  "dl-183": [
+    "batch normalization"
+  ],
+  "dl-171": [
+    "ReLU"
+  ],
+  "dl-196": [
+    "leaky ReLU"
+  ],
+  "dl-169": [
+    "activation function"
+  ],
+  "dl-170": [
+    "sigmoid"
+  ],
+  "dl-164": [
+    "tanh"
+  ],
+  "dl-158": [
+    "softmax"
+  ],
+  "dl-161": [
+    "LSTM"
+  ],
+  "dl-165": [
+    "GRU"
+  ],
+  "dl-153": [
+    "generative adversarial network",
+    "GAN"
+  ],
+  "dl-190": [
+    "autoencoder"
+  ],
+  "dl-172": [
+    "pooling"
+  ],
+  "dl-249": [
+    "self-attention"
+  ],
+  "dl-250": [
+    "multi-head attention"
+  ],
+  "dl-251": [
+    "positional encoding"
+  ],
+  "dl-252": [
+    "beam search"
+  ],
+  "dl-253": [
+    "contrastive learning"
+  ],
+  "dl-254": [
+    "knowledge distillation"
+  ],
+  "dl-230": [
+    "intersection over union",
+    "IoU"
+  ],
+  "dl-231": [
+    "focal loss"
+  ],
+  "dl-195": [
+    "universal approximation theorem"
+  ],
+  "dl-173": [
+    "residual connection"
+  ],
+  "genai-1": [
+    "top-p",
+    "nucleus sampling"
+  ],
+  "genai-2": [
+    "retrieval-augmented generation",
+    "RAG"
+  ],
+  "genai-3": [
+    "chunk size",
+    "chunking"
+  ],
+  "genai-4": [
+    "hybrid search",
+    "BM25"
+  ],
+  "genai-6": [
+    "hallucination"
+  ],
+  "genai-7": [
+    "context window"
+  ],
+  "genai-8": [
+    "system prompt"
+  ],
+  "genai-9": [
+    "transformer"
+  ],
+  "genai-10": [
+    "BERT"
+  ],
+  "genai-12": [
+    "embedding"
+  ],
+  "genai-13": [
+    "few-shot",
+    "zero-shot"
+  ],
+  "genai-14": [
+    "RLHF",
+    "reinforcement learning from human feedback"
+  ],
+  "genai-15": [
+    "byte pair encoding",
+    "BPE",
+    "tokenization"
+  ],
+  "genai-16": [
+    "KV cache"
+  ],
+  "genai-17": [
+    "direct preference optimization",
+    "DPO"
+  ],
+  "genai-18": [
+    "low-rank adaptation",
+    "LoRA"
+  ],
+  "genai-19": [
+    "speculative decoding"
+  ],
+  "genai-20": [
+    "LLM-as-a-judge",
+    "LLM judge"
+  ],
+  "genai-21": [
+    "chain-of-thought",
+    "chain of thought"
+  ],
+  "genai-22": [
+    "Chinchilla",
+    "scaling laws"
+  ],
+  "genai-23": [
+    "mixture of experts",
+    "mixture-of-experts"
+  ],
+  "genai-24": [
+    "FlashAttention"
+  ],
+  "genai-25": [
+    "grouped-query attention"
+  ],
+  "genai-26": [
+    "BLEU",
+    "ROUGE"
+  ],
+  "mlops-1": [
+    "data drift",
+    "covariate shift"
+  ],
+  "mlops-2": [
+    "concept drift"
+  ],
+  "mlops-4": [
+    "training-serving skew"
+  ],
+  "mlops-5": [
+    "Population Stability Index",
+    "PSI"
+  ],
+  "mlops-7": [
+    "online inference",
+    "batch inference"
+  ],
+  "mlops-8": [
+    "feature store"
+  ],
+  "mlops-9": [
+    "shadow deployment"
+  ],
+  "mlops-10": [
+    "canary deployment",
+    "canary release"
+  ],
+  "mlops-11": [
+    "cold start"
+  ],
+  "mlops-12": [
+    "two-tower"
+  ],
+  "history-115": [
+    "perceptron"
+  ],
+  "history-116": [
+    "backpropagation"
+  ],
+  "history-110": [
+    "MNIST"
+  ],
+  "history-122": [
+    "ImageNet"
+  ],
+  "history-139": [
+    "AlexNet"
+  ],
+  "history-123": [
+    "AlphaGo"
+  ],
+  "history-119": [
+    "Deep Blue"
+  ],
+  "history-126": [
+    "Turing test"
+  ],
+  "history-111": [
+    "least squares"
+  ],
+  "history-113": [
+    "Markov chain"
+  ],
+  "history-133": [
+    "Q-learning"
+  ],
+  "history-143": [
+    "Tensor Processing Unit",
+    "TPU"
+  ],
+  "history-128": [
+    "TensorFlow"
+  ],
+  "history-129": [
+    "Keras"
+  ],
+  "history-130": [
+    "PyTorch"
+  ],
+  "history-138": [
+    "Theano"
+  ]
+}

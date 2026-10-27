@@ -1,5 +1,7 @@
 import raw from "../content/questions.json";
 import topicList from "../content/topics.json";
+import linkTerms from "../content/links.json";
+import { createLinker, type Segment } from "./links";
 import { buildRelatedIndex, type RelatedIndex } from "./related";
 
 /**
@@ -253,6 +255,16 @@ export function getRelatedQuestions(
     relatedIndexes.set(q.category, index);
   }
   return index.related(q, limit);
+}
+
+const linkParagraphs = createLinker(questions, linkTerms as Record<string, string[]>);
+
+/**
+ * A card's longer answer, split into text and links to the cards it mentions.
+ * See `lib/links.ts`.
+ */
+export function getLinkedExplanation(q: QuestionWithSlug): Segment[][] {
+  return q.explanation ? linkParagraphs(q.id, q.explanation) : [];
 }
 
 export const QUESTION_COUNT = questions.length;
