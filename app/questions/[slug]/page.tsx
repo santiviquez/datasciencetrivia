@@ -7,6 +7,7 @@ import { SCHEMA_ID } from "@/lib/schema";
 import {
   CATEGORIES,
   getAllQuestions,
+  getLinkedExplanation,
   getQuestionBySlug,
   getRelatedQuestions,
   pageTitle,
@@ -125,8 +126,18 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
                 The longer answer
               </h2>
               <div className="mt-4 space-y-4 leading-relaxed">
-                {q.explanation.map((para, i) => (
-                  <p key={i}>{para}</p>
+                {getLinkedExplanation(q).map((para, i) => (
+                  <p key={i}>
+                    {para.map((part, j) =>
+                      typeof part === "string" ? (
+                        part
+                      ) : (
+                        <Link key={j} href={`/questions/${part.slug}`} className="underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current">
+                          {part.text}
+                        </Link>
+                      ),
+                    )}
+                  </p>
                 ))}
               </div>
             </section>

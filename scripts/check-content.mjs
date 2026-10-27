@@ -171,6 +171,32 @@ for (const q of raw) {
 }
 
 /**
+ * content/links.json names the phrases that link to each card from the longer
+ * answers. An id that no longer exists would silently stop linking, and the
+ * same phrase listed for two cards would link to whichever came first.
+ */
+const linkTerms = JSON.parse(readFileSync(join(here, "..", "content", "links.json"), "utf8"));
+const linkedBy = new Map();
+for (const [id, names] of Object.entries(linkTerms)) {
+  if (!seenIds.has(id)) errors.push(`content/links.json: "${id}" is not a question id`);
+  if (!Array.isArray(names) || names.length === 0) {
+    errors.push(`content/links.json: "${id}" needs a non-empty list of phrases`);
+    continue;
+  }
+  for (const name of names) {
+    if (typeof name !== "string" || !name.trim()) {
+      errors.push(`content/links.json: "${id}" has an empty phrase`);
+      continue;
+    }
+    // All-lowercase phrases match any casing, so they collide with any casing.
+    const key = name === name.toLowerCase() ? name : `=${name}`;
+    const clash = linkedBy.get(key) ?? linkedBy.get(name.toLowerCase());
+    if (clash) errors.push(`content/links.json: "${name}" is listed for both "${clash}" and "${id}"`);
+    else linkedBy.set(key, id);
+  }
+}
+
+/**
  * A redirect from a merged card must land on a live card, and must not shadow
  * one: Next applies redirects before routing, so a "from" that is still a live
  * slug would make that card unreachable.
@@ -215,5 +241,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${topicOf.size} cards in topics, ${redirects.length} redirects, ${markdown.size} Markdown files`,
+  `content OK — ${raw.length} questions, ${seenSlugs.size} unique slugs, ${starterLists.length} starter lists, ${topicOf.size} cards in topics, ${linkedBy.size} link phrases, ${redirects.length} redirects, ${markdown.size} Markdown files`,
 );
