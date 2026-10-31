@@ -29,11 +29,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.8,
     })),
-    ...getAllQuestions().map((q) => ({
-      url: `${SITE.url}/questions/${q.slug}`,
-      lastModified: new Date(q.updated ?? CONTENT_UPDATED),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
+    ...getAllQuestions()
+      .filter((q) => !q.noindex)
+      .map((q) => ({
+        url: `${SITE.url}/questions/${q.slug}`,
+        lastModified: new Date(q.updated ?? CONTENT_UPDATED),
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
   ];
 }

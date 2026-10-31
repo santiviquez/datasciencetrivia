@@ -36,6 +36,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     title,
     description,
     alternates: { canonical: `/questions/${q.slug}` },
+    // Replaces the site-wide robots setting rather than merging with it.
+    ...(q.noindex && { robots: { index: false, follow: true } }),
     openGraph: {
       type: "article",
       title: `${title} — ${SITE.name}`,
