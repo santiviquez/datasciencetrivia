@@ -106,6 +106,14 @@ export interface Question {
    */
   explanation?: string[];
   /**
+   * Keeps the card's page out of search results and the sitemap while the
+   * card stays in the deck, the quizzes and the hubs. For cards that work as
+   * a quiz prompt but can't stand alone as an answer to a search, e.g. "Tanh
+   * function squishes values to be between?", so Google judges the site on
+   * the pages that can.
+   */
+  noindex?: true;
+  /**
    * Date (YYYY-MM-DD) this card's question, answer or explanation last
    * changed. Feeds the page's <lastmod> and dateModified, so a crawler can
    * tell which pages are worth refetching. Omit it and the deck-wide

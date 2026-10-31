@@ -126,6 +126,7 @@
     "category": "ml",
     "question": "What is the process of adding tuning parameters to a model to induce smoothness in order to prevent overfitting?",
     "answer": "Regularization: a penalty on parameter size added to the loss, so the fit stays smooth rather than chasing every training point. L1 (lasso) zeroes weights outright and selects features, L2 (ridge) shrinks them all. Its strength is tuned on validation data, never training loss.",
+    "noindex": true,
     "explanation": [
       "Regularization. It adds a penalty to the training loss, minimizing loss(w) + λ · penalty(w), where the tuning parameter λ sets how much complexity costs. Large weights let predictions swing sharply between nearby inputs, so penalizing them gives a smoother function that follows the trend, not every noisy point.",
       "Smoothing splines show the idea literally. They minimize Σ (yᵢ − f(xᵢ))² + λ ∫ f''(x)² dx, where the integral measures total curvature. With λ = 0 the curve can pass through every training point; as λ grows, bending gets expensive, and in the limit the fit is the least-squares straight line. Ridge and lasso make the same trade on weights.",
@@ -270,6 +271,7 @@
     "category": "ml",
     "question": "How many centroids would a k-means algorithm with k = 3 find?",
     "answer": "3",
+    "noindex": true,
     "explanation": [
       "Three. In k-means k is the number of clusters, and each cluster is represented by one centroid, the mean of its points. With k = 3 the algorithm returns three centroids, and each point joins the cluster of the nearest one.",
       "Lloyd's algorithm alternates two steps: assign each point to its closest centroid, then move each centroid to the mean of its points. For the points 1, 2, 9, 10, 20 and 22 with starting centroids 1, 9 and 10, the first pass gives {1, 2}, {9} and {10, 20, 22}, moving the centroids to 1.5, 9 and 17.3. The next gives {1, 2}, {9, 10} and {20, 22}, with centroids 1.5, 9.5 and 21, and then nothing changes.",
@@ -559,6 +561,7 @@
     "category": "ml",
     "question": "Mean Squared Error, Root Mean Squared Error, Mean Absolute Error, R-squared are metrics for evaluation which type of models?",
     "answer": "Regression models.",
+    "noindex": true,
     "explanation": [
       "Regression models, which predict a continuous number such as a price or a delivery time. MAE, MSE and RMSE measure the typical size of the prediction errors, so lower is better. R-squared compares the model with a baseline that always predicts the mean, so higher is better.",
       "Example: actual values 10, 12, 14 and 20 with predictions 11, 11, 15 and 18 give errors of −1, 1, −1 and 2. MAE = 5/4 = 1.25. MSE = 7/4 = 1.75, and RMSE = √1.75 ≈ 1.32, in the target's units. The actuals average 14, so the total sum of squares is 16 + 4 + 0 + 36 = 56 and R² = 1 − 7/56 = 0.875.",
@@ -728,6 +731,7 @@
     "category": "ml",
     "question": "High bias can cause an algorithm to underfit? True or False?",
     "answer": "True.",
+    "noindex": true,
     "explanation": [
       "True. High bias is the main cause of underfitting. Bias is error from a model's assumptions being too restrictive for the real pattern, so the model misses that pattern even on its training data, and its error is high on training and new data alike.",
       "Example: a linear classifier on the four XOR points, (0, 0) and (1, 1) in one class, (0, 1) and (1, 0) in the other. No straight line separates them, so it gets at most 3 of 4 right, however long it trains. Adding the feature x₁x₂ makes them separable and removes the bias. Heavy regularization adds bias too: ridge with a huge λ pushes weights toward zero and predicts roughly the mean.",
@@ -741,6 +745,7 @@
     "category": "ml",
     "question": "High variance can cause an algorithm to overfit. True or False?",
     "answer": "True.",
+    "noindex": true,
     "explanation": [
       "True. In the bias-variance sense, variance is how much a model's predictions change when it is trained on a different sample from the same population. A high-variance model bends to the noise in its particular training set, and fitting noise is what overfitting is. Strictly, high variance is less a cause of overfitting than its defining symptom.",
       "Example: train an unpruned decision tree on five random samples of 1,000 homes and ask each to price the same house. The answers might range from $240,000 to $390,000, because each tree memorized different noise; a linear regression trained on the same samples might stay between $295,000 and $310,000.",
@@ -921,6 +926,7 @@
     "category": "ml",
     "question": "What is the main data structure used in causal modelling?",
     "answer": "Graphs! More specifically, directed acyclic graphs.",
+    "noindex": true,
     "explanation": [
       "Graphs, specifically directed acyclic graphs (DAGs). Nodes are variables and an arrow X → Y means X directly causes Y; acyclic means no chain of arrows loops back, so nothing causes itself. Judea Pearl set out this approach in his book Causality (2000), and his 2011 Turing Award cited his calculus for causal reasoning.",
       "A DAG tells you what to adjust for. Suppose Age → Exercise, Age → Disease and Exercise → Disease. The backdoor path Exercise ← Age → Disease mixes age's effect into the association, so you condition on age: P(disease | do(exercise)) = Σₐ P(disease | exercise, a) P(a), where do() means setting exercise by intervention.",
@@ -1160,6 +1166,7 @@
     "category": "stats",
     "question": "In a normal distribution which parameter indicates where the bell is centered?",
     "answer": "The mean.",
+    "noindex": true,
     "explanation": [
       "The mean, μ. A normal distribution N(μ, σ²) has two parameters: μ sets where the bell is centered and the standard deviation σ sets its width. Because the curve is symmetric, μ is also the median and the mode, the point where the density peaks.",
       "The density is f(x) = (1 / (σ√(2π))) · exp(−(x − μ)² / (2σ²)). Its exponent is 0 only at x = μ, so the peak sits exactly at the mean. Changing μ slides the curve without changing its shape: many IQ tests are scaled to mean 100 and standard deviation 15, and raising the mean to 110 would shift every percentile up 10 points.",
@@ -1173,6 +1180,7 @@
     "category": "stats",
     "question": "In a normal distribution, which parameter indicates how wide the bell is?",
     "answer": "The standard deviation.",
+    "noindex": true,
     "explanation": [
       "The standard deviation, σ. In a normal distribution N(μ, σ²), μ fixes the center and σ the width: the larger σ, the wider and flatter the bell. The variance σ² carries the same information on a squared scale.",
       "σ has a geometric meaning: the curve's inflection points, where its curvature flips, sit at μ − σ and μ + σ. About 68% of values lie within one σ of the mean, 95% within two and 99.7% within three. Since the total area is 1, the peak height is 1 / (σ√(2π)), so doubling σ halves the peak. A machine filling boxes to 500 g with σ = 5 g puts about 95% of them between 490 and 510 g.",
@@ -1290,6 +1298,7 @@
     "category": "stats",
     "question": "Precision is the ratio between which two quantities?",
     "answer": "True positives over predicted positives, TP / (TP + FP): of the cases you flagged, how many were right. It says nothing about the positives you missed, so it is read alongside recall, and it is the metric to favour when a false alarm is the costly error.",
+    "noindex": true,
     "explanation": [
       "Precision is the ratio between the true positives and all predicted positives: precision = TP / (TP + FP). The denominator counts every case the model labeled positive, right or wrong, so precision answers one question: when the model says yes, how often is it right?",
       "Example: a drug-screening model scores 10,000 compounds and sends its top 40 to the lab. Twelve turn out to be active, so precision is 12 / 40 = 0.30. If each assay costs $2,000, each confirmed hit costs $2,000 / 0.30 ≈ $6,667, so precision sets the cost per success. Active compounds ranked below the cutoff never enter the ratio.",
@@ -2104,6 +2113,7 @@
     "category": "history",
     "question": "Andrey Markov first described the techniques he used to analyse a poem, and these techniques later became known as Markov chains. True or false?",
     "answer": "False as stated. Markov introduced the chains in a 1906 paper on the law of large numbers for dependent variables. His 1913 study of vowel and consonant sequences in the first 20,000 letters of Pushkin's Eugene Onegin was their first application to real data, not their origin.",
+    "noindex": true,
     "explanation": [
       "False as stated, though it is a popular telling. Markov introduced his chains in a purely mathematical paper in 1906. In 1913 he applied them to Alexander Pushkin's verse novel Eugene Onegin, the first use of a Markov chain on real data. A Markov chain is a sequence of random states in which the next depends only on the current one.",
       "He presented the study to the Imperial Academy of Sciences in St. Petersburg on 23 January 1913 (Julian calendar). He labeled the first 20,000 letters as vowels or consonants and counted which followed which. Vowels were 43.2% of the letters, yet after a vowel the chance of another vowel was only about 0.128, while after a consonant the chance of a vowel was about 0.663. The letters were not independent, and a two-state chain captured the alternation.",
@@ -2419,6 +2429,7 @@
     "category": "history",
     "question": "What object did Yann LeCun use in his NIPS 2016 keynote to describe the 'layers' of intelligence?",
     "answer": "Cake",
+    "noindex": true,
     "explanation": [
       "A cake. In his opening keynote at NIPS 2016 in Barcelona, \"Predictive Learning\", Yann LeCun said that if intelligence is a cake, unsupervised learning is the bulk of the cake, supervised learning the icing, and reinforcement learning the cherry. Each layer's size reflects its share of what a machine learns.",
       "The argument was about information per example, and his slides put rough numbers on it. A reinforcement learning agent gets an occasional scalar reward, a few bits for some samples. A supervised model gets a label, 10 to 10,000 bits per sample. A model that predicts hidden or future parts of its input, such as the next frames of a video, gets millions of bits per sample.",
@@ -2433,6 +2444,7 @@
     "category": "history",
     "question": "What defunct deep learning library was started in 2007 by the Montreal lab now known as Mila?",
     "answer": "Theano",
+    "noindex": true,
     "explanation": [
       "Theano. It was developed from 2007 in Yoshua Bengio's lab at the Université de Montréal, then called LISA (Laboratoire d'informatique des systèmes adaptatifs) and only later renamed the Montreal Institute for Learning Algorithms (MILA), now Mila. Strictly, Theano was a Python compiler for math on multi-dimensional arrays, on which deep learning libraries were built.",
       "You defined an expression symbolically; Theano derived its gradients automatically, optimized the graph and generated C++ or CUDA code for a CPU or GPU. James Bergstra, Olivier Breuleux, Frédéric Bastien and colleagues presented it at the SciPy 2010 conference. Keras first ran on it, as did Lasagne, Blocks and PyMC3.",
@@ -2489,6 +2501,7 @@
     "category": "history",
     "question": "What was the output dimension of the embedding layers and sub-layers of the original Transformer (Attention Is All You Need, 2017)?",
     "answer": "512 (d_model) in the base model. The larger Transformer (big) in the same paper used 1024.",
+    "noindex": true,
     "explanation": [
       "512. In the base model of \"Attention Is All You Need\" by Ashish Vaswani and colleagues at Google, presented at NIPS 2017, every embedding layer and sub-layer outputs vectors of size d_model = 512. d_model is the width of the vector that represents each token as it moves through the network.",
       "The other base hyperparameters fit around it: 6 encoder and 6 decoder layers, 8 attention heads of 64 dimensions each (8 × 64 = 512), and a feed-forward inner layer of 2048, four times d_model. The model had about 65 million parameters and trained in 12 hours on 8 P100 GPUs. Transformer (big) doubled d_model to 1024, with 16 heads.",
@@ -2503,6 +2516,7 @@
     "category": "history",
     "question": "In 2016 Google’s AlphaGo won four out of five games of Go against Lee Sedol, a professional Go player from South Korea (9 dan rank). What hardware powered the AlphaGo software to victory?",
     "answer": "Tensor Processing Unit (TPU).",
+    "noindex": true,
     "explanation": [
       "Tensor Processing Units (TPUs), custom chips Google designed to run neural networks. AlphaGo, built by Google DeepMind, beat Lee Sedol 4 games to 1 in Seoul from 9 to 15 March 2016, with TPUs evaluating its policy and value networks. Google revealed the chip only at Google I/O in May 2016, when engineer Norm Jouppi wrote that TPUs powered AlphaGo in those matches.",
       "The first-generation TPU is an application-specific integrated circuit (ASIC) built for inference: it runs networks that are already trained, using a matrix unit of 65,536 8-bit multiply-accumulate cells. Google said TPUs had been in its data centers for more than a year. The AlphaGo that beat Fan Hui in October 2015 had run on 1,202 CPUs and 176 GPUs; DeepMind's 2017 AlphaGo Zero paper says the Lee Sedol version used 48 TPUs.",
@@ -2586,6 +2600,7 @@
     "category": "dl",
     "question": "What are the two actors in a convolution operation?",
     "answer": "Convolutional filter and a slice of an input matrix.",
+    "noindex": true,
     "explanation": [
       "The filter, or kernel, and the patch of the input it covers. The filter is a small grid of learned weights, such as 3 × 3; the patch is the same-sized slice of input beneath it. Their element-wise products are summed, plus a bias, into one output value.",
       "A vertical-edge filter with every row [1, 0, −1], on a patch with every row [10, 10, 0], gives 10 + 10 + 10 = 30, a strong edge response; a flat patch gives 0. Sliding the filter fills the feature map: a 5 × 5 input, a 3 × 3 filter, stride 1 and no padding give a 3 × 3 map, as (5 − 3)/1 + 1 = 3.",
@@ -2744,6 +2759,7 @@
     "category": "dl",
     "question": "What type of layer typically has a cell, an input gate, an output gate and a forget gate?",
     "answer": "An LSTM. The cell state carries information along a mostly additive path while the gates learn what to write, forget and read, which is how it survives the vanishing gradients that stall plain RNNs on long sequences. Attention has since displaced it for most sequence work.",
+    "noindex": true,
     "explanation": [
       "An LSTM layer. The cell carries memory between steps. The forget gate sets how much of the old cell state to keep, the input gate how much new information to write, and the output gate how much of the cell to expose as the hidden state. Each gate is a sigmoid layer with outputs between 0 and 1.",
       "Example: with old cell state 2.0, forget gate 0.9, input gate 0.5 and candidate −0.8, the new cell state is 0.9 × 2.0 + 0.5 × (−0.8) = 1.4. With output gate 0.7, the hidden state is 0.7 × tanh(1.4) ≈ 0.62. Since the cell updates by addition, information survives many steps while the forget gate stays near 1.",
@@ -2757,6 +2773,7 @@
     "category": "dl",
     "question": "Sigmoid squishes values to be between?",
     "answer": "0 and 1, which is what makes it the right output layer for a binary probability. Inside a deep network it is a poor choice: gradients vanish once inputs saturate at either tail, and its output is not zero-centred, so ReLU-family activations replaced it in hidden layers.",
+    "noindex": true,
     "explanation": [
       "Between 0 and 1. The sigmoid, or logistic, function σ(x) = 1 / (1 + e^(−x)) maps any real number into the open interval (0, 1), approaching 1 for large positive inputs and 0 for large negative ones without ever reaching either. That is why its output can be read as a probability in a binary classifier's output layer.",
       "Some values: σ(0) = 0.5, σ(2) ≈ 0.88, σ(−2) ≈ 0.12 and σ(5) ≈ 0.993. The curve is symmetric, σ(−x) = 1 − σ(x), and its inverse is the logit, log(p / (1 − p)). Its relative tanh(x) = 2σ(2x) − 1 has the same S-shape but maps to (−1, 1).",
@@ -2783,6 +2800,7 @@
     "category": "dl",
     "question": "Tanh function squishes values to be between?",
     "answer": "-1 and 1",
+    "noindex": true,
     "explanation": [
       "Between −1 and 1. The hyperbolic tangent, tanh(x) = (eˣ − e⁻ˣ) / (eˣ + e⁻ˣ), maps any real number into the open interval (−1, 1), approaching 1 for large positive inputs and −1 for large negative ones without reaching either. It is odd, tanh(−x) = −tanh(x), and tanh(0) = 0, so its outputs are zero-centered.",
       "Some values: tanh(1) ≈ 0.76, tanh(2) ≈ 0.96 and tanh(3) ≈ 0.995. The derivative, 1 − tanh²(x), is 1 at the origin, four times sigmoid's peak of 0.25, one reason tanh trained better than sigmoid in hidden layers before ReLU. It still saturates: the derivative is about 0.07 at x = 2 and 0.0099 at x = 3. In 32-bit floats, tanh(10) rounds to exactly 1.0.",
@@ -2796,6 +2814,7 @@
     "category": "dl",
     "question": "Type of layer that typically has a reset gate and an update gate?",
     "answer": "A GRU. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.",
+    "noindex": true,
     "explanation": [
       "A GRU, or gated recurrent unit. Its two gates are the reset gate and the update gate; the output gate belongs to the LSTM. Each gate is a sigmoid layer whose 0-to-1 outputs scale how much of a signal passes.",
       "The update gate sets how much of the old hidden state to keep versus replace with a new candidate, merging the LSTM's forget and input gates. The reset gate sets how much of the old state feeds that candidate; near 0, the candidate depends almost only on the current input. If the update gate keeps 99% of a state per step, 0.99¹⁰⁰ ≈ 0.37 survives 100 steps.",
@@ -2907,6 +2926,7 @@
     "category": "dl",
     "question": "Why did the embedding layers and all sub-layers of the original Transformer (Attention Is All You Need, 2017) need the same output dimension?",
     "answer": "Because of the residual connections.",
+    "noindex": true,
     "explanation": [
       "Because of the residual connections. Each sub-layer, self-attention or feed-forward, is wrapped as LayerNorm(x + Sublayer(x)), and two vectors can only be added if they have the same length. The paper says so: to facilitate these residual connections, all sub-layers and embedding layers output dimension d_model.",
       "A 10-token sentence enters as a 10 × 512 matrix. Eight attention heads each output 10 × 64; concatenated they give 10 × 512, and the output projection W^O keeps that width. The feed-forward block widens each token to 2048, then projects back to 512 before the addition. Positional encodings are added to the embeddings, not concatenated, so they need width 512 too.",
@@ -2982,6 +3002,7 @@
     "question": "As the dropout ratio used in a neural network increases, the network’s capacity also increases.",
     "title": "Does a higher dropout rate increase a neural network's capacity?",
     "answer": "False",
+    "noindex": true,
     "explanation": [
       "False. A higher dropout rate lowers a network's effective capacity, its ability to fit complex functions, noise included. The rate is the probability that each unit is zeroed on a training step, so a higher rate means each step trains a smaller random sub-network. No parameters are added or removed; dropout only limits how existing weights are used, which is why it regularizes.",
       "Example: in a layer of 1,024 units, a rate of 0.2 leaves about 819 active per step and a rate of 0.8 about 205. Units cannot rely on particular partners and must learn simple, redundant features. Too high a rate underfits: even the training loss stays high.",
@@ -2997,6 +3018,7 @@
     "question": "Stochastic Gradient Descent is the proper technique to use when the full dataset doesn’t fit in memory.",
     "title": "Should you use SGD when the dataset doesn't fit in memory?",
     "answer": "True",
+    "noindex": true,
     "explanation": [
       "True. Stochastic gradient descent, and in practice its mini-batch form, is the standard way to train when the data does not fit in memory. Each update needs only one example or one small batch, so the rest of the dataset can stay on disk and be streamed in, an approach called out-of-core learning.",
       "The numbers make the point. ImageNet's 1.28 million training images, decoded to 224 × 224 × 3 arrays of 32-bit floats, would take about 770 GB, while a batch of 256 takes about 154 MB. Data loaders read one batch at a time and prepare the next while the GPU works.",
@@ -3027,6 +3049,7 @@
     "question": "Gradient Descent is an algorithm used to minimize overfitting in neural networks.",
     "title": "Is gradient descent used to reduce overfitting?",
     "answer": "False",
+    "noindex": true,
     "explanation": [
       "False. Gradient descent is an optimization algorithm: it minimizes the training loss by repeatedly moving the weights against the gradient, w ← w − η ∇L(w). It has no notion of overfitting, which is fitting the training data, noise included, so closely that performance on new data suffers. Reducing overfitting is the job of regularization.",
       "Run long enough, gradient descent can even cause overfitting. Fit a degree-9 polynomial to 10 noisy points: with 10 coefficients, the training error can be driven to zero by a curve threading every point and swinging wildly between them. Neural networks show it in their loss curves: training loss keeps falling while validation loss bottoms out and then rises.",
@@ -3057,6 +3080,7 @@
     "question": "Precision is a performance metric that defines a classification model's ability to identify only relevant samples.",
     "title": "Does precision measure a model's ability to find only relevant samples?",
     "answer": "True",
+    "noindex": true,
     "explanation": [
       "True. Precision is the fraction of samples a classifier labels positive that are actually positive: precision = TP / (TP + FP). A high-precision model rarely raises false alarms, which is what \"identify only relevant samples\" means. Recall instead asks whether it finds all of them.",
       "Example: a spam filter moves 200 emails to the spam folder; 190 are spam and 10 are legitimate, so precision is 190 / 200 = 0.95. If 250 spam emails arrived in total, recall is 190 / 250 = 0.76. The 60 spam emails that reached the inbox do not touch precision at all.",
@@ -3072,6 +3096,7 @@
     "question": "Recall is a performance metric that measures a classification model's ability to identify all relevant samples.",
     "title": "Does recall measure a model's ability to find all relevant samples?",
     "answer": "True",
+    "noindex": true,
     "explanation": [
       "True. Recall is the share of all relevant, or truly positive, samples that a model identifies: recall = TP / (TP + FN), where FN counts the relevant samples it missed. It is also called sensitivity or the true positive rate.",
       "The word relevant comes from information retrieval, where precision and recall were first used to evaluate search systems. Say 40 documents in a collection are relevant to a query and the engine returns 25 results, 20 of them relevant. Recall is 20/40 = 0.5: half of what the user needed never appeared. Precision, the share of returned results that are relevant, is 20/25 = 0.8.",
@@ -3147,6 +3172,7 @@
     "question": "An autoencoder is a neural network that automatically learns by using its inputs as the expected output.",
     "title": "Does an autoencoder learn by using its inputs as the target?",
     "answer": "True",
+    "noindex": true,
     "explanation": [
       "True. An autoencoder is a neural network trained to reproduce its input at its output, so each input is its own target and no labels are needed. An encoder compresses x into a smaller code z, a decoder rebuilds an approximation x̂, and training minimizes a reconstruction loss such as the mean squared error between x and x̂.",
       "Example: a 28 × 28 MNIST digit has 784 pixel values. An encoder might map them through layers of 256 and 64 units to a 32-number code, and a mirror-image decoder maps it back. The code is 24.5 times smaller than the image, so the network has to learn which features summarize a digit instead of copying pixels.",
@@ -3207,6 +3233,7 @@
     "question": "Dropout is an excellent regularization technique that speeds the training process.",
     "title": "Does dropout speed up neural network training?",
     "answer": "False",
+    "noindex": true,
     "explanation": [
       "False. Dropout is a widely used regularizer, but it slows training down. Each step trains a different random sub-network, so gradients are noisier and the network needs more updates to converge, while each update costs about the same.",
       "Srivastava et al., in their 2014 JMLR paper, wrote that a dropout network typically takes 2 to 3 times longer to train than a standard network of the same architecture, naming noisy parameter updates as a major cause. So a model that peaks after 20 epochs might need 40 to 60 with dropout. Implementations save no compute per step either: dropped units are still computed, then multiplied by zero.",
@@ -3237,6 +3264,7 @@
     "question": "Leaky ReLU is an activation function that lets small negative values pass through when a neuron's input is less than zero.",
     "title": "Does leaky ReLU let small negative values pass through?",
     "answer": "True",
+    "noindex": true,
     "explanation": [
       "True. Leaky ReLU passes positive inputs through unchanged and multiplies negative inputs by a small slope α instead of setting them to zero: f(x) = x if x > 0, otherwise αx. Strictly, the condition is on each neuron's own input, its weighted sum, not the network's input.",
       "With α = 0.01, the inputs −5, −0.5 and 3 become −0.05, −0.005 and 3, where plain ReLU gives 0, 0 and 3. The gradient is the point: it is α, not 0, for negative inputs, so a neuron stuck in the negative region still gets small updates and can recover. Andrew Maas, Awni Hannun and Andrew Ng proposed it in 2013 for speech recognition networks.",

@@ -54,6 +54,10 @@ raw.forEach((q, i) => {
     errors.push(`${at}: "explanation" must be a non-empty list of non-empty paragraphs`);
   }
 
+  if (q.noindex !== undefined && q.noindex !== true) {
+    errors.push(`${at}: "noindex" must be true or left out`);
+  }
+
   if (
     q.updated !== undefined &&
     (typeof q.updated !== "string" ||
@@ -125,6 +129,8 @@ for (const [, list] of starterLists) {
   for (const id of ids) {
     if (!seenIds.has(id)) {
       errors.push(`lib/questions.ts: starter "${id}" is not a question id`);
+    } else if (raw[seenIds.get(id)].noindex) {
+      errors.push(`lib/questions.ts: starter "${id}" is hidden from search ("noindex")`);
     }
   }
 }
