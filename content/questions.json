@@ -204,13 +204,15 @@
     "id": "ml-16",
     "category": "ml",
     "question": "What is the difference between L1 (Lasso) and L2 (Ridge) regularization?",
-    "answer": "L1 penalizes the absolute magnitude of the coefficients while L2 penalizes the square of the coefficients.",
+    "answer": "L1 (lasso) adds the sum of the weights' absolute values to the loss and drives some weights exactly to zero. L2 (ridge, also called weight decay) adds the sum of their squares and shrinks every weight without zeroing any.",
     "explanation": [
-      "L1 regularization (lasso) adds λ Σ |wᵢ|, the sum of the weights' absolute values, to the loss; L2 (ridge) adds λ Σ wᵢ², the sum of their squares. As a result, L1 sets some weights exactly to zero, selecting features, while L2 shrinks every weight but keeps them all.",
-      "The penalties charge weights differently. For weights (4, 0.2), L1 charges 4.2 and L2 charges 16 + 0.04 = 16.04. Under L2 the small weight costs almost nothing, so nothing pushes it out. Under L1 it costs the same per unit as the large one, so if its feature barely reduces the error, zeroing it is cheaper. In Bayesian terms, L1 is the MAP estimate under a Laplace prior, L2 under a Gaussian.",
-      "Ridge has a closed-form solution and spreads weight across correlated features; lasso generally needs iterative solvers and tends to keep one feature of a correlated group. Don't confuse them with L1 and L2 losses, mean absolute and mean squared error, which measure prediction error, not weight size."
+      "L1 regularization, called lasso (least absolute shrinkage and selection operator), adds λ Σ |wᵢ|, λ times the L1 norm of the weights, to the loss. L2 regularization, called ridge after ridge regression, adds λ Σ wᵢ², λ times the squared Euclidean norm; neural networks call it weight decay and numerical analysis calls it Tikhonov regularization. Arthur Hoerl and Robert Kennard introduced ridge regression in 1970, and Robert Tibshirani introduced the lasso in 1996. The practical difference: L1 sets some weights exactly to zero, selecting features, while L2 shrinks every weight but keeps them all.",
+      "The penalties charge weights differently. For weights (4, 0.2), L1 charges 4.2 and L2 charges 16 + 0.04 = 16.04. Under L2 the small weight costs almost nothing, so nothing pushes it out, and the large weight dominates the penalty. Under L1 every unit of weight costs the same, so if a feature barely reduces the error, zeroing its weight is cheaper. Put another way, the L1 penalty pushes with a constant force λ all the way to zero, while the L2 push, 2λw, fades as w shrinks, so weights get small but stay nonzero.",
+      "With orthonormal features and the loss ½ ‖y − Xw‖², both have closed forms that make this concrete. Lasso shrinks each least-squares coefficient β̂ by λ and clips it at zero, ŵ = sign(β̂) · max(|β̂| − λ, 0): with λ = 0.5, coefficients 3.0, 0.4 and −1.2 become 2.5, 0 and −0.7. Ridge divides each one by 1 + 2λ instead, so the same coefficients become 1.5, 0.2 and −0.6: smaller, but none of them zero.",
+      "They also treat correlated features differently. If a feature appears twice and the fit needs the two weights to add up to 2, least squares can't choose between (2, 0) and (102, −100), which fit equally well. Ridge, minimizing ‖y − Xw‖² + λ Σ wᵢ², picks the equal split, a little under 1 each, because that has the smallest penalty; its closed form, ŵ = (XᵀX + λI)⁻¹ Xᵀy, adds λ to the diagonal so the matrix stays invertible. Lasso charges every same-sign split 2 and tends to keep one copy arbitrarily, which is why elastic net mixes both penalties. Because |w| has a kink at zero, lasso has no closed form in general; solvers use coordinate descent, as scikit-learn's Lasso does, or proximal steps.",
+      "In practice, standardize the features first. The penalty charges raw weight size, so a distance measured in kilometers instead of meters needs a weight 1,000 times larger and pays far more for it. Leave the intercept unpenalized and choose λ by cross-validation. Weight decay and L2 are the same under plain SGD but not under Adam, which is why AdamW applies the decay separately. In Bayesian terms, L1 is the MAP estimate under a Laplace prior and L2 under a Gaussian. And don't confuse them with L1 and L2 losses, mean absolute and mean squared error, which measure prediction error, not weight size."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-11-01",
     "slug": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization"
   },
   {
@@ -453,81 +455,17 @@
     "slug": "what-is-better-to-have-a-f1-score-equals-to-1-or-to-0"
   },
   {
-    "id": "ml-35",
-    "category": "ml",
-    "question": "Which regularization technique penalizes the sum of absolute value of weights? L1 or L2?",
-    "answer": "L1.",
-    "explanation": [
-      "L1. L1 regularization adds λ Σ |wᵢ|, λ times the L1 norm ‖w‖₁, to the training loss. The name comes from that norm, also called the Manhattan or taxicab norm: length measured as the sum of distances along each axis. L1-penalized linear regression is called lasso.",
-      "Example: weights (3, −2, 0.5) have an L1 norm of 5.5, so λ = 0.1 adds 0.55 to the loss; the sign is ignored. Because |w| has a kink at zero, the penalty has no gradient there. Solvers use coordinate descent, as scikit-learn's Lasso does, or proximal steps that shrink each weight by a fixed amount and set it to zero if it would cross. Plain SGD tends to leave weights jittering near zero.",
-      "A practical follow-up is scaling. The penalty charges raw weight size, so units matter: measure a distance in kilometers instead of meters and its weight must be 1,000 times larger, costing 1,000 times more, so lasso is far more likely to drop it. Standardize features first and leave the intercept unpenalized."
-    ],
-    "updated": "2026-10-15",
-    "slug": "which-regularization-technique-penalizes-the-sum-of-absolute-value-of-weights-l1-or-l2"
-  },
-  {
-    "id": "ml-36",
-    "category": "ml",
-    "question": "Which regularization technique penalizes the sum of square weights? L1 or L2?",
-    "answer": "L2.",
-    "explanation": [
-      "L2. L2 regularization adds λ Σ wᵢ², λ times the squared Euclidean norm ‖w‖₂², to the loss. It is the squared length of the weight vector, not the length itself, so it is smooth and differentiable everywhere. L2-penalized linear regression is called ridge; in neural networks it is usually called weight decay.",
-      "Its gradient is 2λw, so each gradient descent step multiplies every weight by (1 − 2ηλ) before the data gradient is applied. With learning rate η = 0.1 and λ = 0.01, weights shrink 0.2% per step unless the data pushes back. Texts that write (λ/2) Σ wᵢ² get the gradient λw; that only rescales λ.",
-      "Squaring makes large weights dominate: for weights (3, −2, 0.5) the penalty is 9 + 4 + 0.25 = 13.25, 68% of it from the 3. So L2 prefers to spread weight: if four near-identical features can share the work, one weight of 4 costs 16 and four weights of 1 cost 4, while L1 charges 4 either way. scikit-learn's LogisticRegression uses L2 by default."
-    ],
-    "updated": "2026-10-15",
-    "slug": "which-regularization-technique-penalizes-the-sum-of-square-weights-l1-or-l2"
-  },
-  {
-    "id": "ml-37",
-    "category": "ml",
-    "question": "L1 regularization is also called?",
-    "answer": "Lasso, short for least absolute shrinkage and selection operator. It adds λ times the L1 norm of the weights, λ Σ |wᵢ|, to the loss, which drives some weights exactly to zero.",
-    "explanation": [
-      "L1 regularization is also called lasso (least absolute shrinkage and selection operator), the name of L1-penalized linear regression. It adds λ Σ |wᵢ|, λ times the L1 norm of the weights, to the loss. The L1 norm is the quantity penalized, not another name for the method. L2 is ridge.",
-      "Robert Tibshirani introduced it in 1996. It sets some weights exactly to zero, selecting features. With orthonormal features and loss ½ ‖y − Xw‖² + λ Σ |wᵢ|, each weight is its least-squares value shrunk by λ and clipped at zero: ŵ = sign(β̂) · max(|β̂| − λ, 0). With λ = 0.5, coefficients 3.0, 0.4 and −1.2 become 2.5, 0 and −0.7.",
-      "The usual follow-up: why does L1 give zeros and L2 not? The L1 penalty pushes with constant force λ all the way to zero, while the L2 push, 2λw, fades as w shrinks, so weights get small but stay nonzero. Among correlated features lasso keeps one arbitrarily, which is why elastic net mixes L1 and L2."
-    ],
-    "updated": "2026-10-12",
-    "slug": "l1-regularization-is-also-called"
-  },
-  {
-    "id": "ml-38",
-    "category": "ml",
-    "question": "L2 regularization is also called?",
-    "answer": "Ridge.",
-    "explanation": [
-      "L2 regularization is also called ridge, after ridge regression: least squares with an L2 penalty, minimizing ‖y − Xw‖² + λ Σ wᵢ². Neural networks call it weight decay; numerical analysis calls it Tikhonov regularization. It shrinks every weight toward zero but, unlike lasso, almost never sets one exactly to zero.",
-      "Arthur Hoerl and Robert Kennard introduced ridge regression in Technometrics in 1970. Its closed form, ŵ = (XᵀX + λI)⁻¹ Xᵀy, adds λ to the diagonal so the matrix stays invertible even with collinear features. Example: if a feature appears twice, least squares cannot choose between weights of 2 and 0 or 102 and −100, which fit equally well. Ridge picks the equal split, a little under 1 each, because that has the smallest penalty.",
-      "A common follow-up: are weight decay and L2 the same? With plain SGD they are equivalent; with Adam they are not, which is why AdamW applies the decay separately. Scale features first, leave the intercept unpenalized and choose λ by cross-validation."
-    ],
-    "updated": "2026-10-13",
-    "slug": "l2-regularization-is-also-called"
-  },
-  {
-    "id": "ml-39",
-    "category": "ml",
-    "question": "Can we have both L1 and L2 regularization components in a linear model?",
-    "answer": "Yes, it is called Elastic net regularization.",
-    "explanation": [
-      "Yes. A linear model with both penalties is called elastic net: the loss is the usual error plus λ₁ Σ |wᵢ| + λ₂ Σ wᵢ². The L1 part sets some weights exactly to zero; the L2 part shrinks weights smoothly and stabilizes the solution. Hui Zou and Trevor Hastie introduced it in 2005.",
-      "The L2 part fixes a lasso weakness. Suppose x₁ and x₂ are identical copies and the fit needs w₁ + w₂ = 2. Every non-negative split has L1 norm 2, so lasso may keep (2, 0), one copy only. The L2 penalty is 4 for (2, 0) but 2 for (1, 1), so elastic net shares the weight equally: the grouping effect.",
-      "In scikit-learn, ElasticNet takes alpha, the overall strength, and l1_ratio, the L1 share: 1 is lasso, 0 is ridge. Tune both by cross-validation, for example with ElasticNetCV, after scaling the features. It also helps when features outnumber rows: lasso selects at most n features from n samples, while elastic net can keep more."
-    ],
-    "updated": "2026-10-13",
-    "slug": "can-we-have-both-l1-and-l2-regularization-components-in-a-linear-model"
-  },
-  {
     "id": "ml-40",
     "category": "ml",
     "question": "What is Elastic net regularization?",
-    "answer": "A regularization technique that linearly combines the L1 (lasso) and L2 (ridge) penalties.",
+    "answer": "A regularization that adds both the L1 (lasso) and L2 (ridge) penalties to the loss, so one linear model gets both: L1 sets some weights to zero and L2 keeps that selection stable when features are correlated.",
     "explanation": [
-      "Elastic net regularization adds a weighted mix of the L1 and L2 penalties to a model's loss: loss + λ₁ Σ |wᵢ| + λ₂ Σ wᵢ². It keeps lasso's ability to set weights exactly to zero and adds ridge's smooth shrinkage, which keeps selection stable when predictors are correlated. Lasso and ridge are its two extreme cases.",
+      "Elastic net adds a weighted mix of the L1 and L2 penalties to a model's loss: loss + λ₁ Σ |wᵢ| + λ₂ Σ wᵢ². So yes, a linear model can have both penalties at once. It keeps lasso's ability to set weights exactly to zero and adds ridge's smooth shrinkage, and lasso and ridge are its two extreme cases. Hui Zou and Trevor Hastie introduced it in 2005.",
+      "The L2 part fixes a lasso weakness. Suppose x₁ and x₂ are identical copies and the fit needs w₁ + w₂ = 2. Every non-negative split has L1 norm 2, so lasso may keep (2, 0), one copy only. The L2 penalty is 4 for (2, 0) but 2 for (1, 1), so elastic net shares the weight equally: the grouping effect.",
       "The mechanism is clearest with squared loss ½ ‖y − Xw‖² and orthonormal features (XᵀX = I). Each weight then has a closed form: ŵ = sign(β̂) · max(|β̂| − λ₁, 0) / (1 + 2λ₂), where β̂ is the least-squares estimate. With λ₁ = λ₂ = 0.5, estimates of 4.0, 0.3 and −2.0 become 1.75, 0 and −0.75: lasso's thresholding, then ridge's proportional shrinkage.",
-      "Watch the naming: in scikit-learn, alpha is the overall strength and l1_ratio the L1 share, while in R's glmnet, alpha is the L1 share and lambda the strength. It suits wide data such as gene expression, where features outnumber samples and come in correlated groups."
+      "Watch the naming: in scikit-learn, alpha is the overall strength and l1_ratio the L1 share (1 is lasso, 0 is ridge), while in R's glmnet, alpha is the L1 share and lambda the strength. Tune both by cross-validation, for example with ElasticNetCV, after scaling the features. It suits wide data such as gene expression, where features outnumber samples and come in correlated groups: lasso selects at most n features from n samples, while elastic net can keep more."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-11-01",
     "slug": "what-is-elastic-net-regularization"
   },
   {

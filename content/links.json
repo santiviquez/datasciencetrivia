@@ -78,7 +78,8 @@
     "L1 regularization",
     "L2 regularization",
     "lasso",
-    "ridge regression"
+    "ridge regression",
+    "weight decay"
   ],
   "ml-40": [
     "elastic net"
