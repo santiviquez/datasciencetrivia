@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-82 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
+77 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/machine-learning).
 
@@ -14,7 +14,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Linear models, SVMs and naive Bayes](#linear-models-svms-and-naive-bayes) (7)
 - [Trees and ensembles](#trees-and-ensembles) (9)
 - [Overfitting, bias and variance](#overfitting-bias-and-variance) (10)
-- [Regularization](#regularization) (11)
+- [Regularization](#regularization) (6)
 - [Classification metrics](#classification-metrics) (16)
 - [Losses and regression metrics](#losses-and-regression-metrics) (7)
 - [Features, data and validation](#features-data-and-validation) (12)
@@ -277,33 +277,9 @@ Regularization: a penalty on parameter size added to the loss, so the fit stays 
 
 ### What is the difference between L1 (Lasso) and L2 (Ridge) regularization?
 
-L1 penalizes the absolute magnitude of the coefficients while L2 penalizes the square of the coefficients.
+L1 (lasso) adds the sum of the weights' absolute values to the loss and drives some weights exactly to zero. L2 (ridge, also called weight decay) adds the sum of their squares and shrinks every weight without zeroing any.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization)
-
-### Which regularization technique penalizes the sum of absolute value of weights? L1 or L2?
-
-L1.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/which-regularization-technique-penalizes-the-sum-of-absolute-value-of-weights-l1-or-l2)
-
-### Which regularization technique penalizes the sum of square weights? L1 or L2?
-
-L2.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/which-regularization-technique-penalizes-the-sum-of-square-weights-l1-or-l2)
-
-### L1 regularization is also called?
-
-Lasso, short for least absolute shrinkage and selection operator. It adds λ times the L1 norm of the weights, λ Σ \|wᵢ\|, to the loss, which drives some weights exactly to zero.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/l1-regularization-is-also-called)
-
-### L2 regularization is also called?
-
-Ridge.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/l2-regularization-is-also-called)
 
 ### Can we use L1 regularization for feature selection?
 
@@ -311,15 +287,9 @@ Yes, because the nature of L1 regularization will lead to sparse coefficients of
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/can-we-use-l1-regularization-for-feature-selection)
 
-### Can we have both L1 and L2 regularization components in a linear model?
-
-Yes, it is called Elastic net regularization.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/can-we-have-both-l1-and-l2-regularization-components-in-a-linear-model)
-
 ### What is Elastic net regularization?
 
-A regularization technique that linearly combines the L1 (lasso) and L2 (ridge) penalties.
+A regularization that adds both the L1 (lasso) and L2 (ridge) penalties to the loss, so one linear model gets both: L1 sets some weights to zero and L2 keeps that selection stable when features are correlated.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-elastic-net-regularization)
 

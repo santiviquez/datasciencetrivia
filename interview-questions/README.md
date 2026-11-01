@@ -2,11 +2,11 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-292 questions with short answers on machine learning, deep learning, generative AI, MLOps, statistics and the history of AI. They are the cards of [Data Science Trivia](https://www.datasciencetrivia.com), a free flashcard deck for data science and machine learning interviews, written out so you can read or search them in one place.
+287 questions with short answers on machine learning, deep learning, generative AI, MLOps, statistics and the history of AI. They are the cards of [Data Science Trivia](https://www.datasciencetrivia.com), a free flashcard deck for data science and machine learning interviews, written out so you can read or search them in one place.
 
 | Category | Questions | Covers |
 |---|---|---|
-| [Machine Learning](machine-learning.md) | 82 | Models, metrics and the tradeoffs that decide whether a model survives contact with real data. |
+| [Machine Learning](machine-learning.md) | 77 | Models, metrics and the tradeoffs that decide whether a model survives contact with real data. |
 | [Deep Learning](deep-learning.md) | 62 | Neural networks from backpropagation to attention, and the tricks that make them trainable. |
 | [Generative AI](generative-ai.md) | 26 | Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them. |
 | [MLOps](mlops.md) | 14 | What happens after a model ships: drift, monitoring, deployment and the system design questions around them. |

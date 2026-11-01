@@ -1,4 +1,9 @@
 [
   { "from": "what-does-mse-mean", "to": "what-is-mse" },
-  { "from": "what-does-rmse-mean", "to": "what-is-rmse" }
+  { "from": "what-does-rmse-mean", "to": "what-is-rmse" },
+  { "from": "which-regularization-technique-penalizes-the-sum-of-absolute-value-of-weights-l1-or-l2", "to": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization" },
+  { "from": "which-regularization-technique-penalizes-the-sum-of-square-weights-l1-or-l2", "to": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization" },
+  { "from": "l1-regularization-is-also-called", "to": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization" },
+  { "from": "l2-regularization-is-also-called", "to": "what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization" },
+  { "from": "can-we-have-both-l1-and-l2-regularization-components-in-a-linear-model", "to": "what-is-elastic-net-regularization" }
 ]
