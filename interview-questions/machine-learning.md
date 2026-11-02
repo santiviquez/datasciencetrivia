@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-77 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
+74 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/machine-learning).
 
@@ -15,7 +15,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Trees and ensembles](#trees-and-ensembles) (9)
 - [Overfitting, bias and variance](#overfitting-bias-and-variance) (10)
 - [Regularization](#regularization) (6)
-- [Classification metrics](#classification-metrics) (16)
+- [Classification metrics](#classification-metrics) (13)
 - [Losses and regression metrics](#losses-and-regression-metrics) (7)
 - [Features, data and validation](#features-data-and-validation) (12)
 
@@ -327,35 +327,17 @@ Classification models.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/accuracy-precision-recall-f1-score-are-metrics-to-evaluate-which-types-of-models)
 
-### What is precision?
+### What is the difference between precision and recall?
 
-Precision is the number of correct positive predictions divided by the total number of positive predictions: TP / (TP + FP).
+Precision is the share of predicted positives that are correct, TP / (TP + FP). Recall is the share of actual positives the model finds, TP / (TP + FN).
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-precision)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-precision-and-recall)
 
-### What is recall?
+### What is the F1 score?
 
-Recall is the number of the correct predictions of the positive class divided by the number of predictions that should have been classified in the positive class. TP/(TP + FN)
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-recall)
-
-### If someone asks you: out of all the actual positive labels, how many did the model correctly identify? Which metric should you calculate?
-
-Recall: true positives over all actual positives, TP / (TP + FN). It is the metric to optimise when a miss is the expensive error, as in fraud or disease screening. You can always buy recall by lowering the threshold, which is why it is quoted next to precision.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/if-someone-ask-you-out-of-all-the-possible-positive-labels-how-many-did-the-model)
-
-### What is F1-score?
-
-Is a measure of a test's accuracy. F1-score is the harmonic mean of the precision and recall.
+The harmonic mean of precision and recall: F1 = 2 · precision · recall / (precision + recall). It runs from 0 to 1, where 1 is best, and accuracy plays no part in it.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-f1-score)
-
-### Is it better to have an F1 score of 1 or of 0?
-
-F1-score reaches its best value at 1 (perfect precision and recall).
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-better-to-have-a-f1-score-equals-to-1-or-to-0)
 
 ### What is the difference between sensitivity and specificity?
 

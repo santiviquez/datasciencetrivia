@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-62 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+61 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -16,7 +16,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (12)
 - [Transformers, attention and decoding](#transformers-attention-and-decoding) (5)
 - [Vision metrics and training methods](#vision-metrics-and-training-methods) (4)
-- [Rapid-fire basics](#rapid-fire-basics) (7)
+- [Rapid-fire basics](#rapid-fire-basics) (6)
 
 ## Training with gradient descent
 
@@ -420,7 +420,7 @@ Training a smaller student model to imitate a larger teacher by matching the tea
 
 ## Rapid-fire basics
 
-Quick true-or-false checks on the vocabulary around deep learning: categorical features and one-hot encoding, multi-class labels, precision, recall and F1, and what bagging means.
+Quick true-or-false checks on the vocabulary around deep learning: categorical features and one-hot encoding, multi-class labels, precision and recall, and what bagging means.
 
 ### Is a categorical feature one that takes a limited set of values?
 
@@ -461,14 +461,6 @@ True
 True
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/recall-is-a-performance-metric-that-defines-a-classification-models-ability-to-identify)
-
-### Is the F1 score the harmonic mean of precision, recall and accuracy?
-
-> **Flashcard:** The F1 Score is a metric defined as the harmonic mean of precision, recall, and accuracy.
-
-False
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy)
 
 ### Does bagging mean splitting a dataset into random bags?
 
