@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-61 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+58 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -10,7 +10,7 @@ Every question links to its page on the site, with a longer answer. To test your
 
 ## Topics
 
-- [Training with gradient descent](#training-with-gradient-descent) (16)
+- [Training with gradient descent](#training-with-gradient-descent) (13)
 - [Activation functions](#activation-functions) (11)
 - [Dropout, normalization and capacity](#dropout-normalization-and-capacity) (7)
 - [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (12)
@@ -86,31 +86,13 @@ A sophisticated gradient descent algorithm that rescales the gradients of each p
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-adagrad)
 
-### What is learning rate?
+### What is the learning rate, and what if it's too high or too low?
 
-Is a tuning parameter in an optimization algorithm that determines the step size at each iteration while moving toward a minimum of a loss function.
+> **Flashcard:** What is the learning rate?
+
+The step size of gradient descent: each update moves the weights by the learning rate times the gradient. Too high and the loss oscillates or diverges; too low and training crawls.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-learning-rate)
-
-### What happens when the learning rate is too large?
-
-Can accelerate the training. However, it is possible that we “shoot” too far and miss the minimum of the function that we want to optimize.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-happens-when-the-learning-rate-is-too-large)
-
-### What happens when the learning rate is too small?
-
-Training is slow: tiny steps need many more iterations, and on a fixed budget the model may stop before converging. With noisy mini-batch gradients it does settle closer to a minimum, but it can't step past a poor nearby minimum or a plateau.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-happens-when-the-learning-rate-is-too-small)
-
-### Does a learning rate that is too low slow down training?
-
-> **Flashcard:** Using a learning rate that’s too low will cause the training process to be very slow.
-
-True
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow)
 
 ### What if we set all the weights of a neural network to 0?
 

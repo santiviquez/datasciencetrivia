@@ -10,5 +10,8 @@
   { "from": "what-is-recall", "to": "what-is-the-difference-between-precision-and-recall" },
   { "from": "if-someone-ask-you-out-of-all-the-possible-positive-labels-how-many-did-the-model", "to": "what-is-the-difference-between-precision-and-recall" },
   { "from": "what-is-better-to-have-a-f1-score-equals-to-1-or-to-0", "to": "what-is-f1-score" },
-  { "from": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy", "to": "what-is-f1-score" }
+  { "from": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy", "to": "what-is-f1-score" },
+  { "from": "what-happens-when-the-learning-rate-is-too-large", "to": "what-is-learning-rate" },
+  { "from": "what-happens-when-the-learning-rate-is-too-small", "to": "what-is-learning-rate" },
+  { "from": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow", "to": "what-is-learning-rate" }
 ]

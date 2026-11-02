@@ -2634,14 +2634,17 @@
   {
     "id": "dl-159",
     "category": "dl",
-    "question": "What is learning rate?",
-    "answer": "Is a tuning parameter in an optimization algorithm that determines the step size at each iteration while moving toward a minimum of a loss function.",
+    "question": "What is the learning rate?",
+    "title": "What is the learning rate, and what if it's too high or too low?",
+    "answer": "The step size of gradient descent: each update moves the weights by the learning rate times the gradient. Too high and the loss oscillates or diverges; too low and training crawls.",
     "explanation": [
-      "The learning rate is the hyperparameter that sets how big a step gradient descent takes on each update: new weights = old weights − learning rate × gradient. It is usually written η or α, and it is often the single most important hyperparameter to tune.",
-      "Too small, and training crawls and can stall on plateaus or in poor local minima. Too large, and the updates overshoot the minimum, so the loss oscillates or diverges. Typical starting values are 0.1 to 0.01 for SGD and around 0.001 (3e-4 is a popular default) for Adam.",
-      "In practice the rate is rarely constant. Schedules such as step decay, cosine annealing or warmup followed by decay change it during training, and adaptive optimizers like Adam and RMSProp scale it per parameter. A learning-rate range test, which raises the rate every batch and watches the loss, is a quick way to find a good value."
+      "The learning rate is the hyperparameter that sets how big a step gradient descent takes on each update: w ← w − η∇L(w), where η (sometimes written α) is the learning rate. It is often the most important hyperparameter to tune, because the wrong value can keep a model from training at all, however good the rest of the setup is.",
+      "When the rate is too high, each step overshoots the minimum. Near a minimum the right step is small, and a step that is too big jumps to the other side of the valley, sometimes higher up than where it started. The loss oscillates or spikes, and if the rate is large enough it grows from step to step until it diverges, often ending in NaN values. On L(w) = w², whose gradient is 2w, each step multiplies w by (1 − 2η): with η between 0.5 and 1, w flips sign every step but still shrinks, and with η above 1 it grows on every step.",
+      "When the rate is too low, training crawls. On the same L(w) = w², starting at w = 1, η = 0.1 shrinks w by a factor of 0.8 per step and gets it below 0.01 after 21 steps; η = 0.001 shrinks it by 0.998 and needs about 2,300 steps, more than 100 times as many. On a fixed epoch budget the run stops before converging, which looks like underfitting: a smooth but nearly flat loss curve. In deep networks the usual symptom is a loss that crawls across plateaus.",
+      "Two claims about low rates need qualifying. A lower rate does settle closer to the minimum when gradients are noisy, as with mini-batches: on L(w) = ½w² with gradient noise of standard deviation σ, the weight jitters with spread √(η/(2 − η))·σ, about 0.23σ at η = 0.1 and 0.07σ at η = 0.01. But it also closes the gap by 1% per step instead of 10%, which is why schedules start high and decay. And a low rate does not create local minima; it only lacks the step size and noise to hop out of the nearest one, where larger steps can skip shallow dips.",
+      "Typical starting values are 0.1 to 0.01 for SGD and around 0.001 for Adam, with 3e-4 a popular default. In practice the rate is rarely constant: warmup keeps the first steps small, step decay or cosine annealing shrink it later, and adaptive optimizers like Adam and RMSProp scale it per parameter. To find a good value, run a learning-rate range test, which raises the rate every batch and plots the loss, and pick a rate somewhat below the point where the loss starts to climb. If a run diverges, lower the rate by a factor of 3 to 10."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-02",
     "slug": "what-is-learning-rate"
   },
   {
@@ -2739,34 +2742,6 @@
     "updated": "2026-10-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-if-we-set-all-the-weights-of-a-neural-network-to-0"
-  },
-  {
-    "id": "dl-167",
-    "category": "dl",
-    "question": "What happens when the learning rate is too large?",
-    "answer": "Can accelerate the training. However, it is possible that we “shoot” too far and miss the minimum of the function that we want to optimize.",
-    "explanation": [
-      "When the learning rate is too large, each gradient descent step overshoots the minimum. The loss bounces around instead of settling, and if the rate is large enough it grows from step to step until it diverges, often ending in NaN values.",
-      "The learning rate scales how far the weights move along the negative gradient. Near a minimum the right step is small; a step that is too big jumps to the other side of the valley, sometimes higher up than where it started. Symptoms are a loss curve that oscillates wildly, spikes, or climbs, and in deep networks exploding activations or gradients.",
-      "The usual fixes are to lower the rate by a factor of 3 to 10, add a warmup period so early steps are small, use a decay schedule, or use an adaptive optimizer like Adam. A learning-rate range test, which raises the rate each batch and plots the loss, is a quick way to find the largest rate that still trains stably."
-    ],
-    "updated": "2026-10-11",
-    "proposedBy": "@Al_Grigor",
-    "slug": "what-happens-when-the-learning-rate-is-too-large"
-  },
-  {
-    "id": "dl-168",
-    "category": "dl",
-    "question": "What happens when the learning rate is too small?",
-    "answer": "Training is slow: tiny steps need many more iterations, and on a fixed budget the model may stop before converging. With noisy mini-batch gradients it does settle closer to a minimum, but it can't step past a poor nearby minimum or a plateau.",
-    "explanation": [
-      "Training gets slow. The learning rate η scales every update, w ← w − η∇L(w), so small steps mean many more iterations and, on a fixed budget, a run that may stop before converging. Its other effects, a more precise minimum and getting stuck, need qualifying.",
-      "The more precise minimum holds for noisy mini-batch training: SGD jitters around the minimum, and the jitter grows with η. For L(w) = ½w² with gradient noise of standard deviation σ, the weight settles with spread √(η/(2 − η))·σ: 0.23σ at η = 0.1, 0.07σ at η = 0.01. But the smaller rate closes the gap by 1% per step, not 10%, so schedules start high and decay.",
-      "A small rate does not create local minima. Small steps follow the slope into the nearest basin and lack the size and noise to hop out; larger steps can skip shallow dips. In deep networks the usual symptom is crawling across plateaus. Some studies link larger rates to flatter minima that generalize better, though this is debated."
-    ],
-    "updated": "2026-10-15",
-    "proposedBy": "@Al_Grigor",
-    "slug": "what-happens-when-the-learning-rate-is-too-small"
   },
   {
     "id": "dl-169",
@@ -3023,21 +2998,6 @@
     "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "in-neural-networks-an-activation-functions-most-essential-role-is-to-decide-whether-a"
-  },
-  {
-    "id": "dl-188",
-    "category": "dl",
-    "question": "Using a learning rate that’s too low will cause the training process to be very slow.",
-    "title": "Does a learning rate that is too low slow down training?",
-    "answer": "True",
-    "explanation": [
-      "True. A learning rate that is too low makes gradient descent take tiny steps, so the loss falls slowly and training needs far more iterations to converge. The learning rate η scales every update: w ← w − η ∇L(w).",
-      "Example: take L(w) = w², whose gradient is 2w, starting at w = 1. Each step multiplies w by (1 − 2η). With η = 0.1 the factor is 0.8, and w falls below 0.01 after 21 steps. With η = 0.001 the factor is 0.998, and the same progress takes about 2,300 steps, more than 100 times as many.",
-      "On a fixed epoch budget, a tiny rate also stops before converging, which looks like underfitting; the loss curve shows a smooth but nearly flat decline. Interviewers often ask how to choose the rate: a learning-rate range test, warmup plus a decay schedule, or an adaptive optimizer such as Adam. A rate that is too high fails the opposite way, with a loss that oscillates or diverges."
-    ],
-    "updated": "2026-10-16",
-    "proposedBy": "@svpino",
-    "slug": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow"
   },
   {
     "id": "dl-189",
