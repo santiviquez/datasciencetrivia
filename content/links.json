@@ -2,6 +2,9 @@
   "ml-17": [
     "confusion matrix"
   ],
+  "ml-31": [
+    "precision and recall"
+  ],
   "ml-33": [
     "F1 score",
     "F1-score"

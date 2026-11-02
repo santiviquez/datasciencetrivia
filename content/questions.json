@@ -376,19 +376,6 @@
     "slug": "what-does-random-means-in-the-random-forest-term"
   },
   {
-    "id": "ml-29",
-    "category": "ml",
-    "question": "If someone asks you: out of all the actual positive labels, how many did the model correctly identify? Which metric should you calculate?",
-    "answer": "Recall: true positives over all actual positives, TP / (TP + FN). It is the metric to optimise when a miss is the expensive error, as in fraud or disease screening. You can always buy recall by lowering the threshold, which is why it is quoted next to precision.",
-    "explanation": [
-      "Recall. It answers exactly that question: of all the examples that are actually positive, what fraction did the model label positive? Recall = TP / (TP + FN), where FN counts the positives the model missed. It is also called sensitivity, hit rate or the true positive rate.",
-      "Example: a test set holds 100 fraudulent transactions. The model flags 120 transactions, 80 of them real fraud. Recall is 80 / 100 = 0.80, because 20 frauds slipped through. Precision, the share of flagged transactions that are fraud, is 80 / 120 ≈ 0.67. The two metrics answer different questions from the same confusion matrix.",
-      "Recall matters most when a miss is costly: cancer screening, fraud, safety defects. It can always be pushed to 1.0 by predicting everything as positive, so it means little on its own. Interviewers expect you to pair it with precision, explain how lowering the threshold trades one for the other, and mention the F1 score or the precision-recall curve as ways to summarize both."
-    ],
-    "updated": "2026-10-12",
-    "slug": "if-someone-ask-you-out-of-all-the-possible-positive-labels-how-many-did-the-model"
-  },
-  {
     "id": "ml-30",
     "category": "ml",
     "question": "Producing a model with poor predictive ability because the model hasn't captured the complexity of the training data.",
@@ -405,54 +392,32 @@
   {
     "id": "ml-31",
     "category": "ml",
-    "question": "What is precision?",
-    "answer": "Precision is the number of correct positive predictions divided by the total number of positive predictions: TP / (TP + FP).",
+    "question": "What is the difference between precision and recall?",
+    "answer": "Precision is the share of predicted positives that are correct, TP / (TP + FP). Recall is the share of actual positives the model finds, TP / (TP + FN).",
     "explanation": [
-      "Precision is the share of a model's positive predictions that are actually positive: precision = TP / (TP + FP). A precision of 0.9 means one flagged case in ten is a false alarm. It ignores the positives the model missed, which recall measures.",
-      "Even for a fixed model, precision depends on how common positives are. Take a test that catches 90% of sick patients and wrongly flags 5% of healthy ones. Among 10,000 people with 1% prevalence, it finds 90 of the 100 sick and flags 495 of the 9,900 healthy, so precision is 90 / 585 ≈ 0.15. At 10% prevalence it finds 900 and flags 450: precision 900 / 1,350 ≈ 0.67.",
-      "Interviewers then ask about thresholds. Raising the decision threshold usually raises precision and lowers recall, but precision can dip at some steps, while recall never rises. If a model predicts no positives, precision is 0/0 and undefined; scikit-learn reports 0 and warns. Favor precision when false positives are costly, such as blocking legitimate payments."
+      "Precision and recall both measure how a classifier handles the positive class, from opposite sides. Precision = TP / (TP + FP) asks how many of the cases the model flagged are really positive. Recall = TP / (TP + FN) asks how many of the real positives the model flagged. Recall is also called sensitivity, hit rate or the true positive rate.",
+      "One example shows both. A test set holds 100 fraudulent transactions. The model flags 120 transactions, 80 of them real fraud. Precision is 80 / 120 ≈ 0.67, so one flag in three is a false alarm. Recall is 80 / 100 = 0.80, so 20 frauds slipped through. Neither number uses the true negatives, the legitimate transactions left alone, which is why both stay informative when positives are rare and accuracy is not.",
+      "The two trade off through the decision threshold. Lowering it flags more cases, so recall rises or stays put while precision usually falls; raising it does the reverse. Recall never rises when the threshold goes up, but precision can dip at some steps, because the next case to drop out may be a true positive. Both extremes are easy to reach and useless: flagging everything gives recall 1.0 with precision equal to the share of positives, and a model that flags nothing has an undefined precision of 0/0, which scikit-learn reports as 0 with a warning.",
+      "Recall depends only on how the model treats the real positives, but precision also depends on how common they are. Take a screening test that catches 90% of sick patients and wrongly flags 5% of healthy ones. Among 10,000 people with 1% prevalence, it finds 90 of the 100 sick and flags 495 of the 9,900 healthy, so precision is 90 / 585 ≈ 0.15. At 10% prevalence it finds 900 and flags 450, and precision rises to 900 / 1,350 ≈ 0.67. Recall is 0.90 in both cases.",
+      "Which one to favor depends on which error costs more. Favor recall when a miss is expensive, as in cancer screening or fraud detection, and precision when a false alarm is, as in a spam filter that would bury real email. To report both as one number, use the F1 score, their harmonic mean; to compare models across every threshold, plot the precision-recall curve. In medicine the same quantities go by other names: recall is sensitivity, precision is the positive predictive value, and specificity, the share of healthy people correctly cleared, completes the usual pair."
     ],
-    "updated": "2026-10-14",
-    "slug": "what-is-precision"
-  },
-  {
-    "id": "ml-32",
-    "category": "ml",
-    "question": "What is recall?",
-    "answer": "Recall is the number of the correct predictions of the positive class divided by the number of predictions that should have been classified in the positive class. TP/(TP + FN)",
-    "explanation": [
-      "Recall, also called sensitivity or the true positive rate, is the share of actual positives the model finds: recall = TP / (TP + FN). It answers \"of everything that was really positive, how much did we catch?\"",
-      "Example: there are 50 fraudulent transactions and the model flags 40 of them. Recall is 40/50 = 0.8, no matter how many legitimate transactions it also flagged by mistake. That is why recall is always reported with precision, which counts those false alarms.",
-      "Prioritize recall when missing a positive is expensive, as in cancer screening or fraud detection. You raise it by lowering the decision threshold, which usually lowers precision. Predicting everything as positive gives a recall of 1.0 and is useless, which is the tradeoff the F1 score and the precision-recall curve capture."
-    ],
-    "updated": "2026-10-11",
-    "slug": "what-is-recall"
+    "updated": "2026-11-02",
+    "slug": "what-is-the-difference-between-precision-and-recall"
   },
   {
     "id": "ml-33",
     "category": "ml",
-    "question": "What is F1-score?",
-    "answer": "Is a measure of a test's accuracy. F1-score is the harmonic mean of the precision and recall.",
+    "question": "What is the F1 score?",
+    "answer": "The harmonic mean of precision and recall: F1 = 2 · precision · recall / (precision + recall). It runs from 0 to 1, where 1 is best, and accuracy plays no part in it.",
     "explanation": [
-      "The F1 score is the harmonic mean of precision and recall: F1 = 2 · precision · recall / (precision + recall). It runs from 0 to 1 and is high only when both precision and recall are high.",
-      "Example: a fraud model flags 100 transactions, 60 of which are fraud, out of 120 frauds in total. Precision is 60/100 = 0.6, recall is 60/120 = 0.5, and F1 = 2 · 0.6 · 0.5 / 1.1 ≈ 0.55. The harmonic mean punishes imbalance, so precision 1.0 with recall 0.1 gives an F1 of only about 0.18.",
-      "F1 is the usual choice on imbalanced data, where accuracy is misleading, but it ignores true negatives and assumes precision and recall matter equally. When they don't, use F-beta (F2 weights recall more, F0.5 weights precision more). For multi-class problems, macro-F1 averages the per-class scores and micro-F1 pools all predictions first."
+      "The F1 score is the harmonic mean of precision and recall: F1 = 2 · precision · recall / (precision + recall). It runs from 0 to 1, where 1 is best, and it is high only when both precision and recall are high. Accuracy is not part of the formula, whatever the trick question says.",
+      "The harmonic mean is used because it is dragged toward the smaller of the two numbers. A classifier with precision 1.0 and recall 0.1 has an arithmetic mean of 0.55 but an F1 of about 0.18, which matches how poorly it finds the positive class. Written with confusion matrix counts, F1 = 2TP / (2TP + FP + FN), so the true negatives never enter it.",
+      "Example: a fraud model flags 100 transactions, 60 of which are fraud, out of 120 frauds in total. Precision is 60 / 100 = 0.6, recall is 60 / 120 = 0.5, and F1 = 2 · 0.6 · 0.5 / 1.1 ≈ 0.55. The counts give the same answer: TP = 60, FP = 40 and FN = 60, so F1 = 120 / 220 ≈ 0.55.",
+      "An F1 of 1 means no false positives and no false negatives; an F1 of 0 means the model found no true positives at all. A model that never predicts the positive class scores 0, even at 99% accuracy. What counts as good depends on how rare positives are: labeling everything positive gives recall 1 and precision equal to the prevalence p, so F1 = 2p / (1 + p), about 0.67 at 50% prevalence and only 0.02 at 1%. An F1 of exactly 1 on a test set more often signals data leakage than a perfect model.",
+      "F1 is the usual choice on imbalanced data, where accuracy misleads, but it ignores true negatives and weights precision and recall equally. When they don't matter equally, use F-beta, which weights recall beta times as much as precision: F2 favors recall and F0.5 favors precision. For multi-class problems, macro-F1 averages the per-class scores so rare classes count as much as common ones, while micro-F1 pools every prediction first and, when each example has exactly one label, equals accuracy. F1 also moves with the decision threshold, so tune the threshold on validation data before comparing models by it."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-02",
     "slug": "what-is-f1-score"
-  },
-  {
-    "id": "ml-34",
-    "category": "ml",
-    "question": "Is it better to have an F1 score of 1 or of 0?",
-    "answer": "F1-score reaches its best value at 1 (perfect precision and recall).",
-    "explanation": [
-      "An F1 score of 1 is better. F1 is the harmonic mean of precision and recall and runs from 0 to 1. A score of 1 means every predicted positive is correct and every actual positive is found; 0 means the model found no true positives at all.",
-      "From the confusion matrix, F1 = 2TP / (2TP + FP + FN). It is 1 only when FP = FN = 0, and 0 whenever TP = 0 and some error exists. With 40 true positives, 10 false positives and 10 false negatives, F1 = 80 / 100 = 0.8. A model that never predicts the positive class scores F1 = 0, even at 99% accuracy.",
-      "A good F1 depends on how rare positives are. Labeling everything positive gives recall 1 and precision equal to the prevalence p, so F1 = 2p / (1 + p): about 0.67 at 50% prevalence, only 0.02 at 1%. An F1 of exactly 1 on a test set more often signals data leakage than a perfect model."
-    ],
-    "updated": "2026-10-15",
-    "slug": "what-is-better-to-have-a-f1-score-equals-to-1-or-to-0"
   },
   {
     "id": "ml-40",
@@ -2888,21 +2853,6 @@
     "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "one-hot-encoding-is-an-excellent-solution-to-transform-categorical-features-with-high"
-  },
-  {
-    "id": "dl-178",
-    "category": "dl",
-    "question": "The F1 Score is a metric defined as the harmonic mean of precision, recall, and accuracy.",
-    "title": "Is the F1 score the harmonic mean of precision, recall and accuracy?",
-    "answer": "False",
-    "explanation": [
-      "False. The F1 score is the harmonic mean of precision and recall only: F1 = 2 · precision · recall / (precision + recall). Accuracy is not part of the formula.",
-      "The harmonic mean is used because it is dragged down by the smaller of the two numbers. A classifier with precision 1.0 and recall 0.1 has an arithmetic mean of 0.55 but an F1 of about 0.18, which reflects how poorly it actually finds the positive class.",
-      "Accuracy is left out on purpose. F1 is mostly used on imbalanced problems such as fraud or disease detection, where accuracy is misleading: predicting the majority class every time can score 99% accuracy while catching nothing. When precision and recall are not equally important, the F-beta score weights recall beta times as much as precision."
-    ],
-    "updated": "2026-10-16",
-    "proposedBy": "@svpino",
-    "slug": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy"
   },
   {
     "id": "dl-179",

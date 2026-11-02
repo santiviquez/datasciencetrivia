@@ -80,10 +80,7 @@
         "ml-18",
         "ml-46",
         "ml-31",
-        "ml-32",
-        "ml-29",
         "ml-33",
-        "ml-34",
         "ml-217",
         "ml-5",
         "ml-64",
@@ -220,14 +217,13 @@
     },
     {
       "name": "Rapid-fire basics",
-      "lead": "Quick true-or-false checks on the vocabulary around deep learning: categorical features and one-hot encoding, multi-class labels, precision, recall and F1, and what bagging means.",
+      "lead": "Quick true-or-false checks on the vocabulary around deep learning: categorical features and one-hot encoding, multi-class labels, precision and recall, and what bagging means.",
       "ids": [
         "dl-174",
         "dl-177",
         "dl-193",
         "dl-175",
         "dl-176",
-        "dl-178",
         "dl-197"
       ]
     }
