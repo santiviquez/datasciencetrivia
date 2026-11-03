@@ -171,11 +171,13 @@ Combining individual models together with the purpose of improving the predictiv
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-ensemble-learning)
 
-### Bagging stands for?
+### What is bagging (bootstrap aggregating) in machine learning?
 
-Bootstrap aggregating: train the same learner on many bootstrap resamples and average the predictions, which cuts variance and leaves bias roughly untouched. That is why it suits deep unstable trees, while boosting attacks bias by fitting each model to the last one's errors.
+> **Flashcard:** What is bagging?
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/bagging-stands-for)
+Bootstrap aggregating: train the same model on many bootstrap samples of the data, drawn with replacement, and average or vote their predictions. It mainly cuts variance, which is why it suits deep, unstable trees.
+
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-bagging)
 
 ### What is boosting when referring to machine learning algorithms?
 
