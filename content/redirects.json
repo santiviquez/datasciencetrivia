@@ -13,5 +13,8 @@
   { "from": "the-f1-score-is-a-metric-defined-as-the-harmonic-mean-of-precision-recall-and-accuracy", "to": "what-is-f1-score" },
   { "from": "what-happens-when-the-learning-rate-is-too-large", "to": "what-is-learning-rate" },
   { "from": "what-happens-when-the-learning-rate-is-too-small", "to": "what-is-learning-rate" },
-  { "from": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow", "to": "what-is-learning-rate" }
+  { "from": "using-a-learning-rate-thats-too-low-will-cause-the-training-process-to-be-very-slow", "to": "what-is-learning-rate" },
+  { "from": "type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of", "to": "what-is-the-difference-between-batch-mini-batch-and-stochastic-gradient-descent" },
+  { "from": "type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step", "to": "what-is-the-difference-between-batch-mini-batch-and-stochastic-gradient-descent" },
+  { "from": "type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees", "to": "what-is-the-difference-between-batch-mini-batch-and-stochastic-gradient-descent" }
 ]

@@ -352,10 +352,9 @@
   ],
   "dl-144": [
     "stochastic gradient descent",
-    "SGD"
-  ],
-  "dl-146": [
-    "mini-batch gradient descent"
+    "SGD",
+    "mini-batch gradient descent",
+    "batch gradient descent"
   ],
   "dl-156": [
     "gradient descent"
