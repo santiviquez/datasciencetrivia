@@ -2432,44 +2432,17 @@
   {
     "id": "dl-144",
     "category": "dl",
-    "question": "Type of gradient descent where we use only a single training example to calculate the gradient and update the parameters.",
-    "title": "What is stochastic gradient descent?",
-    "answer": "Stochastic Gradient Descent.",
+    "question": "What is the difference between batch, mini-batch and stochastic gradient descent?",
+    "answer": "How many examples each update uses: batch gradient descent uses the whole training set, stochastic gradient descent (SGD) one example, and mini-batch gradient descent a small batch, typically 32 to 512.",
     "explanation": [
-      "Stochastic gradient descent (SGD). In its original form it computes the gradient of the loss on one randomly chosen training example and updates the parameters immediately: w ← w − η ∇Lᵢ(w), with η the learning rate. Strictly it is a variant of gradient descent, not of backpropagation, which only computes the gradient.",
-      "Example: fit y = w·x with squared loss (w·x − y)², starting at w = 0. The example x = 2, y = 4 gives the gradient 2(w·x − y)·x = −16, so with η = 0.05 the weight moves to 0.8 before the next example is drawn. With a million examples, one epoch makes a million updates, where batch gradient descent makes one.",
-      "Each single-example gradient is a noisy but unbiased estimate of the full gradient, so progress zig-zags and the learning rate must shrink over time for SGD to settle. Watch the vocabulary: in PyTorch and most papers, \"SGD\" means mini-batch SGD, with batches of 32 to 512 examples, which use a GPU far better."
+      "All three are gradient descent: compute the gradient of the loss and step against it, w ← w − η g, with η the learning rate. They differ only in how many training examples go into g on each update. Batch (full-batch) gradient descent averages the gradient over all n examples, stochastic gradient descent (SGD) uses one randomly chosen example, and mini-batch gradient descent uses a batch of B examples, typically 32 to 512. Backpropagation is not one of them; it only computes the gradients.",
+      "The batch size sets how many updates an epoch buys. With 50,000 training images and a batch size of 256, an epoch takes 196 mini-batch updates, 195 full batches plus one of 80, versus one update for batch gradient descent and 50,000 for pure SGD. On ImageNet's 1,281,167 training images, one exact full-batch step costs as much compute as about 5,000 mini-batch steps of 256.",
+      "A single SGD step is cheap but noisy. Fit y = w·x with squared loss (w·x − y)², starting at w = 0. The example x = 2, y = 4 gives the gradient 2(w·x − y)·x = −16, so with η = 0.05 the weight jumps to 0.8 before the next example is drawn. Each such gradient is an unbiased estimate of the full gradient, and averaging B of them shrinks the noise like 1/√B: quadrupling the batch halves the noise but quadruples the work per step.",
+      "Batch gradient descent is deterministic, and on a smooth loss a small enough fixed rate lowers the loss on every step, reaching the global minimum if the loss is convex. Exact gradients also make quasi-Newton methods such as L-BFGS practical, which is what scikit-learn's LogisticRegression uses by default. Pure SGD zig-zags and needs a learning rate that shrinks over time to settle. Mini-batches sit in between and win in deep learning: they keep a GPU busy, never need the whole dataset in memory, and add noise that can help training move past saddle points.",
+      "Watch the vocabulary: in PyTorch, Keras and most papers, \"SGD\" means mini-batch SGD, not one example at a time. A common follow-up is what to change as the batch grows: scale the learning rate with it, linearly as a rule of thumb and with a warmup, and expect very large batches to sometimes generalize slightly worse. Memory does not force mini-batches either, since you can accumulate gradients over chunks and still take one exact full-batch step."
     ],
-    "updated": "2026-10-16",
-    "slug": "type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of"
-  },
-  {
-    "id": "dl-145",
-    "category": "dl",
-    "question": "Type of gradient descent where we use the whole dataset to perform a single update step.",
-    "title": "What is batch gradient descent?",
-    "answer": "Batch Gradient Descent.",
-    "explanation": [
-      "Batch gradient descent, also called full-batch or vanilla gradient descent. Each update averages the gradient over all n training examples, w ← w − η (1/n) Σ ∇ℓᵢ(w), so one epoch buys exactly one step. Strictly, it is a variant of gradient descent; backpropagation only computes the gradients.",
-      "Because the gradient is exact, the run is deterministic, and on a smooth loss a small enough fixed rate lowers the loss on every step, reaching the global minimum if the loss is convex. Exact gradients also make quasi-Newton methods such as L-BFGS practical; scikit-learn's LogisticRegression uses it by default. The cost is per step: on ImageNet's 1,281,167 training images, one step costs as much compute as about 5,000 mini-batch updates of 256.",
-      "It suits small datasets and convex models; deep learning prefers mini-batches because one exact step is rarely worth thousands of noisy ones. Memory is not the real limit: you can accumulate the gradient over chunks and still take one exact step."
-    ],
-    "updated": "2026-10-16",
-    "slug": "type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step"
-  },
-  {
-    "id": "dl-146",
-    "category": "dl",
-    "question": "Type of gradient descent where we use a fixed number of training examples, fewer than the whole dataset, to calculate the gradient.",
-    "title": "What is mini-batch gradient descent?",
-    "answer": "Mini-batch Gradient Descent.",
-    "explanation": [
-      "Mini-batch gradient descent. Each update computes the gradient on a fixed-size batch of examples, typically 32 to 512, rather than the whole dataset (batch gradient descent) or one example (stochastic gradient descent). Strictly, these are variants of gradient descent; backpropagation only computes the gradient for each batch.",
-      "Example: with 50,000 images and a batch size of 256, an epoch takes 196 updates, 195 full batches plus one of 80, versus 1 for batch gradient descent and 50,000 for pure SGD. The batch gradient, (1/B) Σ ∇ℓᵢ, is an unbiased, noisy estimate of the full gradient; its noise shrinks like 1/√B, so quadrupling the batch halves the noise but quadruples the work.",
-      "Mini-batches win because they keep a GPU busy, never need the full dataset in memory, and add noise that can help training escape saddle points. A common follow-up: as the batch grows, scale the learning rate with it, and very large batches can generalize slightly worse. In PyTorch and Keras, \"SGD\" almost always means mini-batch SGD."
-    ],
-    "updated": "2026-10-16",
-    "slug": "type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees"
+    "updated": "2026-11-03",
+    "slug": "what-is-the-difference-between-batch-mini-batch-and-stochastic-gradient-descent"
   },
   {
     "id": "dl-147",

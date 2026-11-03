@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-58 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+56 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -10,7 +10,7 @@ Every question links to its page on the site, with a longer answer. To test your
 
 ## Topics
 
-- [Training with gradient descent](#training-with-gradient-descent) (13)
+- [Training with gradient descent](#training-with-gradient-descent) (11)
 - [Activation functions](#activation-functions) (11)
 - [Dropout, normalization and capacity](#dropout-normalization-and-capacity) (7)
 - [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (12)
@@ -28,29 +28,11 @@ A loss function.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-gradient-descent-tries-to-minimize)
 
-### What is stochastic gradient descent?
+### What is the difference between batch, mini-batch and stochastic gradient descent?
 
-> **Flashcard:** Type of gradient descent where we use only a single training example to calculate the gradient and update the parameters.
+How many examples each update uses: batch gradient descent uses the whole training set, stochastic gradient descent (SGD) one example, and mini-batch gradient descent a small batch, typically 32 to 512.
 
-Stochastic Gradient Descent.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/type-of-backpropagation-where-we-use-only-a-single-training-example-for-calculation-of)
-
-### What is batch gradient descent?
-
-> **Flashcard:** Type of gradient descent where we use the whole dataset to perform a single update step.
-
-Batch Gradient Descent.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/type-of-backpropagation-where-we-use-the-whole-dataset-to-perform-a-single-step)
-
-### What is mini-batch gradient descent?
-
-> **Flashcard:** Type of gradient descent where we use a fixed number of training examples, fewer than the whole dataset, to calculate the gradient.
-
-Mini-batch Gradient Descent.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/type-of-backpropagation-where-we-use-a-fixed-number-of-training-examples-which-is-lees)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-batch-mini-batch-and-stochastic-gradient-descent)
 
 ### What is an epoch?
 
