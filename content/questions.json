@@ -606,15 +606,18 @@
   {
     "id": "ml-54",
     "category": "ml",
-    "question": "Bagging stands for?",
-    "answer": "Bootstrap aggregating: train the same learner on many bootstrap resamples and average the predictions, which cuts variance and leaves bias roughly untouched. That is why it suits deep unstable trees, while boosting attacks bias by fitting each model to the last one's errors.",
+    "question": "What is bagging?",
+    "title": "What is bagging (bootstrap aggregating) in machine learning?",
+    "answer": "Bootstrap aggregating: train the same model on many bootstrap samples of the data, drawn with replacement, and average or vote their predictions. It mainly cuts variance, which is why it suits deep, unstable trees.",
     "explanation": [
-      "Bagging stands for bootstrap aggregating. It trains many copies of one model, each on a bootstrap sample of the training data (n rows drawn with replacement from the n available), then aggregates their predictions: an average for regression, a majority vote for classification. Leo Breiman introduced it in 1994 and published \"Bagging Predictors\" in 1996.",
-      "Each bootstrap sample contains about 63.2% of the distinct rows, since a row is never drawn with probability (1 − 1/n)ⁿ ≈ 1/e ≈ 0.368. These out-of-bag rows give a free validation estimate. Averaging B models with variance σ² and pairwise correlation ρ gives variance ρσ² + (1 − ρ)σ²/B: more models help, but correlation sets a floor.",
-      "Bagging helps unstable, high-variance learners such as deep decision trees and does little for stable ones like linear regression. Random forests also sample features at each split to lower ρ. Boosting is the contrast: it trains models in sequence, each fixing the errors of the previous ones, and mainly reduces bias."
+      "Bagging, short for bootstrap aggregating, trains many copies of one model, each on its own bootstrap sample of the training data, then aggregates their predictions: an average for regression, a majority vote for classification. A bootstrap sample draws n rows with replacement from the n available. Leo Breiman introduced the method in a 1994 technical report and published \"Bagging Predictors\" in 1996.",
+      "Bagging does not split the data into separate bags, despite a popular true-or-false question that says so. Because sampling is with replacement, the bags overlap and repeat rows. The chance that a given row is never drawn in n draws is (1 − 1/n)ⁿ, which approaches 1/e ≈ 0.368, so each bag holds about 63.2% of the distinct rows. The rows a model never saw, its out-of-bag rows, give a free validation estimate. Sampling without replacement instead is called pasting.",
+      "Averaging is what cuts the variance. For B models that each have variance σ² and pairwise correlation ρ, the average has variance ρσ² + (1 − ρ)σ²/B. With σ² = 1 and ρ = 0.3, 10 models give 0.3 + 0.07 = 0.37 and 100 models give 0.307: more models help, but the correlation sets a floor that no number of models removes.",
+      "That is why bagging helps unstable, high-variance learners such as deep decision trees and does little for stable ones like linear regression. A random forest is bagged trees plus a random subset of features at each split, which lowers ρ. The models train in parallel, and adding more of them does not cause overfitting.",
+      "Interviewers usually follow up with boosting, the other main ensemble family. Boosting trains models one after another, each focusing on the examples the ensemble so far gets wrong, and mainly reduces bias rather than variance. So bagging wants strong, unstable base models, while boosting wants weak ones such as one-split stumps."
     ],
-    "updated": "2026-10-12",
-    "slug": "bagging-stands-for"
+    "updated": "2026-11-03",
+    "slug": "what-is-bagging"
   },
   {
     "id": "ml-55",
@@ -3094,21 +3097,6 @@
     "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative"
-  },
-  {
-    "id": "dl-197",
-    "category": "dl",
-    "question": "Bagging is the concept of splitting a dataset and randomly placing it into bags for training a model.",
-    "title": "Does bagging mean splitting a dataset into random bags?",
-    "answer": "False",
-    "explanation": [
-      "False, as worded. Bagging, short for bootstrap aggregating, does not split the dataset into separate bags. It draws many bootstrap samples, each as large as the original data and drawn with replacement, trains one model per sample, and combines their predictions by averaging or majority vote. Leo Breiman published it in 1996.",
-      "Because sampling is with replacement, the bags overlap and repeat rows. The chance that a given row is never picked in n draws is (1 − 1/n)ⁿ, which approaches 1/e ≈ 0.368, so each bag holds about 63.2% of the distinct rows; the left-out, out-of-bag rows give a free validation estimate. Averaging models trained on slightly different data cancels much of their variance.",
-      "Bagging helps most with unstable, high-variance learners such as deep decision trees; a random forest is bagged trees plus a random subset of features at each split. Interviewers often contrast it with boosting, which trains models one after another on the previous ones' errors and mainly reduces bias. Sampling without replacement instead is called pasting."
-    ],
-    "updated": "2026-10-16",
-    "proposedBy": "@svpino",
-    "slug": "bagging-is-the-concept-of-splitting-a-dataset-and-randomly-placing-it-into-bags-for"
   },
   {
     "id": "dl-174",
