@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-55 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+54 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -12,7 +12,7 @@ Every question links to its page on the site, with a longer answer. To test your
 
 - [Training with gradient descent](#training-with-gradient-descent) (11)
 - [Activation functions](#activation-functions) (11)
-- [Dropout, normalization and capacity](#dropout-normalization-and-capacity) (7)
+- [Dropout, normalization and capacity](#dropout-normalization-and-capacity) (6)
 - [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (12)
 - [Transformers, attention and decoding](#transformers-attention-and-decoding) (5)
 - [Vision metrics and training methods](#vision-metrics-and-training-methods) (4)
@@ -182,7 +182,7 @@ False
 
 ## Dropout, normalization and capacity
 
-How capacity grows with layers and shrinks with dropout, what batch normalization is and isn't, how high bias differs from overfitting, and the universal approximation theorem, which says one hidden layer is enough in principle.
+How capacity grows with layers and shrinks with dropout, what batch normalization is and isn't, and the universal approximation theorem, which says one hidden layer is enough in principle.
 
 ### How does dropout regularization work in deep learning?
 
@@ -229,14 +229,6 @@ True
 True with conditions: by the universal approximation theorem, one hidden layer with enough units and a non-polynomial activation can approximate any continuous function on a closed, bounded domain. With no hidden layer, a network only draws linear boundaries and can't even fit XOR.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/a-neural-network-with-a-single-layer-is-capable-of-approximating-any-function)
-
-### Is high bias the same as overfitting?
-
-> **Flashcard:** Having high bias means the model is too simple and can’t capture many features during the training phase. This is also known as overfitting.
-
-False
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the)
 
 ## CNNs, RNNs, GANs and autoencoders
 
