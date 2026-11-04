@@ -55,8 +55,6 @@
         "ml-58",
         "ml-56",
         "ml-57",
-        "ml-44",
-        "ml-45",
         "ml-42"
       ]
     },
@@ -160,15 +158,14 @@
     },
     {
       "name": "Dropout, normalization and capacity",
-      "lead": "How capacity grows with layers and shrinks with dropout, what batch normalization is and isn't, how high bias differs from overfitting, and the universal approximation theorem, which says one hidden layer is enough in principle.",
+      "lead": "How capacity grows with layers and shrinks with dropout, what batch normalization is and isn't, and the universal approximation theorem, which says one hidden layer is enough in principle.",
       "ids": [
         "dl-150",
         "dl-181",
         "dl-194",
         "dl-183",
         "dl-179",
-        "dl-195",
-        "dl-185"
+        "dl-195"
       ]
     },
     {

@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-74 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
+72 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/machine-learning).
 
@@ -13,7 +13,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Learning paradigms](#learning-paradigms) (10)
 - [Linear models, SVMs and naive Bayes](#linear-models-svms-and-naive-bayes) (7)
 - [Trees and ensembles](#trees-and-ensembles) (9)
-- [Overfitting, bias and variance](#overfitting-bias-and-variance) (10)
+- [Overfitting, bias and variance](#overfitting-bias-and-variance) (8)
 - [Regularization](#regularization) (6)
 - [Classification metrics](#classification-metrics) (13)
 - [Losses and regression metrics](#losses-and-regression-metrics) (7)
@@ -203,11 +203,9 @@ Almost every machine learning interview reaches the bias-variance tradeoff. Thes
 
 ### What is the bias-variance tradeoff?
 
-> **Flashcard:** Explain the bias-variance tradeoff.
+The tension between underfitting and overfitting. Expected squared error splits into bias² (a model too simple for the truth), variance (sensitivity to the training sample) and irreducible noise. More complexity lowers bias and raises variance, so you tune it to minimize the sum.
 
-Expected squared error splits into squared bias (a model too simple for the truth), variance (sensitivity to which training sample you drew) and irreducible noise. Pushing one down usually lifts the other, so you tune capacity and regularization to minimise the sum, not either term alone.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/explain-what-is-bias-variance-tradeoff)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-bias-variance-tradeoff)
 
 ### What is overfitting?
 
@@ -248,18 +246,6 @@ True.
 True.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/high-variance-can-cause-an-algorithm-to-overfit-true-of-false)
-
-### Model simplification tends to decrease bias and increase variance, which leads to underfitting. True or False?
-
-False. Model simplification decreases the variance but increases the bias.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/model-simplification-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to)
-
-### Increasing model complexity tends to decrease bias and increase variance, which leads to overfitting. True or False?
-
-True.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/model-complexity-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to)
 
 ### Does feature selection tend to increase overfitting?
 

@@ -474,32 +474,6 @@
     "slug": "mean-squared-error-root-mean-squared-error-mean-absolute-error-r-squared-are-metrics-for"
   },
   {
-    "id": "ml-44",
-    "category": "ml",
-    "question": "Model simplification tends to decrease bias and increase variance, which leads to underfitting. True or False?",
-    "answer": "False. Model simplification decreases the variance but increases the bias.",
-    "explanation": [
-      "False. Simplifying a model does the opposite: it increases bias and decreases variance. The statement's conclusion is right, since a model simplified too far underfits, but the cause is the extra bias. A simple model makes strong assumptions, so it misses real structure, yet changes little when trained on a different sample.",
-      "Example: prune a decision tree from depth 20 to depth 2. The deep tree memorizes its training set and changes shape with every new sample: low bias, high variance. The depth-2 tree has at most four leaves, so it misses real structure but looks almost the same across samples: high bias, low variance. Stronger regularization or dropping features moves a model the same way.",
-      "That is why simplification is the standard fix for overfitting: it trades a little bias for a large cut in variance, and test error falls as long as variance was the bigger problem. A rule of thumb for interviews: high training error points to bias, while a large train-validation gap points to variance."
-    ],
-    "updated": "2026-10-12",
-    "slug": "model-simplification-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to"
-  },
-  {
-    "id": "ml-45",
-    "category": "ml",
-    "question": "Increasing model complexity tends to decrease bias and increase variance, which leads to overfitting. True or False?",
-    "answer": "True.",
-    "explanation": [
-      "True. Making a model more complex, with more parameters, deeper trees or higher-degree features, tends to lower bias and raise variance. Bias is error from overly rigid assumptions; variance is how much the fitted model changes with the training sample. Once variance dominates, the model overfits.",
-      "Expected test error = bias² + variance + irreducible noise. In k-nearest neighbors, k = 50 averages many points, giving smooth, stable, biased predictions; k = 1 copies the nearest training point, so bias is low but predictions jump with each new sample. As complexity grows, test error usually falls, then climbs once variance rises faster than bias drops: a U-shape.",
-      "Interviewers often ask how to find the bottom of the U: cross-validate over a complexity knob such as tree depth, k or regularization strength. One known exception is double descent: heavily overparameterized models such as large neural networks can see test error fall again after they fit the training data perfectly, so parameter count alone is a poor measure of complexity."
-    ],
-    "updated": "2026-10-12",
-    "slug": "model-complexity-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to"
-  },
-  {
     "id": "ml-46",
     "category": "ml",
     "question": "Accuracy, Precision, Recall, F1 score, ... are metrics to evaluate which types of models?",
@@ -676,16 +650,17 @@
   {
     "id": "ml-59",
     "category": "ml",
-    "question": "Explain the bias-variance tradeoff.",
-    "title": "What is the bias-variance tradeoff?",
-    "answer": "Expected squared error splits into squared bias (a model too simple for the truth), variance (sensitivity to which training sample you drew) and irreducible noise. Pushing one down usually lifts the other, so you tune capacity and regularization to minimise the sum, not either term alone.",
+    "question": "What is the bias-variance tradeoff?",
+    "answer": "The tension between underfitting and overfitting. Expected squared error splits into bias² (a model too simple for the truth), variance (sensitivity to the training sample) and irreducible noise. More complexity lowers bias and raises variance, so you tune it to minimize the sum.",
     "explanation": [
-      "The bias-variance tradeoff is the tension between underfitting and overfitting. Bias is error from wrong assumptions, such as fitting a straight line to a curve. Variance is how much the fitted model changes when trained on a different sample. Simple models have high bias and low variance; flexible models the reverse.",
-      "For squared error the expected test error at a point decomposes exactly: E[(y − f̂(x))²] = Bias[f̂(x)]² + Var[f̂(x)] + σ², where σ² is irreducible noise. Fit polynomials to 20 noisy points: degree 1 underfits with high bias, degree 15 chases nearly every point and swings wildly between them, showing high variance. A middle degree minimizes the total.",
-      "To diagnose: high training and validation error points to bias, so add features or capacity. Low training error with much higher validation error points to variance, so add data, regularize or simplify. Bagging mainly cuts variance, boosting mainly cuts bias. Very large neural networks can show double descent, where test error falls again past the point of perfect training fit."
+      "The bias-variance tradeoff is the tension between underfitting and overfitting. Bias is error from wrong or overly rigid assumptions, such as fitting a straight line to a curve. Variance is how much the fitted model changes when it is trained on a different sample from the same population. Simple models have high bias and low variance; flexible models have low bias and high variance.",
+      "For squared error, the expected test error at a point decomposes exactly: E[(y − f̂(x))²] = Bias[f̂(x)]² + Var[f̂(x)] + σ², where σ² is irreducible noise. Fit polynomials to 20 noisy points: degree 1 underfits with high bias, while degree 15 chases nearly every point and swings wildly between them, showing high variance. A middle degree minimizes the total.",
+      "Model complexity pushes the two terms in opposite directions. Increasing complexity, with more parameters, deeper trees or higher-degree features, tends to decrease bias and increase variance, which leads to overfitting once variance dominates. Simplifying a model does the reverse: it increases bias and decreases variance, so a model simplified too far underfits because of the extra bias. In k-nearest neighbors, k = 1 copies the nearest training point (low bias, high variance), while k = 50 averages many points into smooth, stable, biased predictions. As complexity grows, test error usually falls and then climbs again: a U-shape.",
+      "A popular trick question says high bias is overfitting. It is underfitting. A high-bias model does poorly everywhere, say 70% training accuracy and 68% validation accuracy. A high-variance model memorizes the training data, noise included: 99% training accuracy but 75% on validation. Poor scores on both point to bias; a large gap between them points to variance.",
+      "The fixes follow from the diagnosis. For high bias, use a more flexible model, add better features, reduce regularization or train longer; more data rarely helps. For high variance, get more data, add regularization such as weight decay or dropout, stop early or simplify the model. To find the bottom of the U, cross-validate over a complexity knob such as tree depth, k or regularization strength. Bagging mainly cuts variance and boosting mainly cuts bias. One known exception to the U: very large neural networks can show double descent, where test error falls again after the model fits the training data perfectly."
     ],
-    "updated": "2026-10-16",
-    "slug": "explain-what-is-bias-variance-tradeoff"
+    "updated": "2026-11-04",
+    "slug": "what-is-the-bias-variance-tradeoff"
   },
   {
     "id": "ml-60",
@@ -2897,21 +2872,6 @@
     "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "gradient-descent-is-an-algorithm-used-to-minimize-overfitting-in-neural-networks"
-  },
-  {
-    "id": "dl-185",
-    "category": "dl",
-    "question": "Having high bias means the model is too simple and can’t capture many features during the training phase. This is also known as overfitting.",
-    "title": "Is high bias the same as overfitting?",
-    "answer": "False",
-    "explanation": [
-      "False. The first part is roughly right: high bias means the model is too simple to capture the real pattern in the data. But that is underfitting, not overfitting. Bias is the error that comes from wrong or overly restrictive assumptions, such as fitting a straight line to a curved relationship.",
-      "The bias-variance decomposition splits expected squared error into bias² + variance + irreducible noise. A high-bias model does poorly everywhere: say 70% training accuracy and 68% validation accuracy. An overfit, high-variance model memorizes the training data, noise included: say 99% training accuracy but 75% on validation. A large gap between the two signals variance; poor scores on both signal bias.",
-      "The usual follow-up is how to fix each one. For high bias, use a more flexible model, add better features, reduce regularization or train longer; more data rarely helps. For high variance, get more data, add regularization such as weight decay or dropout, stop early or simplify the model."
-    ],
-    "updated": "2026-10-16",
-    "proposedBy": "@svpino",
-    "slug": "having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the"
   },
   {
     "id": "dl-175",
