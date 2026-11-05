@@ -1,57 +1,18 @@
 [
   {
-    "id": "ml-1",
-    "category": "ml",
-    "question": "Name three supervised learning algorithms.",
-    "title": "What are some examples of supervised learning algorithms?",
-    "answer": "Any three of: linear regression, logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors, naive Bayes and neural networks.",
-    "explanation": [
-      "Logistic regression, decision trees and support vector machines are three; linear regression, k-nearest neighbors, naive Bayes, random forests, gradient boosting and neural networks also count. All learn from labeled examples, inputs paired with the correct output. Regression on its own names a task, predicting a number, not an algorithm.",
-      "Take spam filtering, with emails labeled spam or not spam. Logistic regression learns a weight for each word and turns the weighted sum into a probability. A decision tree learns yes or no questions, such as whether the email contains \"free\". A support vector machine finds the boundary with the widest margin between the classes. Naive Bayes multiplies per-word probabilities, assuming words are independent given the class.",
-      "A strong answer spans families and tasks: logistic regression classifies despite its name, linear regression predicts numbers, and trees, KNN, SVMs and neural networks do both. Interviewers then ask how to choose: data size, interpretability, training cost and data type. A classic trap: k-means and PCA use no labels, so they are unsupervised."
-    ],
-    "updated": "2026-10-16",
-    "slug": "name-three-supervised-learning-algorithms"
-  },
-  {
-    "id": "ml-2",
-    "category": "ml",
-    "question": "Name three unsupervised learning algorithms.",
-    "title": "What are some examples of unsupervised learning algorithms?",
-    "answer": "k-means clustering, principal component analysis (PCA) and DBSCAN; others include hierarchical clustering, Gaussian mixture models, isolation forest and autoencoders. Clustering and anomaly detection are tasks rather than algorithms.",
-    "explanation": [
-      "Three standard answers are k-means clustering, principal component analysis (PCA) and DBSCAN; hierarchical clustering, Gaussian mixture models, isolation forest and autoencoders also count. All learn from features alone, with no target. Name concrete algorithms: clustering and anomaly detection are tasks, not algorithms.",
-      "Show that you know what each does. k-means assigns each point to the nearest of k centroids, moves each centroid to the mean of its points, and repeats until nothing changes. PCA projects data onto the orthogonal directions of greatest variance. A Gaussian mixture gives soft memberships: with two equally weighted components, means 0 and 4, standard deviation 1, a point at 2.5 belongs 88% to the second and 12% to the first.",
-      "Expect a follow-up on choosing between them. k-means needs k in advance and favors round clusters of similar size. DBSCAN finds clusters of any shape and labels outliers as noise, but struggles when density varies. Hierarchical clustering gives a dendrogram you can cut at any level, but needs all pairwise distances, so it scales poorly."
-    ],
-    "updated": "2026-10-16",
-    "slug": "name-three-unsupervised-learning-algorithms"
-  },
-  {
     "id": "ml-3",
     "category": "ml",
-    "question": "What is the type of machine learning algorithms used to draw inferences from labeled data?",
-    "answer": "Supervised Learning.",
+    "question": "What is supervised learning?",
+    "title": "What is supervised learning, and what are some examples?",
+    "answer": "Machine learning that learns from labeled data: examples paired with the correct output. Classification predicts a category and regression a number; common algorithms include linear and logistic regression, decision trees, random forests, gradient boosting, SVMs, k-nearest neighbors and neural networks.",
     "explanation": [
-      "Supervised learning. It trains on examples that come with the correct output, the label, and learns a mapping from inputs to outputs that it can then apply to new, unlabeled inputs.",
-      "When the label is a category, such as spam or not spam, the task is classification; when it is a number, such as a house price, it is regression. Common algorithms include linear and logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors and neural networks.",
-      "It contrasts with unsupervised learning, which finds structure in unlabeled data (clustering, dimensionality reduction), semi-supervised learning, which mixes a few labels with many unlabeled examples, and reinforcement learning, which learns from rewards instead of labels. Self-supervised learning, used to pretrain large language models, creates its labels from the data itself, for example by predicting the next word."
+      "Supervised learning is the type of machine learning that learns from labeled data: every training example comes with the correct output, the label, and the algorithm learns a mapping from inputs to outputs that it can then apply to new, unlabeled inputs. When the label is a category, such as spam or not spam, the task is classification; when it is a number, such as a house price, it is regression.",
+      "Common supervised algorithms are linear regression, logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors, naive Bayes and neural networks. A strong answer spans families and tasks: logistic regression classifies despite its name, linear regression predicts numbers, and trees, KNN, SVMs and neural networks can do both. Regression on its own names a task, not an algorithm, and k-means and PCA are a classic trap: they use no labels, so they are unsupervised.",
+      "Take spam filtering, with emails labeled spam or not spam. Logistic regression learns a weight for each word and turns the weighted sum into a probability. A decision tree learns yes-or-no questions, such as whether the email contains \"free\". A support vector machine finds the boundary with the widest margin between the classes. Naive Bayes multiplies per-word probabilities, assuming words are independent given the class.",
+      "Supervised learning contrasts with unsupervised learning, which finds structure in unlabeled data; semi-supervised learning, which mixes a few labels with many unlabeled examples; and reinforcement learning, which learns from rewards instead of labels. Self-supervised learning, used to pretrain large language models, creates its labels from the data itself, for example by predicting the next word. Interviewers then ask how to choose an algorithm: data size, interpretability, training cost and the type of data all matter."
     ],
-    "updated": "2026-10-11",
-    "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data"
-  },
-  {
-    "id": "ml-4",
-    "category": "ml",
-    "question": "What is the type of machine learning algorithms used to draw inferences from data without labels?",
-    "answer": "Unsupervised Learning.",
-    "explanation": [
-      "Unsupervised learning. These algorithms see only input features, with no target column, and infer structure from the inputs themselves. In probability terms, supervised learning models p(y | x), while unsupervised learning studies p(x): where the data is dense, how it groups and which variables move together.",
-      "Association rule mining is a classic example. A shop has 1,000 unlabeled receipts: 200 contain bread and 100 contain both bread and butter, so the rule bread → butter has support 100 / 1,000 = 10% and confidence 100 / 200 = 50%. If 250 receipts contain butter, the lift is 0.5 / 0.25 = 2: bread buyers are twice as likely as average to buy butter.",
-      "Interviewers then ask how it differs from its neighbors. Semi-supervised learning uses a few labels plus many unlabeled rows. Self-supervised learning creates labels from the data itself, such as predicting a masked word. Reinforcement learning learns from rewards. In practice, unsupervised output often feeds a supervised model as cluster IDs or compressed features."
-    ],
-    "updated": "2026-10-15",
-    "slug": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without"
+    "updated": "2026-11-05",
+    "slug": "what-is-supervised-learning"
   },
   {
     "id": "ml-5",
@@ -437,13 +398,16 @@
     "id": "ml-41",
     "category": "ml",
     "question": "What is unsupervised learning?",
-    "answer": "Unsupervised learning aims to detect patterns in data where no labels are given.",
+    "title": "What is unsupervised learning, and what are some examples?",
+    "answer": "Machine learning on data without labels: the algorithm finds structure in the inputs alone, through clustering, dimensionality reduction or anomaly detection. Examples include k-means, PCA, DBSCAN, hierarchical clustering, Gaussian mixture models and isolation forest.",
     "explanation": [
-      "Unsupervised learning is machine learning on data without labels: the algorithm sees only the inputs, with no target to predict, and must find structure in them itself. Rather than mapping inputs to a known output, it describes the inputs: which points are alike, which directions carry most of the variation, which points are unusual.",
-      "Its main tasks are clustering, dimensionality reduction, density estimation, anomaly detection and association rules. Example: a bank has a million card transactions and no fraud labels. An isolation forest scores each transaction by how few random splits it takes to separate it from the rest, and the 1,000 most isolated go to an analyst.",
-      "The usual follow-up is evaluation. With no ground truth there is no accuracy, so you judge results by internal scores such as the silhouette, by whether they help a downstream model, or by expert review. Be careful: k-means returns k clusters even from random noise, and your choice of features, scaling and distance shapes what gets found."
+      "Unsupervised learning is the type of machine learning that draws inferences from data without labels: the algorithm sees only the inputs, with no target to predict, and must find structure in them itself. In probability terms, supervised learning models p(y | x), while unsupervised learning studies p(x): where the data is dense, how it groups, which variables move together and which points are unusual.",
+      "Its main tasks are clustering, dimensionality reduction, density estimation, anomaly detection and association rules. Three standard algorithms are k-means clustering, principal component analysis (PCA) and DBSCAN; hierarchical clustering, Gaussian mixture models, isolation forest and autoencoders also count. When asked for examples, name algorithms: clustering and anomaly detection are tasks.",
+      "k-means assigns each point to the nearest of k centroids, moves each centroid to the mean of its points, and repeats until nothing changes. PCA projects the data onto the orthogonal directions of greatest variance. An isolation forest scores each point by how few random splits it takes to separate it from the rest, so a bank with a million card transactions and no fraud labels can send the 1,000 most isolated to an analyst. Association rules count co-occurrence: if 200 of 1,000 receipts contain bread and 100 contain both bread and butter, the rule bread → butter has 10% support and 50% confidence.",
+      "Expect a follow-up on choosing between them. k-means needs k in advance and favors round clusters of similar size. DBSCAN finds clusters of any shape and labels outliers as noise, but struggles when density varies. Hierarchical clustering gives a dendrogram you can cut at any level, but needs all pairwise distances, so it scales poorly.",
+      "Evaluation is the other usual follow-up. With no ground truth there is no accuracy, so you judge results by internal scores such as the silhouette, by whether they help a downstream model, or by expert review. k-means returns k clusters even from random noise, and the choice of features, scaling and distance shapes what gets found. In practice, unsupervised output often feeds a supervised model as cluster IDs or compressed features."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-11-05",
     "slug": "what-is-unsupervised-learning"
   },
   {

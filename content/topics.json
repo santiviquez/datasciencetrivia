@@ -4,11 +4,8 @@
       "name": "Learning paradigms",
       "lead": "Interviews often open by checking the map of the field: supervised learning learns from labeled examples, unsupervised learning finds structure such as clusters without labels, data can arrive all at once or as a stream, and causal modeling asks what would change under an intervention.",
       "ids": [
-        "ml-1",
-        "ml-2",
         "ml-41",
         "ml-3",
-        "ml-4",
         "ml-67",
         "ml-21",
         "ml-48",
