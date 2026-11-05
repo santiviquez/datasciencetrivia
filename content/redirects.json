@@ -22,5 +22,9 @@
   { "from": "explain-what-is-bias-variance-tradeoff", "to": "what-is-the-bias-variance-tradeoff" },
   { "from": "model-simplification-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to", "to": "what-is-the-bias-variance-tradeoff" },
   { "from": "model-complexity-tends-to-decrease-the-bias-and-increase-the-variance-which-leads-to", "to": "what-is-the-bias-variance-tradeoff" },
-  { "from": "having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the", "to": "what-is-the-bias-variance-tradeoff" }
+  { "from": "having-high-bias-means-the-model-is-too-simple-and-cant-capture-many-features-during-the", "to": "what-is-the-bias-variance-tradeoff" },
+  { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data", "to": "what-is-supervised-learning" },
+  { "from": "name-three-supervised-learning-algorithms", "to": "what-is-supervised-learning" },
+  { "from": "name-three-unsupervised-learning-algorithms", "to": "what-is-unsupervised-learning" },
+  { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without", "to": "what-is-unsupervised-learning" }
 ]

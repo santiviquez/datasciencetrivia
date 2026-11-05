@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-72 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
+69 machine learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Models, metrics and the tradeoffs that decide whether a model survives contact with real data.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/machine-learning).
 
@@ -10,7 +10,7 @@ Every question links to its page on the site, with a longer answer. To test your
 
 ## Topics
 
-- [Learning paradigms](#learning-paradigms) (10)
+- [Learning paradigms](#learning-paradigms) (7)
 - [Linear models, SVMs and naive Bayes](#linear-models-svms-and-naive-bayes) (7)
 - [Trees and ensembles](#trees-and-ensembles) (9)
 - [Overfitting, bias and variance](#overfitting-bias-and-variance) (8)
@@ -23,39 +23,21 @@ Every question links to its page on the site, with a longer answer. To test your
 
 Interviews often open by checking the map of the field: supervised learning learns from labeled examples, unsupervised learning finds structure such as clusters without labels, data can arrive all at once or as a stream, and causal modeling asks what would change under an intervention.
 
-### What are some examples of supervised learning algorithms?
+### What is unsupervised learning, and what are some examples?
 
-> **Flashcard:** Name three supervised learning algorithms.
+> **Flashcard:** What is unsupervised learning?
 
-Any three of: linear regression, logistic regression, decision trees, random forests, gradient boosting, support vector machines, k-nearest neighbors, naive Bayes and neural networks.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/name-three-supervised-learning-algorithms)
-
-### What are some examples of unsupervised learning algorithms?
-
-> **Flashcard:** Name three unsupervised learning algorithms.
-
-k-means clustering, principal component analysis (PCA) and DBSCAN; others include hierarchical clustering, Gaussian mixture models, isolation forest and autoencoders. Clustering and anomaly detection are tasks rather than algorithms.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/name-three-unsupervised-learning-algorithms)
-
-### What is unsupervised learning?
-
-Unsupervised learning aims to detect patterns in data where no labels are given.
+Machine learning on data without labels: the algorithm finds structure in the inputs alone, through clustering, dimensionality reduction or anomaly detection. Examples include k-means, PCA, DBSCAN, hierarchical clustering, Gaussian mixture models and isolation forest.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-unsupervised-learning)
 
-### What is the type of machine learning algorithms used to draw inferences from labeled data?
+### What is supervised learning, and what are some examples?
 
-Supervised Learning.
+> **Flashcard:** What is supervised learning?
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data)
+Machine learning that learns from labeled data: examples paired with the correct output. Classification predicts a category and regression a number; common algorithms include linear and logistic regression, decision trees, random forests, gradient boosting, SVMs, k-nearest neighbors and neural networks.
 
-### What is the type of machine learning algorithms used to draw inferences from data without labels?
-
-Unsupervised Learning.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-supervised-learning)
 
 ### What is clustering?
 
