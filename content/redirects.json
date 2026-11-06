@@ -26,5 +26,7 @@
   { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-labeled-data", "to": "what-is-supervised-learning" },
   { "from": "name-three-supervised-learning-algorithms", "to": "what-is-supervised-learning" },
   { "from": "name-three-unsupervised-learning-algorithms", "to": "what-is-unsupervised-learning" },
-  { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without", "to": "what-is-unsupervised-learning" }
+  { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without", "to": "what-is-unsupervised-learning" },
+  { "from": "what-is-a-false-positive", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" },
+  { "from": "what-is-a-false-negative", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" }
 ]
