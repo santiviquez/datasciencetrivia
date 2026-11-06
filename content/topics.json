@@ -405,7 +405,6 @@
       "lead": "The statistics side of model evaluation: false positives and false negatives, precision as a ratio, precision and recall at k for ranked results, and the squared-error metrics MSE and RMSE. The machine learning cards cover the other metrics.",
       "ids": [
         "stats-84",
-        "stats-83",
         "stats-86",
         "stats-108",
         "stats-105",

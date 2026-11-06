@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-73 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
+72 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/statistics).
 
@@ -15,7 +15,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Hypothesis testing](#hypothesis-testing) (17)
 - [Experiments, bias and causal inference](#experiments-bias-and-causal-inference) (10)
 - [Correlation, regression and time series](#correlation-regression-and-time-series) (10)
-- [Model errors and metrics](#model-errors-and-metrics) (6)
+- [Model errors and metrics](#model-errors-and-metrics) (5)
 - [PCA, clustering and divergences](#pca-clustering-and-divergences) (6)
 
 ## Describing data
@@ -420,17 +420,11 @@ A property of data in a dataset, in which the data distribution stays constant a
 
 The statistics side of model evaluation: false positives and false negatives, precision as a ratio, precision and recall at k for ranked results, and the squared-error metrics MSE and RMSE. The machine learning cards cover the other metrics.
 
-### What is a false positive?
+### What is the difference between a false positive and a false negative?
 
-An example in which the model mistakenly predicted the positive class.
+A false positive is a negative case predicted as positive, like a legitimate email sent to spam. A false negative is a positive case predicted as negative, like a missed tumor. In hypothesis testing they are Type I and Type II errors.
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-false-positive)
-
-### What is a false negative?
-
-An example in which the model mistakenly predicted the negative class.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-false-negative)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-a-false-positive-and-a-false-negative)
 
 ### Precision is the ratio between which two quantities?
 
