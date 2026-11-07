@@ -28,5 +28,6 @@
   { "from": "name-three-unsupervised-learning-algorithms", "to": "what-is-unsupervised-learning" },
   { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without", "to": "what-is-unsupervised-learning" },
   { "from": "what-is-a-false-positive", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" },
-  { "from": "what-is-a-false-negative", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" }
+  { "from": "what-is-a-false-negative", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" },
+  { "from": "name-three-techniques-of-dimensionality-reduction", "to": "what-is-dimensionality-reduction" }
 ]

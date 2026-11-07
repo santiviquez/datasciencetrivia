@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-72 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
+71 statistics questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Inference, uncertainty and the ideas that people most often get subtly wrong in interviews.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/statistics).
 
@@ -16,7 +16,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Experiments, bias and causal inference](#experiments-bias-and-causal-inference) (10)
 - [Correlation, regression and time series](#correlation-regression-and-time-series) (10)
 - [Model errors and metrics](#model-errors-and-metrics) (5)
-- [PCA, clustering and divergences](#pca-clustering-and-divergences) (6)
+- [PCA, clustering and divergences](#pca-clustering-and-divergences) (5)
 
 ## Describing data
 
@@ -454,19 +454,13 @@ Root Mean Squared Error: the square root of MSE, which puts the error back in th
 
 PCA and SVD for reducing dimensions, the elbow and silhouette methods for picking k in k-means, and KL and Jensen-Shannon divergence for measuring how far apart two distributions are, which drift monitoring often relies on.
 
-### What is dimensionality reduction?
+### What is dimensionality reduction, and what are the common techniques?
 
-It is the process of reducing the number of variables under consideration by obtaining a set of principal variables.
+> **Flashcard:** What is dimensionality reduction?
+
+It means representing data with fewer variables while keeping most of its useful structure, either by keeping a subset of the original features or by building a few new ones from them. Common techniques are PCA, SVD, LDA, autoencoders, t-SNE and UMAP.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-dimensionality-reduction)
-
-### What are the common dimensionality reduction techniques?
-
-> **Flashcard:** Name three techniques of dimensionality reduction.
-
-Singular Value Decomposition (SVD), Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Autoencoders, Fourier and Wavelet Transforms.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/name-three-techniques-of-dimensionality-reduction)
 
 ### Is rotation necessary in PCA?
 
