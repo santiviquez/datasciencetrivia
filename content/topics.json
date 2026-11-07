@@ -416,7 +416,6 @@
       "lead": "PCA and SVD for reducing dimensions, the elbow and silhouette methods for picking k in k-means, and KL and Jensen-Shannon divergence for measuring how far apart two distributions are, which drift monitoring often relies on.",
       "ids": [
         "stats-82",
-        "stats-91",
         "stats-94",
         "stats-107",
         "stats-198",

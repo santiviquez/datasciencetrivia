@@ -324,9 +324,7 @@
     "kurtosis"
   ],
   "stats-82": [
-    "dimensionality reduction"
-  ],
-  "stats-91": [
+    "dimensionality reduction",
     "principal component analysis",
     "PCA"
   ],

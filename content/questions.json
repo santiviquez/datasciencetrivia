@@ -1090,13 +1090,16 @@
     "id": "stats-82",
     "category": "stats",
     "question": "What is dimensionality reduction?",
-    "answer": "It is the process of reducing the number of variables under consideration by obtaining a set of principal variables.",
+    "title": "What is dimensionality reduction, and what are the common techniques?",
+    "answer": "It means representing data with fewer variables while keeping most of its useful structure, either by keeping a subset of the original features or by building a few new ones from them. Common techniques are PCA, SVD, LDA, autoencoders, t-SNE and UMAP.",
     "explanation": [
-      "Dimensionality reduction means representing data with fewer variables while keeping as much of its useful structure as possible. It works either by selecting a subset of the original columns or by building a smaller set of new variables from combinations of them, as principal component analysis does.",
-      "The motivation is the curse of dimensionality. High-dimensional space is mostly empty: 10 features at 10 levels each make 10¹⁰ cells, and as dimensions grow, distances between random points become nearly equal, hurting nearest-neighbor methods and clustering. Real data usually sits near a lower-dimensional surface: MNIST digit images have 784 pixels, yet PCA on the raw pixels keeps 95% of their variance with about 150 components.",
-      "It removes noise and collinearity before modeling, compresses data and lets you plot it in two or three dimensions. Interviewers ask about the costs: extracted features lose their meaning, and an unsupervised method like PCA can drop a low-variance direction that predicts the target. In t-SNE and UMAP plots, cluster sizes and gaps are not reliable."
+      "Dimensionality reduction means representing data with fewer variables while keeping most of its useful structure, by selecting some features or combining them into new ones. Feature selection keeps a subset of the original columns, for example by dropping near-constant or highly correlated ones. Feature extraction builds a smaller set of new variables from combinations of the originals, as principal component analysis (PCA) does. Extracted features usually compress better, but selected ones keep their meaning.",
+      "The motivation is the curse of dimensionality. High-dimensional space is mostly empty: 10 features at 10 levels each make 10¹⁰ cells, and as dimensions grow, distances between random points become nearly equal, hurting nearest-neighbor methods and clustering. Real data usually sits near a lower-dimensional surface: MNIST digit images have 784 pixels, yet PCA on the raw pixels keeps 95% of their variance with about 150 components. Reducing dimensions removes noise and collinearity before modeling, speeds up training, compresses data and lets you plot it in two or three dimensions.",
+      "PCA, the most common technique, projects data onto the orthogonal directions of maximum variance. It is usually computed from the singular value decomposition (SVD) of the centered data, X = UΣVᵀ, keeping the first k columns of V; truncated SVD without centering works directly on sparse data such as text term matrices. Linear discriminant analysis (LDA) is supervised: it finds directions that best separate known classes, at most C − 1 of them for C classes. Autoencoders learn a non-linear compression through a narrow hidden layer. t-SNE and UMAP are non-linear methods built mainly for 2D and 3D plots. Fourier and wavelet transforms re-express a signal so a few coefficients carry most of it.",
+      "Interviewers often ask how to choose k for PCA: standardize the features first so the largest-scale one does not dominate, then keep enough components to explain, say, 95% of the variance, or look for the elbow in a scree plot. If a standardized 5-feature dataset has eigenvalues 2.6, 1.3, 0.6, 0.3 and 0.2 (they sum to 5), the first two components explain 3.9 / 5 = 78% of the variance and the first three 4.5 / 5 = 90%.",
+      "They also ask about the costs. Extracted features lose their meaning, and an unsupervised method like PCA can drop a low-variance direction that happens to predict the target. Fit the reduction on the training data only, inside the cross-validation pipeline, so the test set does not leak into it. In t-SNE and UMAP plots, cluster sizes and the gaps between clusters are not reliable, so don't read distances off them."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-11-07",
     "slug": "what-is-dimensionality-reduction"
   },
   {
@@ -1166,20 +1169,6 @@
     ],
     "updated": "2026-10-20",
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
-  },
-  {
-    "id": "stats-91",
-    "category": "stats",
-    "question": "Name three techniques of dimensionality reduction.",
-    "title": "What are the common dimensionality reduction techniques?",
-    "answer": "Singular Value Decomposition (SVD), Principal Component Analysis (PCA), Linear Discriminant Analysis (LDA), Autoencoders, Fourier and Wavelet Transforms.",
-    "explanation": [
-      "Three standard answers are principal component analysis (PCA), singular value decomposition (SVD) and linear discriminant analysis (LDA); autoencoders, t-SNE and UMAP are also common. Dimensionality reduction maps many features to fewer while keeping the useful structure, which cuts noise, speeds up training and makes data plottable.",
-      "PCA projects data onto the orthogonal directions of maximum variance. It is usually computed from the SVD of the centered data, X = UΣVᵀ, keeping the first k columns of V. LDA is supervised: it finds directions that best separate known classes, at most C − 1 of them for C classes. Autoencoders learn a non-linear compression through a narrow hidden layer. Fourier and wavelet transforms re-express a signal so a few coefficients carry most of it.",
-      "Interviewers often ask how to choose k for PCA: keep enough components to explain, say, 95% of the variance, after standardizing features so the largest-scale one does not dominate. Also distinguish feature extraction, which builds new features, from feature selection, which keeps a subset of the originals."
-    ],
-    "updated": "2026-10-16",
-    "slug": "name-three-techniques-of-dimensionality-reduction"
   },
   {
     "id": "stats-92",
