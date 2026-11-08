@@ -29,5 +29,9 @@
   { "from": "what-is-the-type-of-machine-learning-algorithms-used-to-draw-inferences-from-data-without", "to": "what-is-unsupervised-learning" },
   { "from": "what-is-a-false-positive", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" },
   { "from": "what-is-a-false-negative", "to": "what-is-the-difference-between-a-false-positive-and-a-false-negative" },
-  { "from": "name-three-techniques-of-dimensionality-reduction", "to": "what-is-dimensionality-reduction" }
+  { "from": "name-three-techniques-of-dimensionality-reduction", "to": "what-is-dimensionality-reduction" },
+  { "from": "what-does-lstm-means", "to": "what-is-lstm" },
+  { "from": "type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate", "to": "what-is-lstm" },
+  { "from": "what-does-gru-means", "to": "what-is-gru" },
+  { "from": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate", "to": "what-is-gru" }
 ]

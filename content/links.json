@@ -390,11 +390,13 @@
   "dl-158": [
     "softmax"
   ],
-  "dl-161": [
-    "LSTM"
+  "dl-160": [
+    "LSTM",
+    "long short-term memory"
   ],
-  "dl-165": [
-    "GRU"
+  "dl-163": [
+    "GRU",
+    "gated recurrent unit"
   ],
   "dl-153": [
     "generative adversarial network",
