@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-54 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+52 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -13,7 +13,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Training with gradient descent](#training-with-gradient-descent) (11)
 - [Activation functions](#activation-functions) (11)
 - [Dropout, normalization and capacity](#dropout-normalization-and-capacity) (6)
-- [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (12)
+- [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (10)
 - [Transformers, attention and decoding](#transformers-attention-and-decoding) (5)
 - [Vision metrics and training methods](#vision-metrics-and-training-methods) (4)
 - [Rapid-fire basics](#rapid-fire-basics) (5)
@@ -254,29 +254,21 @@ False as stated: convolution layers are translation equivariant, and pooling mak
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/convolutional-neural-networks-are-translation-invariant)
 
-### What does LSTM mean?
+### What is an LSTM (long short-term memory) network?
 
-Long Short-Term Memory.
+> **Flashcard:** What is an LSTM?
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-lstm-means)
+A Long Short-Term Memory network: a recurrent neural network with a cell state and three gates (forget, input and output) that decide what to erase, write and expose at each step, which lets it learn dependencies across long sequences.
 
-### What type of layer typically has a cell, an input gate, an output gate and a forget gate?
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-lstm)
 
-An LSTM. The cell state carries information along a mostly additive path while the gates learn what to write, forget and read, which is how it survives the vanishing gradients that stall plain RNNs on long sequences. Attention has since displaced it for most sequence work.
+### What is a GRU (gated recurrent unit), and how does it differ from an LSTM?
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate)
+> **Flashcard:** What is a GRU?
 
-### What does GRU mean?
+A Gated Recurrent Unit: a recurrent neural network cell with two gates, reset and update, and no separate cell state. It is a simpler alternative to the LSTM, with about 25% fewer parameters, and it usually performs about as well.
 
-Gated Recurrent Unit.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-gru-means)
-
-### Type of layer that typically has a reset gate and an update gate?
-
-A GRU. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-gru)
 
 ### Which are the two components of a Generative Adversarial Network?
 

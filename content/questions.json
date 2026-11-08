@@ -2542,29 +2542,17 @@
   {
     "id": "dl-160",
     "category": "dl",
-    "question": "What does LSTM mean?",
-    "answer": "Long Short-Term Memory.",
+    "question": "What is an LSTM?",
+    "title": "What is an LSTM (long short-term memory) network?",
+    "answer": "A Long Short-Term Memory network: a recurrent neural network with a cell state and three gates (forget, input and output) that decide what to erase, write and expose at each step, which lets it learn dependencies across long sequences.",
     "explanation": [
       "LSTM stands for Long Short-Term Memory, a recurrent neural network built to learn long-range dependencies in sequences. Sepp Hochreiter and Jürgen Schmidhuber introduced it in a 1997 Neural Computation paper of the same name. The name refers to making short-term memory, held in the network's activations rather than its weights, last for a long time.",
-      "Plain RNNs struggle with long gaps because gradients shrink or explode over many time steps. An LSTM adds an additively updated cell state, cₜ = fₜ ⊙ cₜ₋₁ + iₜ ⊙ c̃ₜ, with output hₜ = oₜ ⊙ tanh(cₜ). The forget, input and output gates are sigmoid layers that decide what to erase, write and expose. The forget gate came later, added by Gers, Schmidhuber and Cummins in 1999.",
-      "Common follow-ups: how an LSTM differs from a GRU, which has two gates and no separate cell state, and why Transformers, which process a whole sequence in parallel, replaced it in most NLP after 2017. LSTMs remain common for time series and on-device models."
+      "Plain RNNs struggle with long gaps because gradients shrink or explode over many time steps. An LSTM adds a cell state that is updated mostly by addition, cₜ = fₜ ⊙ cₜ₋₁ + iₜ ⊙ c̃ₜ, and outputs hₜ = oₜ ⊙ tanh(cₜ). The three gates are sigmoid layers with outputs between 0 and 1: the forget gate fₜ sets how much of the old cell state to keep, the input gate iₜ how much of the new candidate c̃ₜ to write, and the output gate oₜ how much of the cell to expose as the hidden state. The forget gate came later, added by Gers, Schmidhuber and Cummins in 1999.",
+      "A worked step: with old cell state 2.0, forget gate 0.9, input gate 0.5 and candidate −0.8, the new cell state is 0.9 × 2.0 + 0.5 × (−0.8) = 1.4. With output gate 0.7, the hidden state is 0.7 × tanh(1.4) ≈ 0.62. Because the cell updates by addition, information and gradients survive many steps while the forget gate stays near 1, which is why initializing the forget gate bias to 1 helps.",
+      "Interviewers like the parameter count. The three gates and the candidate each have their own weights, so a layer with 100 inputs and 256 units has 4 × (256 × (100 + 256) + 256) = 365,568 parameters, counting one bias per block (PyTorch keeps two, adding 1,024). Other common follow-ups: how an LSTM differs from a GRU, which has two gates and no separate cell state, and why Transformers, which process a whole sequence in parallel, replaced it in most NLP after 2017. LSTMs remain common for time series and on-device models."
     ],
-    "updated": "2026-10-12",
-    "slug": "what-does-lstm-means"
-  },
-  {
-    "id": "dl-161",
-    "category": "dl",
-    "question": "What type of layer typically has a cell, an input gate, an output gate and a forget gate?",
-    "answer": "An LSTM. The cell state carries information along a mostly additive path while the gates learn what to write, forget and read, which is how it survives the vanishing gradients that stall plain RNNs on long sequences. Attention has since displaced it for most sequence work.",
-    "noindex": true,
-    "explanation": [
-      "An LSTM layer. The cell carries memory between steps. The forget gate sets how much of the old cell state to keep, the input gate how much new information to write, and the output gate how much of the cell to expose as the hidden state. Each gate is a sigmoid layer with outputs between 0 and 1.",
-      "Example: with old cell state 2.0, forget gate 0.9, input gate 0.5 and candidate −0.8, the new cell state is 0.9 × 2.0 + 0.5 × (−0.8) = 1.4. With output gate 0.7, the hidden state is 0.7 × tanh(1.4) ≈ 0.62. Since the cell updates by addition, information survives many steps while the forget gate stays near 1.",
-      "Interviewers like the parameter count. The three gates and the candidate each have weights, so 100 inputs and 256 units give 4 × (256 × (100 + 256) + 256) = 365,568 parameters, with one bias per block. Initializing the forget gate bias to 1 makes the cell remember by default."
-    ],
-    "updated": "2026-10-15",
-    "slug": "type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate"
+    "updated": "2026-11-08",
+    "slug": "what-is-lstm"
   },
   {
     "id": "dl-162",
@@ -2583,15 +2571,17 @@
   {
     "id": "dl-163",
     "category": "dl",
-    "question": "What does GRU mean?",
-    "answer": "Gated Recurrent Unit.",
+    "question": "What is a GRU?",
+    "title": "What is a GRU (gated recurrent unit), and how does it differ from an LSTM?",
+    "answer": "A Gated Recurrent Unit: a recurrent neural network cell with two gates, reset and update, and no separate cell state. It is a simpler alternative to the LSTM, with about 25% fewer parameters, and it usually performs about as well.",
     "explanation": [
       "GRU stands for Gated Recurrent Unit, a recurrent neural network cell that uses gates to decide how much of its past state to keep at each time step. Kyunghyun Cho and colleagues proposed it in a 2014 EMNLP paper on encoder-decoder models for machine translation, as a simpler alternative to the LSTM.",
-      "It has two gates. The reset gate rₜ controls how much of the previous state feeds the candidate state, h̃ₜ = tanh(W xₜ + U (rₜ ⊙ hₜ₋₁)), and the update gate zₜ blends old and new: hₜ = (1 − zₜ) ⊙ hₜ₋₁ + zₜ ⊙ h̃ₜ. There is no separate cell state, and with three weight blocks instead of four, a GRU has about 25% fewer parameters than an LSTM of the same size.",
-      "The usual follow-up is GRU versus LSTM. A 2014 comparison by Chung, Gulcehre, Cho and Bengio found the two comparable, and neither has won outright since, so in practice you try both. Both ease the vanishing gradient problem of plain RNNs."
+      "It has two gates, each a sigmoid layer with outputs between 0 and 1. The reset gate rₜ controls how much of the previous state feeds the candidate state, h̃ₜ = tanh(W xₜ + U (rₜ ⊙ hₜ₋₁)); near 0, the candidate depends almost only on the current input. The update gate zₜ blends old and new, hₜ = (1 − zₜ) ⊙ hₜ₋₁ + zₜ ⊙ h̃ₜ, doing the job of the LSTM's forget and input gates at once. Watch the convention: Cho and colleagues' paper multiplies the old state by z, many later sources by 1 − z.",
+      "Compared with an LSTM, a GRU merges the cell state and hidden state into one, so it needs no output gate: an LSTM's output gate chooses how much of its separate cell to expose, while a GRU exposes its whole state. With three weight blocks instead of four, it has about 25% fewer parameters than an LSTM of the same size. A layer with 100 inputs and 256 units has 3 × (256 × (100 + 256) + 256) = 274,176 parameters against the LSTM's 365,568, counting one bias per block.",
+      "The update gate is how a GRU holds memory: if it keeps 99% of a state each step, 0.99¹⁰⁰ ≈ 0.37 of it survives 100 steps. Which to pick is the usual follow-up. A 2014 comparison by Chung, Gulcehre, Cho and Bengio found the two comparable, and neither has won outright since, so in practice you try both. A GRU trains a little faster and is often preferred when data or compute is limited; an LSTM's separate cell sometimes helps on very long sequences. Both ease the vanishing gradient problem of plain RNNs, and Transformers have replaced both for most language tasks."
     ],
-    "updated": "2026-10-12",
-    "slug": "what-does-gru-means"
+    "updated": "2026-11-08",
+    "slug": "what-is-gru"
   },
   {
     "id": "dl-164",
@@ -2606,20 +2596,6 @@
     ],
     "updated": "2026-10-15",
     "slug": "tanh-function-squishes-values-to-be-between"
-  },
-  {
-    "id": "dl-165",
-    "category": "dl",
-    "question": "Type of layer that typically has a reset gate and an update gate?",
-    "answer": "A GRU. It folds the LSTM's cell and hidden state into one and drops a gate, so it has fewer parameters and trains faster, usually matching LSTM accuracy on short and medium sequences.",
-    "noindex": true,
-    "explanation": [
-      "A GRU, or gated recurrent unit. Its two gates are the reset gate and the update gate; the output gate belongs to the LSTM. Each gate is a sigmoid layer whose 0-to-1 outputs scale how much of a signal passes.",
-      "The update gate sets how much of the old hidden state to keep versus replace with a new candidate, merging the LSTM's forget and input gates. The reset gate sets how much of the old state feeds that candidate; near 0, the candidate depends almost only on the current input. If the update gate keeps 99% of a state per step, 0.99¹⁰⁰ ≈ 0.37 survives 100 steps.",
-      "Why no output gate? An LSTM's output gate chooses how much of its separate cell state to expose. A GRU has only the hidden state and exposes all of it. Watch the convention: Cho and colleagues' original paper multiplies the old state by z, many later sources by 1 − z."
-    ],
-    "updated": "2026-10-13",
-    "slug": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate"
   },
   {
     "id": "dl-166",
