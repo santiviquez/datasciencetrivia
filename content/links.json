@@ -150,10 +150,6 @@
   "ml-68": [
     "time series"
   ],
-  "ml-70": [
-    "directed acyclic graph",
-    "causal graph"
-  ],
   "stats-201": [
     "p-value"
   ],
@@ -373,18 +369,14 @@
     "batch normalization"
   ],
   "dl-171": [
-    "ReLU"
-  ],
-  "dl-196": [
+    "ReLU",
     "leaky ReLU"
   ],
   "dl-169": [
     "activation function"
   ],
   "dl-170": [
-    "sigmoid"
-  ],
-  "dl-164": [
+    "sigmoid",
     "tanh"
   ],
   "dl-158": [
@@ -402,7 +394,7 @@
     "generative adversarial network",
     "GAN"
   ],
-  "dl-190": [
+  "dl-192": [
     "autoencoder"
   ],
   "dl-172": [
@@ -435,9 +427,6 @@
   ],
   "dl-195": [
     "universal approximation theorem"
-  ],
-  "dl-173": [
-    "residual connection"
   ],
   "genai-1": [
     "top-p",
@@ -587,15 +576,8 @@
   "history-111": [
     "least squares"
   ],
-  "history-113": [
-    "Markov chain"
-  ],
   "history-133": [
     "Q-learning"
-  ],
-  "history-143": [
-    "Tensor Processing Unit",
-    "TPU"
   ],
   "history-128": [
     "TensorFlow"
@@ -605,9 +587,6 @@
   ],
   "history-130": [
     "PyTorch"
-  ],
-  "history-138": [
-    "Theano"
   ],
   "stats-84": [
     "false positive",

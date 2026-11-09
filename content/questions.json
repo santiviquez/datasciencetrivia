@@ -2584,20 +2584,6 @@
     "slug": "what-is-gru"
   },
   {
-    "id": "dl-164",
-    "category": "dl",
-    "question": "Tanh function squishes values to be between?",
-    "answer": "-1 and 1",
-    "noindex": true,
-    "explanation": [
-      "Between −1 and 1. The hyperbolic tangent, tanh(x) = (eˣ − e⁻ˣ) / (eˣ + e⁻ˣ), maps any real number into the open interval (−1, 1), approaching 1 for large positive inputs and −1 for large negative ones without reaching either. It is odd, tanh(−x) = −tanh(x), and tanh(0) = 0, so its outputs are zero-centered.",
-      "Some values: tanh(1) ≈ 0.76, tanh(2) ≈ 0.96 and tanh(3) ≈ 0.995. The derivative, 1 − tanh²(x), is 1 at the origin, four times sigmoid's peak of 0.25, one reason tanh trained better than sigmoid in hidden layers before ReLU. It still saturates: the derivative is about 0.07 at x = 2 and 0.0099 at x = 3. In 32-bit floats, tanh(10) rounds to exactly 1.0.",
-      "Tanh lives on inside LSTMs and GRUs, which squash candidate states to (−1, 1), and in the output layer of image generators such as DCGAN, with pixels scaled to match. LeCun's 1998 \"Efficient BackProp\" recommended a scaled version, 1.7159 tanh(2x/3), chosen so that f(±1) = ±1."
-    ],
-    "updated": "2026-10-15",
-    "slug": "tanh-function-squishes-values-to-be-between"
-  },
-  {
     "id": "dl-166",
     "category": "dl",
     "question": "What if we set all the weights of a neural network to 0?",
@@ -2629,13 +2615,15 @@
     "id": "dl-170",
     "category": "dl",
     "question": "What are the problems with sigmoid as an activation function?",
-    "answer": "The output of the sigmoid function for large positive or negative numbers is almost zero. From this comes the problem of vanishing gradient.",
+    "title": "What are the problems with sigmoid, and how does tanh compare?",
+    "answer": "It saturates: for large positive or negative inputs its gradient is nearly zero, which causes vanishing gradients in deep networks. Its outputs are also always positive rather than zero-centered. Tanh fixes the centering but still saturates, which is why ReLU took over.",
     "explanation": [
       "Sigmoid has three problems as a hidden-layer activation: it saturates, causing vanishing gradients; its output is not zero-centered; and it is relatively expensive to compute.",
       "Saturation is the big one. For large positive or negative inputs the curve is flat, so its derivative is close to zero, and even at its peak the derivative is only 0.25. Backpropagation multiplies these derivatives layer after layer, so in a deep network the gradient reaching the early layers shrinks toward zero and those layers barely learn.",
-      "Because sigmoid outputs are always positive, the gradients for a neuron's weights all share the same sign, which pushes updates into an inefficient zig-zag. That is why ReLU and its variants replaced sigmoid in hidden layers, and tanh is preferred when a bounded output is needed. Sigmoid is still the right choice in the output layer for binary classification and inside the gates of LSTMs and GRUs."
+      "Because sigmoid outputs are always positive, the gradients for a neuron's weights all share the same sign, which pushes updates into an inefficient zig-zag. That is why ReLU and its variants replaced sigmoid in hidden layers, and tanh is preferred when a bounded output is needed. Sigmoid is still the right choice in the output layer for binary classification and inside the gates of LSTMs and GRUs.",
+      "Tanh, tanh(x) = (eˣ − e⁻ˣ) / (eˣ + e⁻ˣ), squashes inputs into (−1, 1) instead of (0, 1). It is a rescaled sigmoid, tanh(x) = 2σ(2x) − 1, so its outputs are zero-centered, and its derivative, 1 − tanh²(x), peaks at 1, four times sigmoid's 0.25. That is why tanh trained better than sigmoid in hidden layers before ReLU. It still saturates: the derivative is about 0.07 at x = 2 and 0.0099 at x = 3. Tanh lives on inside LSTMs and GRUs, which squash candidate states to (−1, 1), and in the output layer of image generators such as DCGAN."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-09",
     "proposedBy": "@Al_Grigor",
     "slug": "what-are-the-problems-with-sigmoid-as-an-activation-function"
   },
@@ -2643,13 +2631,15 @@
     "id": "dl-171",
     "category": "dl",
     "question": "What is ReLU? How is it better than sigmoid?",
+    "title": "What is ReLU, how is it better than sigmoid, and what is leaky ReLU?",
     "answer": "ReLU, max(0, x), zeroes negative inputs and passes positive ones through. Unlike sigmoid it doesn't saturate for positive inputs, where its gradient is 1, so it greatly reduces vanishing gradients in deep networks, and it is cheaper to compute.",
     "explanation": [
       "ReLU, the rectified linear unit, is f(x) = max(0, x): negative inputs become 0 and positive ones pass through. It beats sigmoid in hidden layers mainly because it does not saturate for positive inputs, where its gradient is exactly 1, so gradients survive many layers. It is also cheaper, with no exponential.",
       "Sigmoid's derivative, σ(x)(1 − σ(x)), is at most 0.25 and about 0.0066 at x = 5. Backpropagation multiplies one such factor per layer; over ten sigmoid layers they alone multiply to at most 0.25¹⁰ ≈ 9.5 × 10⁻⁷, while an active ReLU's factor is 1. In the 2012 AlexNet paper, a four-layer CNN with ReLUs reached 25% training error on CIFAR-10 six times faster than with tanh.",
-      "ReLU reduces vanishing gradients rather than solving them. A unit whose input stays negative gets zero gradient and can die, ReLU outputs are not zero-centered, and deep networks also need He initialization, normalization and residual connections. Follow-up: why did zero-centered tanh also lose? It saturates at both ends, like sigmoid."
+      "ReLU reduces vanishing gradients rather than solving them. A unit whose input stays negative gets zero gradient and can die, ReLU outputs are not zero-centered, and deep networks also need He initialization, normalization and residual connections. Follow-up: why did zero-centered tanh also lose? It saturates at both ends, like sigmoid.",
+      "Dying units led to variants. Leaky ReLU multiplies negative inputs by a small slope α instead of zeroing them, f(x) = x if x > 0, otherwise αx, so a unit stuck in the negative region still gets gradient α and can recover: with α = 0.01, the inputs −5 and 3 become −0.05 and 3. Andrew Maas, Awni Hannun and Andrew Ng proposed it in 2013. Defaults differ: PyTorch uses 0.01, the Keras layer 0.3, and DCGAN discriminators 0.2, while PReLU, from Kaiming He and colleagues in 2015, learns α during training. The gains are often small, and transformers mostly use GELU or SiLU."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-11-09",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-relu-how-is-it-better-than-sigmoid"
   },
@@ -2868,22 +2858,6 @@
     "slug": "relu-is-an-activation-function-that-given-an-input-vector-generates-an-output-where-the"
   },
   {
-    "id": "dl-190",
-    "category": "dl",
-    "question": "An autoencoder is a neural network that automatically learns by using its inputs as the expected output.",
-    "title": "Does an autoencoder learn by using its inputs as the target?",
-    "answer": "True",
-    "noindex": true,
-    "explanation": [
-      "True. An autoencoder is a neural network trained to reproduce its input at its output, so each input is its own target and no labels are needed. An encoder compresses x into a smaller code z, a decoder rebuilds an approximation x̂, and training minimizes a reconstruction loss such as the mean squared error between x and x̂.",
-      "Example: a 28 × 28 MNIST digit has 784 pixel values. An encoder might map them through layers of 256 and 64 units to a 32-number code, and a mirror-image decoder maps it back. The code is 24.5 times smaller than the image, so the network has to learn which features summarize a digit instead of copying pixels.",
-      "Without a bottleneck or another constraint, it can just learn the identity function. Denoising autoencoders corrupt the input and keep the clean original as the target. Uses include dimensionality reduction and anomaly detection, where high reconstruction error flags unusual inputs. Because the targets come from the data itself, autoencoders count as unsupervised or self-supervised."
-    ],
-    "updated": "2026-10-16",
-    "proposedBy": "@svpino",
-    "slug": "an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the"
-  },
-  {
     "id": "dl-191",
     "category": "dl",
     "question": "Convolutional neural networks are translation invariant.",
@@ -2901,17 +2875,18 @@
   {
     "id": "dl-192",
     "category": "dl",
-    "question": "Autoencoders are one of the most popular supervised learning methods.",
-    "title": "Are autoencoders a supervised learning method?",
-    "answer": "False",
+    "question": "What is an autoencoder?",
+    "title": "What is an autoencoder, and is it supervised or unsupervised?",
+    "answer": "A neural network trained to reproduce its input: an encoder compresses it into a small code and a decoder rebuilds it. The input is its own target, so it needs no labels and counts as unsupervised, or self-supervised, learning.",
     "explanation": [
-      "False. Autoencoders are unsupervised, or more precisely self-supervised: they learn to reconstruct their own input, so the target is the input itself and no human labels are needed. Supervised learning needs input-label pairs (x, y), such as photos tagged with what they show.",
-      "The loss shows the difference. A supervised classifier minimizes L(f(x), y); an autoencoder minimizes L(g(f(x)), x), with f the encoder and g the decoder. That made autoencoders a pretraining tool: Hinton and Salakhutdinov's 2006 Science paper trained deep autoencoders on unlabeled data, and their codes beat linear methods such as PCA at compressing images and documents. A classifier can then be trained on the codes with few labels, which is semi-supervised learning.",
-      "A common follow-up: a linear autoencoder trained with squared error learns the same subspace as the top principal components, as Baldi and Hornik showed in 1989, so non-linear activations are what let it do more. Masked autoencoders, which hide 75% of an image's patches and rebuild them, are a modern self-supervised pretraining method."
+      "An autoencoder is a neural network trained to reproduce its input at its output. An encoder f compresses x into a smaller code z, a decoder g rebuilds an approximation x̂ = g(f(x)), and training minimizes a reconstruction loss such as the mean squared error between x and x̂. Each input is its own target, so no labels are needed.",
+      "Example: a 28 × 28 MNIST digit has 784 pixel values. An encoder might map them through layers of 256 and 64 units to a 32-number code, and a mirror-image decoder maps it back. The code is 24.5 times smaller than the image, so the network has to learn which features summarize a digit instead of copying pixels. Without a bottleneck or another constraint, it could just learn the identity function; denoising autoencoders instead corrupt the input and keep the clean original as the target.",
+      "Are autoencoders supervised? No: they are unsupervised, or more precisely self-supervised. Supervised learning needs input-label pairs (x, y) and minimizes L(f(x), y); an autoencoder minimizes L(g(f(x)), x), with the target taken from the data itself. That made autoencoders a pretraining tool: Hinton and Salakhutdinov's 2006 Science paper trained deep autoencoders on unlabeled data, and their codes beat linear methods such as PCA at compressing images and documents. A classifier can then be trained on the codes with few labels, which is semi-supervised learning.",
+      "Uses include dimensionality reduction and anomaly detection, where high reconstruction error flags unusual inputs. A common follow-up: a linear autoencoder trained with squared error learns the same subspace as the top principal components, as Baldi and Hornik showed in 1989, so non-linear activations are what let it do more. Variational autoencoders learn a distribution over codes so that new samples can be generated, and masked autoencoders, which hide 75% of an image's patches and rebuild them, are a modern self-supervised pretraining method."
     ],
-    "updated": "2026-10-16",
+    "updated": "2026-11-09",
     "proposedBy": "@svpino",
-    "slug": "autoencoders-are-one-of-the-most-popular-supervised-learning-methods"
+    "slug": "what-is-an-autoencoder"
   },
   {
     "id": "dl-193",
@@ -2958,22 +2933,6 @@
     "updated": "2026-10-16",
     "proposedBy": "@svpino",
     "slug": "a-neural-network-with-a-single-layer-is-capable-of-approximating-any-function"
-  },
-  {
-    "id": "dl-196",
-    "category": "dl",
-    "question": "Leaky ReLU is an activation function that lets small negative values pass through when a neuron's input is less than zero.",
-    "title": "Does leaky ReLU let small negative values pass through?",
-    "answer": "True",
-    "noindex": true,
-    "explanation": [
-      "True. Leaky ReLU passes positive inputs through unchanged and multiplies negative inputs by a small slope α instead of setting them to zero: f(x) = x if x > 0, otherwise αx. Strictly, the condition is on each neuron's own input, its weighted sum, not the network's input.",
-      "With α = 0.01, the inputs −5, −0.5 and 3 become −0.05, −0.005 and 3, where plain ReLU gives 0, 0 and 3. The gradient is the point: it is α, not 0, for negative inputs, so a neuron stuck in the negative region still gets small updates and can recover. Andrew Maas, Awni Hannun and Andrew Ng proposed it in 2013 for speech recognition networks.",
-      "Interviewers ask how to pick α. Defaults differ: PyTorch uses 0.01, the Keras layer 0.3, and DCGAN discriminators use 0.2. PReLU, from Kaiming He and colleagues in 2015, learns α during training. Leaky ReLU is as cheap as ReLU and avoids dead units, but gains are often small; transformers mostly use GELU or SiLU."
-    ],
-    "updated": "2026-10-16",
-    "proposedBy": "@svpino",
-    "slug": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative"
   },
   {
     "id": "dl-174",

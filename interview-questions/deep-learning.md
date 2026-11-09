@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-52 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
+49 deep learning questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. Neural networks from backpropagation to attention, and the tricks that make them trainable.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/deep-learning).
 
@@ -11,9 +11,9 @@ Every question links to its page on the site, with a longer answer. To test your
 ## Topics
 
 - [Training with gradient descent](#training-with-gradient-descent) (11)
-- [Activation functions](#activation-functions) (11)
+- [Activation functions](#activation-functions) (9)
 - [Dropout, normalization and capacity](#dropout-normalization-and-capacity) (6)
-- [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (10)
+- [CNNs, RNNs, GANs and autoencoders](#cnns-rnns-gans-and-autoencoders) (9)
 - [Transformers, attention and decoding](#transformers-attention-and-decoding) (5)
 - [Vision metrics and training methods](#vision-metrics-and-training-methods) (4)
 - [Rapid-fire basics](#rapid-fire-basics) (5)
@@ -124,37 +124,27 @@ ReLU, the rectified linear unit, max(0, x). It is cheap and its gradient is exac
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/which-activation-function-follows-these-rules-if-input-is-negative-or-zero-output-is-0)
 
-### What is ReLU? How is it better than sigmoid?
+### What is ReLU, how is it better than sigmoid, and what is leaky ReLU?
+
+> **Flashcard:** What is ReLU? How is it better than sigmoid?
 
 ReLU, max(0, x), zeroes negative inputs and passes positive ones through. Unlike sigmoid it doesn't saturate for positive inputs, where its gradient is 1, so it greatly reduces vanishing gradients in deep networks, and it is cheaper to compute.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-relu-how-is-it-better-than-sigmoid)
 
-### What are the problems with sigmoid as an activation function?
+### What are the problems with sigmoid, and how does tanh compare?
 
-The output of the sigmoid function for large positive or negative numbers is almost zero. From this comes the problem of vanishing gradient.
+> **Flashcard:** What are the problems with sigmoid as an activation function?
+
+It saturates: for large positive or negative inputs its gradient is nearly zero, which causes vanishing gradients in deep networks. Its outputs are also always positive rather than zero-centered. Tanh fixes the centering but still saturates, which is why ReLU took over.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-are-the-problems-with-sigmoid-as-an-activation-function)
-
-### Does leaky ReLU let small negative values pass through?
-
-> **Flashcard:** Leaky ReLU is an activation function that lets small negative values pass through when a neuron's input is less than zero.
-
-True
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative)
 
 ### Sigmoid squishes values to be between?
 
 0 and 1, which is what makes it the right output layer for a binary probability. Inside a deep network it is a poor choice: gradients vanish once inputs saturate at either tail, and its output is not zero-centred, so ReLU-family activations replaced it in hidden layers.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/sigmoid-squishes-values-to-be-between)
-
-### Tanh function squishes values to be between?
-
--1 and 1
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/tanh-function-squishes-values-to-be-between)
 
 ### What does the softmax function do?
 
@@ -288,21 +278,13 @@ Determine whether examples are real or fake.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-function-of-the-discriminator-in-a-gan)
 
-### Does an autoencoder learn by using its inputs as the target?
+### What is an autoencoder, and is it supervised or unsupervised?
 
-> **Flashcard:** An autoencoder is a neural network that automatically learns by using its inputs as the expected output.
+> **Flashcard:** What is an autoencoder?
 
-True
+A neural network trained to reproduce its input: an encoder compresses it into a small code and a decoder rebuilds it. The input is its own target, so it needs no labels and counts as unsupervised, or self-supervised, learning.
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the)
-
-### Are autoencoders a supervised learning method?
-
-> **Flashcard:** Autoencoders are one of the most popular supervised learning methods.
-
-False
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/autoencoders-are-one-of-the-most-popular-supervised-learning-methods)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-an-autoencoder)
 
 ## Transformers, attention and decoding
 
