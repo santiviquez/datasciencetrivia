@@ -33,5 +33,9 @@
   { "from": "what-does-lstm-means", "to": "what-is-lstm" },
   { "from": "type-of-layer-that-tipically-has-a-cell-input-gate-output-gate-and-a-forget-gate", "to": "what-is-lstm" },
   { "from": "what-does-gru-means", "to": "what-is-gru" },
-  { "from": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate", "to": "what-is-gru" }
+  { "from": "type-of-layer-that-tipically-has-a-reset-gate-and-a-output-gate", "to": "what-is-gru" },
+  { "from": "autoencoders-are-one-of-the-most-popular-supervised-learning-methods", "to": "what-is-an-autoencoder" },
+  { "from": "an-autoencoder-is-a-neural-network-that-automatically-learns-by-using-its-inputs-as-the", "to": "what-is-an-autoencoder" },
+  { "from": "leaky-relu-is-an-activation-function-that-allows-the-passing-of-small-sized-negative", "to": "what-is-relu-how-is-it-better-than-sigmoid" },
+  { "from": "tanh-function-squishes-values-to-be-between", "to": "what-are-the-problems-with-sigmoid-as-an-activation-function" }
 ]

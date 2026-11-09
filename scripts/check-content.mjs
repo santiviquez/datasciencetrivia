@@ -179,12 +179,17 @@ for (const q of raw) {
 /**
  * content/links.json names the phrases that link to each card from the longer
  * answers. An id that no longer exists would silently stop linking, and the
- * same phrase listed for two cards would link to whichever came first.
+ * same phrase listed for two cards would link to whichever came first. A card
+ * hidden from search ("noindex") is not a link target: links should lead to
+ * pages Google can index.
  */
 const linkTerms = JSON.parse(readFileSync(join(here, "..", "content", "links.json"), "utf8"));
 const linkedBy = new Map();
 for (const [id, names] of Object.entries(linkTerms)) {
   if (!seenIds.has(id)) errors.push(`content/links.json: "${id}" is not a question id`);
+  else if (raw[seenIds.get(id)].noindex) {
+    errors.push(`content/links.json: "${id}" is hidden from search ("noindex"), so pages should not link to it`);
+  }
   if (!Array.isArray(names) || names.length === 0) {
     errors.push(`content/links.json: "${id}" needs a non-empty list of phrases`);
     continue;
