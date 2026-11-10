@@ -169,7 +169,7 @@ const ENTRIES: TimelineEntry[] = [
     year: 2018,
     title: "The Turing Award for deep learning",
     text: "Yoshua Bengio, Geoffrey Hinton and Yann LeCun receive the 2018 Turing Award for the conceptual and engineering breakthroughs that made deep neural networks practical.",
-    cards: ["history-124", "history-135"],
+    cards: ["history-124"],
   },
   {
     year: 2022,

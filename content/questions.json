@@ -2079,15 +2079,17 @@
   {
     "id": "history-124",
     "category": "history",
-    "question": "Which computer scientists received the Turing Award for their contributions to deep learning?",
-    "answer": "Yoshua Bengio, Geoffrey Hinton, and Yann LeCun.",
+    "question": "Who are known as the \"Godfathers of AI\"?",
+    "title": "Who are the Godfathers of AI, and why did they win the Turing Award?",
+    "answer": "Geoffrey Hinton, Yann LeCun and Yoshua Bengio, the three researchers whose work underpins modern deep learning. They shared the 2018 ACM Turing Award for making deep neural networks a critical component of computing.",
     "explanation": [
-      "Yoshua Bengio, Geoffrey Hinton and Yann LeCun shared the 2018 ACM A.M. Turing Award, often called the Nobel Prize of computing, for conceptual and engineering breakthroughs that made deep neural networks a critical component of computing. It is the 2018 award, but ACM announced it on 27 March 2019, so it is often misdated.",
+      "The \"Godfathers of AI\" are Geoffrey Hinton, Yann LeCun and Yoshua Bengio, who shared the 2018 ACM A.M. Turing Award, often called the Nobel Prize of computing, for conceptual and engineering breakthroughs that made deep neural networks a critical component of computing. The nickname, more precisely the godfathers of deep learning, is a media label rather than a formal title, and it spread after that award. It is the 2018 award, but ACM announced it on 27 March 2019, so it is often misdated.",
       "Each is known for different pieces. Hinton coauthored the 1986 Nature paper that popularized backpropagation, co-invented Boltzmann machines and coauthored AlexNet in 2012. LeCun developed convolutional networks at AT&T Bell Labs, where they went into a system for reading bank checks. Bengio pioneered neural language models with learned word embeddings and coauthored the 2014 papers that introduced attention for translation and generative adversarial networks.",
-      "The $1 million prize, funded by Google, was presented in San Francisco on 15 June 2019. Two later honors are easy to confuse with it: Hinton shared the 2024 Nobel Prize in Physics with John Hopfield, and the 2024 Turing Award went to Andrew Barto and Richard Sutton for reinforcement learning."
+      "Their ties go back decades. LeCun was Hinton's postdoc in Toronto, and Bengio coauthored LeCun's 1998 LeNet-5 paper. In 2004, when neural networks were out of fashion, Hinton founded a Canadian Institute for Advanced Research (CIFAR) program, now Learning in Machines & Brains, that brought the three together; they jokingly called themselves the \"deep learning conspiracy\". The $1 million Turing prize, funded by Google, was presented in San Francisco on 15 June 2019.",
+      "Today they disagree in public. Hinton left Google in May 2023 so he could speak freely about AI risk, and Bengio also warns of catastrophic risks, while LeCun calls such fears overblown. Quiz traps: Hinton alone is often called \"the godfather of AI\"; Fei-Fei Li, who created ImageNet, is often called its \"godmother\"; Hinton shared the 2024 Nobel Prize in Physics with John Hopfield; and the 2024 Turing Award went to Andrew Barto and Richard Sutton for reinforcement learning."
     ],
-    "updated": "2026-10-14",
-    "slug": "which-computer-scientists-received-the-turing-award-for-their-contributions-in-deep"
+    "updated": "2026-11-10",
+    "slug": "who-are-the-godfathers-of-ai"
   },
   {
     "id": "history-125",
@@ -2219,19 +2221,6 @@
     ],
     "updated": "2026-10-15",
     "slug": "who-is-known-of-the-founding-father-of-convolutional-nets"
-  },
-  {
-    "id": "history-135",
-    "category": "history",
-    "question": "Who are known as the \"Godfathers of AI\"?",
-    "answer": "Geoffrey Hinton, Yann LeCun, and Yoshua Bengio.",
-    "explanation": [
-      "Geoffrey Hinton, Yann LeCun and Yoshua Bengio, though the usual nickname is the \"Godfathers of AI\", or more precisely the godfathers of deep learning, not the \"Good Parents of AI\". It is a media label, not a formal title, for the three researchers whose work underpins modern deep learning.",
-      "Their ties go back decades. LeCun was Hinton's postdoc in Toronto, and Bengio coauthored LeCun's 1998 LeNet-5 paper. In 2004, when neural networks were out of fashion, Hinton founded a Canadian Institute for Advanced Research (CIFAR) program, now Learning in Machines & Brains, that brought the three together; they jokingly called themselves the \"deep learning conspiracy\". The nickname spread after their shared 2018 Turing Award.",
-      "Today they disagree in public. Hinton left Google in May 2023 so he could speak freely about AI risk, and Bengio also warns of catastrophic risks, while LeCun calls such fears overblown. Two quiz traps: Hinton alone is often called \"the godfather of AI\", and Fei-Fei Li, who created ImageNet, is often called its \"godmother\"."
-    ],
-    "updated": "2026-10-15",
-    "slug": "who-are-known-as-the-good-parents-of-ai"
   },
   {
     "id": "history-136",

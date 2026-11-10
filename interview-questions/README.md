@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-264 questions with short answers on machine learning, deep learning, generative AI, MLOps, statistics and the history of AI. They are the cards of [Data Science Trivia](https://www.datasciencetrivia.com), a free flashcard deck for data science and machine learning interviews, written out so you can read or search them in one place.
+263 questions with short answers on machine learning, deep learning, generative AI, MLOps, statistics and the history of AI. They are the cards of [Data Science Trivia](https://www.datasciencetrivia.com), a free flashcard deck for data science and machine learning interviews, written out so you can read or search them in one place.
 
 | Category | Questions | Covers |
 |---|---|---|
@@ -11,7 +11,7 @@
 | [Generative AI](generative-ai.md) | 26 | Large language models in practice: prompting, retrieval, evaluation and the tradeoffs behind shipping them. |
 | [MLOps](mlops.md) | 14 | What happens after a model ships: drift, monitoring, deployment and the system design questions around them. |
 | [Statistics](statistics.md) | 71 | Inference, uncertainty and the ideas that people most often get subtly wrong in interviews. |
-| [History](history-of-ai.md) | 35 | The people, papers and moments that built the field, from the perceptron to the Transformer. |
+| [History](history-of-ai.md) | 34 | The people, papers and moments that built the field, from the perceptron to the Transformer. |
 
 Each question links to its own page on the site, with a longer answer: the mechanism, a worked example and what an interviewer asks next.
 
