@@ -2,7 +2,7 @@
 
 <!-- Generated from content/questions.json by `npm run export:questions`. Edit the JSON, not this file. -->
 
-35 history questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. The people, papers and moments that built the field, from the perceptron to the Transformer.
+34 history questions with short answers, from [Data Science Trivia](https://www.datasciencetrivia.com), free flashcards for data science and machine learning interviews. The people, papers and moments that built the field, from the perceptron to the Transformer.
 
 Every question links to its page on the site, with a longer answer. To test yourself instead of reading, [flip through them as flashcards](https://www.datasciencetrivia.com/categories/history).
 
@@ -14,7 +14,7 @@ Every question links to its page on the site, with a longer answer. To test your
 - [Early AI and the first neural networks, 1950 to 1989](#early-ai-and-the-first-neural-networks-1950-to-1989) (7)
 - [Machine learning grows up, 1990 to 2009](#machine-learning-grows-up-1990-to-2009) (11)
 - [The deep learning era, 2012 to 2017](#the-deep-learning-era-2012-to-2017) (10)
-- [The people](#the-people) (3)
+- [The people](#the-people) (2)
 
 ## The mathematical roots, 1763 to 1913
 
@@ -234,17 +234,13 @@ Cake
 
 Geoffrey Hinton, Yann LeCun and Yoshua Bengio, who shared the 2018 Turing Award for deep learning, and the students who learned from them.
 
-### Which computer scientists received the Turing Award for their contributions to deep learning?
+### Who are the Godfathers of AI, and why did they win the Turing Award?
 
-Yoshua Bengio, Geoffrey Hinton, and Yann LeCun.
+> **Flashcard:** Who are known as the "Godfathers of AI"?
 
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/which-computer-scientists-received-the-turing-award-for-their-contributions-in-deep)
+Geoffrey Hinton, Yann LeCun and Yoshua Bengio, the three researchers whose work underpins modern deep learning. They shared the 2018 ACM Turing Award for making deep neural networks a critical component of computing.
 
-### Who are known as the "Godfathers of AI"?
-
-Geoffrey Hinton, Yann LeCun, and Yoshua Bengio.
-
-[Read the longer answer →](https://www.datasciencetrivia.com/questions/who-are-known-as-the-good-parents-of-ai)
+[Read the longer answer →](https://www.datasciencetrivia.com/questions/who-are-the-godfathers-of-ai)
 
 ### Whose notable students include Ruslan Salakhutdinov, Ilya Sutskever and Yann LeCun?
 
