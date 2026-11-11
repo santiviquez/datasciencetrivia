@@ -30,7 +30,11 @@ export interface RankableCard {
 }
 
 export interface RelatedIndex<T extends RankableCard> {
-  related(target: T, limit: number): T[];
+  /**
+   * Up to `limit` cards related to `target`. Cards for which `eligible`
+   * returns false still shape the term weights but are never returned.
+   */
+  related(target: T, limit: number, eligible?: (card: T) => boolean): T[];
 }
 
 /**
@@ -165,7 +169,7 @@ export function buildRelatedIndex<T extends RankableCard>(
   const vectorFor = (id: string) => vectors.get(id) ?? empty;
 
   return {
-    related(target, limit) {
+    related(target, limit, eligible = () => true) {
       if (limit <= 0) return [];
 
       const targetVector = vectorFor(target.id);
@@ -179,7 +183,7 @@ export function buildRelatedIndex<T extends RankableCard>(
         ((deckOrder.get(id) ?? 0) - from + total) % total;
 
       const scored = cards
-        .filter((card) => card.id !== target.id)
+        .filter((card) => card.id !== target.id && eligible(card))
         .map((card) => ({
           card,
           similarity: cosine(targetVector, vectorFor(card.id)),

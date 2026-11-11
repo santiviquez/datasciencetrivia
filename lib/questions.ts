@@ -252,6 +252,10 @@ const relatedIndexes = new Map<CategoryKey, RelatedIndex<QuestionWithSlug>>();
 /**
  * Same-category cards ranked by how much of the topic they share, most
  * relevant first. See `lib/related.ts` for the scoring.
+ *
+ * Cards hidden from search ("noindex") stay in the index, so term weights are
+ * the same for every page, but are never recommended: the related slots on a
+ * page should lead to pages Google can index.
  */
 export function getRelatedQuestions(
   q: QuestionWithSlug,
@@ -262,7 +266,7 @@ export function getRelatedQuestions(
     index = buildRelatedIndex(getQuestionsByCategory(q.category));
     relatedIndexes.set(q.category, index);
   }
-  return index.related(q, limit);
+  return index.related(q, limit, (card) => !card.noindex);
 }
 
 const linkParagraphs = createLinker(questions, linkTerms as Record<string, string[]>);
