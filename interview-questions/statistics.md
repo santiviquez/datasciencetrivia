@@ -438,15 +438,19 @@ Precision at k and recall at k are evaluation metrics for ranking algorithms.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-precision-and-recall-at-k)
 
-### What is MSE?
+### What is MSE (mean squared error), and how do you calculate it?
 
-MSE stands for Mean Squared Error. And is a measure of how close a fitted line is to data points by measuring the average squared of the errors.
+> **Flashcard:** What is MSE?
+
+Mean squared error: the average of the squared differences between predicted and actual values. Squaring makes every error positive and lets large misses dominate, so MSE is the standard regression loss and is sensitive to outliers.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-mse)
 
-### What is RMSE?
+### What is RMSE (root mean squared error), and how do you interpret it?
 
-Root Mean Squared Error: the square root of MSE, which puts the error back in the units of the target. Squaring first lets large misses dominate, so RMSE is always at least MAE and far more outlier-sensitive — report MAE too when a handful of extreme rows drives the number.
+> **Flashcard:** What is RMSE?
+
+Root mean squared error: the square root of MSE, which puts the error back in the target's units. Squaring first lets large misses dominate, so RMSE is always at least as large as MAE and more sensitive to outliers; report MAE too when a few extreme rows drive the number.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-rmse)
 
