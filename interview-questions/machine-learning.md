@@ -441,9 +441,11 @@ Converting a (usually continuous) feature into multiple binary features called b
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/explain-what-is-bucketing)
 
-### What is the difference between a dense and a sparse feature?
+### What is the difference between dense and sparse features in ML?
 
-A dense feature is one in which most values are non-zero in contrast with a sparse one where most values are zeros or empty.
+> **Flashcard:** What is the difference between a dense and a sparse feature?
+
+A dense feature has a meaningful, mostly non-zero value in almost every row, like age or an embedding. A sparse feature is zero or missing in most rows, like a one-hot encoded category or a bag-of-words count.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-a-dense-and-a-sparse-feature)
 

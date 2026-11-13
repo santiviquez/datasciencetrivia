@@ -28,9 +28,11 @@ Nominal data names categories with no natural order, ex: eye color, city or paym
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-of-and-nominal-and-ordinal-feature)
 
-### What does high and low cardinality mean?
+### What do high and low cardinality mean in data, with examples?
 
-High cardinality refers to columns with values that are very uncommon or unique, example: email addresses, or user names. And low cardinality: refers to columns with few unique values, example: status flags, boolean values.
+> **Flashcard:** What does high and low cardinality mean?
+
+Cardinality is the number of distinct values in a column. High cardinality means many unique values, often close to one per row, like user IDs or email addresses; low cardinality means a few values that repeat, like order status or a yes/no flag.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-high-and-low-cardinality-mean)
 
