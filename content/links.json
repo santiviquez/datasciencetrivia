@@ -64,6 +64,12 @@
     "one-hot encoding",
     "one hot encoding"
   ],
+  "ml-22": [
+    "sparse feature",
+    "dense feature",
+    "sparse matrix",
+    "sparse matrices"
+  ],
   "ml-13": [
     "target encoding"
   ],
@@ -342,7 +348,9 @@
   ],
   "stats-79": [
     "high cardinality",
-    "high-cardinality"
+    "high-cardinality",
+    "low cardinality",
+    "low-cardinality"
   ],
   "dl-144": [
     "stochastic gradient descent",

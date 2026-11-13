@@ -247,13 +247,17 @@
     "id": "ml-22",
     "category": "ml",
     "question": "What is the difference between a dense and a sparse feature?",
-    "answer": "A dense feature is one in which most values are non-zero in contrast with a sparse one where most values are zeros or empty.",
+    "title": "What is the difference between dense and sparse features in ML?",
+    "answer": "A dense feature has a meaningful, mostly non-zero value in almost every row, like age or an embedding. A sparse feature is zero or missing in most rows, like a one-hot encoded category or a bag-of-words count.",
     "explanation": [
-      "A dense feature has a meaningful, mostly non-zero value for almost every row, like age, price or a 300-dimensional word embedding. A sparse feature is zero or missing for most rows, like a one-hot encoded city column or a bag-of-words vector where each document uses a few hundred words out of a vocabulary of 50,000.",
-      "The difference changes how you store and model the data. Sparse matrices are kept in formats such as CSR that only record the non-zero entries, so a million-column one-hot matrix still fits in memory. Linear models and gradient-boosted trees handle sparse inputs well; distance-based methods like KNN and k-means struggle, because in a sparse space most points look almost equally far apart.",
-      "A common move in interviews and in practice is to turn sparse features into dense ones: embeddings compress a high-cardinality category into a short dense vector, and techniques like truncated SVD do the same for text."
+      "Dense features have a real value in almost every row, like age or price; sparse features are zero or missing in most rows, like a one-hot encoded city. Embeddings are dense too: a 300-dimensional word vector has no zeros to speak of. A bag-of-words vector is the classic sparse case, since each document uses a few hundred words out of a vocabulary of 50,000.",
+      "Sparsity is the share of entries that are zero. One-hot encoding a city column with 2,000 cities gives each row a single 1 among 2,000 columns, so that block of the data is 99.95% zeros. A TF-IDF matrix of 100,000 documents over a 50,000-word vocabulary has 5 billion cells; if each document uses about 200 distinct words, only 20 million of them are non-zero, 0.4%.",
+      "That is why sparse data is stored in formats that only record the non-zero entries, such as CSR (compressed sparse row), which keeps the values, their column indices and where each row starts. Stored densely as 64-bit floats, the TF-IDF matrix above takes 40 GB; in CSR it takes about 240 MB. scikit-learn's one-hot encoder and text vectorizers return sparse matrices by default, and converting one to a dense array is a common way to run out of memory.",
+      "Models differ in how well they handle each. Linear models such as logistic regression and linear SVMs work well on sparse inputs, and so does gradient boosting: XGBoost's split finding is sparsity-aware, and LightGBM bundles sparse features that are rarely non-zero at the same time. Distance-based methods such as KNN and k-means struggle, because in a high-dimensional sparse space most points share few non-zero features and look almost equally far apart; cosine similarity copes better than Euclidean distance there. Neural networks want dense inputs, which is why they turn sparse IDs into embeddings.",
+      "A common move is to turn sparse features into dense ones. An embedding compresses a high-cardinality category into a short dense vector learned during training, and truncated SVD does the same for a TF-IDF matrix; unlike PCA it doesn't center the data first, which would turn every zero into a non-zero value. Search has the same split: sparse retrieval matches words, as BM25 does, dense retrieval compares embeddings, and hybrid search combines the two.",
+      "Interview follow-ups: why you shouldn't standardize a sparse matrix by subtracting the mean (it makes every zero non-zero; scale without centering instead, as scikit-learn's MaxAbsScaler does), and how this relates to L1 regularization, which uses \"sparse\" in a different sense: it produces sparse weights, with most coefficients exactly zero, whatever the input looks like."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-13",
     "slug": "what-is-the-difference-between-a-dense-and-a-sparse-feature"
   },
   {
@@ -1051,13 +1055,17 @@
     "id": "stats-79",
     "category": "stats",
     "question": "What does high and low cardinality mean?",
-    "answer": "High cardinality refers to columns with values that are very uncommon or unique, example: email addresses, or user names. And low cardinality: refers to columns with few unique values, example: status flags, boolean values.",
+    "title": "What do high and low cardinality mean in data, with examples?",
+    "answer": "Cardinality is the number of distinct values in a column. High cardinality means many unique values, often close to one per row, like user IDs or email addresses; low cardinality means a few values that repeat, like order status or a yes/no flag.",
     "explanation": [
-      "Cardinality is the number of distinct values a column holds. A high-cardinality column has many unique values, often close to one per row, like user IDs, email addresses or ZIP codes. A low-cardinality column has only a handful, like order status, gender or a yes/no flag.",
-      "It matters most when encoding categorical features. One-hot encoding a low-cardinality column is cheap and safe. One-hot encoding a high-cardinality one creates thousands of sparse columns, slows training and invites overfitting to rare values, so people reach for target encoding, count encoding, hashing or learned embeddings instead.",
-      "In databases the same word describes how selective a column is: indexing a high-cardinality column narrows a query a lot, while an index on a low-cardinality column rarely helps."
+      "Cardinality is the number of distinct values a column holds. A high-cardinality column has many unique values, often close to one per row, like user IDs, email addresses or ZIP codes. A low-cardinality column repeats a handful of values, like order status, country or a yes/no flag.",
+      "There is no fixed cutoff, because it is relative to the number of rows and to what you want to do with the column. A useful check is the ratio of distinct values to rows. In a 1-million-row orders table, a customer_id column with 400,000 distinct values is high cardinality and a payment_method column with 5 is low; a US ZIP code column, with up to about 41,000 values, is usually treated as high when it comes to modeling. In pandas, df[col].nunique() gives the count and df[col].nunique() / len(df) the ratio.",
+      "It matters most when encoding categorical features. One-hot encoding a low-cardinality column adds a few columns and is safe. One-hot encoding a high-cardinality one adds a column per value: thousands of mostly-zero columns, slower training, and many categories seen only a few times, which a model can memorize and then overfit to. The usual alternatives are target encoding (replace each category with the average target, computed out of fold so it doesn't cause target leakage), count encoding, the hashing trick (map values into a fixed number of buckets), grouping rare values into an \"other\" bucket, and learned embeddings in neural networks. CatBoost and LightGBM also handle categorical columns natively.",
+      "A column whose values are nearly all unique, like a row ID or an email address, is usually dropped rather than encoded: it carries no pattern that generalizes to new rows, only a way to memorize old ones. The useful signal is often in something derived from it, such as the email's domain or the customer's number of past orders.",
+      "The word means related things in other fields. In databases, cardinality describes how selective a column is: an index on a high-cardinality column narrows a query a lot, while an index on a low-cardinality column like a status flag rarely helps (bitmap indexes are the exception, built for exactly that case). In data modeling it describes relationships: one-to-one, one-to-many or many-to-many. And in monitoring systems like Prometheus, a high-cardinality metric is one with too many label combinations, such as a user_id label, because each combination is stored as its own time series.",
+      "Interview follow-ups: how you would encode a column with 10,000 categories (target encoding, hashing or an embedding, and how you'd keep the target encoding from leaking), what a one-hot encoded model does with a category it never saw in training (it gets all zeros, unless you reserve an \"unknown\" bucket), and what changes when cardinality grows after deployment, as when a product catalog adds items: a fixed one-hot encoding has no column for the new values, while hashing still maps each one to a bucket."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-13",
     "slug": "what-does-high-and-low-cardinality-mean"
   },
   {
