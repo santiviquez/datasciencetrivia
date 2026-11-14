@@ -648,13 +648,17 @@
     "id": "ml-61",
     "category": "ml",
     "question": "Is logistic regression a linear model? Why?",
-    "answer": "Logistic regression is considered a generalized linear model because the outcome always depends on the sum of the inputs and parameters.",
+    "title": "Is logistic regression a linear model, even with the sigmoid?",
+    "answer": "Yes. It is a generalized linear model: it computes a linear score w·x + b and passes it through a sigmoid, so the log-odds are linear in the inputs and the decision boundary is a straight line or flat hyperplane.",
     "explanation": [
-      "Yes. Logistic regression is a linear model because it computes a linear combination of the inputs, w·x + b, and the decision boundary where the predicted probability equals 0.5 is the hyperplane w·x + b = 0. It belongs to the family of generalized linear models.",
-      "The sigmoid on top is what confuses people. It squashes the linear score into a probability between 0 and 1, so the output is a non-linear function of x, but the log-odds, log(p / (1 − p)), is exactly linear in x. That is the sense in which the model is linear: in the parameters and in the log-odds, not in the probability.",
-      "The practical consequence is that logistic regression can only separate classes with a straight line or flat hyperplane. To fit curved boundaries you add features yourself, such as polynomial terms or interactions, or switch to a non-linear model like a tree ensemble or a neural network."
+      "Yes. Logistic regression is a linear model: it computes a linear score of the inputs, z = w·x + b, and its decision boundary, z = 0, is a straight line or flat hyperplane. It belongs to the family of generalized linear models (GLMs), with a binary outcome and the logit link.",
+      "The sigmoid on top is what confuses people. It squashes the score into a probability, p = 1 / (1 + e^(−z)), so p is a non-linear function of x, but the log-odds, log(p / (1 − p)), equal z exactly. That is the sense in which the model is linear: in its parameters and in the log-odds, not in the probability. It also makes the coefficients readable: each one is the change in log-odds per unit of its feature, so e^w is an odds ratio, and w = 0.7 roughly doubles the odds for every unit increase.",
+      "Example: with z = 2x₁ − x₂ − 1, the point (1, 0) gets z = 1 and p = 1 / (1 + e^(−1)) ≈ 0.73, and the point (0, 1) gets z = −2 and p ≈ 0.12. Every point with 2x₁ − x₂ = 1 sits at exactly p = 0.5, and that set is a straight line. Points on any line parallel to it share one probability, so the probability only changes as you move across those lines.",
+      "The practical consequence is that logistic regression can only separate classes with a straight line or flat hyperplane, so on its own it can't learn XOR. To fit a curved boundary you add features yourself, such as polynomial terms (x₁², x₁x₂) or splines: the model is still linear in those features, but the boundary is curved in the original space. Or you switch to a non-linear model like a tree ensemble or a neural network.",
+      "How it differs from linear regression: both compute w·x + b, but linear regression predicts that score directly and is fit by minimizing squared error, while logistic regression turns it into a probability and is fit by maximum likelihood, which means minimizing log loss. There is no closed-form solution, so it is fit iteratively, with Newton's method or gradient descent. The loss is convex, so there is one best solution, except when the classes are perfectly separable: then the weights grow without limit unless they are regularized.",
+      "Interview follow-ups: whether a neural network with a sigmoid output is linear too (only with no hidden layers; a single sigmoid neuron is logistic regression), and whether its probabilities can be trusted. They are often reasonably calibrated because the model minimizes log loss, but strong regularization and class weights distort them, so check a calibration curve before using them as probabilities."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-14",
     "proposedBy": "@Al_Grigor",
     "slug": "is-logistic-regression-a-linear-model-why"
   },
@@ -1400,13 +1404,17 @@
     "id": "stats-108",
     "category": "stats",
     "question": "What is precision and recall at k?",
-    "answer": "Precision at k and recall at k are evaluation metrics for ranking algorithms.",
+    "title": "What are precision at k and recall at k, and how are they calculated?",
+    "answer": "Ranking metrics. Precision at k is the share of the top k results that are relevant; recall at k is the share of all relevant items that make it into the top k. Both ignore the order inside the top k.",
     "explanation": [
-      "Precision at k is the fraction of the top k recommended items that are relevant. Recall at k is the fraction of all relevant items that appear in the top k. They are the standard metrics for recommenders and search ranking, where only the first few results get seen.",
-      "Example: a user has 5 relevant items and the model's top 10 contain 3 of them. Precision@10 = 3/10 = 0.3 and recall@10 = 3/5 = 0.6. Raising k usually raises recall and lowers precision, the same tradeoff as moving a classification threshold.",
-      "Both ignore the order inside the top k: a relevant item at position 1 counts the same as one at position 10. When order matters, use mean average precision (MAP), MRR or NDCG. Pick k to match what users actually see, such as 5 results on a mobile screen."
+      "Precision at k is the share of the top k results that are relevant; recall at k is the share of all relevant items that land in the top k. Written precision@k and recall@k, they are the standard metrics for recommenders, search and retrieval in RAG systems, where only the first few results get seen or passed on.",
+      "Precision@k = (relevant items in the top k) / k, and recall@k = (relevant items in the top k) / (all relevant items). Example: a user has 5 relevant items and the model's top 10 contain 3 of them, at positions 1, 4 and 9. Precision@10 = 3/10 = 0.3 and recall@10 = 3/5 = 0.6. At k = 5 only the first two are in the list, so precision@5 = 2/5 = 0.4 and recall@5 = 2/5 = 0.4.",
+      "Raising k never lowers recall@k, while precision@k usually falls, the same tradeoff as lowering a classification threshold. Two edge cases trip people up. If a user has fewer relevant items than k, precision@k can't reach 1: with 2 relevant items the best possible precision@10 is 0.2, which is why some evaluations report R-precision, the precision at k equal to the number of relevant items. And recall@k is undefined for a user with no relevant items, so those users are usually left out of the average.",
+      "In practice both are computed per user or per query and then averaged, so every user counts equally however many relevant items they have. Related metrics: hit rate at k, the share of users with at least one relevant item in the top k, is common when each user has a single held-out item; mean reciprocal rank (MRR) looks only at the first relevant result; and when the order inside the top k matters, mean average precision (MAP) and NDCG reward putting relevant items higher.",
+      "Order is the big blind spot: a relevant item at position 1 counts the same as one at position 10. For a user with exactly 3 relevant items, a ranking that puts them at positions 1 to 3 and one that puts them at 8 to 10 get the same precision@10 (0.3) and recall@10 (1.0), though users would only see the first. Average precision tells them apart by averaging the precision at each position where a relevant item appears: (1/1 + 2/2 + 3/3) / 3 = 1.0 for the first ranking, (1/8 + 2/9 + 3/10) / 3 ≈ 0.22 for the second.",
+      "Pick k to match what is actually used: 5 for what fits on a phone screen, 10 for a first page of search results, or the number of chunks a RAG pipeline passes to the model, where recall@k matters most because a passage that isn't retrieved can't be used. Interview follow-ups: why recommending only the most popular items can score well on precision@k while helping no one discover anything, and why offline precision@k on logged data understates a new model, since items users were never shown can't have been marked relevant."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-14",
     "proposedBy": "@Al_Grigor",
     "slug": "what-is-precision-and-recall-at-k"
   },

@@ -352,6 +352,12 @@
     "low cardinality",
     "low-cardinality"
   ],
+  "stats-108": [
+    "precision at k",
+    "recall at k",
+    "precision@k",
+    "recall@k"
+  ],
   "dl-144": [
     "stochastic gradient descent",
     "SGD",

@@ -434,9 +434,11 @@ True positives over predicted positives, TP / (TP + FP): of the cases you flagge
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/precision-is-the-rate-between)
 
-### What is precision and recall at k?
+### What are precision at k and recall at k, and how are they calculated?
 
-Precision at k and recall at k are evaluation metrics for ranking algorithms.
+> **Flashcard:** What is precision and recall at k?
+
+Ranking metrics. Precision at k is the share of the top k results that are relevant; recall at k is the share of all relevant items that make it into the top k. Both ignore the order inside the top k.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-precision-and-recall-at-k)
 
