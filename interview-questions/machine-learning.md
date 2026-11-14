@@ -325,9 +325,11 @@ ROC curve.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/graphical-representation-of-the-contrast-between-true-positives-and-false-positives-rates)
 
-### What is the precision-recall curve?
+### What is a precision-recall curve, and when is it better than ROC?
 
-A precision-recall curve (or PR Curve) is a plot of the precision (y-axis) and the recall (x-axis) for different probability thresholds.
+> **Flashcard:** What is the precision-recall curve?
+
+A plot of precision (y-axis) against recall (x-axis) across classification thresholds, one point per threshold. Its area, usually reported as average precision, summarizes it, and it shows more than a ROC curve when positives are rare.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-precision-recall-curve)
 
