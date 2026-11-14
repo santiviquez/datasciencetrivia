@@ -73,9 +73,11 @@ Graphs! More specifically, directed acyclic graphs.
 
 Expect to defend the simple models before the fancy ones: why logistic regression counts as a linear model and whether it needs scaled features, what a perfectly collinear column does to a regression, which kernels an SVM uses, and what makes naive Bayes naive.
 
-### Is logistic regression a linear model? Why?
+### Is logistic regression a linear model, even with the sigmoid?
 
-Logistic regression is considered a generalized linear model because the outcome always depends on the sum of the inputs and parameters.
+> **Flashcard:** Is logistic regression a linear model? Why?
+
+Yes. It is a generalized linear model: it computes a linear score w·x + b and passes it through a sigmoid, so the log-odds are linear in the inputs and the decision boundary is a straight line or flat hyperplane.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/is-logistic-regression-a-linear-model-why)
 
@@ -323,9 +325,11 @@ ROC curve.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/graphical-representation-of-the-contrast-between-true-positives-and-false-positives-rates)
 
-### What is the precision-recall curve?
+### What is a precision-recall curve, and when is it better than ROC?
 
-A precision-recall curve (or PR Curve) is a plot of the precision (y-axis) and the recall (x-axis) for different probability thresholds.
+> **Flashcard:** What is the precision-recall curve?
+
+A plot of precision (y-axis) against recall (x-axis) across classification thresholds, one point per threshold. Its area, usually reported as average precision, summarizes it, and it shows more than a ROC curve when positives are rare.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-precision-recall-curve)
 
