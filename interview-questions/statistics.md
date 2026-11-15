@@ -36,9 +36,11 @@ Cardinality is the number of distinct values in a column. High cardinality means
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-high-and-low-cardinality-mean)
 
-### What is the difference between "long" and "wide" format data?
+### What is long vs wide format data, and how do you convert between them?
 
-Wide: categorical data is grouped in a single row, long: each row is an observation belonging to a particular category.
+> **Flashcard:** What is the difference between "long" and "wide" format data?
+
+Wide format has one row per subject, with repeated measurements in separate columns. Long format has one row per observation, with one column naming the measurement and another holding its value.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-long-and-wide-format-data)
 
@@ -364,9 +366,11 @@ Correlation is covariance divided by the two standard deviations, so it is unitl
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-covariance-and-correlation)
 
-### If pearson correlation is 0 between two variables can we assume that there isn't any relation between them?
+### Does zero correlation mean two variables are unrelated or independent?
 
-No. Pearson correlation coefficient between 2 variables might be zero even when they have a relationship between them. Example: x and x^2
+> **Flashcard:** If pearson correlation is 0 between two variables can we assume that there isn't any relation between them?
+
+No. A Pearson correlation of 0 only rules out a linear relationship. Two variables can be strongly related in a non-linear way, like y = x² with x symmetric around zero, and still have a correlation of exactly 0.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/if-pearson-correlation-is-0-between-two-variables-can-we-assume-that-there-isnt-any)
 

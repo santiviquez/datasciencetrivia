@@ -969,13 +969,17 @@
     "id": "stats-72",
     "category": "stats",
     "question": "What is the difference between \"long\" and \"wide\" format data?",
-    "answer": "Wide: categorical data is grouped in a single row, long: each row is an observation belonging to a particular category.",
+    "title": "What is long vs wide format data, and how do you convert between them?",
+    "answer": "Wide format has one row per subject, with repeated measurements in separate columns. Long format has one row per observation, with one column naming the measurement and another holding its value.",
     "explanation": [
-      "In wide format each subject has one row and repeated measurements spread across columns, such as one row per student with columns math, physics and chemistry. In long format each row is a single observation, so the same student appears three times with a subject column and a score column.",
-      "Long format is what most plotting and modelling tools expect, because every variable is one column; it matches the \"tidy data\" convention. Wide format is easier for people to read and is what many spreadsheets and some algorithms, like a feature matrix for scikit-learn, need.",
-      "Converting between them is called melting or pivoting. In pandas, melt goes from wide to long and pivot or pivot_table goes from long to wide; in R the tidyr functions pivot_longer and pivot_wider do the same."
+      "In wide format each subject has one row and its repeated measurements sit in separate columns; in long format each row is a single observation. One row per student with columns math, physics and chemistry is wide. The long version lists each student three times, with a subject column and a score column.",
+      "Example: two students with three scores each are 2 rows by 4 columns in wide format (student, math, physics, chemistry) and 6 rows by 3 columns in long format (student, subject, score). The data is identical; only the layout changes. In long format, adding a fourth subject adds rows rather than a column.",
+      "Long format is what most plotting and modelling tools expect, because each variable is one column. It is the \"tidy data\" convention, and it is what seaborn and ggplot2 need to color or facet by subject, what repeated-measures and mixed-effects models take, and how time series databases store readings. Wide format is easier for people to read, is how spreadsheets and reports usually look, and is what a scikit-learn feature matrix needs: one row per example, one column per feature.",
+      "Converting between them is called melting (wide to long) and pivoting (long to wide). In pandas, df.melt(id_vars=\"student\", var_name=\"subject\", value_name=\"score\") goes long and df.pivot(index=\"student\", columns=\"subject\", values=\"score\") goes back; pivot_table does the same while aggregating duplicates. In R, tidyr's pivot_longer and pivot_wider do the same job, and in SQL a pivot is a GROUP BY with one CASE expression per new column.",
+      "Two things go wrong in practice. pivot raises an error when a student has two rows for the same subject, so deduplicate first or use pivot_table with an aggregation such as the mean. And pivoting wide on a column with many values, like one column per day for a year, creates hundreds of columns that are mostly missing; that data usually belongs in long format.",
+      "Interview follow-ups: how you would turn event logs, one row per user per event, into model features (aggregate or pivot to one row per user), and which format a seaborn line chart of each subject's score over time needs (long, with subject as the hue)."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-15",
     "slug": "what-is-the-difference-between-long-and-wide-format-data"
   },
   {
@@ -1232,11 +1236,14 @@
     "question": "What is the difference between covariance and correlation?",
     "answer": "Correlation is covariance divided by the two standard deviations, so it is unitless and bounded in [-1, 1], while covariance carries the units of both variables and has no fixed scale. That is what makes correlation comparable across pairs; both only capture linear association.",
     "explanation": [
-      "Covariance measures whether two variables move together, and correlation is covariance rescaled to a fixed range: corr(X, Y) = cov(X, Y) / (σX · σY). Covariance can be any number and carries the units of both variables; correlation is unitless and always between −1 and 1.",
-      "That is why correlation is the one you compare across pairs. The covariance between height in centimetres and weight in kilograms changes by a factor of 100 if you switch to metres; the correlation stays the same. A correlation of 0.8 means a strong positive linear relationship whatever the units.",
-      "Both only capture linear association and both are sensitive to outliers. A correlation of 0 does not mean the variables are independent, and neither measure says anything about causation. The covariance matrix is still the more useful object in practice: PCA, portfolio risk and the multivariate normal distribution are all built on it."
+      "Covariance measures whether two variables move together; correlation is covariance rescaled to fall between −1 and 1: corr(X, Y) = cov(X, Y) / (σX · σY). Covariance can be any number and carries the units of both variables, while correlation is unitless.",
+      "Covariance is the average product of the two variables' deviations from their means: cov(X, Y) = Σ (xᵢ − x̄)(yᵢ − ȳ) / (n − 1) for a sample. It is positive when the variables tend to sit above their means together and negative when one tends to be above while the other is below. Example: hours studied x = 1, 2, 3, 4, 5 and exam scores y = 52, 55, 61, 64, 68. The means are 3 and 60, the deviation products are 16, 5, 0, 4 and 16, which sum to 41, so the covariance is 41 / 4 = 10.25 hour-points. The standard deviations are about 1.58 hours and 6.52 points, so the correlation is 10.25 / (1.58 × 6.52) ≈ 0.99.",
+      "That is why correlation is the one you compare across pairs. Record the same scores as fractions of 100 and the covariance drops to 0.1025, while the correlation stays 0.99. A correlation of 0.8 means a strong positive linear relationship whatever the units; a covariance of 10 means nothing until you know the scales. Covariance of a variable with itself is its variance, and its correlation with itself is 1.",
+      "Both only capture linear association and both are sensitive to outliers. A correlation of 0 does not mean the variables are independent, and neither measure says anything about causation. The usual coefficient is the Pearson correlation; Spearman's rank correlation applies the same formula to the ranks of the values, which catches any monotonic relationship and resists outliers.",
+      "In practice the covariance matrix is the more useful object: it holds every pairwise covariance, with the variances on its diagonal, and PCA, portfolio risk (a portfolio's variance is wᵀΣw) and the multivariate normal distribution are all built on it. The correlation matrix is the covariance matrix of the standardized variables, which is why PCA on the correlation matrix is the same as PCA on standardized data.",
+      "Interview follow-ups: what a correlation of 0.99 between two features does to a linear regression (multicollinearity: unstable coefficients with large standard errors), why the sample covariance divides by n − 1 (the deviations are measured from the sample mean, and dividing by n would underestimate on average), and whether correlation is transitive (not in general: if Y = X + Z with X and Z independent and equally spread, Y correlates about 0.71 with each, while X and Z are uncorrelated)."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-15",
     "slug": "what-is-the-difference-between-covariance-and-correlation"
   },
   {
@@ -1256,13 +1263,17 @@
     "id": "stats-97",
     "category": "stats",
     "question": "If pearson correlation is 0 between two variables can we assume that there isn't any relation between them?",
-    "answer": "No. Pearson correlation coefficient between 2 variables might be zero even when they have a relationship between them. Example: x and x^2",
+    "title": "Does zero correlation mean two variables are unrelated or independent?",
+    "answer": "No. A Pearson correlation of 0 only rules out a linear relationship. Two variables can be strongly related in a non-linear way, like y = x² with x symmetric around zero, and still have a correlation of exactly 0.",
     "explanation": [
       "No. A Pearson correlation of 0 only means there is no linear relationship between the two variables. They can still be strongly, even perfectly, related in a non-linear way.",
-      "The classic example is y = x² with x spread symmetrically around zero, say from −3 to 3. y is completely determined by x, yet the correlation is 0, because the rising half of the curve cancels the falling half. A circle, a U-shape or a sine wave over a full period can all produce correlations near zero.",
-      "Always plot the data before trusting the coefficient, as Anscombe's quartet famously shows. To detect monotonic relationships use Spearman's rank correlation, and for general dependence use mutual information or distance correlation, which is zero only when the variables are truly independent. The reverse direction does hold: independent variables always have zero correlation."
+      "The classic example is y = x² with x symmetric around zero. Take x = −2, −1, 0, 1, 2, so y = 4, 1, 0, 1, 4. The mean of x is 0 and the mean of y is 2, so the covariance is proportional to Σ x(y − 2) = (−2)(2) + (−1)(−1) + 0 + (1)(−1) + (2)(2) = 0, and the correlation is exactly 0, although y is completely determined by x. The rising half of the curve cancels the falling half. A circle, a U-shape or a sine wave over a full period behave the same way.",
+      "The implication only runs one way. Independent variables always have zero covariance, so zero correlation, but zero correlation doesn't imply independence. The exception is jointly normal variables: for them, uncorrelated does mean independent. Being normal one at a time isn't enough: if X is standard normal and Y = S·X, where S is a random sign independent of X, Y is standard normal too and uncorrelated with X, yet |Y| always equals |X|.",
+      "A correlation near zero over a whole dataset can also hide strong relationships inside groups that point in opposite directions, a cousin of Simpson's paradox, and a single outlier can pull a correlation toward 0 or away from it.",
+      "Always plot the data before trusting the coefficient, as Anscombe's quartet famously shows: four datasets with the same correlation of about 0.82 and completely different shapes. Spearman's rank correlation detects monotonic relationships, though it still gives 0 for y = x² on a symmetric range, because that curve isn't monotonic. For general dependence use mutual information or distance correlation, which is zero only when the variables are truly independent.",
+      "Interview follow-ups: whether you can drop a feature because its correlation with the target is near zero (no: a tree model or an interaction term can still use it), and what a correlation of exactly 0 means for a simple linear regression of y on x (the fitted slope is 0, since the slope is cov(x, y) / var(x))."
     ],
-    "updated": "2026-10-11",
+    "updated": "2026-11-15",
     "slug": "if-pearson-correlation-is-0-between-two-variables-can-we-assume-that-there-isnt-any"
   },
   {
