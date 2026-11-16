@@ -253,9 +253,11 @@ L1 (lasso) adds the sum of the weights' absolute values to the loss and drives s
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-l1-lasso-and-l2-ridge-regularization)
 
-### Can we use L1 regularization for feature selection?
+### Can L1 (Lasso) regularization be used for feature selection, and how?
 
-Yes, because the nature of L1 regularization will lead to sparse coefficients of features. Feature selection can be done by keeping only features with non-zero coefficients.
+> **Flashcard:** Can we use L1 regularization for feature selection?
+
+Yes. The L1 penalty drives the coefficients of weak features to exactly zero, so fitting a Lasso and keeping the features with non-zero coefficients selects a subset of them. Stronger regularization keeps fewer features.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/can-we-use-l1-regularization-for-feature-selection)
 
@@ -477,9 +479,11 @@ Training on a disproportionately low percentage of over-represented class exampl
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-downsampling-in-the-context-of-class-imbalanced-dataset)
 
-### What is data leakage?
+### What is data leakage in machine learning, and how do you prevent it?
 
-When information from outside the training dataset is used to create the model. For example, including any information from the validation or test sets into the model.
+> **Flashcard:** What is data leakage?
+
+Data leakage is when a model learns from information it won't have at prediction time, such as a feature that is only known after the outcome or statistics computed on the test set. It makes validation scores look better than the model really is.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-data-leakage)
 
