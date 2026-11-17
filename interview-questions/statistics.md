@@ -318,9 +318,11 @@ Distortion that occurs when the data you analyze are not representative of the p
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-selection-bias)
 
-### What is Survivorship bias?
+### What does survivorship bias mean, and what are classic examples of it?
 
-Is the logical error of concentrating on the people or things that made it past some selection process and overlooking those that did not.
+> **Flashcard:** What is Survivorship bias?
+
+Survivorship bias is drawing conclusions only from the people or things that made it through some selection process, while ignoring those that didn't. Because the failures are invisible, the survivors look more typical, or more successful, than they really are.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-survivorship-bias)
 

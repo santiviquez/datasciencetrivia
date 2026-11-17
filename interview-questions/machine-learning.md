@@ -51,9 +51,11 @@ Clustering algorithms group objects such that similar feature points are put int
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/how-many-centroids-a-k-means-algorithm-with-k-3-would-find)
 
-### Is KNN a clustering algorithm?
+### Is KNN a clustering algorithm, and how is it different from k-means?
 
-No. It is a supervised learning method that could be used for classification and regression problems.
+> **Flashcard:** Is KNN a clustering algorithm?
+
+No. KNN (k-nearest neighbors) is a supervised algorithm for classification and regression that predicts from the labels of the k closest training points. The clustering algorithm with a k is k-means, which groups unlabeled data into k clusters.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/is-knn-a-clustering-algorithm)
 
