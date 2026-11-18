@@ -309,7 +309,9 @@ Precision is the share of predicted positives that are correct, TP / (TP + FP). 
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-precision-and-recall)
 
-### What is the F1 score?
+### What is the F1 score, and how do you calculate and interpret it?
+
+> **Flashcard:** What is the F1 score?
 
 The harmonic mean of precision and recall: F1 = 2 · precision · recall / (precision + recall). It runs from 0 to 1, where 1 is best, and accuracy plays no part in it.
 

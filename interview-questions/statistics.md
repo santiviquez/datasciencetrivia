@@ -312,7 +312,9 @@ A trend that shows up in every subgroup of the data reverses, or disappears, whe
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-simpsons-paradox)
 
-### What is selection bias?
+### What is selection bias, and what are its main types and examples?
+
+> **Flashcard:** What is selection bias?
 
 Distortion that occurs when the data you analyze are not representative of the population you want to draw conclusions about, because of how units ended up in the sample. Survivorship bias, non-response bias and self-selection are common forms.
 
@@ -482,9 +484,11 @@ Not as an extra step: PCA is itself an orthogonal rotation of the axes onto the 
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/is-rotation-necessary-in-pca)
 
-### How can we select K for K-means?
+### How do you choose k for k-means with the elbow method or silhouette score?
 
-Domain knowledge first, then the elbow of inertia against k, average silhouette, or the gap statistic. Inertia falls monotonically, so the elbow is often ambiguous; silhouette scores separation as well as compactness. If a downstream use defines the segments, let that pick k.
+> **Flashcard:** How can we select K for K-means?
+
+Start with domain knowledge, then compare a range of k: look for the elbow where inertia stops falling fast, the k with the highest average silhouette score, or the k picked by the gap statistic. If a downstream use defines the segments, let that set k.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/how-can-we-select-k-for-k-means)
 
