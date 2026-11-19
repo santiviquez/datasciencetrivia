@@ -174,7 +174,7 @@ A theorem stating that as the number of independent trials increases, the averag
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-law-of-large-numbers)
 
-### What is the central limit theorem?
+### What is the central limit theorem, and why does it matter in statistics?
 
 > **Flashcard:** The normal distribution derives its importance from which famous theorem?
 
@@ -186,7 +186,9 @@ The Central Limit Theorem: the mean of n independent draws from a distribution w
 
 The most tested part of statistics. Know what a p-value and a confidence interval do and don't say, the two ways a test can be wrong and how sample size drives power, which test fits which data (t, z, chi-square, ANOVA, Fisher's exact, and rank-based tests when normality is doubtful), and what running many tests does to the false positive rate.
 
-### What is a p-value?
+### What is a p-value, and how do you interpret it correctly?
+
+> **Flashcard:** What is a p-value?
 
 The probability, if the null hypothesis were true, of getting a result at least as extreme as the one observed. A small p-value means the data would be surprising if there were no effect; it is not the probability that the null hypothesis is true.
 
@@ -200,7 +202,9 @@ That the result would be unlikely if there were no real effect: its p-value is b
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-does-it-mean-for-a-result-to-be-statistically-significant)
 
-### What is a confidence interval?
+### What is a confidence interval, and how do you interpret a 95% CI?
+
+> **Flashcard:** What is a confidence interval?
 
 A range computed from a sample by a method that, over repeated samples, captures the true parameter a stated share of the time, such as 95%. The 95% describes the method, not the chance that this particular interval contains the true value.
 

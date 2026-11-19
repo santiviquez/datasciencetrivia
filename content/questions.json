@@ -1198,14 +1198,18 @@
     "id": "stats-88",
     "category": "stats",
     "question": "The normal distribution derives its importance from which famous theorem?",
-    "title": "What is the central limit theorem?",
+    "title": "What is the central limit theorem, and why does it matter in statistics?",
     "answer": "The Central Limit Theorem: the mean of n independent draws from a distribution with finite variance is approximately normal for large n, whatever the population's shape. That is what justifies normal-based confidence intervals and t-tests on non-normal data, provided the sample is large enough for the data's skew.",
     "explanation": [
-      "The central limit theorem. The mean of n independent draws from any distribution with finite variance σ² is approximately normal for large n, centered on the true mean μ with standard deviation σ/√n, whatever the shape of the data. That is why the normal curve appears throughout statistics, even for non-normal data.",
-      "Example: a fair die is flat on 1 to 6, with mean 3.5 and standard deviation about 1.71. Average 30 rolls, repeat many times, and the averages form a bell centered on 3.5 with standard deviation 1.71/√30 ≈ 0.31. Abraham de Moivre found the coin-tossing case in 1733, Laplace generalized it, and George Pólya named it in 1920.",
-      "Follow-ups test the conditions. It describes the sampling distribution of the mean, so it never makes a skewed dataset normal. The n needed depends on skew: 30 is a rule of thumb, and heavily skewed data may need hundreds. Without finite variance it fails: the mean of n Cauchy draws is distributed like a single draw."
+      "The central limit theorem says the mean of many independent draws is roughly normal, whatever the shape of the data, as long as the variance is finite.",
+      "More precisely: take n independent draws from a distribution with mean μ and finite variance σ². For large n, the sample mean x̄ is approximately normal with mean μ and standard deviation σ/√n, the standard error. Equivalently, √n(x̄ − μ)/σ approaches a standard normal, and the sum of the draws is approximately normal with mean nμ and variance nσ². That is why the normal curve appears throughout statistics, even for data that is far from normal.",
+      "Example: a fair die is flat on 1 to 6, with mean 3.5 and standard deviation about 1.71. Average 30 rolls, repeat many times, and the averages form a bell centered on 3.5 with standard deviation 1.71/√30 ≈ 0.31. Skewed data takes longer. The exponential distribution has skewness 2, and the mean of n draws has skewness 2/√n: about 0.89 at n = 5, 0.37 at n = 30 and 0.2 at n = 100. So the popular rule of thumb that n = 30 is enough holds for mild skew and is optimistic for heavy skew, such as revenue per user.",
+      "It is what makes everyday methods work on non-normal data: confidence intervals and z- and t-tests for means, the normal approximation for conversion rates in A/B tests (a proportion is the mean of 0s and 1s, and the approximation is usually fine once n·p and n·(1 − p) are both at least about 10), and error bars on averages. It also explains why measurement errors often look normal: they are the sum of many small, independent effects.",
+      "The conditions matter. It needs independence, or at least weak dependence: autocorrelated time series and clustered data, such as many sessions per user, have larger variance than σ²/n suggests. It needs finite variance: the mean of n Cauchy draws is distributed like a single draw, however large n is. It describes the sampling distribution of the mean, so it never makes the data itself normal. And it is about means and sums: the maximum of a sample follows different laws, studied in extreme value theory.",
+      "Abraham de Moivre found the coin-tossing case in 1733, Laplace generalized it in 1810, and George Pólya named it the central limit theorem in 1920, calling it central because of its importance to probability.",
+      "Interview follow-ups: how it differs from the law of large numbers (that one says x̄ converges to μ; the central limit theorem describes the size and shape of the fluctuations around μ, which shrink like 1/√n), why the t-distribution is used instead of the normal for small samples (σ is estimated from the data, which adds uncertainty), and what to do when n is small and the data is skewed (use bootstrapping or a test that doesn't rely on normality, such as Mann-Whitney)."
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-11-19",
     "slug": "the-normal-distribution-derives-its-importance-from-which-famous-theorem"
   },
   {
@@ -1504,26 +1508,37 @@
     "id": "stats-201",
     "category": "stats",
     "question": "What is a p-value?",
+    "title": "What is a p-value, and how do you interpret it correctly?",
     "answer": "The probability, if the null hypothesis were true, of getting a result at least as extreme as the one observed. A small p-value means the data would be surprising if there were no effect; it is not the probability that the null hypothesis is true.",
     "explanation": [
-      "A p-value measures how compatible the data are with the null hypothesis. You pick a test statistic, work out how it would be distributed if the null were true, and ask how often a value at least as extreme as yours would turn up. If that probability is below the significance level α, often 0.05, the result is called statistically significant and the null is rejected.",
+      "A p-value is the probability, assuming the null hypothesis is true, of getting a result at least as extreme as the one you observed.",
+      "To get one, pick a test statistic, work out how it would be distributed if the null were true, and see how far into the tail your value falls. If the p-value is below the significance level α, chosen in advance and often 0.05, the result is called statistically significant and the null is rejected. A two-sided test counts extreme results in both directions; a one-sided test counts only the direction you predicted beforehand.",
       "Example: a coin lands heads 60 times in 100 flips. If it is fair, the chance of 60 or more heads is about 2.8%, and of a result at least that far from 50 in either direction about 5.7%. The two-sided p-value is 0.057, so the result is not significant at 0.05, even though the coin may well be biased. Absence of significance is not evidence of fairness.",
-      "Interviewers probe the misreadings. A p-value is not the probability that the null is true or that the result is a fluke, and it says nothing about the size of the effect: with a million users, a 0.1% lift can have p < 0.001. The American Statistical Association's 2016 statement on p-values warns against basing conclusions on whether p crosses 0.05 alone, so report the effect size and a confidence interval with it."
+      "In an A/B test with 5,000 users per arm, a conversion rate of 11.5% against 10% gives z ≈ 2.42 and a two-sided p-value of about 0.015. That says a gap this large would be rare if the two versions really converted equally. It doesn't say the lift is exactly 1.5 points; the 95% confidence interval for the lift runs from about 0.3 to 2.7 points.",
+      "Interviewers probe the misreadings. A p-value is not the probability that the null is true or that the result is a fluke, and it says nothing about the size of the effect: with a million users, a 0.1% lift can have p < 0.001. And p = 0.04 and p = 0.06 are almost the same evidence, even though one crosses 0.05 and the other doesn't.",
+      "When the null is true, p-values are spread evenly between 0 and 1, so testing 20 independent hypotheses with no real effects gives one result below 0.05 on average. That is why running many tests, or trying analyses until one works (p-hacking), produces false discoveries, and why corrections such as Bonferroni or Benjamini-Hochberg exist.",
+      "A p-value of 0.05 is also weaker evidence than it sounds. Sellke, Bayarri and Berger showed in 2001 that, starting from even odds, p = 0.05 still leaves the null with a probability of at least about 29%. The American Statistical Association's 2016 statement warns against basing conclusions on whether p crosses 0.05 alone, so report the effect size and a confidence interval with it.",
+      "Interview follow-ups: how you would explain p = 0.03 to a product manager (if there were truly no difference, a gap this big would show up about 3% of the time), why a non-significant result isn't proof of no effect (the test may lack statistical power), and what changes when you peek at a running A/B test and stop as soon as p < 0.05 (the false positive rate climbs well above 5%)."
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-11-19",
     "slug": "what-is-a-p-value"
   },
   {
     "id": "stats-202",
     "category": "stats",
     "question": "What is a confidence interval?",
+    "title": "What is a confidence interval, and how do you interpret a 95% CI?",
     "answer": "A range computed from a sample by a method that, over repeated samples, captures the true parameter a stated share of the time, such as 95%. The 95% describes the method, not the chance that this particular interval contains the true value.",
     "explanation": [
-      "A confidence interval gives a plausible range for a parameter such as a mean, together with a confidence level. For a mean it is usually x̄ ± t* × s/√n: the sample mean plus or minus a critical value times the standard error. Higher confidence means a wider interval, and more data means a narrower one, shrinking with √n.",
-      "Example: 100 delivery times have a mean of 32 minutes and a standard deviation of 10. The standard error is 10/√100 = 1, and the t critical value for 99 degrees of freedom is 1.98, so the 95% interval runs from about 30.0 to 34.0 minutes. Halving its width takes four times as many deliveries.",
-      "The classic trap: once computed, the interval either contains the true mean or it doesn't. The 95% is the long-run hit rate of the procedure; a Bayesian credible interval is what gives a probability for the parameter itself. Two more follow-ups: a 95% interval for a difference that excludes zero matches p < 0.05 in a two-sided test, and an interval for the mean is not a range for individual values. That is a prediction interval, which is much wider."
+      "A confidence interval is a range of plausible values for a parameter, built by a method that captures the true value a set share of the time, such as 95%.",
+      "For a mean it is usually x̄ ± t* × s/√n: the sample mean plus or minus a critical value times the standard error. Example: 100 delivery times have a mean of 32 minutes and a standard deviation of 10. The standard error is 10/√100 = 1 and the t critical value for 99 degrees of freedom is 1.98, so the 95% interval runs from about 30.0 to 34.0 minutes. Higher confidence gives a wider interval, and more data a narrower one, shrinking with √n: halving the width takes four times as many deliveries.",
+      "The classic trap is the interpretation. Once computed, this particular interval either contains the true mean or it doesn't; the 95% is the long-run hit rate of the procedure. You can see it in a simulation: draw 1,000 samples of 100 from a population whose mean is 32, build a 95% interval from each, and about 950 of them contain 32 (944 in one run). If you want a probability statement about the parameter itself, that is a Bayesian credible interval.",
+      "For a proportion the usual interval is p̂ ± 1.96 × √(p̂(1 − p̂)/n). If 120 of 1,000 visitors convert, p̂ = 12% and the 95% interval is about 10.0% to 14.0%. With small samples or rates near 0% or 100%, use the Wilson interval instead, which never leaves the 0 to 1 range. For an A/B test, build the interval for the difference: 12% against 10% with 1,000 visitors in each arm gives a lift of 2 points with an interval from about −0.7 to +4.7 points, so the data can't rule out no effect.",
+      "When there is no simple formula, as for a median, an AUC or a ratio of two means, use bootstrapping: resample the data with replacement thousands of times, recompute the statistic each time, and take the 2.5th and 97.5th percentiles of the results as a 95% interval.",
+      "Don't confuse it with a prediction interval, which is a range for a single new value rather than for the mean. For one new delivery it is 32 ± 1.98 × 10 × √(1 + 1/100), roughly 12 to 52 minutes, far wider than the 30 to 34 minutes for the mean.",
+      "Interview follow-ups: how a confidence interval relates to a p-value (a 95% interval for a difference that excludes zero matches p < 0.05 in a two-sided test), whether two overlapping 95% intervals mean the difference isn't significant (not necessarily: the interval for the difference is narrower than the two intervals combined, so they can overlap while the difference is significant), and what makes an interval wider (a higher confidence level, more variable data or a smaller sample)."
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-11-19",
     "slug": "what-is-a-confidence-interval"
   },
   {
