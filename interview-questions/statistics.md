@@ -112,7 +112,9 @@ A way to get an overall probability by splitting into cases: if B₁, …, Bₙ 
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-law-of-total-probability)
 
-### What is Bayes' theorem?
+### What is Bayes' theorem, and how do you use it with a worked example?
+
+> **Flashcard:** What is Bayes' theorem?
 
 A rule for reversing a conditional probability: P(A \| B) = P(B \| A) P(A) / P(B). It updates a prior belief P(A) with evidence B into a posterior P(A \| B), and it is why a positive test for a rare condition can still be more likely wrong than right.
 
@@ -234,7 +236,9 @@ A hypothesis test whose statistic follows a standard normal distribution under t
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-z-test)
 
-### What is a chi-square test?
+### What is a chi-square test, and how do you calculate and interpret it?
+
+> **Flashcard:** What is a chi-square test?
 
 A test that compares observed counts with the counts expected under a null hypothesis: χ² = Σ (O − E)² / E. The test of independence checks whether two categorical variables are related; the goodness-of-fit test checks whether counts follow an expected distribution.
 
@@ -304,7 +308,9 @@ Because an association can come from a confounder that drives both variables, fr
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/why-doesnt-correlation-imply-causation)
 
-### What is a confounding variable?
+### What is a confounding variable, and how do you control for it?
+
+> **Flashcard:** What is a confounding variable?
 
 A variable that influences both the independent and the dependent variable, distorting the association between them: it can create a spurious link, hide a real effect or even reverse it.
 
