@@ -1360,13 +1360,19 @@
     "id": "stats-102",
     "category": "stats",
     "question": "What is a confounding variable?",
+    "title": "What is a confounding variable, and how do you control for it?",
     "answer": "A variable that influences both the independent and the dependent variable, distorting the association between them: it can create a spurious link, hide a real effect or even reverse it.",
     "explanation": [
-      "A confounding variable affects both the independent and the dependent variable, so their observed association is not purely the effect of one on the other. It can create a link where none exists, hide a real effect or reverse it. Ice cream sales and drownings rise together because hot weather drives both.",
-      "A 1986 kidney stone study shows how strong this can be. Open surgery succeeded in 78% of 350 patients and percutaneous nephrolithotomy in 83% of 350, yet surgery did better for both small stones (93% vs 87%) and large stones (73% vs 69%). Surgery went mostly to large, harder stones, so stone size drove both treatment and outcome. The reversal is Simpson's paradox.",
-      "Randomization breaks the link between confounder and treatment, which is why A/B tests are the gold standard. With observational data you can stratify, match or adjust for measured confounders, but unmeasured ones remain. Adjusting for the wrong variable also backfires: a mediator, on the causal path, or a collider, a common effect of both."
+      "A confounding variable affects both the cause you are studying and the outcome, so their association mixes a real effect with the confounder's influence.",
+      "It can create a link where none exists, hide a real effect or reverse it. Ice cream sales and drownings rise together because hot weather drives both. Coffee drinking was once linked to lung cancer because coffee drinkers smoked more. Shoe size predicts reading ability in children because age drives both. In each case, the association is real but the causal story is wrong.",
+      "A 1986 kidney stone study shows how strong this can be. Open surgery succeeded in 78% of 350 patients and percutaneous nephrolithotomy in 83% of 350, yet surgery did better for both small stones (93% vs 87%) and large stones (73% vs 69%). Surgery went mostly to large, harder stones, so stone size drove both the treatment choice and the outcome. Comparing within each stone size, which is stratification, removes the confounding; the reversal in the totals is Simpson's paradox.",
+      "A variable is a confounder when it affects the treatment, affects the outcome, and is not itself caused by the treatment. In a causal diagram it opens a back-door path from treatment to outcome (treatment ← confounder → outcome), and adjusting for it closes that path.",
+      "The strongest fix is randomization, which breaks the link between the confounder and the treatment, measured or not; that is why A/B tests are the gold standard. With observational data you can restrict the sample, match treated and untreated units on the confounders, stratify, add the confounders to a regression, or use propensity scores to match or reweight. All of these only handle confounders you measured. For unmeasured ones, look for a natural experiment: an instrumental variable, difference-in-differences or regression discontinuity.",
+      "Adjusting for the wrong variable also backfires. Controlling for a mediator, which sits on the causal path, removes part of the effect you want to measure. Controlling for a collider, a common effect of the treatment and the outcome, creates a spurious association, as in Berkson's paradox.",
+      "It matters in machine learning too. A model trained on observational data learns associations, confounded ones included. A well-known 2015 study by Caruana and colleagues found a pneumonia risk model that rated asthma patients as lower risk, because asthma patients were sent straight to intensive care and so did better. The pattern was real in the data, but acting on it would have been harmful.",
+      "Interview follow-ups: how a confounder differs from a mediator and a collider (it causes both variables, rather than sitting between them or being caused by both), how you would check whether \"users of feature X retain better\" is causal (randomize access to X, or at least compare users with the same tenure and engagement), and how confounding differs from selection bias (confounding is about what drives the treatment; selection bias is about which units end up in the data)."
     ],
-    "updated": "2026-10-14",
+    "updated": "2026-11-20",
     "slug": "what-is-a-confounding-variable"
   },
   {
@@ -1747,13 +1753,19 @@
     "id": "stats-232",
     "category": "stats",
     "question": "What is a chi-square test?",
+    "title": "What is a chi-square test, and how do you calculate and interpret it?",
     "answer": "A test that compares observed counts with the counts expected under a null hypothesis: χ² = Σ (O − E)² / E. The test of independence checks whether two categorical variables are related; the goodness-of-fit test checks whether counts follow an expected distribution.",
     "explanation": [
-      "Each cell contributes its squared gap between observed and expected counts, scaled by the expected count, and the total is compared with a chi-square distribution. For a test of independence on an r × c table, expected counts come from the row and column totals, and the degrees of freedom are (r − 1)(c − 1). Karl Pearson introduced the test in 1900.",
-      "Example: 200 users see each of two checkout pages; 30 convert on A and 50 on B. Overall 80 of 400 convert, so each page is expected to have 40 conversions and 160 non-conversions. χ² = 10²/40 + 10²/40 + 10²/160 + 10²/160 = 6.25 with 1 degree of freedom, so p ≈ 0.012. Many libraries apply Yates' continuity correction to 2 × 2 tables by default, which here gives 5.64 and p ≈ 0.018.",
-      "Interview follow-ups: the approximation needs expected counts of about 5 or more in each cell, otherwise use Fisher's exact test; a significant result says the variables are related, not how strongly, so report a measure such as Cramér's V; and for a 2 × 2 table without the correction, the statistic equals the square of the two-proportion z statistic."
+      "A chi-square test compares observed counts with the counts expected under a null hypothesis, to check whether categorical data matches that expectation.",
+      "The statistic is χ² = Σ (O − E)² / E: each cell contributes its squared gap between observed and expected counts, scaled by the expected count, and the total is compared with a chi-square distribution. The test of independence asks whether two categorical variables are related, using an r × c table whose expected counts come from the row and column totals, with (r − 1)(c − 1) degrees of freedom. The goodness-of-fit test asks whether one variable's counts follow a given distribution, with k − 1 degrees of freedom for k categories. Karl Pearson introduced the test in 1900.",
+      "Independence example: 200 users see each of two checkout pages; 30 convert on A and 50 on B. Overall 80 of 400 convert, so each page is expected to have 40 conversions and 160 non-conversions. χ² = 10²/40 + 10²/40 + 10²/160 + 10²/160 = 6.25 with 1 degree of freedom, so p ≈ 0.012: the pages convert at different rates. Many libraries apply Yates' continuity correction to 2 × 2 tables by default, which here gives 5.64 and p ≈ 0.018.",
+      "Goodness-of-fit example: a die rolled 120 times lands 25, 17, 15, 23, 24 and 16 times on its six faces. A fair die is expected to show each face 20 times, so χ² = (25 + 9 + 25 + 9 + 16 + 16) / 20 = 5.0 with 5 degrees of freedom, and p ≈ 0.42. Counts this uneven are common for a fair die, so there is no evidence it is loaded.",
+      "The assumptions are where interviews go. Each observation must be independent and counted in exactly one cell, so paired data, such as the same users before and after a change, needs McNemar's test instead. Expected counts should be about 5 or more in each cell, otherwise use Fisher's exact test. And the test needs raw counts, never percentages: the statistic scales with the sample size, so the same proportions with twice the data give χ² = 12.5 and p ≈ 0.0004.",
+      "A significant result says the variables are related, not how strongly. Report an effect size such as Cramér's V = √(χ² / (n × (min(r, c) − 1))), which is √(6.25 / 400) = 0.125 for the checkout example, a weak association. To see which cells drive the result, look at each cell's standardized gap, (O − E) / √E; values beyond about ±2 stand out.",
+      "In machine learning it shows up in feature selection (scikit-learn's SelectKBest with chi2 scores non-negative features such as word counts against a categorical target) and in monitoring, where comparing a categorical feature's frequencies in training and production is a simple test for data drift. With millions of rows, though, almost any drift is significant, so watch the effect size too.",
+      "Interview follow-ups: why the chi-square test is right-tailed even though it detects differences in either direction (the statistic squares the gaps, so only large values count against the null), and how it relates to the two-proportion z-test (for a 2 × 2 table without the correction, χ² equals z²; in the checkout example z = 2.5)."
     ],
-    "updated": "2026-10-23",
+    "updated": "2026-11-20",
     "slug": "what-is-a-chi-square-test"
   },
   {
@@ -1865,13 +1877,19 @@
     "id": "stats-241",
     "category": "stats",
     "question": "What is Bayes' theorem?",
+    "title": "What is Bayes' theorem, and how do you use it with a worked example?",
     "answer": "A rule for reversing a conditional probability: P(A | B) = P(B | A) P(A) / P(B). It updates a prior belief P(A) with evidence B into a posterior P(A | B), and it is why a positive test for a rare condition can still be more likely wrong than right.",
     "explanation": [
-      "The terms have names: P(A) is the prior, P(B | A) the likelihood, P(A | B) the posterior, and P(B), the evidence, usually comes from the law of total probability. The theorem follows in one line from the definition of conditional probability. Thomas Bayes's essay was published in 1763, after his death, by Richard Price, and Laplace later developed the idea into a general method.",
-      "Example: 20% of email is spam, the word \"free\" appears in 40% of spam and in 5% of other email. P(spam | \"free\") = (0.4 × 0.2) / (0.4 × 0.2 + 0.05 × 0.8) = 0.08 / 0.12 ≈ 67%. A naive Bayes spam filter repeats this for every word, assuming the words are independent given the class.",
-      "The interview point is the base rate. Ignoring a small prior is the base rate fallacy: with a 1% prevalence, even a test that catches 90% of cases and wrongly flags only 10% of healthy people gives a positive result that is right just 8% of the time. Bayesian statistics applies the same update to model parameters instead of events."
+      "Bayes' theorem reverses a conditional probability: P(A | B) = P(B | A) · P(A) / P(B). It turns a prior belief into a posterior once you see evidence.",
+      "The terms have names: P(A) is the prior, P(B | A) the likelihood, P(A | B) the posterior, and P(B) the evidence, which usually comes from the law of total probability: P(B) = P(B | A) P(A) + P(B | not A) P(not A). The theorem follows in one line from the definition of conditional probability, since P(A and B) equals both P(A | B) P(B) and P(B | A) P(A).",
+      "The classic example is a medical test. A disease affects 1% of people, the test catches 90% of cases, and it wrongly flags 10% of healthy people. Picture 1,000 people: 10 are sick and 9 of them test positive, while 990 are healthy and 99 of them test positive. So only 9 of the 108 positives are sick, P(sick | positive) ≈ 8.3%. Ignoring the small prior and guessing something close to 90% is the base rate fallacy. If the same person tests positive again on an independent test, today's 8.3% becomes the new prior and the probability rises to 45%.",
+      "The odds form makes repeated updates easy: posterior odds = prior odds × likelihood ratio. The test's likelihood ratio for a positive result is 0.9 / 0.1 = 9, so prior odds of 1 to 99 become 9 to 99, about 1 to 11, which is the same 8.3%.",
+      "Example from text classification: 20% of email is spam, and the word \"free\" appears in 40% of spam and 5% of other email. P(spam | \"free\") = (0.4 × 0.2) / (0.4 × 0.2 + 0.05 × 0.8) = 0.08 / 0.12 ≈ 67%. A naive Bayes classifier repeats this for every word, assuming the words are independent given the class, which is rarely true but often works well.",
+      "Bayesian statistics applies the same update to unknown parameters instead of events. To estimate a conversion rate with a flat Beta(1, 1) prior, observing 30 conversions in 200 visits gives a Beta(31, 171) posterior, with mean 31 / 202 ≈ 15.3% and a 95% credible interval of about 10.7% to 20.6%. Unlike a confidence interval, that one can be read directly as a probability statement about the rate.",
+      "Thomas Bayes's essay was published in 1763, after his death, by Richard Price, and Laplace later developed the idea into a general method of inference.",
+      "Interview follow-ups: the prosecutor's fallacy (confusing P(evidence | innocent) with P(innocent | evidence), the same reversal as the medical test), the Monty Hall problem (switching doors wins with probability 2/3, a standard Bayes exercise), and why naive Bayes still ranks well when its probabilities are badly calibrated."
     ],
-    "updated": "2026-10-23",
+    "updated": "2026-11-20",
     "slug": "what-is-bayes-theorem"
   },
   {
