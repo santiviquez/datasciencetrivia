@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TOOLS } from "@/lib/tools";
 import {
   CATEGORIES,
   CATEGORY_KEYS,
@@ -62,6 +63,27 @@ export default function BelowFold() {
                 className="inline-block border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
               >
                 {QUIZZES[s].name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="tools" className="mt-14">
+        <h2 id="tools" className="font-[family-name:var(--font-display)] text-xl">
+          Free calculators
+        </h2>
+        <p className="mt-2 text-sm text-[var(--muted)]">
+          Work out the numbers, with the formula shown and a flashcard for each idea.
+        </p>
+        <ul className="mt-5 flex flex-wrap gap-3">
+          {TOOLS.map((t) => (
+            <li key={t.slug}>
+              <Link
+                href={`/tools/${t.slug}`}
+                className="inline-block border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
+              >
+                {t.name}
               </Link>
             </li>
           ))}
