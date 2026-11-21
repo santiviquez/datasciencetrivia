@@ -2,35 +2,27 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { CATEGORIES } from "@/lib/questions";
 import {
   EXAMPLE_COUNTS,
   METRICS,
-  formatMetric,
   total,
   type ConfusionCounts,
-  type MetricDef,
   type MetricKey,
 } from "@/lib/metrics";
 
 type Cell = keyof ConfusionCounts;
 const CELLS: Cell[] = ["tp", "fn", "fp", "tn"];
-
-const CELL_INFO: Record<Cell, { short: string; long: string; correct: boolean }> = {
-  tp: { short: "TP", long: "True positives", correct: true },
-  fn: { short: "FN", long: "False negatives", correct: false },
-  fp: { short: "FP", long: "False positives", correct: false },
-  tn: { short: "TN", long: "True negatives", correct: true },
-};
-
+const CORRECT: Record<Cell, boolean> = { tp: true, fn: false, fp: false, tn: true };
 const HEADLINE: MetricKey[] = ["accuracy", "precision", "recall", "f1"];
+const SHORT: Partial<Record<MetricKey, string>> = { f1: "F1", mcc: "MCC" };
 
 /** The numbers plugged into the formula, so the reader can check the arithmetic. */
-function substituted(key: MetricKey, c: ConfusionCounts): string | null {
+function working(key: MetricKey, c: ConfusionCounts): string | null {
   const { tp, fp, fn, tn } = c;
-  const n = total(c);
   switch (key) {
     case "accuracy":
-      return `(${tp} + ${tn}) / ${n}`;
+      return `(${tp} + ${tn}) / ${total(c)}`;
     case "precision":
       return `${tp} / (${tp} + ${fp})`;
     case "recall":
@@ -48,7 +40,7 @@ function substituted(key: MetricKey, c: ConfusionCounts): string | null {
     case "fdr":
       return `${fp} / (${fp} + ${tp})`;
     case "prevalence":
-      return `(${tp} + ${fn}) / ${n}`;
+      return `(${tp} + ${fn}) / ${total(c)}`;
     default:
       return null;
   }
@@ -60,79 +52,30 @@ function parseCount(raw: string | null): number | null {
   return Number.isInteger(n) && n >= 0 && n <= 1e9 ? n : null;
 }
 
-function pct(v: number | null) {
-  return v === null ? "" : `${(v * 100).toFixed(1)}%`;
-}
+const show = (v: number | null) => (v === null ? "—" : v.toFixed(3));
 
-function MetricBar({ def, value }: { def: MetricDef; value: number | null }) {
-  if (value === null) return <div className="h-2 bg-black/5" aria-hidden="true" />;
-  const [lo, hi] = def.range;
-  const share = Math.min(1, Math.max(0, (value - lo) / (hi - lo)));
-  const zero = lo < 0 ? (0 - lo) / (hi - lo) : 0;
-  const left = Math.min(share, zero);
-  const width = Math.abs(share - zero);
-  return (
-    <div className="relative h-2 bg-black/5" aria-hidden="true">
-      {lo < 0 ? <span className="absolute inset-y-0 w-px bg-black/40" style={{ left: `${zero * 100}%` }} /> : null}
-      <span
-        className="absolute inset-y-0 bg-black transition-[left,width] duration-200 ease-out"
-        style={{ left: `${left * 100}%`, width: `${width * 100}%` }}
-      />
-    </div>
-  );
-}
-
-function MetricRow({ def, counts, big }: { def: MetricDef; counts: ConfusionCounts; big?: boolean }) {
-  const value = def.compute(counts);
-  const sub = substituted(def.key, counts);
-  return (
-    <li className={`flex flex-col gap-2 border-[var(--rule)] ${big ? "border-[6px] border-black p-4" : "border-t py-4"}`}>
-      <div className="flex items-baseline justify-between gap-3">
-        <h3 className="font-[family-name:var(--font-card)] text-sm font-bold uppercase leading-tight">{def.name}</h3>
-        <p className="shrink-0 text-right font-[family-name:var(--font-card)] tabular-nums">
-          <span className={big ? "text-2xl font-bold" : "text-lg font-bold"}>{formatMetric(value)}</span>
-          {def.range[0] === 0 && value !== null ? (
-            <span className="ml-2 text-xs text-[var(--muted)]">{pct(value)}</span>
-          ) : null}
-        </p>
-      </div>
-      <MetricBar def={def} value={value} />
-      {def.aka ? <p className="text-xs text-[var(--muted)]">Also called {def.aka}</p> : null}
-      <p className="text-sm leading-relaxed">{def.meaning}</p>
-      <p className="font-mono text-xs leading-relaxed text-[var(--muted)]">
-        {def.formula}
-        {sub ? <> = {sub}</> : null}
-        {value === null ? " → undefined, the denominator is 0" : null}
-      </p>
-      {def.card ? (
-        <Link href={`/questions/${def.card}`} className="text-xs font-semibold underline underline-offset-2">
-          {def.name} on its flashcard
-        </Link>
-      ) : null}
-    </li>
-  );
-}
+const asRaw = (c: ConfusionCounts): Record<Cell, string> => ({
+  tp: String(c.tp),
+  fp: String(c.fp),
+  fn: String(c.fn),
+  tn: String(c.tn),
+});
 
 export default function ConfusionMatrixCalculator() {
-  const [raw, setRaw] = useState<Record<Cell, string>>({
-    tp: String(EXAMPLE_COUNTS.tp),
-    fp: String(EXAMPLE_COUNTS.fp),
-    fn: String(EXAMPLE_COUNTS.fn),
-    tn: String(EXAMPLE_COUNTS.tn),
-  });
+  const [raw, setRaw] = useState<Record<Cell, string>>(asRaw(EXAMPLE_COUNTS));
   const [copied, setCopied] = useState(false);
+  const ml = CATEGORIES.ml;
 
   // A shared link (?tp=…&fp=…&fn=…&tn=…) opens with those counts.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const fromUrl = CELLS.map((c) => parseCount(params.get(c)));
-    if (fromUrl.every((v) => v !== null)) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- reading the URL once on mount
-      setRaw({ tp: String(fromUrl[0]), fn: String(fromUrl[1]), fp: String(fromUrl[2]), tn: String(fromUrl[3]) });
+    const v = CELLS.map((c) => parseCount(params.get(c)));
+    if (v.every((x) => x !== null)) {
+      setRaw({ tp: String(v[0]), fn: String(v[1]), fp: String(v[2]), tn: String(v[3]) });
     }
   }, []);
 
-  const parsed = useMemo(() => {
+  const counts = useMemo(() => {
     const out = {} as ConfusionCounts;
     for (const c of CELLS) {
       const v = parseCount(raw[c]);
@@ -143,154 +86,153 @@ export default function ConfusionMatrixCalculator() {
   }, [raw]);
 
   useEffect(() => {
-    if (!parsed) return;
+    if (!counts) return;
     const url = new URL(window.location.href);
-    for (const c of CELLS) url.searchParams.set(c, String(parsed[c]));
+    for (const c of CELLS) url.searchParams.set(c, String(counts[c]));
     window.history.replaceState(null, "", url);
-  }, [parsed]);
+  }, [counts]);
 
-  const counts = parsed ?? { tp: 0, fp: 0, fn: 0, tn: 0 };
-  const n = total(counts);
-  const headline = METRICS.filter((m) => HEADLINE.includes(m.key));
-  const rest = METRICS.filter((m) => !HEADLINE.includes(m.key));
-
-  const accuracy = METRICS[0].compute(counts);
-  const mcc = METRICS.find((m) => m.key === "mcc")!.compute(counts);
-  const prevalence = n === 0 ? null : (counts.tp + counts.fn) / n;
-  const imbalanced = prevalence !== null && (prevalence < 0.2 || prevalence > 0.8);
+  const c = counts ?? { tp: 0, fp: 0, fn: 0, tn: 0 };
+  const n = total(c);
+  const get = (k: MetricKey) => METRICS.find((m) => m.key === k)!.compute(c);
+  const prevalence = get("prevalence");
+  const accuracy = get("accuracy");
+  const mcc = get("mcc");
+  const flattered =
+    prevalence !== null && accuracy !== null && mcc !== null &&
+    (prevalence < 0.2 || prevalence > 0.8) && accuracy - Math.max(mcc, 0) > 0.25;
 
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
+      setTimeout(() => setCopied(false), 1500);
     } catch {
-      setCopied(false);
+      /* clipboard blocked: nothing to do */
     }
   }
 
-  const cellInput = (c: Cell) => {
-    const info = CELL_INFO[c];
-    const invalid = parseCount(raw[c]) === null;
-    return (
-      <label
-        key={c}
-        className="flex flex-col gap-1 border-[4px] border-black p-3"
-        style={{ backgroundColor: info.correct ? "var(--color-stats)" : "var(--color-dl)" }}
-      >
-        <span className="font-[family-name:var(--font-card)] text-xs font-bold uppercase">
-          {info.short} <span className="font-normal normal-case">· {info.long}</span>
-        </span>
-        <input
-          type="number"
-          inputMode="numeric"
-          min={0}
-          step={1}
-          value={raw[c]}
-          onChange={(e) => setRaw((r) => ({ ...r, [c]: e.target.value }))}
-          aria-invalid={invalid}
-          className={`w-full border-2 bg-white px-2 py-1.5 font-[family-name:var(--font-card)] text-xl font-bold tabular-nums outline-none focus:border-black ${
-            invalid ? "border-red-600" : "border-black/20"
-          }`}
-        />
-      </label>
-    );
-  };
+  const input = (cell: Cell, label: string) => (
+    <label
+      className="relative flex h-20 items-end border-[4px] border-black px-2 pb-1.5 sm:h-24"
+      style={{ backgroundColor: CORRECT[cell] ? "var(--color-stats)" : "var(--color-dl)" }}
+    >
+      <span className="absolute left-2 top-1.5 font-[family-name:var(--font-card)] text-[11px] font-bold">
+        {cell.toUpperCase()}
+      </span>
+      <span className="sr-only">{label}</span>
+      <input
+        type="number"
+        inputMode="numeric"
+        min={0}
+        step={1}
+        value={raw[cell]}
+        onChange={(e) => setRaw((r) => ({ ...r, [cell]: e.target.value }))}
+        aria-invalid={parseCount(raw[cell]) === null}
+        className="w-full bg-transparent text-right font-[family-name:var(--font-card)] text-2xl font-bold tabular-nums outline-none [appearance:textfield] aria-[invalid=true]:text-red-700 sm:text-3xl [&::-webkit-inner-spin-button]:appearance-none"
+      />
+    </label>
+  );
+
+  const action =
+    "text-xs font-semibold underline decoration-black/25 underline-offset-4 transition-colors hover:decoration-black disabled:opacity-40";
 
   return (
-    <div>
-      <section aria-labelledby="calc-input" className="border-[10px] border-black bg-white">
-        <header className="flex items-center justify-between gap-3 border-b-[10px] border-black px-4 py-3" style={{ backgroundColor: "var(--color-ml)" }}>
-          <h2 id="calc-input" className="font-[family-name:var(--font-card)] text-sm font-bold uppercase sm:text-base">
-            Your confusion matrix
-          </h2>
-          <span className="text-xs font-semibold tabular-nums">n = {n.toLocaleString("en-US")}</span>
+    <div className="space-y-8">
+      <article className="mx-auto w-full max-w-[460px] border-[10px] border-black bg-white">
+        <header className="flex h-[64px] border-b-[10px] border-black">
+          <div className="flex flex-1 items-center border-r-[10px] border-black px-4">
+            <span className="font-[family-name:var(--font-card)] text-lg uppercase">Confusion matrix</span>
+          </div>
+          <div className="w-[64px] shrink-0" style={{ backgroundColor: ml.color }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={ml.pattern} alt="" aria-hidden="true" className="h-full w-full object-cover" />
+          </div>
         </header>
 
         <div className="p-4">
-          <div className="grid grid-cols-[auto_1fr_1fr] gap-2 text-xs">
+          <div className="grid grid-cols-[1.25rem_1fr_1fr] gap-2">
             <span />
-            <span className="text-center font-semibold">Predicted positive</span>
-            <span className="text-center font-semibold">Predicted negative</span>
-
-            <span className="flex items-center font-semibold [writing-mode:vertical-rl] rotate-180 sm:rotate-0 sm:[writing-mode:horizontal-tb]">Actual positive</span>
-            {cellInput("tp")}
-            {cellInput("fn")}
-
-            <span className="flex items-center font-semibold [writing-mode:vertical-rl] rotate-180 sm:rotate-0 sm:[writing-mode:horizontal-tb]">Actual negative</span>
-            {cellInput("fp")}
-            {cellInput("tn")}
+            <span className="text-center text-[11px] text-[var(--muted)]">Predicted +</span>
+            <span className="text-center text-[11px] text-[var(--muted)]">Predicted −</span>
+            <span className="flex items-center justify-center text-[11px] text-[var(--muted)] [writing-mode:vertical-rl] rotate-180">Actual +</span>
+            {input("tp", "True positives")}
+            {input("fn", "False negatives")}
+            <span className="flex items-center justify-center text-[11px] text-[var(--muted)] [writing-mode:vertical-rl] rotate-180">Actual −</span>
+            {input("fp", "False positives")}
+            {input("tn", "True negatives")}
           </div>
 
-          {!parsed ? (
-            <p className="mt-3 text-sm text-red-700" role="alert">
-              Each cell needs a whole number of 0 or more.
-            </p>
-          ) : null}
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() =>
-                setRaw({
-                  tp: String(EXAMPLE_COUNTS.tp),
-                  fp: String(EXAMPLE_COUNTS.fp),
-                  fn: String(EXAMPLE_COUNTS.fn),
-                  tn: String(EXAMPLE_COUNTS.tn),
-                })
-              }
-              className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white active:scale-[0.97]"
-            >
-              Load the fraud example
-            </button>
-            <button
-              type="button"
-              onClick={() => setRaw({ tp: "", fp: "", fn: "", tn: "" })}
-              className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white active:scale-[0.97]"
-            >
-              Clear
-            </button>
-            <button
-              type="button"
-              onClick={copyLink}
-              disabled={!parsed}
-              className="border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white active:scale-[0.97] disabled:opacity-40"
-            >
-              {copied ? "Link copied" : "Copy a link to these numbers"}
+          <div className="mt-4 flex items-center gap-4 pl-7">
+            <button type="button" className={action} onClick={() => setRaw(asRaw(EXAMPLE_COUNTS))}>Example</button>
+            <button type="button" className={action} onClick={() => setRaw({ tp: "", fp: "", fn: "", tn: "" })}>Clear</button>
+            <button type="button" className={action} onClick={copyLink} disabled={!counts}>
+              {copied ? "Copied" : "Copy link"}
             </button>
           </div>
         </div>
-      </section>
 
-      {parsed && n > 0 ? (
-        <p className="mt-6 max-w-2xl leading-relaxed" aria-live="polite">
-          Out of {n.toLocaleString("en-US")} cases, the model flagged {(counts.tp + counts.fp).toLocaleString("en-US")} as
-          positive and {counts.tp.toLocaleString("en-US")} of those were right. It caught {counts.tp.toLocaleString("en-US")}{" "}
-          of the {(counts.tp + counts.fn).toLocaleString("en-US")} real positives.
-          {imbalanced && accuracy !== null && mcc !== null && accuracy - Math.max(mcc, 0) > 0.25 ? (
-            <>
-              {" "}
-              Only {pct(prevalence)} of the data is positive, so accuracy ({pct(accuracy)}) looks much better than the
-              model is. Read MCC ({formatMetric(mcc, 2)}), F1 or balanced accuracy instead.
-            </>
-          ) : null}
-        </p>
-      ) : null}
+        <footer
+          className="flex h-[28px] items-center justify-between border-t-[10px] border-black px-3 text-[11px] font-semibold"
+          style={{ backgroundColor: ml.color }}
+        >
+          <span className="tabular-nums">n = {n.toLocaleString("en-US")}</span>
+          <span>datasciencetrivia.com</span>
+        </footer>
+      </article>
 
-      <section aria-labelledby="calc-results" className="mt-8">
-        <h2 id="calc-results" className="font-[family-name:var(--font-display)] text-xl">
-          Results
-        </h2>
-        <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {headline.map((m) => (
-            <MetricRow key={m.key} def={m} counts={counts} big />
-          ))}
-        </ul>
-        <ul className="mt-6">
-          {rest.map((m) => (
-            <MetricRow key={m.key} def={m} counts={counts} />
-          ))}
-        </ul>
+      <section aria-label="Results">
+        <dl className="grid grid-cols-2 border-[4px] border-black sm:grid-cols-4">
+          {HEADLINE.map((k, i) => {
+            const m = METRICS.find((d) => d.key === k)!;
+            return (
+              <div
+                key={k}
+                className={`px-3 py-3 ${i % 2 ? "border-l-[4px] border-black" : ""} ${i > 1 ? "border-t-[4px] border-black sm:border-t-0" : ""} ${i === 2 ? "sm:border-l-[4px]" : ""}`}
+              >
+                <dt className="font-[family-name:var(--font-card)] text-[11px] font-bold uppercase">{SHORT[k] ?? m.name}</dt>
+                <dd className="mt-1 font-[family-name:var(--font-card)] text-2xl font-bold tabular-nums">{show(m.compute(c))}</dd>
+              </div>
+            );
+          })}
+        </dl>
+
+        {flattered ? (
+          <p className="mt-3 text-sm text-[var(--muted)]">
+            Only {(prevalence! * 100).toFixed(0)}% of cases are positive, so accuracy flatters this model. MCC is{" "}
+            {mcc!.toFixed(2)}.
+          </p>
+        ) : null}
+
+        <table className="mt-6 w-full text-sm">
+          <thead className="sr-only">
+            <tr><th>Metric</th><th>Value</th><th>Working</th></tr>
+          </thead>
+          <tbody>
+            {METRICS.map((m) => {
+              const w = working(m.key, c);
+              return (
+                <tr key={m.key} className="border-t border-[var(--rule)] align-baseline">
+                  <th scope="row" className="py-2 pr-3 text-left font-normal">
+                    {m.card ? (
+                      <Link href={`/questions/${m.card}`} className="underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current">
+                        {m.name}
+                      </Link>
+                    ) : (
+                      m.name
+                    )}
+                  </th>
+                  <td className="py-2 pr-3 text-right font-semibold tabular-nums">{show(m.compute(c))}</td>
+                  <td className="hidden py-2 font-mono text-xs text-[var(--muted)] sm:table-cell">
+                    {m.formula}
+                    {w ? ` = ${w}` : ""}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+        <p className="mt-2 text-xs text-[var(--muted)]">— means undefined: the formula divides by zero.</p>
       </section>
     </div>
   );

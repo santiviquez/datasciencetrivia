@@ -73,9 +73,6 @@ export default function BelowFold() {
         <h2 id="tools" className="font-[family-name:var(--font-display)] text-xl">
           Free calculators
         </h2>
-        <p className="mt-2 text-sm text-[var(--muted)]">
-          Work out the numbers, with the formula shown and a flashcard for each idea.
-        </p>
         <ul className="mt-5 flex flex-wrap gap-3">
           {TOOLS.map((t) => (
             <li key={t.slug}>

@@ -17,7 +17,7 @@ export const TOOLS: Tool[] = [
     slug: "confusion-matrix-calculator",
     name: "Confusion matrix calculator",
     blurb:
-      "Enter TP, FP, FN and TN to get accuracy, precision, recall, F1, specificity, MCC, Cohen's kappa and 7 more metrics, with the working shown.",
+      "Precision, recall, F1, MCC and 10 more.",
     category: "ml",
   },
 ];
