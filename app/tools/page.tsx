@@ -41,34 +41,21 @@ export default function ToolsPage() {
           </nav>
 
           <h1 className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl">Tools</h1>
-          <p className="mt-4 max-w-xl leading-relaxed">
-            Calculators for the numbers that come up in data science work and interviews. Each one shows the
-            formula with your numbers in it and links to the flashcard that explains the idea. Free, no sign-up,
-            and everything runs in your browser.
-          </p>
+          <p className="mt-3 text-[var(--muted)]">Free calculators that show their working.</p>
 
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {TOOLS.map((t) => (
               <li key={t.slug}>
                 <Link
                   href={`/tools/${t.slug}`}
-                  className="flex h-full flex-col gap-1 rounded-md border border-[var(--rule)] px-4 py-3 transition hover:border-black/30"
+                  className="flex h-full flex-col border-[6px] border-black bg-white transition-transform duration-150 ease-out hover:-translate-y-0.5 active:scale-[0.98]"
                 >
-                  <span className="flex items-center gap-2">
-                    <span className="h-3 w-3 shrink-0" style={{ backgroundColor: CATEGORIES[t.category].color }} aria-hidden="true" />
-                    <span className="font-[family-name:var(--font-card)] text-sm font-bold uppercase">{t.name}</span>
-                  </span>
-                  <span className="text-sm text-[var(--muted)]">{t.blurb}</span>
+                  <span className="flex-1 px-4 py-4 font-[family-name:var(--font-card)] text-base font-bold uppercase leading-snug">{t.name}</span>
+                  <span className="border-t-[6px] border-black px-4 py-1.5 text-xs" style={{ backgroundColor: CATEGORIES[t.category].color }}>{t.blurb}</span>
                 </Link>
               </li>
             ))}
           </ul>
-
-          <p className="mt-10 text-sm">
-            <Link href="/quiz" className="underline underline-offset-2">Quizzes</Link>
-            {" · "}
-            <Link href="/questions" className="underline underline-offset-2">All questions by topic</Link>
-          </p>
 
           <div className="mt-16 border-t border-[var(--rule)] pt-8"><Author /></div>
         </main>
