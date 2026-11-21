@@ -1,4 +1,5 @@
 import { SITE } from "@/lib/site";
+import { TOOLS } from "@/lib/tools";
 import {
   CATEGORIES,
   CATEGORY_KEYS,
@@ -27,6 +28,8 @@ export function GET() {
     `Who made it and how it works: ${SITE.url}/about`,
     `Timeline of the history of AI: ${SITE.url}/ai-history`,
     `Quizzes (10 questions each, with answers): ${SITE.url}/quiz`,
+    `Free calculators: ${SITE.url}/tools`,
+    ...TOOLS.map((t) => `- ${t.name}: ${SITE.url}/tools/${t.slug} (${t.blurb})`),
     "",
   ];
 
