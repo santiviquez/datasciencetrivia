@@ -224,7 +224,9 @@ The probability that a test rejects the null hypothesis when a real effect of a 
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-statistical-power)
 
-### What is a t-test?
+### What is a t-test, and how do you choose and calculate the right one?
+
+> **Flashcard:** What is a t-test?
 
 A test of whether a mean differs from a given value, or whether two means differ, when the population standard deviation is unknown and estimated from the sample. The statistic is the difference divided by its standard error, which follows a t distribution under the null hypothesis.
 
@@ -244,7 +246,9 @@ A test that compares observed counts with the counts expected under a null hypot
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-chi-square-test)
 
-### What is ANOVA?
+### What is ANOVA, and how do you calculate and interpret the F statistic?
+
+> **Flashcard:** What is ANOVA?
 
 Analysis of variance: a test of whether three or more group means are all equal. It compares the variation between the group means with the variation within the groups; a large ratio, the F statistic, says at least one mean differs, but not which.
 
