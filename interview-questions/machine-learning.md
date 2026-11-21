@@ -323,7 +323,7 @@ Sensitivity is the share of actual positives a test catches, TP / (TP + FN), the
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-sensitivity-and-specificity)
 
-### What is a ROC curve?
+### What is a ROC curve, and how do you interpret the AUC?
 
 > **Flashcard:** Which graph plots the true positive rate against the false positive rate at various classification thresholds?
 
