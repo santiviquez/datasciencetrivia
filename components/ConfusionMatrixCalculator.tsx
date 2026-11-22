@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { CATEGORIES } from "@/lib/questions";
+import ToolCard, { type CardLook } from "@/components/ToolCard";
+import { NumberCell, ToolActions, replaceUrlSearch, useUrlSearch } from "@/components/ToolControls";
 import {
   EXAMPLE_COUNTS,
   METRICS,
@@ -60,20 +61,18 @@ const asRaw = (c: ConfusionCounts): Record<Cell, string> => ({
   fn: String(c.fn),
   tn: String(c.tn),
 });
+const EXAMPLE_RAW = asRaw(EXAMPLE_COUNTS);
 
-export default function ConfusionMatrixCalculator() {
-  const [raw, setRaw] = useState<Record<Cell, string>>(asRaw(EXAMPLE_COUNTS));
-  const [copied, setCopied] = useState(false);
-  const ml = CATEGORIES.ml;
-
-  // A shared link (?tp=…&fp=…&fn=…&tn=…) opens with those counts.
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+export default function ConfusionMatrixCalculator({ look }: { look: CardLook }) {
+  // A shared link (?tp=…&fp=…&fn=…&tn=…) opens with those counts, until the first edit.
+  const search = useUrlSearch();
+  const shared = useMemo(() => {
+    const params = new URLSearchParams(search);
     const v = CELLS.map((c) => parseCount(params.get(c)));
-    if (v.every((x) => x !== null)) {
-      setRaw({ tp: String(v[0]), fn: String(v[1]), fp: String(v[2]), tn: String(v[3]) });
-    }
-  }, []);
+    return v.every((x) => x !== null) ? { tp: String(v[0]), fn: String(v[1]), fp: String(v[2]), tn: String(v[3]) } : null;
+  }, [search]);
+  const [edited, setRaw] = useState<Record<Cell, string> | null>(null);
+  const raw = edited ?? shared ?? EXAMPLE_RAW;
 
   const counts = useMemo(() => {
     const out = {} as ConfusionCounts;
@@ -85,12 +84,11 @@ export default function ConfusionMatrixCalculator() {
     return out;
   }, [raw]);
 
+  // Only edits are written to the URL, so a shared link survives the first render.
   useEffect(() => {
-    if (!counts) return;
-    const url = new URL(window.location.href);
-    for (const c of CELLS) url.searchParams.set(c, String(counts[c]));
-    window.history.replaceState(null, "", url);
-  }, [counts]);
+    if (!edited || !counts) return;
+    replaceUrlSearch(Object.fromEntries(CELLS.map((c) => [c, String(counts[c])])));
+  }, [edited, counts]);
 
   const c = counts ?? { tp: 0, fp: 0, fn: 0, tn: 0 };
   const n = total(c);
@@ -102,84 +100,40 @@ export default function ConfusionMatrixCalculator() {
     prevalence !== null && accuracy !== null && mcc !== null &&
     (prevalence < 0.2 || prevalence > 0.8) && accuracy - Math.max(mcc, 0) > 0.25;
 
-  async function copyLink() {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* clipboard blocked: nothing to do */
-    }
-  }
-
-  const input = (cell: Cell, label: string) => (
-    <label
-      className="relative flex h-20 items-end border-[4px] border-black px-2 pb-1.5 sm:h-24"
-      style={{ backgroundColor: CORRECT[cell] ? "var(--color-stats)" : "var(--color-dl)" }}
-    >
-      <span className="absolute left-2 top-1.5 font-[family-name:var(--font-card)] text-[11px] font-bold">
-        {cell.toUpperCase()}
-      </span>
-      <span className="sr-only">{label}</span>
-      <input
-        type="number"
-        inputMode="numeric"
-        min={0}
-        step={1}
-        value={raw[cell]}
-        onChange={(e) => setRaw((r) => ({ ...r, [cell]: e.target.value }))}
-        aria-invalid={parseCount(raw[cell]) === null}
-        className="w-full bg-transparent text-right font-[family-name:var(--font-card)] text-2xl font-bold tabular-nums outline-none [appearance:textfield] aria-[invalid=true]:text-red-700 sm:text-3xl [&::-webkit-inner-spin-button]:appearance-none"
-      />
-    </label>
+  const input = (cell: Cell, name: string) => (
+    <NumberCell
+      label={cell.toUpperCase()}
+      name={name}
+      value={raw[cell]}
+      onChange={(v) => setRaw({ ...raw, [cell]: v })}
+      invalid={parseCount(raw[cell]) === null}
+      color={CORRECT[cell] ? "var(--color-stats)" : "var(--color-dl)"}
+      integer
+    />
   );
-
-  const action =
-    "text-xs font-semibold underline decoration-black/25 underline-offset-4 transition-colors hover:decoration-black disabled:opacity-40";
 
   return (
     <div className="space-y-8">
-      <article className="mx-auto w-full max-w-[460px] border-[10px] border-black bg-white">
-        <header className="flex h-[64px] border-b-[10px] border-black">
-          <div className="flex flex-1 items-center border-r-[10px] border-black px-4">
-            <span className="font-[family-name:var(--font-card)] text-lg uppercase">Confusion matrix</span>
-          </div>
-          <div className="w-[64px] shrink-0" style={{ backgroundColor: ml.color }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ml.pattern} alt="" aria-hidden="true" className="h-full w-full object-cover" />
-          </div>
-        </header>
-
-        <div className="p-4">
-          <div className="grid grid-cols-[1.25rem_1fr_1fr] gap-2">
-            <span />
-            <span className="text-center text-[11px] text-[var(--muted)]">Predicted +</span>
-            <span className="text-center text-[11px] text-[var(--muted)]">Predicted −</span>
-            <span className="flex items-center justify-center text-[11px] text-[var(--muted)] [writing-mode:vertical-rl] rotate-180">Actual +</span>
-            {input("tp", "True positives")}
-            {input("fn", "False negatives")}
-            <span className="flex items-center justify-center text-[11px] text-[var(--muted)] [writing-mode:vertical-rl] rotate-180">Actual −</span>
-            {input("fp", "False positives")}
-            {input("tn", "True negatives")}
-          </div>
-
-          <div className="mt-4 flex items-center gap-4 pl-7">
-            <button type="button" className={action} onClick={() => setRaw(asRaw(EXAMPLE_COUNTS))}>Example</button>
-            <button type="button" className={action} onClick={() => setRaw({ tp: "", fp: "", fn: "", tn: "" })}>Clear</button>
-            <button type="button" className={action} onClick={copyLink} disabled={!counts}>
-              {copied ? "Copied" : "Copy link"}
-            </button>
-          </div>
+      <ToolCard title="Confusion matrix" look={look} footer={`n = ${n.toLocaleString("en-US")}`}>
+        <div className="grid grid-cols-[1.25rem_1fr_1fr] gap-2">
+          <span />
+          <span className="text-center text-[11px] text-[var(--muted)]">Predicted +</span>
+          <span className="text-center text-[11px] text-[var(--muted)]">Predicted −</span>
+          <span className="flex items-center justify-center text-[11px] text-[var(--muted)] [writing-mode:vertical-rl] rotate-180">Actual +</span>
+          {input("tp", "True positives")}
+          {input("fn", "False negatives")}
+          <span className="flex items-center justify-center text-[11px] text-[var(--muted)] [writing-mode:vertical-rl] rotate-180">Actual −</span>
+          {input("fp", "False positives")}
+          {input("tn", "True negatives")}
         </div>
 
-        <footer
-          className="flex h-[28px] items-center justify-between border-t-[10px] border-black px-3 text-[11px] font-semibold"
-          style={{ backgroundColor: ml.color }}
-        >
-          <span className="tabular-nums">n = {n.toLocaleString("en-US")}</span>
-          <span>datasciencetrivia.com</span>
-        </footer>
-      </article>
+        <ToolActions
+          className="mt-4 pl-7"
+          onExample={() => setRaw(EXAMPLE_RAW)}
+          onClear={() => setRaw({ tp: "", fp: "", fn: "", tn: "" })}
+          canShare={counts !== null}
+        />
+      </ToolCard>
 
       <section aria-label="Results">
         <dl className="grid grid-cols-2 border-[4px] border-black sm:grid-cols-4">

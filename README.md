@@ -68,6 +68,9 @@ And around the deck:
   topic, scored, with a result you can share.
 - **[The history of AI](https://www.datasciencetrivia.com/ai-history)** as a
   timeline, each milestone with a card to test yourself.
+- **[Free calculators](https://www.datasciencetrivia.com/tools)** that show
+  their working: a [p-value calculator](https://www.datasciencetrivia.com/tools/p-value-calculator)
+  and a [confusion matrix calculator](https://www.datasciencetrivia.com/tools/confusion-matrix-calculator).
 - **[llms.txt](https://www.datasciencetrivia.com/llms.txt)**: the whole deck
   as plain text, for AI assistants that want to quote it.
 

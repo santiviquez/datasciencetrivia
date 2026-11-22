@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "check:content": "node scripts/check-content.mjs",
+    "check:stats": "node --no-warnings scripts/check-stats.mjs",
     "import:questions": "node scripts/import-questions.mjs",
     "export:questions": "node scripts/export-questions.mjs"
   },

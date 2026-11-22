@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import GameScreen from "@/components/GameScreen";
 import { SITE, CONTENT_UPDATED, absoluteUrl } from "@/lib/site";
 import { SCHEMA_ID } from "@/lib/schema";
+import { toolsForCard } from "@/lib/tools";
 import {
   CATEGORIES,
   getAllQuestions,
@@ -55,6 +56,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
 
   const category = CATEGORIES[q.category];
   const related = getRelatedQuestions(q, 8);
+  const tools = toolsForCard(q.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -143,6 +145,20 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
                 ))}
               </div>
             </section>
+          ) : null}
+
+          {tools.length > 0 ? (
+            <p className="mb-14 text-sm">
+              <span className="text-[var(--muted)]">Try it with your own numbers: </span>
+              {tools.map((t, i) => (
+                <span key={t.slug}>
+                  {i ? ", " : ""}
+                  <Link href={`/tools/${t.slug}`} className="font-semibold underline decoration-[var(--rule)] underline-offset-2 hover:decoration-current">
+                    {t.name}
+                  </Link>
+                </span>
+              ))}
+            </p>
           ) : null}
 
           {related.length > 0 ? (
