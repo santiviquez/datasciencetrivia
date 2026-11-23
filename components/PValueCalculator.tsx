@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import DensityCurve, { type Tail } from "@/components/DensityCurve";
 import ToolCard, { type CardLook } from "@/components/ToolCard";
-import { NumberCell, Segmented, ToolActions, replaceUrlSearch, useUrlSearch } from "@/components/ToolControls";
+import { NumberCell, ResultChoice, Segmented, ToolActions, replaceUrlSearch, useUrlSearch } from "@/components/ToolControls";
 import { lowerTail, twoTail, upperQuantile, upperTail, type Distribution } from "@/lib/stats";
 
 type Field = "x" | "df1" | "df2";
@@ -219,32 +219,13 @@ export default function PValueCalculator({ look }: { look: CardLook }) {
       </ToolCard>
 
       <section aria-label="Results">
-        <fieldset>
-          <legend className="sr-only">P-value by tail. Choose one to see its critical values.</legend>
-          <div className={`grid border-[4px] border-black ${shownTails.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
-            {shownTails.map((t, i) => (
-              <label
-                key={t}
-                className={`cursor-pointer px-3 py-3 transition-colors duration-150 ease-out has-checked:bg-[var(--color-stats)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#319795] [&:not(:has(:checked))]:hover:bg-black/[0.04] ${i ? "border-l-[4px] border-black" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="tail"
-                  value={t}
-                  checked={tail === t}
-                  onChange={() => setTail(t)}
-                  className="sr-only"
-                />
-                <span className="block font-[family-name:var(--font-card)] text-[11px] font-bold uppercase">
-                  {TAIL_NAME[t]}
-                </span>
-                <span className="mt-1 block font-[family-name:var(--font-card)] text-xl font-bold tabular-nums sm:text-2xl">
-                  {formatP(p[t])}
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <ResultChoice
+          legend="P-value by tail. Choose one to see its critical values."
+          name="tail"
+          options={shownTails.map((t) => ({ value: t, label: TAIL_NAME[t], text: formatP(p[t]) }))}
+          value={tail}
+          onChange={setTail}
+        />
 
         {working ? (
           <p className="mt-3 font-mono text-xs text-[var(--muted)]">

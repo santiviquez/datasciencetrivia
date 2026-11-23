@@ -6,7 +6,7 @@ import type { CardLook } from "@/components/ToolCard";
 import { CATEGORIES, getQuestionBySlug } from "@/lib/questions";
 import { SCHEMA_ID } from "@/lib/schema";
 import { SITE, absoluteUrl } from "@/lib/site";
-import { TOOLS_UPDATED, getTool } from "@/lib/tools";
+import { TOOLS, TOOLS_UPDATED, getTool } from "@/lib/tools";
 
 export interface Faq {
   q: string;
@@ -14,6 +14,8 @@ export interface Faq {
 }
 
 const toolPath = (slug: string) => `/tools/${slug}`;
+const CHIP =
+  "inline-block border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white";
 
 export function toolMetadata(slug: string, title: string, description: string): Metadata {
   const path = toolPath(slug);
@@ -142,11 +144,21 @@ export default function ToolPage({
             <ul className="mt-3 flex flex-wrap gap-2">
               {tool.cards.map(([card, label]) => (
                 <li key={card}>
-                  <Link
-                    href={`/questions/${card}`}
-                    className="inline-block border-2 border-black px-3 py-1.5 text-xs font-semibold transition hover:bg-black hover:text-white"
-                  >
+                  <Link href={`/questions/${card}`} className={CHIP}>
                     {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section aria-labelledby="more" className="mt-12">
+            <h2 id="more" className="font-[family-name:var(--font-display)] text-lg">More calculators</h2>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {TOOLS.filter((t) => t.slug !== slug).map((t) => (
+                <li key={t.slug}>
+                  <Link href={toolPath(t.slug)} className={CHIP}>
+                    {t.name}
                   </Link>
                 </li>
               ))}
