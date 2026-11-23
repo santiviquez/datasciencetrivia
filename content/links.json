@@ -265,7 +265,8 @@
     "maximum likelihood"
   ],
   "stats-75": [
-    "normal distribution"
+    "normal distribution",
+    "z-score"
   ],
   "stats-80": [
     "R-squared"
