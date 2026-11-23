@@ -46,9 +46,23 @@ export const TOOLS: Tool[] = [
       ["what-does-it-mean-for-a-result-to-be-statistically-significant", "Statistical significance"],
     ],
   },
+  {
+    slug: "z-score-calculator",
+    name: "Z-score calculator",
+    blurb: "Z score, percentile and tail probabilities.",
+    category: "stats",
+    cards: [
+      ["what-two-parameters-defined-a-normal-distribution", "Normal distribution"],
+      ["measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value", "Standard deviation"],
+      ["what-is-a-z-test", "z-test"],
+      ["what-is-a-p-value", "P-value"],
+      ["values-distant-from-most-other-values-are", "Outliers"],
+      ["standardization-of-features-is-required-before-training-a-logistic-regression", "Standardization"],
+    ],
+  },
 ];
 
-export const TOOLS_UPDATED = "2026-11-22";
+export const TOOLS_UPDATED = "2026-11-23";
 
 export function getTool(slug: string): Tool {
   const tool = TOOLS.find((t) => t.slug === slug);
