@@ -134,7 +134,9 @@ A function that describes a continuous random variable: the probability of landi
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-probability-density-function)
 
-### What two parameters define a normal distribution?
+### What is a normal distribution, and how do z-scores work?
+
+> **Flashcard:** What two parameters define a normal distribution?
 
 Its mean and its standard deviation.
 
@@ -232,7 +234,9 @@ A test of whether a mean differs from a given value, or whether two means differ
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-a-t-test)
 
-### What is a z-test?
+### What is a z-test, and when do you use it instead of a t-test?
+
+> **Flashcard:** What is a z-test?
 
 A hypothesis test whose statistic follows a standard normal distribution under the null hypothesis: the difference divided by its standard error, compared with ±1.96 for a two-sided test at 5%. It applies when the standard error is known or the sample is large, as with conversion rates.
 
