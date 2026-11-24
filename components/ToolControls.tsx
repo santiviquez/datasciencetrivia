@@ -108,6 +108,7 @@ export function Segmented<T extends string>({
 /**
  * A calculator's headline results as one bordered strip, where picking a cell
  * changes what the card shows (which tail the curve shades, for example).
+ * Results too long to sit side by side are stacked with `rows`.
  */
 export function ResultChoice<T extends string>({
   legend,
@@ -115,21 +116,25 @@ export function ResultChoice<T extends string>({
   options,
   value,
   onChange,
+  rows = false,
 }: {
   legend: string;
   name: string;
   options: readonly { value: T; label: string; text: string }[];
   value: T;
   onChange: (value: T) => void;
+  rows?: boolean;
 }) {
+  const columns = options.length === 3 ? "grid-cols-3" : "grid-cols-2";
+  const divider = rows ? "border-t-[4px] border-black" : "border-l-[4px] border-black";
   return (
     <fieldset>
       <legend className="sr-only">{legend}</legend>
-      <div className={`grid border-[4px] border-black ${options.length === 3 ? "grid-cols-3" : "grid-cols-2"}`}>
+      <div className={`grid border-[4px] border-black ${rows ? "" : columns}`}>
         {options.map((o, i) => (
           <label
             key={o.value}
-            className={`cursor-pointer px-3 py-3 transition-colors duration-150 ease-out has-checked:bg-[var(--color-stats)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#319795] [&:not(:has(:checked))]:hover:bg-black/[0.04] ${i ? "border-l-[4px] border-black" : ""}`}
+            className={`cursor-pointer px-3 py-3 transition-colors duration-150 ease-out has-checked:bg-[var(--color-stats)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#319795] [&:not(:has(:checked))]:hover:bg-black/[0.04] ${rows ? "flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1" : ""} ${i ? divider : ""}`}
           >
             <input
               type="radio"
@@ -140,7 +145,9 @@ export function ResultChoice<T extends string>({
               className="sr-only"
             />
             <span className="block font-[family-name:var(--font-card)] text-[11px] font-bold uppercase">{o.label}</span>
-            <span className="mt-1 block font-[family-name:var(--font-card)] text-xl font-bold tabular-nums sm:text-2xl">
+            <span
+              className={`block font-[family-name:var(--font-card)] font-bold tabular-nums ${rows ? "text-lg sm:text-xl" : "mt-1 text-xl sm:text-2xl"}`}
+            >
               {o.text}
             </span>
           </label>

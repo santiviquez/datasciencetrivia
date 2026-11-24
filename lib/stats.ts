@@ -209,3 +209,42 @@ export function upperQuantile(dist: Distribution, p: number, df: Df = []): numbe
   }
   return (lo + hi) / 2;
 }
+
+/** A confidence interval, with the critical value that set its width. */
+export interface Interval {
+  lower: number;
+  upper: number;
+  critical: number;
+}
+
+/** The z or t value that leaves `level` (between 0 and 1) in the middle of the distribution. */
+export function criticalValue(dist: "z" | "t", level: number, df: Df = []): number {
+  return upperQuantile(dist, (1 - level) / 2, df);
+}
+
+/** mean ± critical × sd / √n. The t interval uses n − 1 degrees of freedom. */
+export function meanInterval(dist: "z" | "t", mean: number, sd: number, n: number, level: number): Interval {
+  const critical = criticalValue(dist, level, dist === "t" ? [n - 1] : []);
+  const margin = (critical * sd) / Math.sqrt(n);
+  return { lower: mean - margin, upper: mean + margin, critical };
+}
+
+/**
+ * The interval for a proportion of `successes` out of n. "wald" is the
+ * textbook normal approximation, p ± z √(p(1 − p)/n). "wilson" is the score
+ * interval, which holds up with small samples and proportions near 0 or 1.
+ */
+export function proportionInterval(
+  method: "wald" | "wilson",
+  successes: number,
+  n: number,
+  level: number,
+): Interval {
+  const z = criticalValue("z", level);
+  const p = successes / n;
+  const spread = (p * (1 - p)) / n;
+  const scale = method === "wilson" ? 1 + (z * z) / n : 1;
+  const centre = method === "wilson" ? (p + (z * z) / (2 * n)) / scale : p;
+  const half = (z * Math.sqrt(method === "wilson" ? spread + (z * z) / (4 * n * n) : spread)) / scale;
+  return { lower: Math.max(0, centre - half), upper: Math.min(1, centre + half), critical: z };
+}

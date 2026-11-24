@@ -60,9 +60,23 @@ export const TOOLS: Tool[] = [
       ["standardization-of-features-is-required-before-training-a-logistic-regression", "Standardization"],
     ],
   },
+  {
+    slug: "confidence-interval-calculator",
+    name: "Confidence interval calculator",
+    blurb: "For a mean or a proportion, at any level.",
+    category: "stats",
+    cards: [
+      ["what-is-a-confidence-interval", "Confidence interval"],
+      ["the-normal-distribution-derives-its-importance-from-which-famous-theorem", "Central limit theorem"],
+      ["what-is-a-t-test", "t-test"],
+      ["what-is-a-z-test", "z-test"],
+      ["what-is-bootstrapping-in-statistics", "Bootstrapping"],
+      ["what-does-it-mean-for-a-result-to-be-statistically-significant", "Statistical significance"],
+    ],
+  },
 ];
 
-export const TOOLS_UPDATED = "2026-11-23";
+export const TOOLS_UPDATED = "2026-11-24";
 
 export function getTool(slug: string): Tool {
   const tool = TOOLS.find((t) => t.slug === slug);
