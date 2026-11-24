@@ -7,7 +7,7 @@ import { TOOLS } from "@/lib/tools";
 
 const TITLE = "Free Data Science and Machine Learning Calculators";
 const DESCRIPTION =
-  "Free calculators for statistics and machine learning that show their working: p-value, z-score and confusion matrix calculators, with a flashcard for each concept.";
+  "Free statistics and machine learning calculators that show their working: p-value, z-score, confidence interval and confusion matrix, with a flashcard for each.";
 
 export const metadata: Metadata = {
   title: { absolute: TITLE },

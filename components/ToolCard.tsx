@@ -22,7 +22,7 @@ export default function ToolCard({
     <article className="mx-auto w-full max-w-[460px] border-[10px] border-black bg-white">
       <header className="flex h-[64px] border-b-[10px] border-black">
         <div className="flex flex-1 items-center border-r-[10px] border-black px-4">
-          <span className="font-[family-name:var(--font-card)] text-lg uppercase">{title}</span>
+          <span className="font-[family-name:var(--font-card)] text-base uppercase leading-tight sm:text-lg">{title}</span>
         </div>
         <div className="w-[64px] shrink-0" style={{ backgroundColor: look.color }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}

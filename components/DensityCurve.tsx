@@ -1,6 +1,8 @@
 import { density, upperQuantile, type Df, type Distribution } from "@/lib/stats";
 
 export type Tail = "two" | "right" | "left";
+/** What to shade: one of a p-value's tails, or the middle a confidence interval covers. */
+export type Shade = Tail | "middle";
 
 const W = 100;
 const H = 100;
@@ -29,7 +31,8 @@ function range(dist: Distribution, df: Df, x: number | null): [number, number] {
 const fmt = (v: number) => String(Number(v.toFixed(Math.abs(v) >= 100 ? 0 : 2))).replace("-", "−");
 
 /**
- * The distribution's density with the p-value's tail shaded.
+ * The distribution's density with a p-value's tail shaded, or the middle
+ * that a confidence interval covers.
  *
  * The SVG stretches to its box and the strokes don't scale, so lines stay the
  * same weight at any width. Labels are HTML under it, so the type doesn't
@@ -41,12 +44,15 @@ export default function DensityCurve({
   x,
   tail,
   fill,
+  label = fmt,
 }: {
   dist: Distribution;
   df: Df;
   x: number | null;
-  tail: Tail;
+  tail: Shade;
   fill: string;
+  /** What to print under a mark. Defaults to the mark's own value. */
+  label?: (mark: number) => string;
 }) {
   const [lo, hi] = range(dist, df, x);
   const sx = (v: number) => ((Math.min(Math.max(v, lo), hi) - lo) / (hi - lo)) * W;
@@ -82,6 +88,10 @@ export default function DensityCurve({
       const a = Math.abs(x);
       areas.push(area(-Infinity, -a), area(a, Infinity));
       marks.push(-a, a);
+    } else if (tail === "middle") {
+      const a = Math.abs(x);
+      areas.push(area(-a, a));
+      marks.push(-a, a);
     } else if (tail === "right") {
       areas.push(area(x, Infinity));
       marks.push(x);
@@ -91,11 +101,13 @@ export default function DensityCurve({
     }
   }
 
-  // Two labels too close to read are merged into one "±" label.
+  // Two labels too close to read are merged into one.
   const merged = marks.length === 2 && sx(marks[1]) - sx(marks[0]) < 20;
-  const labels = merged
-    ? [{ at: 50, text: `±${fmt(Math.abs(marks[1]))}` }]
-    : marks.map((m) => ({ at: Math.min(Math.max(sx(m), 6), 94), text: fmt(m) }));
+  const labels = !merged
+    ? marks.map((m) => ({ at: Math.min(Math.max(sx(m), 6), 94), text: label(m) }))
+    : label === fmt
+      ? [{ at: 50, text: `±${fmt(Math.abs(marks[1]))}` }]
+      : [{ at: 50, text: `${label(marks[0])} to ${label(marks[1])}` }];
 
   return (
     <div aria-hidden="true">
@@ -117,8 +129,8 @@ export default function DensityCurve({
         <line x1={0} x2={W} y1={H} y2={H} stroke="#000" strokeWidth={2.5} vectorEffect="non-scaling-stroke" />
       </svg>
       <div className="relative mt-1 h-4 text-[11px] tabular-nums text-[var(--muted)]">
-        {labels.map((l) => (
-          <span key={l.text} className="absolute -translate-x-1/2" style={{ left: `${l.at}%` }}>
+        {labels.map((l, i) => (
+          <span key={i} className="absolute -translate-x-1/2" style={{ left: `${l.at}%` }}>
             {l.text}
           </span>
         ))}
