@@ -62,7 +62,7 @@ The median (the line inside the box, not the mean), the first and third quartile
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-values-could-you-infer-from-a-boxplot)
 
-### What measures how far a set of numbers is spread out from their average?
+### What are variance and standard deviation, and how do you calculate them?
 
 > **Flashcard:** Measures how far a set of (random) numbers is spread out from their average value.
 
