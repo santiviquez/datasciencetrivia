@@ -65,6 +65,51 @@ export function NumberCell({
   );
 }
 
+/** A list of numbers on a calculator card: the frame of a NumberCell with room to paste, and a running count. */
+export function ListCell({
+  label,
+  name,
+  value,
+  onChange,
+  invalid,
+  count,
+  placeholder,
+}: {
+  /** Shown in the corner. */
+  label: ReactNode;
+  /** The full name, for screen readers. */
+  name: string;
+  value: string;
+  onChange: (value: string) => void;
+  invalid: boolean;
+  /** How many numbers were read, shown in the other corner. */
+  count: number;
+  placeholder?: string;
+}) {
+  return (
+    <label className="relative block border-[4px] border-black bg-white px-2 pb-1.5 pt-7 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#319795]">
+      <span aria-hidden="true" className="absolute left-2 top-1.5 font-[family-name:var(--font-card)] text-[11px] font-bold">
+        {label}
+      </span>
+      <span className="sr-only">{name}</span>
+      <span className="absolute right-2 top-1.5 font-[family-name:var(--font-card)] text-[11px] font-bold tabular-nums">
+        {count > 0 ? `n = ${count.toLocaleString("en-US")}` : null}
+      </span>
+      <textarea
+        rows={3}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-invalid={invalid}
+        placeholder={placeholder}
+        spellCheck={false}
+        autoComplete="off"
+        autoCapitalize="off"
+        className="block w-full resize-none bg-transparent font-[family-name:var(--font-card)] text-xl font-bold leading-snug tabular-nums outline-none placeholder:font-normal placeholder:text-black/30 aria-[invalid=true]:text-red-700"
+      />
+    </label>
+  );
+}
+
 /** A row of mutually exclusive choices, drawn as one bordered bar. Radio inputs underneath, so arrow keys work. */
 export function Segmented<T extends string>({
   legend,

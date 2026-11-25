@@ -74,9 +74,23 @@ export const TOOLS: Tool[] = [
       ["what-does-it-mean-for-a-result-to-be-statistically-significant", "Statistical significance"],
     ],
   },
+  {
+    slug: "standard-deviation-calculator",
+    name: "Standard deviation calculator",
+    blurb: "Sample and population, with the steps.",
+    category: "stats",
+    cards: [
+      ["measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value", "Variance and standard deviation"],
+      ["what-two-parameters-defined-a-normal-distribution", "Normal distribution"],
+      ["values-distant-from-most-other-values-are", "Outliers"],
+      ["how-interquartile-range-is-calculated", "Interquartile range"],
+      ["what-do-skewness-and-kurtosis-measure", "Skewness and kurtosis"],
+      ["the-normal-distribution-derives-its-importance-from-which-famous-theorem", "Central limit theorem"],
+    ],
+  },
 ];
 
-export const TOOLS_UPDATED = "2026-11-24";
+export const TOOLS_UPDATED = "2026-11-25";
 
 export function getTool(slug: string): Tool {
   const tool = TOOLS.find((t) => t.slug === slug);
