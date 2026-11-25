@@ -50,7 +50,9 @@ The Quantile.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-generalization-of-the-median)
 
-### How is the interquartile range calculated?
+### What is the interquartile range (IQR), and how do you calculate it?
+
+> **Flashcard:** How is the interquartile range calculated?
 
 Q3 - Q1
 
@@ -76,7 +78,9 @@ Skewness measures a distribution's asymmetry: positive when the right tail is lo
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-do-skewness-and-kurtosis-measure)
 
-### Values distant from most other values are?
+### What are outliers, and how do you detect and handle them?
+
+> **Flashcard:** Values distant from most other values are?
 
 Outliers.
 

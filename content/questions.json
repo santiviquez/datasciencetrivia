@@ -1170,13 +1170,20 @@
     "id": "stats-85",
     "category": "stats",
     "question": "Values distant from most other values are?",
+    "title": "What are outliers, and how do you detect and handle them?",
     "answer": "Outliers.",
     "explanation": [
-      "Outliers. An outlier is an observation unusually far from the bulk of the data, such as a recorded adult height of 250 cm. It may be a measurement or data-entry error, or a genuine but rare event.",
-      "A standard rule is Tukey's fences: flag values below Q1 − 1.5 × IQR or above Q3 + 1.5 × IQR, where IQR = Q3 − Q1. If Q1 = 20 and Q3 = 30, the fences are 5 and 45, so 52 is an outlier; box plots draw such points individually. The rule |z| > 3 is also common, but outliers inflate the mean and standard deviation that z uses, so robust versions use the median and median absolute deviation.",
-      "Interviewers ask what you would do with one. Do not delete it automatically: check whether it is an error; if real, consider robust methods such as the median, Huber loss or tree models. In regression, separate outliers in y from high-leverage points in x and influential points, measured by Cook's distance."
+      "Outliers. An outlier is an observation unusually far from the bulk of the data, such as a recorded adult height of 250 cm. It may be a measurement or data-entry error, a value from a different population, or a genuine but rare event.",
+      "Tukey's fences are the standard rule: flag values below Q1 − 1.5 × IQR or above Q3 + 1.5 × IQR, where IQR = Q3 − Q1. For 2, 4, 4, 4, 5, 5, 7 and 30, NumPy's quartiles are Q1 = 4 and Q3 = 5.5, so the IQR is 1.5 and the fences are 1.75 and 7.75. Only 30 falls outside. Box plots draw such points individually.",
+      "The z-score rule, |z| > 3, is also common, but an outlier inflates the mean and standard deviation that z is built from. In the same data the mean is 7.6 and the sample standard deviation 9.1, so 30 scores only z = 2.45 and passes. This is called masking. With the sample standard deviation no z-score can exceed (n − 1)/√n, so the rule cannot flag anything in fewer than 11 points.",
+      "The robust version swaps in the median and the median absolute deviation (MAD): the modified z-score is 0.6745 × (x − median) / MAD, flagged above 3.5 in absolute value. Here the median is 4.5 and the MAD 0.5, so 30 scores 34.4. The median and MAD barely move when one value goes wild, which is why this rule still works.",
+      "What to do with one: don't delete it automatically. First check whether it is an error, such as a typo, a unit mix-up, a sentinel code like 999 or a sensor fault. Fix or drop errors and say that you did. If the value is real, keep it and choose methods that tolerate it: the median over the mean, a log transform for long right tails, winsorizing (capping at, say, the 1st and 99th percentiles), Huber loss, quantile regression or tree models. Reporting results with and without the point is often the clearest answer.",
+      "Why it matters: one value can move a whole summary. Dropping the 30 takes the mean from 7.6 to 4.4 and the sample standard deviation from 9.1 to 1.5, while the median only moves from 4.5 to 4. Least squares, Pearson correlation, k-means and PCA are all built on squared deviations, so they inherit that sensitivity. Min-max scaling squeezes every other value into a sliver of the range; scikit-learn's RobustScaler uses the median and IQR instead.",
+      "In regression, separate three things. An outlier has an unusual y for its x, a large residual. A high-leverage point has an unusual x. An influential point changes the fitted line when it is removed, which usually takes both. Cook's distance measures influence, with values above 4/n or above 1 as common flags.",
+      "With many features, a point can be ordinary in every column and still odd in combination, such as a height of 190 cm with a weight of 45 kg. Multivariate methods catch that: Mahalanobis distance, isolation forests, local outlier factor and DBSCAN's noise points.",
+      "Interview follow-ups: are outliers always a problem (no: in fraud or fault detection they are the signal), how many points Tukey's rule flags on clean normal data (about 0.7%, since the fences sit 2.7 standard deviations out, against 0.27% for |z| > 3), and why not remove everything a rule flags (you shrink the spread artificially and may throw away the most informative cases)."
     ],
-    "updated": "2026-10-12",
+    "updated": "2026-11-25",
     "slug": "values-distant-from-most-other-values-are"
   },
   {
@@ -1397,13 +1404,20 @@
     "id": "stats-103",
     "category": "stats",
     "question": "How is the interquartile range calculated?",
+    "title": "What is the interquartile range (IQR), and how do you calculate it?",
     "answer": "Q3 - Q1",
     "explanation": [
-      "The interquartile range is the third quartile minus the first: IQR = Q3 − Q1. Q1 is the 25th percentile and Q3 the 75th, so the IQR measures the spread of the middle 50% of the data as a single number.",
-      "Sort the data and find the quartiles. For 1, 3, 4, 7, 8, 10, 12, 15, 20 the median is 8. Taking the median of each half, leaving out the middle value, gives Q1 = 3.5 and Q3 = 13.5, so IQR = 10. The default in NumPy and R interpolates instead: Q1 = 4, Q3 = 12, IQR = 8. Both conventions are valid, so check your tool's.",
-      "Interviewers ask why not use the standard deviation. The IQR ignores the top and bottom quarters, so it is robust: change 20 to 2,000 and the IQR stays put, while the standard deviation jumps from about 6 to 664. For normal data, IQR ≈ 1.35σ. Box plots, the 1.5 × IQR outlier rule and scikit-learn's RobustScaler use it."
+      "The interquartile range is the third quartile minus the first: IQR = Q3 − Q1. Q1 is the 25th percentile and Q3 the 75th (quartiles are the quantiles that cut sorted data into four equal parts), so the IQR measures the spread of the middle 50% of the data as a single number.",
+      "Sort the data and find the quartiles. For 1, 3, 4, 7, 8, 10, 12, 15, 20 the median is 8. Taking the median of each half, leaving out the middle value, gives Q1 = 3.5 and Q3 = 13.5, so IQR = 10. The default in NumPy, pandas and R interpolates instead: Q1 = 4, Q3 = 12, IQR = 8.",
+      "Both conventions are valid, and tools disagree. On this data Excel's QUARTILE.EXC and a TI-84 give 3.5 and 13.5, while QUARTILE.INC, NumPy, pandas and R give 4 and 12. The gap shrinks as the sample grows, so it matters for small data sets and homework answers and rarely for real ones. Say which method you used.",
+      "In code: np.percentile(x, 75) − np.percentile(x, 25), scipy.stats.iqr(x), or x.quantile(0.75) − x.quantile(0.25) in pandas. In SQL, PERCENTILE_CONT(0.75) minus PERCENTILE_CONT(0.25) interpolates the same way.",
+      "Interviewers ask why not use the standard deviation. The IQR ignores the top and bottom quarters, so it is robust: change 20 to 2,000 and the IQR stays put, while the standard deviation jumps from about 6 to 664. Up to a quarter of the values can be corrupted before the IQR can be dragged arbitrarily far. For the standard deviation, one is enough.",
+      "For normal data the quartiles sit 0.6745 standard deviations either side of the mean, so IQR ≈ 1.349σ. Turned around, IQR / 1.349 is a robust estimate of σ: here 8 / 1.349 ≈ 5.9, against a sample standard deviation of 6.1.",
+      "The 1.5 × IQR rule, Tukey's fences, flags outliers below Q1 − 1.5 × IQR or above Q3 + 1.5 × IQR. Here that is below −8 or above 24, so nothing is flagged. On normal data the fences sit about 2.7 standard deviations from the mean and flag roughly 0.7% of points.",
+      "Where it shows up: the box of a box plot runs from Q1 to Q3, so its length is the IQR. scikit-learn's RobustScaler subtracts the median and divides by the IQR. The Freedman-Diaconis rule sets a histogram's bin width to 2 × IQR / ∛n.",
+      "Limits and follow-ups: the IQR says nothing about the tails, so two data sets with the same IQR can have very different extremes. On clean, roughly normal data the standard deviation is the more precise measure because it uses every value. The median absolute deviation is more robust still (it tolerates up to half the data being corrupted), and the semi-interquartile range is simply IQR / 2."
     ],
-    "updated": "2026-10-13",
+    "updated": "2026-11-25",
     "slug": "how-interquartile-range-is-calculated"
   },
   {
