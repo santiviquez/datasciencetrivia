@@ -4,7 +4,7 @@
  *
  * Pure functions with no React in them. Tail probabilities are computed
  * directly (never as 1 − CDF), so a p-value of 1e-12 keeps its digits.
- * `scripts/check-stats.mjs` checks every function against SciPy.
+ * `scripts/check-stats.mjs` checks every function against reference values.
  */
 
 const EPS = 1e-15;
@@ -247,4 +247,29 @@ export function proportionInterval(
   const centre = method === "wilson" ? (p + (z * z) / (2 * n)) / scale : p;
   const half = (z * Math.sqrt(method === "wilson" ? spread + (z * z) / (4 * n * n) : spread)) / scale;
   return { lower: Math.max(0, centre - half), upper: Math.min(1, centre + half), critical: z };
+}
+
+/** What a standard deviation is built from. */
+export interface Spread {
+  n: number;
+  sum: number;
+  mean: number;
+  /** The sum of squared deviations from the mean. */
+  ss: number;
+}
+
+/** The count, sum, mean and sum of squared deviations of a list of numbers. */
+export function spread(values: readonly number[]): Spread {
+  const n = values.length;
+  let sum = 0;
+  for (const v of values) sum += v;
+  const mean = sum / n;
+  let ss = 0;
+  for (const v of values) ss += (v - mean) ** 2;
+  return { n, sum, mean, ss };
+}
+
+/** The sum of squares over n − 1 for a sample (Bessel's correction), over n for a whole population. */
+export function variance({ ss, n }: Spread, sample: boolean): number {
+  return ss / (sample ? n - 1 : n);
 }
