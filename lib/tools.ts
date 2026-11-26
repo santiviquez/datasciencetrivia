@@ -88,9 +88,23 @@ export const TOOLS: Tool[] = [
       ["the-normal-distribution-derives-its-importance-from-which-famous-theorem", "Central limit theorem"],
     ],
   },
+  {
+    slug: "mean-median-mode-calculator",
+    name: "Mean, median and mode calculator",
+    blurb: "Plus range and quartiles, with the working.",
+    category: "stats",
+    cards: [
+      ["what-is-the-generalization-of-the-median", "Quantiles"],
+      ["what-values-could-you-infer-from-a-boxplot", "Box plot"],
+      ["how-interquartile-range-is-calculated", "Interquartile range"],
+      ["values-distant-from-most-other-values-are", "Outliers"],
+      ["what-do-skewness-and-kurtosis-measure", "Skewness and kurtosis"],
+      ["measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value", "Variance and standard deviation"],
+    ],
+  },
 ];
 
-export const TOOLS_UPDATED = "2026-11-25";
+export const TOOLS_UPDATED = "2026-11-26";
 
 export function getTool(slug: string): Tool {
   const tool = TOOLS.find((t) => t.slug === slug);

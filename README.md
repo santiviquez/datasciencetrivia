@@ -72,7 +72,8 @@ And around the deck:
   their working: a [p-value calculator](https://www.datasciencetrivia.com/tools/p-value-calculator),
   a [z-score calculator](https://www.datasciencetrivia.com/tools/z-score-calculator),
   a [confidence interval calculator](https://www.datasciencetrivia.com/tools/confidence-interval-calculator),
-  a [standard deviation calculator](https://www.datasciencetrivia.com/tools/standard-deviation-calculator)
+  a [standard deviation calculator](https://www.datasciencetrivia.com/tools/standard-deviation-calculator),
+  a [mean, median and mode calculator](https://www.datasciencetrivia.com/tools/mean-median-mode-calculator)
   and a [confusion matrix calculator](https://www.datasciencetrivia.com/tools/confusion-matrix-calculator).
 - **[llms.txt](https://www.datasciencetrivia.com/llms.txt)**: the whole deck
   as plain text, for AI assistants that want to quote it.
