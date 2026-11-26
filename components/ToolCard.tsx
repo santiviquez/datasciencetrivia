@@ -36,8 +36,8 @@ export default function ToolCard({
         className="flex h-[28px] items-center justify-between border-t-[10px] border-black px-3 text-[11px] font-semibold"
         style={{ backgroundColor: look.color }}
       >
-        <span className="tabular-nums">{footer}</span>
-        <span>datasciencetrivia.com</span>
+        <span className="min-w-0 truncate tabular-nums">{footer}</span>
+        <span className="shrink-0 pl-3">datasciencetrivia.com</span>
       </footer>
     </article>
   );

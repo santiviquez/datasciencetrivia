@@ -1,6 +1,6 @@
 /**
- * Probability distributions for the calculators: normal, Student's t,
- * chi-square and F.
+ * Probability distributions for the calculators (normal, Student's t,
+ * chi-square and F) and summaries of a list of numbers.
  *
  * Pure functions with no React in them. Tail probabilities are computed
  * directly (never as 1 − CDF), so a p-value of 1e-12 keeps its digits.
@@ -272,4 +272,35 @@ export function spread(values: readonly number[]): Spread {
 /** The sum of squares over n − 1 for a sample (Bessel's correction), over n for a whole population. */
 export function variance({ ss, n }: Spread, sample: boolean): number {
   return ss / (sample ? n - 1 : n);
+}
+
+/**
+ * The value a fraction p of the way through a sorted list, interpolating
+ * between neighbours: p = 0.5 is the median, 0.25 and 0.75 the quartiles.
+ * The convention of Excel's QUARTILE.INC, NumPy and R's default.
+ */
+export function sampleQuantile(sorted: readonly number[], p: number): number {
+  const at = (sorted.length - 1) * p;
+  const below = Math.floor(at);
+  const above = Math.ceil(at);
+  return sorted[below] + (sorted[above] - sorted[below]) * (at - below);
+}
+
+/** The values of a sorted list that occur most often, and how often. No modes when no value repeats. */
+export function modes(sorted: readonly number[]): { values: number[]; count: number } {
+  let values: number[] = [];
+  let count = 1;
+  for (let start = 0; start < sorted.length; ) {
+    let end = start + 1;
+    while (end < sorted.length && sorted[end] === sorted[start]) end++;
+    const run = end - start;
+    if (run > count) {
+      values = [sorted[start]];
+      count = run;
+    } else if (run === count && run > 1) {
+      values.push(sorted[start]);
+    }
+    start = end;
+  }
+  return { values, count };
 }

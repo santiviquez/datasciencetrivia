@@ -1,12 +1,15 @@
 // Checks lib/stats.ts against reference values (scripts/stats-reference.json):
 // tails, densities, quantiles and intervals from SciPy and statsmodels, and
-// spreads computed in exact rational arithmetic. Run with `npm run check:stats`.
+// spreads, quartiles and modes computed in exact rational arithmetic. Run with
+// `npm run check:stats`.
 import { readFileSync } from "node:fs";
 import {
   density,
   lowerTail,
   meanInterval,
+  modes,
   proportionInterval,
+  sampleQuantile,
   spread,
   upperQuantile,
   upperTail,
@@ -16,6 +19,7 @@ import {
 const rows = JSON.parse(readFileSync(new URL("./stats-reference.json", import.meta.url), "utf8"));
 const fns = { upper: upperTail, lower: lowerTail, density, quantile: upperQuantile };
 const bounds = ({ lower, upper }) => [lower, upper];
+const inOrder = (values) => [...values].sort((a, b) => a - b);
 // Functions checked on several numbers at once: a row holds their arguments and a list of expected values.
 const lists = {
   meanInterval: (...args) => bounds(meanInterval(...args)),
@@ -23,6 +27,12 @@ const lists = {
   spread: (values) => {
     const s = spread(values);
     return [s.mean, s.ss, variance(s, true), variance(s, false)];
+  },
+  quartiles: (values) => [0.25, 0.5, 0.75].map((p) => sampleQuantile(inOrder(values), p)),
+  // How often the modes occur, how many there are, then the modes themselves.
+  modes: (values) => {
+    const m = modes(inOrder(values));
+    return [m.count, m.values.length, ...m.values];
   },
 };
 const TOLERANCE = {
@@ -33,6 +43,8 @@ const TOLERANCE = {
   meanInterval: 1e-8,
   proportionInterval: 1e-8,
   spread: 1e-9,
+  quartiles: 1e-12,
+  modes: 0,
 };
 
 let failures = 0;

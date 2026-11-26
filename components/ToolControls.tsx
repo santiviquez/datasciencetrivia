@@ -153,7 +153,8 @@ export function Segmented<T extends string>({
 /**
  * A calculator's headline results as one bordered strip, where picking a cell
  * changes what the card shows (which tail the curve shades, for example).
- * Results too long to sit side by side are stacked with `rows`.
+ * Four results make a 2 × 2 grid, and results too long to sit side by side
+ * are stacked with `rows`.
  */
 export function ResultChoice<T extends string>({
   legend,
@@ -170,16 +171,18 @@ export function ResultChoice<T extends string>({
   onChange: (value: T) => void;
   rows?: boolean;
 }) {
-  const columns = options.length === 3 ? "grid-cols-3" : "grid-cols-2";
-  const divider = rows ? "border-t-[4px] border-black" : "border-l-[4px] border-black";
+  const perRow = rows ? 1 : options.length === 3 ? 3 : 2;
+  const columns = perRow === 3 ? "grid-cols-3" : perRow === 2 ? "grid-cols-2" : "";
+  // Each cell draws the line on its left and the line above it.
+  const divider = (i: number) => `border-black ${i % perRow ? "border-l-[4px]" : ""} ${i >= perRow ? "border-t-[4px]" : ""}`;
   return (
     <fieldset>
       <legend className="sr-only">{legend}</legend>
-      <div className={`grid border-[4px] border-black ${rows ? "" : columns}`}>
+      <div className={`grid border-[4px] border-black ${columns}`}>
         {options.map((o, i) => (
           <label
             key={o.value}
-            className={`cursor-pointer px-3 py-3 transition-colors duration-150 ease-out has-checked:bg-[var(--color-stats)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#319795] [&:not(:has(:checked))]:hover:bg-black/[0.04] ${rows ? "flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1" : ""} ${i ? divider : ""}`}
+            className={`min-w-0 cursor-pointer px-3 py-3 transition-colors duration-150 ease-out has-checked:bg-[var(--color-stats)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-[#319795] [&:not(:has(:checked))]:hover:bg-black/[0.04] ${rows ? "flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1" : ""} ${divider(i)}`}
           >
             <input
               type="radio"
@@ -191,7 +194,7 @@ export function ResultChoice<T extends string>({
             />
             <span className="block font-[family-name:var(--font-card)] text-[11px] font-bold uppercase">{o.label}</span>
             <span
-              className={`block font-[family-name:var(--font-card)] font-bold tabular-nums ${rows ? "text-lg sm:text-xl" : "mt-1 text-xl sm:text-2xl"}`}
+              className={`block font-[family-name:var(--font-card)] font-bold tabular-nums [overflow-wrap:anywhere] ${rows ? "text-lg sm:text-xl" : "mt-1 text-xl sm:text-2xl"}`}
             >
               {o.text}
             </span>
