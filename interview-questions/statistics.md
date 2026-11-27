@@ -158,7 +158,9 @@ The standard deviation.
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/in-a-normal-distribution-which-parameter-indicates-how-wide-is-the-bell)
 
-### What is the binomial distribution?
+### What is the binomial distribution, and what is its formula?
+
+> **Flashcard:** What is the binomial distribution?
 
 The distribution of the number of successes in n independent trials that each succeed with the same probability p: P(k) = C(n, k) pᵏ (1 − p)ⁿ⁻ᵏ. Its mean is np and its variance np(1 − p).
 
