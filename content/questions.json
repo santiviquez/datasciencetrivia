@@ -1609,13 +1609,21 @@
     "id": "stats-205",
     "category": "stats",
     "question": "What is the binomial distribution?",
+    "title": "What is the binomial distribution, and what is its formula?",
     "answer": "The distribution of the number of successes in n independent trials that each succeed with the same probability p: P(k) = C(n, k) pᵏ (1 − p)ⁿ⁻ᵏ. Its mean is np and its variance np(1 − p).",
     "explanation": [
-      "A binomial count needs a fixed number of trials, two outcomes per trial, independence between trials and the same success probability every time. One trial is a Bernoulli variable; the binomial is the sum of n of them. The variance np(1 − p) is largest at p = 0.5.",
-      "Example: an email converts 10% of recipients. Out of 20 recipients, the chance that exactly 2 convert is C(20, 2) × 0.1² × 0.9¹⁸ ≈ 28.5%, and the chance that none do is 0.9²⁰ ≈ 12.2%. Expect 2 conversions, with a standard deviation of √(20 × 0.1 × 0.9) ≈ 1.34.",
-      "Approximations come up in interviews: when np and n(1 − p) are both at least about 10, a normal distribution with the same mean and variance works, which is the basis of the usual A/B test on conversion rates; when n is large and p small, the Poisson with λ = np does. If you sample without replacement from a small population, the trials aren't independent and the hypergeometric distribution is the right one."
+      "A count is binomial when four things hold: the number of trials n is fixed in advance, each trial has two outcomes, the trials are independent, and the success probability p is the same every time. One trial is a Bernoulli variable, and the binomial is the sum of n of them.",
+      "The formula is P(X = k) = C(n, k) × pᵏ × (1 − p)ⁿ⁻ᵏ. The last two factors are the probability of one particular sequence with k successes and n − k failures. C(n, k) = n! / (k! (n − k)!) counts how many such sequences there are.",
+      "Example: an email converts 10% of recipients and goes to 20 people. The chance that exactly 2 convert is C(20, 2) × 0.1² × 0.9¹⁸ = 190 × 0.01 × 0.150 ≈ 0.285. The chance that none do is 0.9²⁰ ≈ 0.122, so the chance of at least one conversion is 0.878.",
+      "Cumulative probabilities add terms up. At most 2 conversions is P(0) + P(1) + P(2) = 0.122 + 0.270 + 0.285 = 0.677. At least 2 is the complement of at most 1: 1 − 0.392 = 0.608. The boundary is the usual mistake: \"at least 2\" includes 2, and \"more than 2\" does not.",
+      "The mean is np and the variance np(1 − p), so here you expect 2 conversions with a standard deviation of √(20 × 0.1 × 0.9) ≈ 1.34. The variance is largest at p = 0.5. The observed rate, successes / n, has standard error √(p(1 − p)/n), which is where the margin of error for a proportion comes from.",
+      "The shape depends on p. At p = 0.5 it is symmetric. For small p it is skewed right, with a tail toward large counts, and for p near 1 it is skewed left. The skew fades as n grows: the skewness is (1 − 2p) / √(np(1 − p)).",
+      "Two approximations come up in interviews. When np and n(1 − p) are both at least about 10, a normal distribution with the same mean and variance is close, which is the basis of the usual A/B test on conversion rates. When n is large and p is small, a Poisson distribution with λ = np is close: for n = 1,000 and p = 0.002 the binomial gives P(X = 0) = 0.1351 and the Poisson gives e⁻² = 0.1353.",
+      "It stops fitting when an assumption breaks. Sampling without replacement from a small population makes the trials dependent, which is the hypergeometric distribution; the binomial is still fine while the sample is under about 10% of the population. If p varies from trial to trial, or outcomes cluster (several users in one household), the real variance is larger than np(1 − p). That is overdispersion, and the beta-binomial model handles it.",
+      "In code: scipy.stats.binom.pmf(2, 20, 0.1) returns 0.285, binom.cdf(2, 20, 0.1) returns 0.677 and binom.sf(1, 20, 0.1) returns 0.608. In R these are dbinom(2, 20, 0.1), pbinom(2, 20, 0.1) and 1 − pbinom(1, 20, 0.1). A TI-84 calls them binompdf and binomcdf.",
+      "Related distributions ask different questions about the same trials. The geometric distribution counts trials until the first success, the negative binomial counts trials until the r-th, and the multinomial allows more than two outcomes. Interview follow-ups: the chance of at least one success in n trials (1 − (1 − p)ⁿ), why the variance peaks at p = 0.5, and how to test whether a coin is fair (a binomial test, or a z-test once n is large)."
     ],
-    "updated": "2026-10-20",
+    "updated": "2026-11-27",
     "slug": "what-is-the-binomial-distribution"
   },
   {
