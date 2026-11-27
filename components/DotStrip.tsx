@@ -1,13 +1,8 @@
+import { placeLabel, type PlotLabel } from "@/lib/plot-labels";
+
 const BINS = 30;
 /** Dots are 8px on a 9px pitch, so ten fit under the 96px plot. Taller stacks become bars. */
 const MAX_DOTS = 10;
-/** A label's width as a share of the narrowest plot (about 300px), per character of 11px tabular type. */
-const CHAR = 2.1;
-
-interface Label {
-  at: number;
-  text: string;
-}
 
 /**
  * A list of numbers as stacked dots on a number line, with a line at each
@@ -57,15 +52,9 @@ export default function DotStrip({
   const tallest = Math.max(...counts, 1);
   const bars = tallest > MAX_DOTS;
 
-  // A label sits under its value, pulled in from the edges, and is dropped if it would run into one already placed.
-  const labels: Label[] = [];
-  const place = (v: number, text = fmt(v)) => {
-    const half = (text.length * CHAR) / 2;
-    const spot = Math.min(Math.max(at(v), half), 100 - half);
-    if (labels.some((l) => Math.abs(l.at - spot) < half + (l.text.length * CHAR) / 2 + 2)) return false;
-    labels.push({ at: spot, text });
-    return true;
-  };
+  // A label sits under its value, and is dropped if it would run into one already placed.
+  const labels: PlotLabel[] = [];
+  const place = (v: number, text = fmt(v)) => placeLabel(labels, at(v), text);
   // The marks come first, so the band is what gives way: both of its ends are labelled, or neither.
   for (const m of marks) place(m);
   const marked = labels.length;
