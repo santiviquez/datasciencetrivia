@@ -1,6 +1,6 @@
 /**
  * Probability distributions for the calculators (normal, Student's t,
- * chi-square and F) and summaries of a list of numbers.
+ * chi-square, F and binomial) and summaries of a list of numbers.
  *
  * Pure functions with no React in them. Tail probabilities are computed
  * directly (never as 1 − CDF), so a p-value of 1e-12 keeps its digits.
@@ -208,6 +208,34 @@ export function upperQuantile(dist: Distribution, p: number, df: Df = []): numbe
     else hi = mid;
   }
   return (lo + hi) / 2;
+}
+
+/**
+ * P(X = k) for the number of successes in n independent trials that each
+ * succeed with probability p: C(n, k) p^k (1 − p)^(n − k), built from
+ * logarithms so that large n neither overflows nor underflows on the way.
+ */
+export function binomialPmf(k: number, n: number, p: number): number {
+  if (k < 0 || k > n) return 0;
+  if (p <= 0) return k === 0 ? 1 : 0;
+  if (p >= 1) return k === n ? 1 : 0;
+  return Math.exp(
+    logGamma(n + 1) - logGamma(k + 1) - logGamma(n - k + 1) + k * Math.log(p) + (n - k) * Math.log1p(-p),
+  );
+}
+
+/** P(X ≤ k) for a binomial count, through the incomplete beta function, so no terms are summed. */
+export function binomialLower(k: number, n: number, p: number): number {
+  if (k < 0) return 0;
+  if (k >= n) return 1;
+  return betaI(n - k, k + 1, 1 - p);
+}
+
+/** P(X ≥ k) for a binomial count. Computed directly, so a small upper tail keeps its digits. */
+export function binomialUpper(k: number, n: number, p: number): number {
+  if (k <= 0) return 1;
+  if (k > n) return 0;
+  return betaI(k, n - k + 1, p);
 }
 
 /** A confidence interval, with the critical value that set its width. */

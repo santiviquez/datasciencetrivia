@@ -102,9 +102,23 @@ export const TOOLS: Tool[] = [
       ["measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value", "Variance and standard deviation"],
     ],
   },
+  {
+    slug: "binomial-distribution-calculator",
+    name: "Binomial distribution calculator",
+    blurb: "Exactly, at most or at least x successes.",
+    category: "stats",
+    cards: [
+      ["what-is-the-binomial-distribution", "Binomial distribution"],
+      ["what-is-the-poisson-distribution", "Poisson distribution"],
+      ["what-two-parameters-defined-a-normal-distribution", "Normal distribution"],
+      ["what-is-a-probability-density-function", "Probability density function"],
+      ["what-is-the-law-of-large-numbers", "Law of large numbers"],
+      ["what-is-a-p-value", "P-value"],
+    ],
+  },
 ];
 
-export const TOOLS_UPDATED = "2026-11-26";
+export const TOOLS_UPDATED = "2026-11-27";
 
 export function getTool(slug: string): Tool {
   const tool = TOOLS.find((t) => t.slug === slug);
