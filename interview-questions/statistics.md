@@ -132,7 +132,9 @@ Frequentists treat parameters as fixed and probability as a long-run frequency, 
 
 [Read the longer answer →](https://www.datasciencetrivia.com/questions/what-is-the-difference-between-bayesian-and-frequentist-statistics)
 
-### What is a probability density function?
+### What is a probability density function (PDF), and how is a CDF different?
+
+> **Flashcard:** What is a probability density function?
 
 A function that describes a continuous random variable: the probability of landing in an interval is the area under the curve over that interval. Its value at a point is a density, not a probability, so it can exceed 1. The cumulative distribution function (CDF) gives P(X ≤ x).
 
