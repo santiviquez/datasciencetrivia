@@ -1,7 +1,8 @@
 // Checks lib/stats.ts against reference values (scripts/stats-reference.json):
 // tails, densities, quantiles and intervals from SciPy and statsmodels, and
 // spreads, quartiles, modes and binomial probabilities computed in exact
-// rational arithmetic (SciPy for the binomial rows with n of 5,000 and up).
+// rational arithmetic (SciPy for the binomial rows with n of 5,000 and up),
+// and normal probabilities between two z scores from mpmath at 50 digits.
 // Run with `npm run check:stats`.
 import { readFileSync } from "node:fs";
 import {
@@ -12,6 +13,7 @@ import {
   lowerTail,
   meanInterval,
   modes,
+  normalBetween,
   proportionInterval,
   sampleQuantile,
   spread,
@@ -40,6 +42,8 @@ const lists = {
   },
   // P(X = k), P(X ≤ k) and P(X ≥ k).
   binomial: (k, n, p) => [binomialPmf(k, n, p), binomialLower(k, n, p), binomialUpper(k, n, p)],
+  // P(Z ≤ a), P(a ≤ Z ≤ b) and P(Z ≥ b).
+  normal: (a, b) => [lowerTail("z", a), normalBetween(a, b), upperTail("z", b)],
 };
 const TOLERANCE = {
   upper: 1e-9,
@@ -52,6 +56,7 @@ const TOLERANCE = {
   quartiles: 1e-12,
   modes: 0,
   binomial: 1e-9,
+  normal: 1e-9,
 };
 
 let failures = 0;

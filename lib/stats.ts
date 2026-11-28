@@ -157,6 +157,17 @@ export function lowerTail(dist: Distribution, x: number, df: Df = []): number {
   }
 }
 
+/**
+ * P(a ≤ Z ≤ b) for a standard normal and finite a ≤ b, taken from whichever
+ * tails are small, so an interval far from the mean keeps its digits.
+ */
+export function normalBetween(a: number, b: number): number {
+  if (!(b > a)) return 0;
+  if (a >= 0) return upperTail("z", a) - upperTail("z", b);
+  if (b <= 0) return lowerTail("z", b) - lowerTail("z", a);
+  return 1 - lowerTail("z", a) - upperTail("z", b);
+}
+
 /** Two-tailed p-value, 2 · P(X ≥ |x|). Only defined for the symmetric distributions. */
 export function twoTail(dist: "z" | "t", x: number, df: Df = []): number {
   return Math.min(1, 2 * upperTail(dist, Math.abs(x), df));
