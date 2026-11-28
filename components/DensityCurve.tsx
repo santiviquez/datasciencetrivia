@@ -1,3 +1,4 @@
+import { placeLabel, type PlotLabel } from "@/lib/plot-labels";
 import { density, upperQuantile, type Df, type Distribution } from "@/lib/stats";
 
 export type Tail = "two" | "right" | "left";
@@ -31,8 +32,8 @@ function range(dist: Distribution, df: Df, x: number | null): [number, number] {
 const fmt = (v: number) => String(Number(v.toFixed(Math.abs(v) >= 100 ? 0 : 2))).replace("-", "−");
 
 /**
- * The distribution's density with a p-value's tail shaded, or the middle
- * that a confidence interval covers.
+ * The distribution's density with a p-value's tail shaded, the middle that a
+ * confidence interval covers, or any stretches given as `regions`.
  *
  * The SVG stretches to its box and the strokes don't scale, so lines stay the
  * same weight at any width. Labels are HTML under it, so the type doesn't
@@ -41,20 +42,27 @@ const fmt = (v: number) => String(Number(v.toFixed(Math.abs(v) >= 100 ? 0 : 2)))
 export default function DensityCurve({
   dist,
   df,
-  x,
-  tail,
+  x = null,
+  tail = "left",
+  regions,
   fill,
   label = fmt,
 }: {
   dist: Distribution;
   df: Df;
-  x: number | null;
-  tail: Shade;
+  /** The statistic, shaded by `tail`. */
+  x?: number | null;
+  tail?: Shade;
+  /** Stretches to shade instead, as [from, to] with an infinite end for a tail. Each finite end is marked. */
+  regions?: readonly (readonly [number, number])[];
   fill: string;
   /** What to print under a mark. Defaults to the mark's own value. */
   label?: (mark: number) => string;
 }) {
-  const [lo, hi] = range(dist, df, x);
+  const ends = regions ? [...new Set(regions.flat().filter(Number.isFinite))].sort((a, b) => a - b) : [];
+  // The curve stretches to reach the end furthest from the middle.
+  const reach = !regions ? x : ends.length ? ends.reduce((far, e) => (Math.abs(e) > Math.abs(far) ? e : far)) : null;
+  const [lo, hi] = range(dist, df, reach);
   const sx = (v: number) => ((Math.min(Math.max(v, lo), hi) - lo) / (hi - lo)) * W;
 
   // Chi-square and F are evaluated just right of 0, where the density may be finite, zero or a pole.
@@ -81,9 +89,9 @@ export default function DensityCurve({
     return `M${sx(from).toFixed(2)},${H}${d}L${sx(to).toFixed(2)},${H}Z`;
   };
 
-  const marks: number[] = [];
-  const areas: (string | null)[] = [];
-  if (x !== null) {
+  const marks: number[] = [...ends];
+  const areas: (string | null)[] = regions ? regions.map(([a, b]) => area(a, b)) : [];
+  if (!regions && x !== null) {
     if (tail === "two") {
       const a = Math.abs(x);
       areas.push(area(-Infinity, -a), area(a, Infinity));
@@ -102,12 +110,20 @@ export default function DensityCurve({
   }
 
   // Two labels too close to read are merged into one.
-  const merged = marks.length === 2 && sx(marks[1]) - sx(marks[0]) < 20;
-  const labels = !merged
-    ? marks.map((m) => ({ at: Math.min(Math.max(sx(m), 6), 94), text: label(m) }))
-    : label === fmt
-      ? [{ at: 50, text: `±${fmt(Math.abs(marks[1]))}` }]
-      : [{ at: 50, text: `${label(marks[0])} to ${label(marks[1])}` }];
+  const both = () => `${label(marks[0])} to ${label(marks[1])}`;
+  const labels: PlotLabel[] = [];
+  if (regions) {
+    // The ends of a region can be any numbers of any length, so they are placed by their width.
+    const placed = marks.map((m) => placeLabel(labels, sx(m), label(m)));
+    if (marks.length === 2 && !placed[1]) {
+      labels.length = 0;
+      placeLabel(labels, (sx(marks[0]) + sx(marks[1])) / 2, both());
+    }
+  } else if (marks.length === 2 && sx(marks[1]) - sx(marks[0]) < 20) {
+    labels.push({ at: 50, text: label === fmt ? `±${fmt(Math.abs(marks[1]))}` : both() });
+  } else {
+    for (const m of marks) labels.push({ at: Math.min(Math.max(sx(m), 6), 94), text: label(m) });
+  }
 
   return (
     <div aria-hidden="true">
@@ -130,7 +146,7 @@ export default function DensityCurve({
       </svg>
       <div className="relative mt-1 h-4 text-[11px] tabular-nums text-[var(--muted)]">
         {labels.map((l, i) => (
-          <span key={i} className="absolute -translate-x-1/2" style={{ left: `${l.at}%` }}>
+          <span key={i} className="absolute -translate-x-1/2 whitespace-nowrap" style={{ left: `${l.at}%` }}>
             {l.text}
           </span>
         ))}

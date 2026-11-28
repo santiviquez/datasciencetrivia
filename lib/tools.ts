@@ -116,9 +116,23 @@ export const TOOLS: Tool[] = [
       ["what-is-a-p-value", "P-value"],
     ],
   },
+  {
+    slug: "normal-distribution-calculator",
+    name: "Normal distribution calculator",
+    blurb: "Below, between or above, and inverse normal.",
+    category: "stats",
+    cards: [
+      ["what-two-parameters-defined-a-normal-distribution", "Normal distribution"],
+      ["what-is-a-probability-density-function", "Probability density function"],
+      ["the-normal-distribution-derives-its-importance-from-which-famous-theorem", "Central limit theorem"],
+      ["measures-how-far-a-set-of-random-numbers-are-spread-out-from-their-average-value", "Standard deviation"],
+      ["what-is-a-confidence-interval", "Confidence interval"],
+      ["what-is-a-z-test", "z-test"],
+    ],
+  },
 ];
 
-export const TOOLS_UPDATED = "2026-11-27";
+export const TOOLS_UPDATED = "2026-11-28";
 
 export function getTool(slug: string): Tool {
   const tool = TOOLS.find((t) => t.slug === slug);
